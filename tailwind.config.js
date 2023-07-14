@@ -6,11 +6,11 @@ export default {
 	theme: {
 		fontFamily: {
 			'display-serif': ['Cehua', ...defaultTheme.fontFamily.serif],
-			'display-sans': ['Glacial Indifference', ...defaultTheme.fontFamily.sans]
+			'display-sans': ['"Glacial Indifference"', ...defaultTheme.fontFamily.sans]
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Open Sans', ...defaultTheme.fontFamily.sans]
+				sans: ['"Open Sans"', ...defaultTheme.fontFamily.sans]
 			}
 		}
 	},
@@ -18,17 +18,17 @@ export default {
 
 	daisyui: {
 		themes: [
-		  {
-			mytheme: {
-			  "primary": "#ffffff",
-			  "secondary": "#808080",
-			  "accent": "#37cdbe",
-			  "neutral": "#3d4451",
-			  "base-100": "#ffffff",
+			{
+				mytheme: {
+					primary: '#ffffff',
+					secondary: '#808080',
+					accent: '#37cdbe',
+					neutral: '#3d4451',
+					'base-100': '#ffffff'
+				}
 			},
-		  },
-		  "dark",
-		  "cupcake",
-		],
-	  },
+			'dark',
+			'cupcake'
+		]
+	}
 };
