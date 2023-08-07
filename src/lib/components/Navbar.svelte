@@ -1,4 +1,5 @@
-<div class="navbar bg-red-950 text-white">
+<div class="navbar bg-red-950 font-display-sans">
+	<!-- Mobile navbar -->
 	<div class="navbar-start">
 		<!-- HAMBURGER MENU -->
 		<details class="dropdown">
@@ -18,34 +19,38 @@
 				>
 			</summary>
 			<ul class="dropdown-content menu rounded-box menu-sm z-[1] mt-3 w-52 bg-base-100 p-2 shadow">
-				<li class="py-0"><a href="/about">ABOUT</a></li>
-				<ul class="ml-4 bg-red-950">
-					<li class="text-xs hover:text-yellow-500"><a href="/venue">VENUE</a></li>
-					<li class="text-xs hover:text-yellow-500"><a href="/team">TEAM</a></li>
-					<li class="text-xs hover:text-yellow-500"><a href="/history">HISTORY</a></li>
-				</ul>
-				<li class="hover:text-yellow-500"><a href="/schedule">SCHEDULE</a></li>
-				<li class="hover:text-yellow-500"><a href="/faq">FAQ</a></li>
-				<li class="hover:text-yellow-500"><a href="/sponsors">SPONSORS</a></li>
+				<li class="py-0">
+					<a href="/about">ABOUT</a>
+					<ul class="ml-4 bg-red-950">
+						<li class="hover:"><a href="/venue">VENUE</a></li>
+						<li><a href="/team">TEAM</a></li>
+						<li><a href="/history">HISTORY</a></li>
+					</ul>
+				</li>
+				<li><a href="/schedule">SCHEDULE</a></li>
+				<li><a href="/faq">FAQ</a></li>
+				<li><a href="/sponsors">SPONSORS</a></li>
 			</ul>
 		</details>
 		<img class="w-12" src="src/lib/images/ideahacks_logo.png" alt="ideahacks" />
 	</div>
 
-	<!-- NAVBAR -->
+	<!-- Desktop navbar -->
 	<div class="navbar-center hidden md:flex">
 		<ul class="menu menu-horizontal px-1">
-			<details class="dropdown-bottom dropdown">
-				<summary class="btn-ghost btn m-1 bg-red-950">ABOUT &#x25BC</summary>
-				<ul class="dropdown-content menu rounded-box menu-sm z-[1] mt-3 bg-red-950 p-2 shadow">
-					<li class="text-xs hover:text-yellow-500"><a href="/venue">VENUE</a></li>
-					<li class="text-xs hover:text-yellow-500"><a href="/team">TEAM</a></li>
-					<li class="text-xs hover:text-yellow-500"><a href="/history">HISTORY</a></li>
-				</ul>
-			</details>
-			<li class="hover:text-yellow-500"><a href="/schedule">SCHEDULE</a></li>
-			<li class="hover:text-yellow-500"><a href="/faq">FAQ</a></li>
-			<li class="hover:text-yellow-500"><a href="/sponsors">SPONSORS</a></li>
+			<li>
+				<details>
+					<summary class="m-1 bg-red-950">ABOUT</summary>
+					<ul class="dropdown-content menu rounded-box menu-sm z-[1] mt-3 bg-red-950 p-2 shadow">
+						<li><a href="/venue">VENUE</a></li>
+						<li><a href="/team">TEAM</a></li>
+						<li><a href="/history">HISTORY</a></li>
+					</ul>
+				</details>
+			</li>
+			<li><a href="/schedule">SCHEDULE</a></li>
+			<li><a href="/faq">FAQ</a></li>
+			<li><a href="/sponsors">SPONSORS</a></li>
 		</ul>
 	</div>
 	<div class="navbar-end">

@@ -4,8 +4,12 @@
 	import Footer from '../lib/components/Footer.svelte';
 </script>
 
-<Navbar />
+<div class="grid min-h-screen grid-rows-[auto_1fr_auto]">
+	<Navbar />
 
-<slot />
+	<main>
+		<slot />
+	</main>
 
-<Footer />
+	<Footer />
+</div>
