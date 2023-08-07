@@ -17,6 +17,7 @@
 	"devDependencies": {
 		"@flydotio/dockerfile": "^0.3.3",
 		"@playwright/test": "^1.28.1",
+		"@prisma/client": "^5.1.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/adapter-node": "^1.3.1",
 		"@sveltejs/kit": "^1.5.0",
@@ -31,6 +32,7 @@
 		"prettier": "^2.8.8",
 		"prettier-plugin-svelte": "^2.8.1",
 		"prettier-plugin-tailwindcss": "^0.3.0",
+		"prisma": "^5.1.1",
 		"svelte": "^3.54.0",
 		"svelte-check": "^3.0.1",
 		"tailwindcss": "^3.3.1",
@@ -39,5 +41,11 @@
 		"vite": "^4.2.0",
 		"vitest": "^0.25.3"
 	},
-	"type": "module"
+	"type": "module",
+	"prisma": {
+		"seed": "vite-node prisma/seed.js"
+	},
+	"dependencies": {
+		"vite-node": "^0.34.1"
+	}
 }

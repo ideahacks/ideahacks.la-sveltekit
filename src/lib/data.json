@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "name": "ESP 32",
+        "quantity": 123
+    },
+    {
+        "id": 2,
+        "name": "UV Sensor",
+        "quantity": 10
+    },
+    {
+        "id": 3,
+        "name": "Flex Sensor",
+        "quantity": 134
+    },
+    {
+        "id": 4,
+        "name": "HC-06",
+        "quantity": 35
+    }
+]
