@@ -34,6 +34,32 @@
 			iteration += 1 / 2;
 		}, 30);
 	}
+
+	let formStatus: String = '';
+
+	async function addEmail(email: String) {
+		const response = await fetch('/api/email', {
+			method: 'POST',
+			body: JSON.stringify({ email }),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+
+		const responseStatus = await response.json();
+
+		formStatus = responseStatus;
+	}
+
+	async function handleSubmit(event: SubmitEvent) {
+		const input = document.querySelector('#email');
+		if (input) {
+			const email = (<HTMLInputElement>input).value;
+			await addEmail(email);
+
+			(<HTMLInputElement>input).value = '';
+		}
+	}
 </script>
 
 <div class="m-32 justify-center">
@@ -71,14 +97,19 @@
 					/></svg
 				>
 			</span>
-			<input
-				id="email"
-				type="text"
-				placeholder="Enter your email"
-				class="input-bordered input join-item border-red-950 placeholder:text-white"
-			/>
+			<form on:submit|preventDefault={handleSubmit}>
+				<input
+					id="email"
+					type="email"
+					placeholder="Enter your email"
+					class="join-item input-bordered input border-red-950 placeholder:text-white"
+				/>
+				<input type="submit" value="Add Email" />
+				<p>{formStatus}</p>
+			</form>
+
 			{#if !submitted}
-				<button on:click={() => (submitted = true)} class="btn-primary btn-square join-item btn">
+				<button on:click={() => (submitted = true)} class="join-item btn-primary btn-square btn">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						class="h-6 w-6"
