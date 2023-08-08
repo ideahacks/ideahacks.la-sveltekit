@@ -1,16 +1,57 @@
 <script lang="ts">
 	let email: string;
 	let submitted: boolean;
+
+	let interval = null;
+
+	const numbers = 'abcdefghijklmnopqrstuvwxyz';
+
+	function scrambleLetters(event) {
+		let iteration = 0;
+
+		clearInterval(interval);
+
+		interval = setInterval(() => {
+			event.target.innerText = event.target.innerText
+				.split('')
+				.map((letter: string, index: number) => {
+					if (index < iteration) {
+						return event.target.dataset.value[index];
+					}
+
+					if (letter === ' ') {
+						return ' ';
+					}
+
+					return numbers[Math.floor(Math.random() * numbers.length)];
+				})
+				.join('');
+
+			if (iteration >= event.target.dataset.value.length) {
+				clearInterval(interval);
+			}
+
+			iteration += 1 / 2;
+		}, 30);
+	}
 </script>
 
 <div class="m-32 justify-center">
 	<h1 class="font-display-serif text-9xl">
-		IDEA Hacks <span class="font-display-sans font-bold">2024</span>
+		<span data-value="IDEA Hacks" on:mouseover={scrambleLetters} on:focus={scrambleLetters}>
+			IDEA Hacks
+		</span>
+		<span class="font-display-sans font-bold tabular-nums">2024</span>
 	</h1>
 	<div class="divider" />
 	<div class="form-control">
 		<label class="label" for="email">
-			<span class="label-text font-display-sans text-5xl font-bold">Stay in the loop</span>
+			<span
+				data-value="Stay in the loop"
+				on:mouseover={scrambleLetters}
+				on:focus={scrambleLetters}
+				class="label-text font-['Cartograph_CF'] text-5xl font-bold">Stay in the loop</span
+			>
 		</label>
 		<label class="join mt-4">
 			<span class="join-item flex max-w-md place-items-center bg-red-950 p-3">
