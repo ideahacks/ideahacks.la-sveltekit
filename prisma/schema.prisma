@@ -10,7 +10,43 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// for the summer landing page
 model Email {
   id    Int    @id @default(autoincrement())
-  email String
+  email String @unique
+}
+
+// for the participants' applications
+model ApplicationForm {
+  // PERSONAL INFO
+  id        String  @id @default(uuid())
+  firstName String
+  lastName  String
+  email     String  @unique
+  phone     String
+  pronouns  String?
+
+  // EDUCATION
+  school   String
+  major    String
+  year     String
+  github   String?
+  linkedin String?
+
+  // TEAM INFO
+  hasTeam        Boolean
+  teammateEmails String[]
+
+  // SHORT ANSWER
+  previousEngineeringExperiences String // prior experience
+  whyParticipateInIDEAHacks      String
+  ideaToHack                     String?
+  hasPreviousHackathonExperience Boolean
+  previousHackathonExperience    String?
+  partsWishlist                  String?
+
+  // MISCELLANEOUS
+  shirtSize                 String
+  dietaryRestrictions       String
+  requiresHousingAssistance Boolean
 }
