@@ -1,9 +1,89 @@
 <script>
+	// @ts-nocheck
+
+	let formStatus = '';
+
+	function getFormData() {
+		const formData = {
+			// PERSONAL
+			firstName: document.getElementById('form-first-name').value,
+			lastName: document.getElementById('form-last-name').value,
+			email: document.getElementById('form-email').value,
+			phone: document.getElementById('form-phone').value,
+			pronouns: document.getElementById('form-pronouns').value,
+
+			// EDUCATION
+			school:
+				document.getElementById('form-school').value === 'Other'
+					? document.getElementById('form-other-school').value
+					: document.getElementById('form-school').value,
+			major: document.getElementById('form-major').value,
+			year: document.getElementById('form-year').value,
+			github: document.getElementById('form-github').value,
+			linkedin: document.getElementById('form-linkedin').value,
+
+			// TEAM INFO
+			hasTeam: document.getElementById('form-hasTeam').value,
+			teammate1: document.getElementById('form-teammate1').value,
+			teammate2: document.getElementById('form-teammate2').value,
+			teammate3: document.getElementById('form-teammate3').value,
+			teammate4: document.getElementById('form-teammate4').value,
+
+			// SHORT ANSWER
+			q1: document.getElementById('form-q1').value,
+			q2: document.getElementById('form-q2').value,
+			q3: document.getElementById('form-q3').value,
+			q4: document.getElementById('form-q4').value,
+			q5: document.getElementById('form-q5').value,
+			q6: document.getElementById('form-q6').value,
+
+			// MISCELLANEOUS
+			requiresHousingAssistance: document.getElementById('form-housing').value,
+			shirtSize: document.getElementById('form-shirt-size').value,
+			dietaryRestrictions: document.getElementById('form-allergies').value
+		};
+
+		return formData;
+	}
+
+	function validateFormData(formData) {}
+
+	async function handleSubmit(e) {
+		e.preventDefault();
+
+		const formData = getFormData();
+
+		const response = await fetch('/api/application', {
+			method: 'POST',
+			body: JSON.stringify(formData),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+
+		const responseStatus = await response.json();
+
+		formStatus = responseStatus;
+	}
+	function handleSave(e) {
+		e.preventDefault();
+		// to be implemented once we have user table
+		console.log('Saved');
+	}
+
+	let firstNameCompleted = true;
+	let lastNameCompleted = true;
+	let emailCompleted = true;
+	let phoneCompleted = true;
+	let schoolCompleted = true;
+	let majorCompleted = true;
+	let yearCompleted = true;
+	let hasTeamCompleted = true;
 </script>
 
-<div class="container mx-auto p-6 font-display-sans">
+<div class="container mx-auto p-6">
 	<h1 class="mb-2 text-center font-display-sans text-2xl font-bold tracking-wide text-gray-700">
-		APPLICATION
+		IDEA HACKS APPLICATION
 	</h1>
 	<form class="mx-auto w-full max-w-xl">
 		<h2 class="mb-2 font-display-sans text-lg font-bold tracking-wide text-gray-700">PERSONAL</h2>
@@ -22,7 +102,10 @@
 					type="text"
 					placeholder="Jane"
 				/>
-				<!-- <p class="text-xs italic text-red-500">Please fill out this field.</p> -->
+
+				{#if !firstNameCompleted}
+					<p class="text-xs italic text-red-500">Please fill out this field.</p>
+				{/if}
 			</div>
 			<div class="w-full px-3 md:w-1/2">
 				<label
@@ -83,13 +166,13 @@
 		<div class="-mx-3 mb-6 flex flex-wrap">
 			<div class="mb-6 w-full px-3 md:mb-0 md:w-2/3">
 				<!-- SCHOOL DROPDOWN -->
-				<label class="mb-2 block text-xs uppercase tracking-wide text-gray-700" for="grid-state">
+				<label class="mb-2 block text-xs uppercase tracking-wide text-gray-700" for="form-school">
 					School*
 				</label>
 				<div class="relative">
 					<select
 						class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 pr-8 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-						id="grid-state"
+						id="form-school"
 					>
 						<option>University of California, Los Angeles</option>
 						<option>University of Southern California</option>
@@ -109,13 +192,13 @@
 			<div class="w-full px-3 md:w-1/3">
 				<label
 					class="mb-2 block text-xs uppercase tracking-wide text-gray-700"
-					for="form-last-name"
+					for="form-other-school"
 				>
 					School (If Other)
 				</label>
 				<input
 					class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-					id="form-last-name"
+					id="form-other-school"
 					type="text"
 					placeholder=""
 				/>
@@ -455,5 +538,21 @@
 				/>
 			</div>
 		</div>
+
+		<button
+			on:click={handleSave}
+			class="rounded bg-orange-500 px-4 py-2 font-bold hover:bg-orange-700"
+		>
+			Save
+		</button>
+
+		<button
+			on:click={handleSubmit}
+			class="rounded bg-orange-500 px-4 py-2 font-bold hover:bg-orange-700"
+		>
+			Submit
+		</button>
+
+		<p class="mb-2 font-display-sans font-bold tracking-wide text-orange-600">{formStatus}</p>
 	</form>
 </div>

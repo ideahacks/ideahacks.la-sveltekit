@@ -34,19 +34,22 @@ model ApplicationForm {
   linkedin String?
 
   // TEAM INFO
-  hasTeam        Boolean
-  teammateEmails String[]
+  hasTeam   String
+  teammate1 String
+  teammate2 String
+  teammate3 String
+  teammate4 String
 
   // SHORT ANSWER
-  previousEngineeringExperiences String // prior experience
-  whyParticipateInIDEAHacks      String
-  ideaToHack                     String?
-  hasPreviousHackathonExperience Boolean
-  previousHackathonExperience    String?
-  partsWishlist                  String?
+  q1 String // prior experience
+  q2 String // why participate
+  q3 String? // idea to hack
+  q4 String // has previous hackathon experience
+  q5 String? // previous hackathon experience
+  q6 String? // parts wish list
 
   // MISCELLANEOUS
+  requiresHousingAssistance String
   shirtSize                 String
   dietaryRestrictions       String
-  requiresHousingAssistance Boolean
 }
