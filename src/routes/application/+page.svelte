@@ -1,7 +1,50 @@
 <script>
 	// @ts-nocheck
 
+	const DEFAULT_SHORT_ANSWER_WORD_LIMIT = 5;
+
+	const WORD_LIMITS = {
+		q1: 250,
+		q2: 250,
+		q3: 100,
+		q4: 250,
+		q5: 50,
+		q6: 100
+	};
+
+	let firstNameCompleted = true;
+	let lastNameCompleted = true;
+	let emailCompleted = true;
+	let emailValid = true;
+	let phoneCompleted = true;
+	let phoneValid = true;
+	let schoolCompleted = true;
+	let majorCompleted = true;
+	let yearCompleted = true;
+	let hasTeamCompleted = true;
+
 	let formStatus = '';
+
+	let shortAnswerWordCounts = {
+		q1: 0,
+		q2: 0,
+		q3: 0,
+		q4: 0,
+		q5: 0,
+		q6: 0
+	};
+
+	function countWords(input, questionName) {
+		// console.log(input);
+		var inputText = input.target.value;
+
+		if (inputText.trim() === '') {
+			shortAnswerWordCounts[questionName] = 0;
+		} else {
+			var len = inputText.trim().split(/[\s]+/).length;
+			shortAnswerWordCounts[questionName] = len;
+		}
+	}
 
 	function getFormData() {
 		const formData = {
@@ -46,7 +89,16 @@
 		return formData;
 	}
 
-	function validateFormData(formData) {}
+	function validateFormData(formData) {
+		firstNameCompleted = !(formData.firstName === '');
+		lastNameCompleted = !(formData.lastName === '');
+		emailCompleted = !(formData.email === '');
+		phoneCompleted = !(formData.email === '');
+
+		validFormData = true;
+
+		return validFormData;
+	}
 
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -64,21 +116,22 @@
 		const responseStatus = await response.json();
 
 		formStatus = responseStatus;
+
+		setTimeout(function () {
+			formStatus = '';
+		}, 2000);
 	}
 	function handleSave(e) {
 		e.preventDefault();
-		// to be implemented once we have user table
+
+		formStatus = "Save isn't implemented yet!";
+
+		setTimeout(function () {
+			formStatus = '';
+		}, 2000);
+
 		console.log('Saved');
 	}
-
-	let firstNameCompleted = true;
-	let lastNameCompleted = true;
-	let emailCompleted = true;
-	let phoneCompleted = true;
-	let schoolCompleted = true;
-	let majorCompleted = true;
-	let yearCompleted = true;
-	let hasTeamCompleted = true;
 </script>
 
 <div class="container mx-auto p-6">
@@ -376,40 +429,71 @@
 		<div class="-mx-3 mb-6 flex flex-wrap">
 			<div class="w-full px-3">
 				<label class="mb-2 block text-xs uppercase tracking-wide text-gray-700" for="form-q1">
-					1. What are your previous engineering experiences?*
+					1. What are your previous engineering experiences? ({WORD_LIMITS.q1} Words)*
 				</label>
 				<textarea
 					class="mb-3 block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
 					id="form-q1"
 					rows="5"
 					placeholder=""
+					on:input={(e) => countWords(e, 'q1')}
 				/>
+				<label
+					class="mb-2 block text-xs uppercase tracking-wide {shortAnswerWordCounts['q1'] <=
+					WORD_LIMITS.q1
+						? 'text-gray-700'
+						: 'text-red-500'}"
+					for="form-q1"
+				>
+					Words: {shortAnswerWordCounts['q1']}
+				</label>
 			</div>
 		</div>
 		<div class="-mx-3 mb-6 flex flex-wrap">
 			<div class="w-full px-3">
 				<label class="mb-2 block text-xs uppercase tracking-wide text-gray-700" for="form-q2">
-					2. Why do you want to participate in IDEA Hacks?*
+					2. Why do you want to participate in IDEA Hacks? ({WORD_LIMITS.q2} Words)*
 				</label>
 				<textarea
 					class="mb-3 block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
 					id="form-q2"
 					rows="5"
 					placeholder=""
+					on:input={(e) => countWords(e, 'q2')}
 				/>
+				<label
+					class="mb-2 block text-xs uppercase tracking-wide {shortAnswerWordCounts['q2'] <=
+					WORD_LIMITS.q2
+						? 'text-gray-700'
+						: 'text-red-500'}"
+					for="form-q2"
+				>
+					Words: {shortAnswerWordCounts['q2']}
+				</label>
 			</div>
 		</div>
 		<div class="-mx-3 mb-6 flex flex-wrap">
 			<div class="w-full px-3">
 				<label class="mb-2 block text-xs uppercase tracking-wide text-gray-700" for="form-q3">
-					3. Do you have an idea to hack for this year's theme? (It's okay if you don't yet!)*
+					3. Do you have an idea to hack for this year's theme? It's okay if you don't yet! ({WORD_LIMITS.q3}
+					Words)*
 				</label>
 				<textarea
 					class="mb-3 block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
 					id="form-q3"
 					rows="5"
 					placeholder="Example: Compost Catapult"
+					on:input={(e) => countWords(e, 'q3')}
 				/>
+				<label
+					class="mb-2 block text-xs uppercase tracking-wide {shortAnswerWordCounts['q3'] <=
+					WORD_LIMITS.q3
+						? 'text-gray-700'
+						: 'text-red-500'}"
+					for="form-q3"
+				>
+					Words: {shortAnswerWordCounts['q3']}
+				</label>
 			</div>
 		</div>
 		<div class="-mx-3 mb-6 flex flex-wrap">
@@ -439,27 +523,48 @@
 			</div>
 			<div class="w-full px-3 md:w-1/2">
 				<label class="mb-2 block text-xs uppercase tracking-wide text-gray-700" for="form-q5">
-					5. If so, please share your experience with us.
+					5. If so, please share your experience with us. ({WORD_LIMITS.q5} Words)
 				</label>
 				<input
 					class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
 					id="form-q5"
 					type="text"
 					placeholder=""
+					on:input={(e) => countWords(e, 'q5')}
 				/>
+				<label
+					class="mb-2 block text-xs uppercase tracking-wide {shortAnswerWordCounts['q5'] <=
+					WORD_LIMITS.q5
+						? 'text-gray-700'
+						: 'text-red-500'}"
+					for="form-q5"
+				>
+					Words: {shortAnswerWordCounts['q5']}
+				</label>
 			</div>
 		</div>
 		<div class="-mx-3 mb-6 flex flex-wrap">
 			<div class="w-full px-3">
 				<label class="mb-2 block text-xs uppercase tracking-wide text-gray-700" for="form-q6">
-					6. What parts would you like to see at IDEA Hacks this year?
+					6. What parts would you like to see at IDEA Hacks this year? ({WORD_LIMITS.q6}
+					Words)
 				</label>
 				<textarea
 					class="mb-3 block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
 					id="form-q6"
 					rows="3"
 					placeholder=""
+					on:input={(e) => countWords(e, 'q6')}
 				/>
+				<label
+					class="mb-2 block text-xs uppercase tracking-wide {shortAnswerWordCounts['q6'] <=
+					WORD_LIMITS.q6
+						? 'text-gray-700'
+						: 'text-red-500'}"
+					for="form-q6"
+				>
+					Words: {shortAnswerWordCounts['q6']}
+				</label>
 			</div>
 		</div>
 		<h2 class="mb-2 font-display-sans text-lg font-bold tracking-wide text-gray-700">
