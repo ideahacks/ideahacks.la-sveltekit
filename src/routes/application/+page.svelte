@@ -12,16 +12,37 @@
 		q6: 100
 	};
 
+	let inputFieldsValid = {
+		'form-first-name': true,
+		'form-last-name': true,
+		'form-email': true,
+		'form-phone': true,
+		'form-major': true,
+		'form-year': true,
+		'form-hasTeam': true,
+		'form-q1': true,
+		'form-q2': true,
+		'form-q3': true,
+		'form-q4': true,
+		'form-shirt-size': true
+	};
+
 	let firstNameCompleted = true;
 	let lastNameCompleted = true;
 	let emailCompleted = true;
-	let emailValid = true;
+	// let emailValid = true;
 	let phoneCompleted = true;
-	let phoneValid = true;
+	// let phoneValid = true;
 	let schoolCompleted = true;
+
 	let majorCompleted = true;
 	let yearCompleted = true;
 	let hasTeamCompleted = true;
+
+	let q1Valid = true;
+	let q2Valid = true;
+	let q3Valid = true;
+	let q4Valid = true;
 
 	let formStatus = '';
 
@@ -33,6 +54,10 @@
 		q5: 0,
 		q6: 0
 	};
+
+	function isEmpty(input) {
+		inputFieldsValid[input.target.id] = input.target.value !== '';
+	}
 
 	function countWords(input, questionName) {
 		// console.log(input);
@@ -95,9 +120,12 @@
 		emailCompleted = !(formData.email === '');
 		phoneCompleted = !(formData.email === '');
 
-		validFormData = true;
+		schoolCompleted = !(formData.school === '');
+		majorCompleted = !(formData.major === '');
+		yearCompleted = !(formData.year === '');
+		hasTeamCompleted = !(formData.hasTeam === '');
 
-		return validFormData;
+		return None;
 	}
 
 	async function handleSubmit(e) {
@@ -150,15 +178,20 @@
 					First Name*
 				</label>
 				<input
-					class="mb-3 block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
+					class="mb-3 block w-full appearance-none rounded border {inputFieldsValid[
+						'form-first-name'
+					]
+						? 'border-gray-200'
+						: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
+					on:input={isEmpty}
 					id="form-first-name"
 					type="text"
 					placeholder="Jane"
 				/>
 
-				{#if !firstNameCompleted}
+				<!-- {#if !inputFieldsValid['form-first-name']}
 					<p class="text-xs italic text-red-500">Please fill out this field.</p>
-				{/if}
+				{/if} -->
 			</div>
 			<div class="w-full px-3 md:w-1/2">
 				<label
@@ -168,11 +201,19 @@
 					Last Name*
 				</label>
 				<input
-					class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+					class="mb-3 block w-full appearance-none rounded border {inputFieldsValid[
+						'form-last-name'
+					]
+						? 'border-gray-200'
+						: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
+					on:input={isEmpty}
 					id="form-last-name"
 					type="text"
 					placeholder="Doe"
 				/>
+				<!-- {#if !inputFieldsValid['form-last-name']}
+					<p class="text-xs italic text-red-500">Please fill out this field.</p>
+				{/if} -->
 			</div>
 		</div>
 		<div class="-mx-3 mb-6 flex flex-wrap">
@@ -181,7 +222,10 @@
 					Email*
 				</label>
 				<input
-					class="mb-3 block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+					class="mb-3 block w-full appearance-none rounded border {inputFieldsValid['form-email']
+						? 'border-gray-200'
+						: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
+					on:input={isEmpty}
 					id="form-email"
 					type="email"
 					placeholder=""
@@ -195,7 +239,10 @@
 					Phone Number*
 				</label>
 				<input
-					class="mb-3 block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
+					class="mb-3 block w-full appearance-none rounded border {inputFieldsValid['form-phone']
+						? 'border-gray-200'
+						: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
+					on:input={isEmpty}
 					id="form-phone"
 					type="text"
 					placeholder="XXX-XXX-XXXX"
@@ -264,7 +311,10 @@
 					Major*
 				</label>
 				<input
-					class="mb-3 block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
+					class="mb-3 block w-full appearance-none rounded border {inputFieldsValid['form-major']
+						? 'border-gray-200'
+						: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
+					on:input={isEmpty}
 					id="form-major"
 					type="text"
 					placeholder=""
@@ -278,7 +328,10 @@
 				</label>
 				<div class="relative">
 					<select
-						class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 pr-8 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+						class="mb-3 block w-full appearance-none rounded border {inputFieldsValid['form-year']
+							? 'border-gray-200'
+							: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
+						on:input={isEmpty}
 						id="form-year"
 					>
 						<option />
@@ -340,7 +393,12 @@
 				</label>
 				<div class="relative">
 					<select
-						class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 pr-8 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+						class="mb-3 block w-full appearance-none rounded border {inputFieldsValid[
+							'form-hasTeam'
+						]
+							? 'border-gray-200'
+							: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
+						on:input={isEmpty}
 						id="form-hasTeam"
 					>
 						<option />
@@ -432,7 +490,11 @@
 					1. What are your previous engineering experiences? ({WORD_LIMITS.q1} Words)*
 				</label>
 				<textarea
-					class="mb-3 block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+					class="mb-3 block w-full appearance-none rounded border {inputFieldsValid['form-q1'] &&
+					shortAnswerWordCounts['q1'] <= WORD_LIMITS.q1
+						? 'border-gray-200'
+						: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
+					on:input={isEmpty}
 					id="form-q1"
 					rows="5"
 					placeholder=""
@@ -455,7 +517,11 @@
 					2. Why do you want to participate in IDEA Hacks? ({WORD_LIMITS.q2} Words)*
 				</label>
 				<textarea
-					class="mb-3 block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+					class="mb-3 block w-full appearance-none rounded border {inputFieldsValid['form-q2'] &&
+					shortAnswerWordCounts['q2'] <= WORD_LIMITS.q2
+						? 'border-gray-200'
+						: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
+					on:input={isEmpty}
 					id="form-q2"
 					rows="5"
 					placeholder=""
@@ -479,7 +545,11 @@
 					Words)*
 				</label>
 				<textarea
-					class="mb-3 block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+					class="mb-3 block w-full appearance-none rounded border {inputFieldsValid['form-q3'] &&
+					shortAnswerWordCounts['q3'] <= WORD_LIMITS.q3
+						? 'border-gray-200'
+						: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
+					on:input={isEmpty}
 					id="form-q3"
 					rows="5"
 					placeholder="Example: Compost Catapult"
@@ -503,7 +573,10 @@
 				</label>
 				<div class="relative">
 					<select
-						class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 pr-8 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+						class="mb-3 block w-full appearance-none rounded border {inputFieldsValid['form-q4']
+							? 'border-gray-200'
+							: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
+						on:input={isEmpty}
 						id="form-q4"
 					>
 						<option />
@@ -526,7 +599,10 @@
 					5. If so, please share your experience with us. ({WORD_LIMITS.q5} Words)
 				</label>
 				<input
-					class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+					class="mb-3 block w-full appearance-none rounded border {shortAnswerWordCounts['q5'] <=
+					WORD_LIMITS.q5
+						? 'border-gray-200'
+						: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
 					id="form-q5"
 					type="text"
 					placeholder=""
@@ -550,7 +626,10 @@
 					Words)
 				</label>
 				<textarea
-					class="mb-3 block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+					class="mb-3 block w-full appearance-none rounded border {shortAnswerWordCounts['q6'] <=
+					WORD_LIMITS.q6
+						? 'border-gray-200'
+						: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
 					id="form-q6"
 					rows="3"
 					placeholder=""
@@ -608,7 +687,12 @@
 				</label>
 				<div class="relative">
 					<select
-						class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 pr-8 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+						class="mb-3 block w-full appearance-none rounded border {inputFieldsValid[
+							'form-shirt-size'
+						]
+							? 'border-gray-200'
+							: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
+						on:input={isEmpty}
 						id="form-shirt-size"
 					>
 						<option />
