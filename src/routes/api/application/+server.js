@@ -23,7 +23,7 @@ export async function POST({ request }) {
     }
     else {
         // insert the new email into the database
-        const applicationCreated = await prisma.applicationForm.create({
+        await prisma.applicationForm.create({
             data: formData
         })
     }

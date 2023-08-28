@@ -1,8 +1,6 @@
 <script>
 	// @ts-nocheck
 
-	const DEFAULT_SHORT_ANSWER_WORD_LIMIT = 5;
-
 	const WORD_LIMITS = {
 		q1: 250,
 		q2: 250,
@@ -12,7 +10,17 @@
 		q6: 100
 	};
 
-	let inputFieldsValid = {
+	let shortAnswerWordCounts = {
+		q1: 0,
+		q2: 0,
+		q3: 0,
+		q4: 0,
+		q5: 0,
+		q6: 0
+	};
+
+	// does each mandatory field have text in it?
+	let inputFieldsFilled = {
 		'form-first-name': true,
 		'form-last-name': true,
 		'form-email': true,
@@ -27,36 +35,10 @@
 		'form-shirt-size': true
 	};
 
-	let firstNameCompleted = true;
-	let lastNameCompleted = true;
-	let emailCompleted = true;
-	// let emailValid = true;
-	let phoneCompleted = true;
-	// let phoneValid = true;
-	let schoolCompleted = true;
-
-	let majorCompleted = true;
-	let yearCompleted = true;
-	let hasTeamCompleted = true;
-
-	let q1Valid = true;
-	let q2Valid = true;
-	let q3Valid = true;
-	let q4Valid = true;
-
 	let formStatus = '';
 
-	let shortAnswerWordCounts = {
-		q1: 0,
-		q2: 0,
-		q3: 0,
-		q4: 0,
-		q5: 0,
-		q6: 0
-	};
-
-	function isEmpty(input) {
-		inputFieldsValid[input.target.id] = input.target.value !== '';
+	function checkIfEmpty(input) {
+		inputFieldsFilled[input.target.id] = input.target.value !== '';
 	}
 
 	function countWords(input, questionName) {
@@ -114,18 +96,31 @@
 		return formData;
 	}
 
-	function validateFormData(formData) {
-		firstNameCompleted = !(formData.firstName === '');
-		lastNameCompleted = !(formData.lastName === '');
-		emailCompleted = !(formData.email === '');
-		phoneCompleted = !(formData.email === '');
+	function isValidFormData(formData) {
+		let inputFieldsValid = {
+			firstNameCompleted: !(formData.firstName === ''),
+			lastNameCompleted: !(formData.lastName === ''),
+			emailCompleted: !(formData.email === ''),
+			phoneCompleted: !(formData.phone === ''),
+			schoolCompleted: !(formData.school === ''),
+			majorCompleted: !(formData.major === ''),
+			yearCompleted: !(formData.year === ''),
+			hasTeamCompleted: !(formData.hasTeam === ''),
+			q1Valid: inputFieldsFilled['form-q1'] && shortAnswerWordCounts['q1'] <= WORD_LIMITS.q1,
+			q2Valid: inputFieldsFilled['form-q2'] && shortAnswerWordCounts['q2'] <= WORD_LIMITS.q2,
+			q3Valid: inputFieldsFilled['form-q3'] && shortAnswerWordCounts['q3'] <= WORD_LIMITS.q3,
+			q4Valid: inputFieldsFilled['form-q4'],
+			q5Valid: shortAnswerWordCounts['q5'] <= WORD_LIMITS.q5,
+			q6Valid: shortAnswerWordCounts['q6'] <= WORD_LIMITS.q6
+		};
 
-		schoolCompleted = !(formData.school === '');
-		majorCompleted = !(formData.major === '');
-		yearCompleted = !(formData.year === '');
-		hasTeamCompleted = !(formData.hasTeam === '');
+		let result = true;
 
-		return None;
+		for (const field in inputFieldsValid) {
+			result = result && inputFieldsValid[field];
+		}
+
+		return result;
 	}
 
 	async function handleSubmit(e) {
@@ -145,14 +140,16 @@
 
 		formStatus = responseStatus;
 
+		// have status disappear after 2 sec
 		setTimeout(function () {
 			formStatus = '';
 		}, 2000);
 	}
-	function handleSave(e) {
+
+	async function handleSave(e) {
 		e.preventDefault();
 
-		formStatus = "Save isn't implemented yet!";
+		formStatus = isValidFormData(getFormData());
 
 		setTimeout(function () {
 			formStatus = '';
@@ -178,18 +175,18 @@
 					First Name*
 				</label>
 				<input
-					class="mb-3 block w-full appearance-none rounded border {inputFieldsValid[
+					class="mb-3 block w-full appearance-none rounded border {inputFieldsFilled[
 						'form-first-name'
 					]
 						? 'border-gray-200'
 						: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
-					on:input={isEmpty}
+					on:input={checkIfEmpty}
 					id="form-first-name"
 					type="text"
 					placeholder="Jane"
 				/>
 
-				<!-- {#if !inputFieldsValid['form-first-name']}
+				<!-- {#if !inputFieldsFilled['form-first-name']}
 					<p class="text-xs italic text-red-500">Please fill out this field.</p>
 				{/if} -->
 			</div>
@@ -201,17 +198,17 @@
 					Last Name*
 				</label>
 				<input
-					class="mb-3 block w-full appearance-none rounded border {inputFieldsValid[
+					class="mb-3 block w-full appearance-none rounded border {inputFieldsFilled[
 						'form-last-name'
 					]
 						? 'border-gray-200'
 						: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
-					on:input={isEmpty}
+					on:input={checkIfEmpty}
 					id="form-last-name"
 					type="text"
 					placeholder="Doe"
 				/>
-				<!-- {#if !inputFieldsValid['form-last-name']}
+				<!-- {#if !inputFieldsFilled['form-last-name']}
 					<p class="text-xs italic text-red-500">Please fill out this field.</p>
 				{/if} -->
 			</div>
@@ -222,10 +219,10 @@
 					Email*
 				</label>
 				<input
-					class="mb-3 block w-full appearance-none rounded border {inputFieldsValid['form-email']
+					class="mb-3 block w-full appearance-none rounded border {inputFieldsFilled['form-email']
 						? 'border-gray-200'
 						: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
-					on:input={isEmpty}
+					on:input={checkIfEmpty}
 					id="form-email"
 					type="email"
 					placeholder=""
@@ -239,10 +236,10 @@
 					Phone Number*
 				</label>
 				<input
-					class="mb-3 block w-full appearance-none rounded border {inputFieldsValid['form-phone']
+					class="mb-3 block w-full appearance-none rounded border {inputFieldsFilled['form-phone']
 						? 'border-gray-200'
 						: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
-					on:input={isEmpty}
+					on:input={checkIfEmpty}
 					id="form-phone"
 					type="text"
 					placeholder="XXX-XXX-XXXX"
@@ -311,10 +308,10 @@
 					Major*
 				</label>
 				<input
-					class="mb-3 block w-full appearance-none rounded border {inputFieldsValid['form-major']
+					class="mb-3 block w-full appearance-none rounded border {inputFieldsFilled['form-major']
 						? 'border-gray-200'
 						: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
-					on:input={isEmpty}
+					on:input={checkIfEmpty}
 					id="form-major"
 					type="text"
 					placeholder=""
@@ -328,10 +325,10 @@
 				</label>
 				<div class="relative">
 					<select
-						class="mb-3 block w-full appearance-none rounded border {inputFieldsValid['form-year']
+						class="mb-3 block w-full appearance-none rounded border {inputFieldsFilled['form-year']
 							? 'border-gray-200'
 							: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
-						on:input={isEmpty}
+						on:input={checkIfEmpty}
 						id="form-year"
 					>
 						<option />
@@ -393,12 +390,12 @@
 				</label>
 				<div class="relative">
 					<select
-						class="mb-3 block w-full appearance-none rounded border {inputFieldsValid[
+						class="mb-3 block w-full appearance-none rounded border {inputFieldsFilled[
 							'form-hasTeam'
 						]
 							? 'border-gray-200'
 							: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
-						on:input={isEmpty}
+						on:input={checkIfEmpty}
 						id="form-hasTeam"
 					>
 						<option />
@@ -490,11 +487,11 @@
 					1. What are your previous engineering experiences? ({WORD_LIMITS.q1} Words)*
 				</label>
 				<textarea
-					class="mb-3 block w-full appearance-none rounded border {inputFieldsValid['form-q1'] &&
+					class="mb-3 block w-full appearance-none rounded border {inputFieldsFilled['form-q1'] &&
 					shortAnswerWordCounts['q1'] <= WORD_LIMITS.q1
 						? 'border-gray-200'
 						: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
-					on:input={isEmpty}
+					on:input={checkIfEmpty}
 					id="form-q1"
 					rows="5"
 					placeholder=""
@@ -517,11 +514,11 @@
 					2. Why do you want to participate in IDEA Hacks? ({WORD_LIMITS.q2} Words)*
 				</label>
 				<textarea
-					class="mb-3 block w-full appearance-none rounded border {inputFieldsValid['form-q2'] &&
+					class="mb-3 block w-full appearance-none rounded border {inputFieldsFilled['form-q2'] &&
 					shortAnswerWordCounts['q2'] <= WORD_LIMITS.q2
 						? 'border-gray-200'
 						: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
-					on:input={isEmpty}
+					on:input={checkIfEmpty}
 					id="form-q2"
 					rows="5"
 					placeholder=""
@@ -545,11 +542,11 @@
 					Words)*
 				</label>
 				<textarea
-					class="mb-3 block w-full appearance-none rounded border {inputFieldsValid['form-q3'] &&
+					class="mb-3 block w-full appearance-none rounded border {inputFieldsFilled['form-q3'] &&
 					shortAnswerWordCounts['q3'] <= WORD_LIMITS.q3
 						? 'border-gray-200'
 						: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
-					on:input={isEmpty}
+					on:input={checkIfEmpty}
 					id="form-q3"
 					rows="5"
 					placeholder="Example: Compost Catapult"
@@ -573,10 +570,10 @@
 				</label>
 				<div class="relative">
 					<select
-						class="mb-3 block w-full appearance-none rounded border {inputFieldsValid['form-q4']
+						class="mb-3 block w-full appearance-none rounded border {inputFieldsFilled['form-q4']
 							? 'border-gray-200'
 							: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
-						on:input={isEmpty}
+						on:input={checkIfEmpty}
 						id="form-q4"
 					>
 						<option />
@@ -687,12 +684,12 @@
 				</label>
 				<div class="relative">
 					<select
-						class="mb-3 block w-full appearance-none rounded border {inputFieldsValid[
+						class="mb-3 block w-full appearance-none rounded border {inputFieldsFilled[
 							'form-shirt-size'
 						]
 							? 'border-gray-200'
 							: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
-						on:input={isEmpty}
+						on:input={checkIfEmpty}
 						id="form-shirt-size"
 					>
 						<option />
