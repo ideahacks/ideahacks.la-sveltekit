@@ -106,13 +106,27 @@
 			majorCompleted: !(formData.major === ''),
 			yearCompleted: !(formData.year === ''),
 			hasTeamCompleted: !(formData.hasTeam === ''),
-			q1Valid: inputFieldsFilled['form-q1'] && shortAnswerWordCounts['q1'] <= WORD_LIMITS.q1,
-			q2Valid: inputFieldsFilled['form-q2'] && shortAnswerWordCounts['q2'] <= WORD_LIMITS.q2,
-			q3Valid: inputFieldsFilled['form-q3'] && shortAnswerWordCounts['q3'] <= WORD_LIMITS.q3,
-			q4Valid: inputFieldsFilled['form-q4'],
+			q1Valid: !(formData.q1 === '') && shortAnswerWordCounts['q1'] <= WORD_LIMITS.q1,
+			q2Valid: !(formData.q2 === '') && shortAnswerWordCounts['q2'] <= WORD_LIMITS.q2,
+			q3Valid: !(formData.q3 === '') && shortAnswerWordCounts['q3'] <= WORD_LIMITS.q3,
+			q4Valid: !(formData.q4 === ''),
 			q5Valid: shortAnswerWordCounts['q5'] <= WORD_LIMITS.q5,
-			q6Valid: shortAnswerWordCounts['q6'] <= WORD_LIMITS.q6
+			q6Valid: shortAnswerWordCounts['q6'] <= WORD_LIMITS.q6,
+			shirtSizeCompleted: !(formData.shirtSize === '')
 		};
+
+		inputFieldsFilled['form-first-name'] = inputFieldsValid.firstNameCompleted;
+		inputFieldsFilled['form-last-name'] = inputFieldsValid.lastNameCompleted;
+		inputFieldsFilled['form-email'] = inputFieldsValid.emailCompleted;
+		inputFieldsFilled['form-phone'] = inputFieldsValid.phoneCompleted;
+		inputFieldsFilled['form-major'] = inputFieldsValid.majorCompleted;
+		inputFieldsFilled['form-year'] = inputFieldsValid.yearCompleted;
+		inputFieldsFilled['form-hasTeam'] = inputFieldsValid.hasTeamCompleted;
+		inputFieldsFilled['form-q1'] = inputFieldsValid.q1Valid;
+		inputFieldsFilled['form-q2'] = inputFieldsValid.q2Valid;
+		inputFieldsFilled['form-q3'] = inputFieldsValid.q3Valid;
+		inputFieldsFilled['form-q4'] = inputFieldsValid.q4Valid;
+		inputFieldsFilled['form-shirt-size'] = inputFieldsValid.shirtSizeCompleted;
 
 		let result = true;
 
@@ -128,32 +142,38 @@
 
 		const formData = getFormData();
 
-		const response = await fetch('/api/application', {
-			method: 'POST',
-			body: JSON.stringify(formData),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
+		if (isValidFormData(formData)) {
+			const response = await fetch('/api/application', {
+				method: 'POST',
+				body: JSON.stringify(formData),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
 
-		const responseStatus = await response.json();
+			const responseStatus = await response.json();
 
-		formStatus = responseStatus;
+			formStatus = responseStatus;
 
-		// have status disappear after 2 sec
+			// have status disappear after 2 sec
+		} else {
+			formStatus =
+				'Please recheck the red input boxes before submitting. These fields are required or contain invalid data.';
+		}
+
 		setTimeout(function () {
 			formStatus = '';
-		}, 2000);
+		}, 5000);
 	}
 
 	async function handleSave(e) {
 		e.preventDefault();
 
-		formStatus = isValidFormData(getFormData());
+		formStatus = "Save isn't implemented yet!";
 
 		setTimeout(function () {
 			formStatus = '';
-		}, 2000);
+		}, 5000);
 
 		console.log('Saved');
 	}
@@ -725,20 +745,16 @@
 			</div>
 		</div>
 
-		<button
-			on:click={handleSave}
-			class="rounded bg-orange-500 px-4 py-2 font-bold hover:bg-orange-700"
-		>
+		<button on:click={handleSave} class="rounded bg-orange-500 px-4 py-2 hover:bg-orange-700">
 			Save
 		</button>
 
-		<button
-			on:click={handleSubmit}
-			class="rounded bg-orange-500 px-4 py-2 font-bold hover:bg-orange-700"
-		>
+		<button on:click={handleSubmit} class="rounded bg-orange-500 px-4 py-2 hover:bg-orange-700">
 			Submit
 		</button>
 
-		<p class="mb-2 font-display-sans font-bold tracking-wide text-orange-600">{formStatus}</p>
+		<p class="mb-2 h-3 p-1 font-display-sans text-xs tracking-wide text-gray-700">
+			{formStatus}
+		</p>
 	</form>
 </div>
