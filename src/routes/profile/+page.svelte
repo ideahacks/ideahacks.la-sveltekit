@@ -30,12 +30,4 @@
 			>
 		</div>
 	</form>
-	<div class="grow flex justify-center">
-		<h5 class="text-5xl font-extrabold">
-			This is some <span
-				class="block my-4 tracking-wider bg-gradient text-transparent bg-clip-text bg-gradient-to-tr from-orange-600 to-green-600"
-				>INCREDIBLE</span
-			> marketing copy.
-		</h5>
-	</div>
 </div>
