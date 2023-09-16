@@ -6,8 +6,14 @@ import { PUBLIC_SUPABASE_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
 
 const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_KEY)
 
-function signUp(){
-		
+async function signUp(){
+	await supabase.auth.signInWithOAuth({
+			provider: 'google',
+			options: {
+				redirectTo: 'http://localhost:5173/profile'
+			}
+		});
+	/*
 	let uname = (document.getElementById('uname') as HTMLInputElement).value
 	let pass = (document.getElementById('pass') as HTMLInputElement).value
 	if(uname == null || pass == null){
@@ -19,7 +25,7 @@ function signUp(){
 			password: pass,
 		});
 	}
-
+*/
 }
 </script>
 
