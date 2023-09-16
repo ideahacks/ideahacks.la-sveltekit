@@ -11,12 +11,6 @@ export const actions = {
 			throw error(400, 'Must send a valid first name and last name');
 		}
 
-		// create the user
-		const session = await event.locals.getSession();
-		if (!session) {
-			throw error(401, 'Must have be logged in to create an account');
-		}
-
 
 		throw redirect(301, '/dashboard');
 	}
