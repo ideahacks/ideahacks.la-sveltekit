@@ -1,22 +1,27 @@
 [
     {
         "id": 1,
-        "name": "ESP 32",
-        "quantity": 123
+        "name": "Coin Acceptor",
+        "quantity": 4
     },
     {
         "id": 2,
-        "name": "UV Sensor",
-        "quantity": 10
+        "name": "DC Gearbox Motor - \"TT Motor\"",
+        "quantity": 33
     },
     {
         "id": 3,
-        "name": "Flex Sensor",
-        "quantity": 134
+        "name": "Foot Switch",
+        "quantity": 5
     },
     {
         "id": 4,
-        "name": "HC-06",
-        "quantity": 35
+        "name": "High Torque Micro Servo",
+        "quantity": 5
+    },
+    {
+        "id": 5,
+        "name": "Sub-Micro Servo 3.7g",
+        "quantity": 9
     }
 ]
