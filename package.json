@@ -43,7 +43,7 @@
 	},
 	"type": "module",
 	"prisma": {
-		"seed": "vite-node prisma/seed.js"
+		"seed": "ts-node prisma/seed.ts"
 	},
 	"dependencies": {
 		"fuse.js": "^6.6.2",
