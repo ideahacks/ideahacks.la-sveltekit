@@ -4,17 +4,15 @@ import defaultTheme from 'tailwindcss/defaultTheme';
 export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
-		fontFamily: {
-			'display-serif': ['Cehua', ...defaultTheme.fontFamily.serif],
-			'display-sans': ['"Glacial Indifference"', ...defaultTheme.fontFamily.sans]
-		},
 		extend: {
 			fontFamily: {
-				sans: ['"Open Sans"', ...defaultTheme.fontFamily.sans]
+				sans: ['"Open Sans"', ...defaultTheme.fontFamily.sans],
+				'display-serif': ['Cehua', ...defaultTheme.fontFamily.serif],
+				'display-sans': ['"Glacial Indifference"', ...defaultTheme.fontFamily.sans]
 			}
 		}
 	},
-	plugins: [require('daisyui')],
+	plugins: [require('@tailwindcss/typography'), require('daisyui')],
 
 	daisyui: {
 		themes: [
