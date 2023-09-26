@@ -26,14 +26,18 @@ export async function load() {
 	const fuse = new Fuse(parts, fuseOptions);
 	
 	// Change the pattern
-	const searchPattern = "con"
+	const searchPattern = ""
 	
 	const fuseResults = fuse.search(searchPattern)
 
 	return {
-		summaries: fuseResults.map((parts) => ({
-			name: parts.item.name,
-			quantity: parts.item.quantity
+		// summaries: fuseResults.map((parts) => ({
+		// 	name: parts.item.name,
+		// 	quantity: parts.item.quantity
+		// }))
+		summaries: parts.map((part) => ({
+			name: part.name,
+			quantity: part.quantity
 		}))
 	};
 }
