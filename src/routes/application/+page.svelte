@@ -154,13 +154,12 @@
 			const responseStatus = await response.json();
 
 			formStatus = responseStatus;
-
-			// have status disappear after 2 sec
 		} else {
 			formStatus =
 				'Please recheck the red input boxes before submitting. These fields are required or contain invalid data.';
 		}
 
+		// have status disappear after a delay
 		setTimeout(function () {
 			formStatus = '';
 		}, 5000);
