@@ -26,8 +26,8 @@
 </script>
 
 <svelte:head>
-	<title>Enceladus-1: the DALL-E wrapper</title>
-	<meta name="description" content="It's on Enceladus" />
+	<title>Welcome to the IDEAHacks hackathon!</title>
+	<meta name="description" content="Welcome to the IDEAHacks hackathon!" />
 </svelte:head>
 
 <div class="font-mono min-h-screen flex flex-col">
