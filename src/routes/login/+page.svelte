@@ -1,46 +1,38 @@
-<script lang='ts'>
+<script lang="ts">
+	export let data;
+	let { supabase } = data;
+	$: ({ supabase } = data);
 
+	let email;
+	let password;
 
-import { createClient } from '@supabase/supabase-js'
-import { PUBLIC_SUPABASE_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
-
-const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_KEY)
-
-async function signUp(){
-	await supabase.auth.signInWithOAuth({
-			provider: 'google',
+	const handleSignUp = async () => {
+		await supabase.auth.signUp({
+			email,
+			password,
 			options: {
-				redirectTo: 'http://localhost:5173/profile'
+				emailRedirectTo: `${location.origin}/auth/callback`
 			}
 		});
-	/*
-	let uname = (document.getElementById('uname') as HTMLInputElement).value
-	let pass = (document.getElementById('pass') as HTMLInputElement).value
-	if(uname == null || pass == null){
-		return
-	}
-	else if(uname.includes('@') && uname.includes('.co') && pass.length >= 8){
-		const supabaseServer = supabase.auth.signUp({
-			email: uname,
-			password: pass,
+	};
+
+	const handleSignIn = async () => {
+		await supabase.auth.signInWithPassword({
+			email,
+			password
 		});
-	}
-*/
-}
+	};
+
+	const handleSignOut = async () => {
+		await supabase.auth.signOut();
+	};
 </script>
 
-<div class="grow w-full flex justify-center items-center bg-neutral-100">
-	<div class="bg-white rounded-md shadow-lg p-6">
-		<h2 class="text-center">Welcome</h2>
-		<p>Username:</p>
-		<div style="margin-bottom: 30px"><input id="uname"/></div>
-		<p>Password:</p>
-		<div style="margin-bottom: 30px"><input id="pass"/></div>
-		
-		
-		<button
-			class="bg-black text-white w-full text-center py-4 px-4 mt-2 hover:shadow-lg"
-			on:click={signUp}>Sign Up</button
-		>
-	</div>
-</div>
+<form on:submit={handleSignUp}>
+	<input name="email" bind:value={email} />
+	<input type="password" name="password" bind:value={password} />
+	<button>Sign up</button>
+</form>
+
+<button on:click={handleSignIn}>Sign in</button>
+<button on:click={handleSignOut}>Sign out</button>
