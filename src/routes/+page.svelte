@@ -69,8 +69,8 @@
 	}
 </script>
 
-<div class="m-16 justify-center">
-	<h1 class="font-display-serif text-9xl">
+<div class="m-12 justify-center md:m-16">
+	<h1 class="font-display-serif text-8xl md:text-9xl">
 		<span> IDEA Hacks </span>
 		<span class="font-display-sans font-bold tabular-nums">2024</span>
 	</h1>
@@ -79,7 +79,7 @@
 		data-value="Stay in the loop"
 		on:mouseover={scrambleLetters}
 		on:focus={scrambleLetters}
-		class=" w-fit font-mono text-5xl font-bold"
+		class=" w-fit font-mono text-4xl font-bold md:text-5xl"
 	>
 		Stay in the loop
 	</div>
