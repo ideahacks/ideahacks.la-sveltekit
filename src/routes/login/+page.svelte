@@ -1,6 +1,4 @@
-<script lang='ts'>
-
-
+<script lang="ts">
 import { createClient } from '@supabase/supabase-js'
 import { PUBLIC_SUPABASE_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
 
@@ -9,24 +7,9 @@ const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_KEY)
 async function signUp(){
 	const {error} = await supabase.auth.signInWithOAuth({
 			provider: 'google',
-			options: {
-				redirectTo: 'http://localhost:5173/profile'
-			}
+			
 		});
-		const user = supabase.auth.getSession()['data'].session.user
-		if (error) {
-			console.error('Error during sign in:', error)
-		} else if (user && user.email.endsWith('@g.ucla.edu')) {
-			console.log('User signed in:', user)
-			await supabase.auth.signInWithOAuth({
-				provider: 'google',
-				options: {
-					redirectTo: 'http://localhost:5173/profile'
-				}
-		});
-		} else {
-			console.log('Invalid domain. Please use a g.ucla.edu email.')
-		}
+		
 }
 	/*
 	let uname = (document.getElementById('uname') as HTMLInputElement).value

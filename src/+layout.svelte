@@ -25,6 +25,7 @@
 	}
 </script>
 
+<<<<<<< HEAD
 <svelte:head>
 	<title>Welcome to the IDEAHacks hackathon!</title>
 	<meta name="description" content="Welcome to the IDEAHacks hackathon!" />
@@ -32,17 +33,21 @@
 
 <div class="font-mono min-h-screen flex flex-col">
 	<header class="flex justify-between items-center py-6 px-12">
+=======
+<div class="font-mono flex min-h-screen flex-col">
+	<header class="flex items-center justify-between px-12 py-6">
+>>>>>>> 6cb8f22e7c2bc4ad5fb578e2d8a07b186ae688e8
 		<a class="text-4xl font-bold tracking-wide" href="/">Enceladus-1</a>
 		{#if session}
 			<div>
-				<a href="/dashboard" class="text-lg tracking-tighter border-2 border-black p-1">Dashboard</a
+				<a href="/dashboard" class="border-2 border-black p-1 text-lg tracking-tighter">Dashboard</a
 				>
-				<button on:click={logout} class="text-lg tracking-tighter border-2 border-black p-1"
+				<button on:click={logout} class="border-2 border-black p-1 text-lg tracking-tighter"
 					>Sign Out</button
 				>
 			</div>
 		{:else}
-			<a href="/login" class="text-lg tracking-tighter border-2 border-black p-1">Login or Signup</a
+			<a href="/login" class="border-2 border-black p-1 text-lg tracking-tighter">Login or Signup</a
 			>
 		{/if}
 	</header>

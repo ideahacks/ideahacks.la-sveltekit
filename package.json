@@ -3,6 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
+		"start": "node build",
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
@@ -41,12 +42,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@material-ui/core": "^4.12.4",
 		"@supabase/auth-helpers-sveltekit": "^0.10.2",
-		"@supabase/supabase-js": "^2.33.1",
-		"crypto": "^1.0.1",
-		"dotenv": "^16.3.1",
-		"dotenv-flow": "^3.2.0",
-		"react": "^17.0.2"
+		"@supabase/supabase-js": "^2.33.1"
 	}
 }
