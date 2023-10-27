@@ -25,18 +25,16 @@
 	}
 </script>
 
-<<<<<<< HEAD
 <svelte:head>
 	<title>Welcome to the IDEAHacks hackathon!</title>
 	<meta name="description" content="Welcome to the IDEAHacks hackathon!" />
 </svelte:head>
 
 <div class="font-mono min-h-screen flex flex-col">
-	<header class="flex justify-between items-center py-6 px-12">
-=======
+	<header class="flex justify-between items-center py-6 px-12"/>
+	</div>
 <div class="font-mono flex min-h-screen flex-col">
 	<header class="flex items-center justify-between px-12 py-6">
->>>>>>> 6cb8f22e7c2bc4ad5fb578e2d8a07b186ae688e8
 		<a class="text-4xl font-bold tracking-wide" href="/">Enceladus-1</a>
 		{#if session}
 			<div>
