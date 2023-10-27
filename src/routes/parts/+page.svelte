@@ -35,7 +35,7 @@
 	}));
 </script>
 
-<!-- <h1>Parts</h1>
+<h1>Parts</h1>
 <p>List of available parts.</p>
 
 <br />
@@ -46,10 +46,4 @@
 	{#each summaries as { name, quantity }}
 		<li>{name}: {quantity}</li>
 	{/each}
-</ul> -->
-
-<div class="container">
-	<h1>Search/Filter</h1>
-	<input type="search" placeholder="Search..." bind:value={$searchStore.search} />
-</div>
-<pre>{JSON.stringify($searchStore.filtered, null, 2)}</pre>
+</ul>
