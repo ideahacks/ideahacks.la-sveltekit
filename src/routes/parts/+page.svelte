@@ -42,8 +42,18 @@
 
 <input class="input-bordered input" bind:value={searchPattern} />
 
-<ul>
+<div class="flex">
 	{#each summaries as { name, quantity }}
-		<li>{name}: {quantity}</li>
+		<!-- <li>{name}: {quantity}</li> -->
+		<div class="card w-96 bg-base-100 shadow-xl">
+			<!-- <figure><img src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" /></figure> -->
+			<div class="card-body">
+				<h2 class="card-title">{name}</h2>
+				<p>{quantity}</p>
+				<div class="card-actions justify-end">
+					<button class="btn w-64 rounded-full">Checkout</button>
+				</div>
+			</div>
+		</div>
 	{/each}
-</ul>
+</div>
