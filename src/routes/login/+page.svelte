@@ -1,16 +1,17 @@
 <script lang="ts">
-import { createClient } from '@supabase/supabase-js'
-import { PUBLIC_SUPABASE_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
+	import { createClient } from '@supabase/supabase-js';
+	import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
 
-const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_KEY)
+	const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
 
-async function signUp(){
-	const {error} = await supabase.auth.signInWithOAuth({
+	async function signUp() {
+		const { error } = await supabase.auth.signInWithOAuth({
 			provider: 'google',
-			
+			options: {
+				redirectTo: '/auth/callback'
+			}
 		});
-		
-}
+	}
 	/*
 	let uname = (document.getElementById('uname') as HTMLInputElement).value
 	let pass = (document.getElementById('pass') as HTMLInputElement).value
@@ -24,20 +25,18 @@ async function signUp(){
 		});
 	}
 */
-
 </script>
 
-<div class="grow w-full flex justify-center items-center bg-neutral-100">
-	<div class="bg-white rounded-md shadow-lg p-6">
+<div class="flex w-full grow items-center justify-center bg-neutral-100">
+	<div class="rounded-md bg-white p-6 shadow-lg">
 		<h2 class="text-center">Welcome</h2>
 		<p>Username:</p>
-		<div style="margin-bottom: 30px"><input id="uname"/></div>
+		<div style="margin-bottom: 30px"><input id="uname" /></div>
 		<p>Password:</p>
-		<div style="margin-bottom: 30px"><input id="pass"/></div>
-		
-		
+		<div style="margin-bottom: 30px"><input id="pass" /></div>
+
 		<button
-			class="bg-black text-white w-full text-center py-4 px-4 mt-2 hover:shadow-lg"
+			class="mt-2 w-full bg-black px-4 py-4 text-center text-white hover:shadow-lg"
 			on:click={signUp}>Sign Up with Google OAuth</button
 		>
 	</div>
