@@ -102,14 +102,14 @@
 					id="email"
 					type="email"
 					placeholder="Enter your email"
-					class="join-item input-bordered input border-red-950 placeholder:text-white"
+					class="input-bordered input join-item border-red-950 placeholder:text-white"
 				/>
 				<input type="submit" value="Add Email" />
 				<p>{formStatus}</p>
 			</form>
 
 			{#if !submitted}
-				<button on:click={() => (submitted = true)} class="join-item btn-primary btn-square btn">
+				<button on:click={() => (submitted = true)} class="btn-primary btn-square join-item btn">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						class="h-6 w-6"
