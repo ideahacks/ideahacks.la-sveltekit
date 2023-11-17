@@ -23,6 +23,8 @@ export async function POST({ request, locals: { supabase, getSession } }) {
     //     dietary_restrictions: ''
     // }
 
+    // console.log(formData);
+
     const session = await getSession();
 
     // TODO: Improve error handling :shrug:
@@ -32,8 +34,6 @@ export async function POST({ request, locals: { supabase, getSession } }) {
 
 
     formData.user_id = session.user.id;
-
-    console.log(formData);
 
     const { data, error } = await supabase
         .from('applications')
