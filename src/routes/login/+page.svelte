@@ -1,13 +1,17 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+
 	export let data;
 	let { supabase } = data;
 	$: ({ supabase } = data);
+
+	const nextPage = $page.url.searchParams.get('next');
 
 	async function signUp() {
 		await supabase.auth.signInWithOAuth({
 			provider: 'google',
 			options: {
-				redirectTo: `${window.location.origin}/auth/callback`
+				redirectTo: `${window.location.origin}/auth/callback${nextPage ? `?next=/${nextPage}` : ''}`
 			}
 		});
 	}

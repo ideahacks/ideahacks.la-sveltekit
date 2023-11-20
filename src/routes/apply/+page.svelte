@@ -200,6 +200,9 @@
 		<h1 class="mb-2 text-center font-display-sans text-2xl font-bold tracking-wide text-gray-700">
 			IDEA HACKS APPLICATION
 		</h1>
+		<h2 class="mb-4 text-center font-display-sans text-2xl font-bold tracking-wide text-gray-700">
+			Hi {session.user.email}!
+		</h2>
 		<form class="mx-auto w-full max-w-xl">
 			<h2 class="mb-2 font-display-sans text-lg font-bold tracking-wide text-gray-700">PERSONAL</h2>
 

@@ -1,4 +1,5 @@
 import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
+import { redirect } from '@sveltejs/kit';
 import type { LayoutLoad } from './$types';
 import { combineChunks, createBrowserClient, isBrowser, parse } from '@supabase/ssr';
 
