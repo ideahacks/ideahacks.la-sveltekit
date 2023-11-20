@@ -1,7 +1,7 @@
 <script lang="ts">
 	import logo from '$lib/images/logo.png';
 	import type { Session, SupabaseClient } from '@supabase/supabase-js';
-	import { UserCircle2 } from 'lucide-svelte';
+	import { LogOut, Mail, UserCircle2 } from 'lucide-svelte';
 
 	export let supabase: SupabaseClient;
 	export let session: Session;
@@ -23,13 +23,25 @@
 		</a>
 	</div>
 	{#if session}
-		<details class="dropdown">
-			<summary class="btn m-1"><UserCircle2 /></summary>
-			<ul class="menu dropdown-content rounded-box z-[1] w-52 bg-base-100 p-2 shadow">
-				<li>Logged in as {session?.user.email}</li>
-				<li><button on:click={signOut}>Logout</button></li>
-			</ul>
-		</details>
+		<ul class="mr-4">
+			<li>
+				<a href="/apply" class="mr-4">Apply</a>
+			</li>
+			<li>
+				<details class="dropdown dropdown-end">
+					<summary class="btn btn-circle btn-primary"><UserCircle2 /></summary>
+					<ul class="menu dropdown-content rounded-box bg-red-950 text-xl shadow-xl">
+						<li>
+							<span>
+								<Mail />
+								{session?.user.email}
+							</span>
+						</li>
+						<li><button on:click={signOut}><LogOut /> Sign out</button></li>
+					</ul>
+				</details>
+			</li>
+		</ul>
 	{:else}
 		<a href="/login" class="btn btn-primary">Login</a>
 	{/if}
