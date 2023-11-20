@@ -41,9 +41,9 @@
 		}, 30);
 	}
 
-	let formStatus: String = '';
+	let formStatus = '';
 
-	async function addEmail(email: String) {
+	async function addEmail(email: string) {
 		console.log(email);
 		const response = await fetch('/api/email', {
 			method: 'POST',
