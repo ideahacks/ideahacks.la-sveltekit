@@ -426,21 +426,6 @@
 				</div>
 			</div>
 
-			<div class="-mx-3 mb-6 flex flex-wrap">
-				<div class="px-3">
-					<label class="mb-2 block text-xs uppercase tracking-wide text-gray-700" for="form-major">
-						RESUME
-					</label>
-					<a
-						target="_blank"
-						id="form-resume"
-						href={RESUME_FORM_LINK}
-						class="mb-3 inline-block rounded bg-orange-500 px-4 py-2 hover:bg-orange-700"
-						>Upload File</a
-					>
-				</div>
-			</div>
-
 			<h2 class="mb-2 font-display-sans text-lg font-bold tracking-wide text-gray-700">
 				SHORT ANSWER
 			</h2>
@@ -689,13 +674,7 @@
 				</div>
 			</div>
 
-			<button on:click={handleSave} class="rounded bg-orange-500 px-4 py-2 hover:bg-orange-700">
-				Save
-			</button>
-
-			<button on:click={handleSubmit} class="rounded bg-orange-500 px-4 py-2 hover:bg-orange-700">
-				Submit
-			</button>
+			<button on:click={handleSubmit} class="btn btn-primary px-4 py-2"> Submit </button>
 
 			<p class="mb-2 h-3 p-1 font-display-sans text-xs tracking-wide text-gray-700">
 				{formStatus}
