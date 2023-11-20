@@ -1,72 +1,5 @@
-<script lang="ts">
-	import { MailCheck, Send, Sparkles, Sun } from 'lucide-svelte';
-	import type { ActionData } from './$types.js';
-	import { enhance } from '$app/forms';
-
-	export let form: ActionData;
-
-	let email: string;
-	let submitted: boolean;
-
-	let interval: number | Timer;
-
-	const numbers = 'abcdefghijklmnopqrstuvwxyz';
-
-	function scrambleLetters(event: FocusEvent | MouseEvent) {
-		let iteration = 0;
-
-		clearInterval(interval);
-
-		interval = setInterval(() => {
-			event.target.innerText = event.target.innerText
-				.split('')
-				.map((letter: string, index: number) => {
-					if (index < iteration) {
-						return event.target.dataset.value[index];
-					}
-
-					if (letter === ' ') {
-						return ' ';
-					}
-
-					return numbers[Math.floor(Math.random() * numbers.length)];
-				})
-				.join('');
-
-			if (iteration >= event.target.dataset.value.length) {
-				clearInterval(interval);
-			}
-
-			iteration += 1 / 2;
-		}, 30);
-	}
-
-	let formStatus = '';
-
-	async function addEmail(email: string) {
-		console.log(email);
-		const response = await fetch('/api/email', {
-			method: 'POST',
-			body: JSON.stringify({ email }),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
-
-		const responseStatus = await response.json();
-
-		formStatus = responseStatus;
-	}
-
-	async function handleSubmit(event: SubmitEvent) {
-		const input = document.querySelector('#email');
-		if (input) {
-			const email = (<HTMLInputElement>input).value;
-			await addEmail(email);
-
-			(<HTMLInputElement>input).value = '';
-		}
-	}
+<script>
+	import { Sparkles } from 'lucide-svelte';
 </script>
 
 <div class="m-12 justify-center md:m-16">
@@ -76,7 +9,7 @@
 	</h1>
 	<h2 class="font-display-sans text-6xl font-black">Jan 12-14</h2>
 	<div class="divider" />
-	<a href="/apply" class="btn btn-primary btn-lg my-8">Applications are open! <Sparkles /></a>
+	<a href="/apply" class="btn-primary btn-lg btn my-8">Applications are open! <Sparkles /></a>
 
 	<p class="mb-4">
 		IEEE at UCLA is pleased to present the tenth anniversary of IDEA Hacks, the premier

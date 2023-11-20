@@ -1,9 +1,8 @@
 <script>
-	// @ts-nocheck
 	export let data;
 
-	let { supabase, session } = data;
-	$: ({ supabase, session } = data);
+	let { session } = data;
+	$: ({ session } = data);
 
 	const email = session?.user.email;
 
@@ -12,8 +11,6 @@
 	// 		console.log(session);
 	// 	});
 	// }
-
-	const RESUME_FORM_LINK = 'https://google.com';
 
 	const WORD_LIMITS = {
 		prior_engineering_experience: 250,
@@ -170,19 +167,6 @@
 			formStatus =
 				'Please recheck the red input boxes before submitting. These fields are required or contain invalid data.';
 		}
-	}
-
-	async function handleSave(e) {
-		console.log(rawFormData);
-		// e.preventDefault();
-
-		// formStatus = "Save isn't implemented yet!";
-
-		// setTimeout(function () {
-		// 	formStatus = '';
-		// }, 5000);
-
-		// console.log('Saved');
 	}
 </script>
 
@@ -674,7 +658,7 @@
 				</div>
 			</div>
 
-			<button on:click={handleSubmit} class="btn btn-primary px-4 py-2"> Submit </button>
+			<button on:click={handleSubmit} class="btn-primary btn px-4 py-2"> Submit </button>
 
 			<p class="mb-2 h-3 p-1 font-display-sans text-xs tracking-wide text-gray-700">
 				{formStatus}
