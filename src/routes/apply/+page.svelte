@@ -1,9 +1,8 @@
 <script>
-	// @ts-nocheck
 	export let data;
 
-	let { supabase, session } = data;
-	$: ({ supabase, session } = data);
+	let { session } = data;
+	$: ({ session } = data);
 
 	const email = session?.user.email;
 
@@ -12,8 +11,6 @@
 	// 		console.log(session);
 	// 	});
 	// }
-
-	const RESUME_FORM_LINK = 'https://google.com';
 
 	const WORD_LIMITS = {
 		prior_engineering_experience: 250,
@@ -171,19 +168,6 @@
 				'Please recheck the red input boxes before submitting. These fields are required or contain invalid data.';
 		}
 	}
-
-	async function handleSave(e) {
-		console.log(rawFormData);
-		// e.preventDefault();
-
-		// formStatus = "Save isn't implemented yet!";
-
-		// setTimeout(function () {
-		// 	formStatus = '';
-		// }, 5000);
-
-		// console.log('Saved');
-	}
 </script>
 
 {#if hasSubmitted}
@@ -197,9 +181,12 @@
 	</div>
 {:else}
 	<div class="container mx-auto p-6">
-		<h1 class="mb-2 text-center font-display-sans text-2xl font-bold tracking-wide text-gray-700">
-			IDEA HACKS APPLICATION
+		<h1 class=" mb-2 text-center font-display-serif text-4xl font-bold tracking-wide text-gray-700">
+			IDEA Hacks Application
 		</h1>
+		<h2 class="mb-4 text-center font-display-sans text-2xl font-bold tracking-wide text-gray-700">
+			Hi {session.user.email}!
+		</h2>
 		<form class="mx-auto w-full max-w-xl">
 			<h2 class="mb-2 font-display-sans text-lg font-bold tracking-wide text-gray-700">PERSONAL</h2>
 
@@ -420,21 +407,6 @@
 							>
 						</div>
 					</div>
-				</div>
-			</div>
-
-			<div class="-mx-3 mb-6 flex flex-wrap">
-				<div class="px-3">
-					<label class="mb-2 block text-xs uppercase tracking-wide text-gray-700" for="form-major">
-						RESUME
-					</label>
-					<a
-						target="_blank"
-						id="form-resume"
-						href={RESUME_FORM_LINK}
-						class="mb-3 inline-block rounded bg-orange-500 px-4 py-2 hover:bg-orange-700"
-						>Upload File</a
-					>
 				</div>
 			</div>
 
@@ -686,13 +658,7 @@
 				</div>
 			</div>
 
-			<button on:click={handleSave} class="rounded bg-orange-500 px-4 py-2 hover:bg-orange-700">
-				Save
-			</button>
-
-			<button on:click={handleSubmit} class="rounded bg-orange-500 px-4 py-2 hover:bg-orange-700">
-				Submit
-			</button>
+			<button on:click={handleSubmit} class="btn-primary btn px-4 py-2"> Submit </button>
 
 			<p class="mb-2 h-3 p-1 font-display-sans text-xs tracking-wide text-gray-700">
 				{formStatus}

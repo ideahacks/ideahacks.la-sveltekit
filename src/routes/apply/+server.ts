@@ -31,7 +31,7 @@ export async function POST({ request, locals: { supabase, getSession } }) {
 
 	formData.user_id = session.user.id;
 
-	const { data, error } = await supabase.from('applications').upsert(formData).select();
+	const { error } = await supabase.from('applications').upsert(formData).select();
 
 	console.log(error);
 

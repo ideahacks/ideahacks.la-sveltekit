@@ -1,24 +1,49 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+
 	export let data;
 	let { supabase } = data;
 	$: ({ supabase } = data);
 
-	async function signUp() {
+	const nextPage = $page.url.searchParams.get('next');
+
+	async function signIn() {
 		await supabase.auth.signInWithOAuth({
 			provider: 'google',
 			options: {
-				redirectTo: `${window.location.origin}/auth/callback`
+				redirectTo: `${window.location.origin}/auth/callback${nextPage ? `?next=/${nextPage}` : ''}`
 			}
 		});
 	}
 </script>
 
-<div class="flex w-full grow items-center justify-center bg-neutral-100">
-	<div class="rounded-md bg-white p-6 shadow-lg">
-		<h2 class="text-center">Welcome</h2>
-		<button
-			class="mt-2 w-full bg-black px-4 py-4 text-center text-white hover:shadow-lg"
-			on:click={signUp}>Sign Up with Google OAuth</button
-		>
+<div class="flex flex-col items-center text-center">
+	<div class="card glass my-16 shadow-xl">
+		<div class="card-body items-center text-center">
+			<h1 class="card-title text-3xl">Join or sign in</h1>
+			<div class="card-actions">
+				<button on:click={signIn} class="btn-large btn-primary btn m-4">Sign in with Google</button>
+			</div>
+		</div>
 	</div>
+	<p class="mb-4 max-w-md">
+		Glad you're here! If you have any issues with login, please reach out to <a
+			href="mailto:webmaster@ieeebruins.com"
+			class="link">webmaster@ieeebruins.com</a
+		>
+		or <span class="font-mono">paulzzy</span> on Discord.
+	</p>
 </div>
+
+<style lang="postcss">
+	:global(body) {
+		background: linear-gradient(
+			180deg,
+			#240202 0%,
+			#70130b 18.75%,
+			#a53018 44.27%,
+			#d97e2e 71.35%,
+			#f6c042 95.83%
+		);
+	}
+</style>
