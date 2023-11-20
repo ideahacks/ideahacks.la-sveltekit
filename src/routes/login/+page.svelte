@@ -7,7 +7,7 @@
 
 	const nextPage = $page.url.searchParams.get('next');
 
-	async function signUp() {
+	async function signIn() {
 		await supabase.auth.signInWithOAuth({
 			provider: 'google',
 			options: {
@@ -20,9 +20,9 @@
 <div class="flex flex-col items-center text-center">
 	<div class="card glass my-16 shadow-xl">
 		<div class="card-body items-center text-center">
-			<h1 class="card-title text-3xl">Sign up or log in</h1>
+			<h1 class="card-title text-3xl">Join or sign in</h1>
 			<div class="card-actions">
-				<button class="btn-large btn btn-primary m-4">Sign in with Google</button>
+				<button on:click={signIn} class="btn-large btn btn-primary m-4">Sign in with Google</button>
 			</div>
 		</div>
 	</div>
