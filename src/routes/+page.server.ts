@@ -19,15 +19,15 @@ export const actions = {
 				}
 			});
 		} catch (e) {
-			if (e instanceof Prisma.PrismaClientKnownRequestError && e.code ==='P2002') {
-					console.log(`Email ${email} already in database`);
-          // For privacy reasons, don't reveal the emails we have
-					return { success: true };
+			if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === 'P2002') {
+				console.log(`Email ${email} already in database`);
+				// For privacy reasons, don't reveal the emails we have
+				return { success: true };
 			}
 
-      return fail(400, {email, invalid: true})
+			return fail(400, { email, invalid: true });
 		}
 
-    return {success: true}
+		return { success: true };
 	}
 };

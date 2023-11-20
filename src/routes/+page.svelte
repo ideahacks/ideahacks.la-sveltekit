@@ -93,19 +93,19 @@
 			name="email"
 			type="email"
 			placeholder="Enter your email"
-			class="input input-bordered input-lg grow font-display-sans placeholder:text-white"
+			class="input-bordered input input-lg grow font-display-sans placeholder:text-white"
 			required
 		/>
 		{#if !form}
-			<button class="btn btn-square btn-primary btn-lg" type="submit">
+			<button class="btn-primary btn-square btn-lg btn" type="submit">
 				<Send />
 			</button>
 		{:else if form?.success}
-			<button class="btn btn-disabled btn-square btn-primary btn-lg" type="submit">
+			<button class="btn-disabled btn-primary btn-square btn-lg btn" type="submit">
 				<MailCheck />
 			</button>
 		{:else if form?.invalid}
-			<button class="btn btn-square btn-primary btn-lg" type="submit">
+			<button class="btn-primary btn-square btn-lg btn" type="submit">
 				<Send />
 			</button>
 		{/if}
