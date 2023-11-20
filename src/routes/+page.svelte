@@ -9,7 +9,7 @@
 	</h1>
 	<h2 class="font-display-sans text-6xl font-black">Jan 12-14</h2>
 	<div class="divider" />
-	<a href="/apply" class="btn btn-primary btn-lg my-8">Applications are open! <Sparkles /></a>
+	<a href="/apply" class="btn-primary btn-lg btn my-8">Applications are open! <Sparkles /></a>
 
 	<p class="mb-4">
 		IEEE at UCLA is pleased to present the tenth anniversary of IDEA Hacks, the premier
