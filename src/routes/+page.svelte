@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MailCheck, Send } from 'lucide-svelte';
+	import { MailCheck, Send, Sparkles } from 'lucide-svelte';
 	import type { ActionData } from './$types.js';
 	import { enhance } from '$app/forms';
 
@@ -74,47 +74,15 @@
 		<span> IDEA Hacks </span>
 		<span class="font-display-sans font-bold tabular-nums">2024</span>
 	</h1>
+	<h2 class="font-display-sans text-6xl font-black">Jan 12-14</h2>
 	<div class="divider" />
-	<div
-		data-value="Stay in the loop"
-		on:mouseover={scrambleLetters}
-		on:focus={scrambleLetters}
-		class=" w-fit font-mono text-4xl font-bold md:text-5xl"
-	>
-		Stay in the loop
-	</div>
-	<form
-		method="POST"
-		use:enhance
-		action="?/submitEmail"
-		class="my-4 flex max-w-lg justify-between gap-2"
-	>
-		<input
-			name="email"
-			type="email"
-			placeholder="Enter your email"
-			class="input-bordered input input-lg grow font-display-sans placeholder:text-white"
-			required
-		/>
-		{#if !form}
-			<button class="btn-primary btn-square btn-lg btn" type="submit">
-				<Send />
-			</button>
-		{:else if form?.success}
-			<button class="btn-disabled btn-primary btn-square btn-lg btn" type="submit">
-				<MailCheck />
-			</button>
-		{:else if form?.invalid}
-			<button class="btn-primary btn-square btn-lg btn" type="submit">
-				<Send />
-			</button>
-		{/if}
-	</form>
-	{#if form?.success}
-		<span class="badge badge-success badge-lg">Subscribed! See you soon.</span>
-	{:else if form?.invalid}
-		<span class="badge badge-error badge-outline">Uh oh, try resubmitting.</span>
-	{/if}
+	<a href="/apply" class="btn btn-primary btn-lg my-8">Applications are open! <Sparkles /></a>
+	<p>
+		Interested in sponsoring IDEA Hacks? Check out our <a
+			href="https://drive.google.com/file/d/1KDASmkWqPmwoqTGyly87Hjs6MYoJ3MSI/view?usp=sharing"
+			class="link">sponsorship brochure</a
+		>!
+	</p>
 </div>
 
 <style lang="postcss">
