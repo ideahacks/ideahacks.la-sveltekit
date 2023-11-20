@@ -23,7 +23,7 @@
 	});
 </script>
 
-<div class="grid min-h-screen grid-rows-[auto_1fr_auto]">
+<div class="flex min-h-screen flex-col">
 	<Navbar />
 
 	<main>
