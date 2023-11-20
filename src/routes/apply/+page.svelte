@@ -197,8 +197,8 @@
 	</div>
 {:else}
 	<div class="container mx-auto p-6">
-		<h1 class="mb-2 text-center font-display-sans text-2xl font-bold tracking-wide text-gray-700">
-			IDEA HACKS APPLICATION
+		<h1 class=" mb-2 text-center font-display-serif text-4xl font-bold tracking-wide text-gray-700">
+			IDEA Hacks Application
 		</h1>
 		<h2 class="mb-4 text-center font-display-sans text-2xl font-bold tracking-wide text-gray-700">
 			Hi {session.user.email}!
