@@ -1,5 +1,5 @@
 <script>
-	import logo from '$lib/images/ideahacks_logo.png';
+	import logo from '$lib/images/logo.png';
 </script>
 
 <div class="navbar bg-red-950 font-display-sans">
