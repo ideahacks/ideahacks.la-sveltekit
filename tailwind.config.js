@@ -17,7 +17,7 @@ export default {
 	daisyui: {
 		themes: [
 			{
-				mytheme: {
+				'ideahacks-2024': {
 					primary: '#f1b21e',
 					secondary: '#130dc8',
 					accent: '#37cdbe',
