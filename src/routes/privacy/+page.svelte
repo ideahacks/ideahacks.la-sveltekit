@@ -11,9 +11,7 @@
 		else outside of the IDEA Hacks organization. If an occasion comes up where we would need to
 		share some of your other information, we will get your consent before sharing it.
 	</p>
-  <p>
-    If you have any concerns, please send an email
-  </p>
+	<p>If you have any concerns, please send an email</p>
 </article>
 
 <style lang="postcss">
