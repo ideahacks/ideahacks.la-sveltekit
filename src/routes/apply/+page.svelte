@@ -55,7 +55,6 @@
 		suggested_parts: '',
 
 		// MISCELLANEOUS
-		needs_housing_assistance: '',
 		shirt_size: '',
 		dietary_restrictions: ''
 	};
@@ -132,7 +131,6 @@
 			prior_hackathon_experience: rawFormData.prior_hackathon_experience,
 			suggested_parts: rawFormData.suggested_parts,
 
-			needs_housing_assistance: rawFormData.needs_housing_assistance,
 			shirt_size: rawFormData.shirt_size,
 			dietary_restrictions: rawFormData.dietary_restrictions
 		};
@@ -150,7 +148,7 @@
 		e.preventDefault();
 
 		if (isValidFormData()) {
-			const response = await fetch('/application', {
+			const response = await fetch('/apply', {
 				method: 'POST',
 				body: JSON.stringify(getFormData()),
 				headers: {
@@ -569,38 +567,6 @@
 			<h2 class="mb-2 font-display-sans text-lg font-bold tracking-wide text-gray-700">
 				MISCELLANEOUS
 			</h2>
-			<div class="-mx-3 mb-6 flex flex-wrap">
-				<div class="w-full px-3">
-					<label class="mb-2 block text-xs tracking-wide text-gray-700" for="form-housing">
-						If you are visiting from another school, would you like assistance with housing over the
-						weekend? Please note that there is a limited number of people we can support, so we will
-						prioritize early applications and those with need.
-					</label>
-					<div class="relative">
-						<select
-							class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 pr-8 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-							id="form-housing"
-							bind:value={rawFormData.needs_housing_assistance}
-						>
-							<option />
-							<option value="true">Yes</option>
-							<option value="false">No</option>
-						</select>
-						<div
-							class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-						>
-							<svg
-								class="h-4 w-4 fill-current"
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 20 20"
-								><path
-									d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-								/></svg
-							>
-						</div>
-					</div>
-				</div>
-			</div>
 			<div class="-mx-3 mb-6 flex flex-wrap">
 				<div class="mb-6 w-full px-3 md:mb-0 md:w-1/2">
 					<label
