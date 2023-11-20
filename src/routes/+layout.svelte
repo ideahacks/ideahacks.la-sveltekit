@@ -1,5 +1,34 @@
-<script>
-  import "../app.css";
+<script lang="ts">
+	import { invalidate } from '$app/navigation';
+	import { onMount } from 'svelte';
+
+	import '../app.css';
+	import Navbar from '../lib/components/Navbar.svelte';
+	import Footer from '../lib/components/Footer.svelte';
+
+	export let data;
+	let { supabase, session } = data;
+	$: ({ supabase, session } = data);
+
+	onMount(() => {
+		const {
+			data: { subscription }
+		} = supabase.auth.onAuthStateChange(async (event, _session) => {
+			if (_session?.expires_at !== session?.expires_at) {
+				invalidate('supabase:auth');
+			}
+		});
+
+		return () => subscription.unsubscribe();
+	});
 </script>
 
-<slot />
+<div class="flex min-h-screen flex-col">
+	<Navbar />
+
+	<main>
+		<slot />
+	</main>
+
+	<Footer />
+</div>
