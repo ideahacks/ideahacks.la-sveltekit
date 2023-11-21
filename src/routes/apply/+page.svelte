@@ -169,7 +169,7 @@
 </script>
 
 {#if hasSubmitted}
-	<div class="container mx-auto p-6">
+	<div class="mx-auto bg-white p-6">
 		<h1 class="mb-2 text-center font-display-sans text-2xl font-bold tracking-wide text-gray-700">
 			APPLICATION SUBMITTED
 		</h1>
@@ -178,7 +178,7 @@
 		</h2>
 	</div>
 {:else}
-	<div class="container mx-auto p-6">
+	<div class="mx-auto bg-white p-6">
 		<h1 class=" mb-2 text-center font-display-serif text-4xl font-bold tracking-wide text-gray-700">
 			IDEA Hacks Application
 		</h1>
@@ -519,7 +519,6 @@
 							: 'border-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
 						id="form-q5"
 						rows="3"
-						type="text"
 						placeholder=""
 						bind:value={rawFormData.prior_hackathon_experience}
 					/>
