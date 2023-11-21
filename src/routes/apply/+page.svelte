@@ -236,7 +236,7 @@
 						Email*
 					</label>
 					<input
-						class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-500 focus:border-gray-500 focus:bg-white focus:outline-none"
+						class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-500 focus:bg-white focus:outline-none"
 						id="form-email"
 						type="text"
 						placeholder=""
@@ -252,7 +252,7 @@
 						Pronouns
 					</label>
 					<input
-						class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+						class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
 						id="form-pronouns"
 						type="text"
 						placeholder=""
@@ -272,7 +272,7 @@
 					</label>
 					<div class="relative">
 						<select
-							class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 pr-8 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+							class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 pr-8 leading-tight text-gray-700 focus:bg-white focus:outline-none"
 							id="form-school"
 							bind:value={rawFormData.school_dropdown}
 						>
@@ -302,7 +302,7 @@
 						School (If Other)
 					</label>
 					<input
-						class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+						class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
 						id="form-other-school"
 						type="text"
 						placeholder=""
@@ -615,7 +615,7 @@
 						dietary restrictions / food allergies
 					</label>
 					<input
-						class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+						class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
 						id="form-allergies"
 						type="text"
 						placeholder=""
@@ -624,7 +624,7 @@
 				</div>
 			</div>
 
-			<button on:click={handleSubmit} class="btn btn-primary px-4 py-2"> Submit </button>
+			<button on:click={handleSubmit} class="btn-primary btn px-4 py-2"> Submit </button>
 
 			<p class="mb-2 h-3 p-1 font-display-sans text-xs tracking-wide text-gray-700">
 				{formStatus}
