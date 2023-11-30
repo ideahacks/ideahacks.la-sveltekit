@@ -587,7 +587,6 @@
 							on:input={() => (inputFieldsUpdated.shirt_size = true)}
 						>
 							<option />
-							<option value="extra_small">Extra Small</option>
 							<option value="small">Small</option>
 							<option value="medium">Medium</option>
 							<option value="large">Large</option>
@@ -625,7 +624,7 @@
 				</div>
 			</div>
 
-			<button on:click={handleSubmit} class="btn btn-primary px-4 py-2"> Submit </button>
+			<button on:click={handleSubmit} class="btn-primary btn px-4 py-2"> Submit </button>
 
 			<p class="mb-2 h-3 p-1 font-display-sans text-xs tracking-wide text-gray-700">
 				{formStatus}
