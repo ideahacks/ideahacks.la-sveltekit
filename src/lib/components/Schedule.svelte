@@ -1,6 +1,9 @@
 <script>
 	import { Sparkles } from 'lucide-svelte';
 </script>
+<script>
+	import { Sparkles } from 'lucide-svelte';
+</script>
 
 <h2 class="my-4 font-display-sans text-3xl font-bold">Friday, January 20th</h2>
 <div class="overflow-x-auto">
