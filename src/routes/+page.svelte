@@ -1,14 +1,45 @@
 <script>
 	import { Sparkles } from 'lucide-svelte';
+	import cloud1 from '$lib/images/cloud1.png';
+	import cloud2 from '$lib/images/cloud2.png';
+	import cloud3 from '$lib/images/cloud3.png';
+	import cloud4 from '$lib/images/cloud4.png';
+	import cloud5 from '$lib/images/cloud5.png';
 </script>
 
+<div class="m-10">
+<a href="/static/cloud.png" data-investors-avatar>
+	<div class="cloud-container">
+		<img class="cloud" src={cloud5} alt="ideahacks" />
+		<img class="cloud" src={cloud1} alt="ideahacks" />
+		<img class="cloud" src={cloud4} alt="ideahacks" />
+		<img class="cloud" src={cloud3} alt="ideahacks" />
+		<img class="cloud" src={cloud1} alt="ideahacks" />
+		<img class="cloud" src={cloud4} alt="ideahacks" />
+		<img class="cloud" src={cloud3} alt="ideahacks" />
+		<img class="cloud" src={cloud2} alt="ideahacks" />
+		<img class="cloud" src={cloud1} alt="ideahacks" />
+		<img class="cloud" src={cloud2} alt="ideahacks" />
+		<img class="cloud" src={cloud4} alt="ideahacks" />
+		<img class="cloud" src={cloud3} alt="ideahacks" />
+		<img class="cloud" src={cloud2} alt="ideahacks" />
+		<img class="cloud" src={cloud1} alt="ideahacks" />
+		<img class="cloud" src={cloud2} alt="ideahacks" />
+		<img class="cloud" src={cloud3} alt="ideahacks" />
+		<img class="cloud" src={cloud2} alt="ideahacks" />
+		<img class="cloud" src={cloud4} alt="ideahacks" />
+	</div>
+</a> 
+</div>
 <div class="m-12 justify-center md:m-16">
+	
 	<h1 class="font-display-serif text-8xl md:text-9xl">
 		<span> IDEA Hacks </span>
 		<span class="font-display-sans font-bold tabular-nums">2024</span>
 	</h1>
 	<h2 class="font-display-sans text-6xl font-black">Jan 12-14</h2>
 	<div class="divider" />
+	
 	<a href="/apply" class="btn-primary btn-lg btn my-8">Applications are open! <Sparkles /></a>
 
 	<p class="mb-4">
@@ -101,4 +132,31 @@
 			#f6c042 95.83%
 		);
 	}
+.cloud-container {
+  display: flex;
+  animation: scrollImages 10s linear infinite; /* Adjust time as needed */
+  margin: 0;
+  padding: 0;
+  width: max-content; /* Ensures the container fits the images exactly */
+}
+
+.cloud {
+  width: 200px; /* Adjust the width as needed */
+  height: auto; /* Maintains the aspect ratio */
+  margin-right: 0; /* Spacing between images */
+}
+
+.cloud:last-child {
+  margin-right: 0; /* Removes margin from the last image */
+}
+
+@keyframes scrollImages {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-60%);
+  }
+}
+
 </style>
