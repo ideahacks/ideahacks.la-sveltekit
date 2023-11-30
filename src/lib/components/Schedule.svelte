@@ -2,7 +2,7 @@
 	import { Sparkles } from 'lucide-svelte';
 </script>
 
-<h2 class="pt-4 font-display-sans text-3xl font-bold">Friday, January 20th</h2>
+<h2 class="my-4 font-display-sans text-3xl font-bold">Friday, January 20th</h2>
 <div class="overflow-x-auto">
 	<table class="table-lg table">
 		<!-- head -->
@@ -48,7 +48,7 @@
 <br />
 <br />
 
-<h2 class="pt-4 font-display-sans text-3xl font-bold">Saturday, January 21st</h2>
+<h2 class="my-4 font-display-sans text-3xl font-bold">Saturday, January 21st</h2>
 <div class="overflow-x-auto">
 	<table class="table-lg table">
 		<thead>
@@ -74,7 +74,7 @@
 	</table>
 </div>
 
-<h2 class="pt-4 font-display-sans text-3xl font-bold">Sunday, January 22nd</h2>
+<h2 class="my-4 font-display-sans text-3xl font-bold">Sunday, January 22nd</h2>
 <div class="overflow-x-auto">
 	<table class="table-lg table">
 		<thead>
