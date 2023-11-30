@@ -1,14 +1,25 @@
 <script>
 	import Schedule from '$lib/components/Schedule.svelte';
-	import { Sparkles } from 'lucide-svelte';
+	import Sponsor from '$lib/components/Sponsor.svelte';
+	import { Calendar, MapPin, Sparkles } from 'lucide-svelte';
+
+	import northrop_grumman from '$lib/images/sponsors/northrop_grumman.svg';
+	import texas_instruments from '$lib/images/sponsors/texas_instruments.svg';
+	import digikey from '$lib/images/sponsors/digikey.svg';
+	import patient_safety_technology_challenge from '$lib/images/sponsors/patient_safety_technology_challenge.png';
 </script>
 
 <div class="m-12 justify-center md:m-16">
-	<h1 class="font-display-serif text-8xl md:text-9xl">
+	<h1 class="my-4 font-display-serif text-8xl md:text-9xl">
 		<span> IDEA Hacks </span>
 		<span class="font-display-sans font-bold tabular-nums">2024</span>
 	</h1>
-	<h2 class="font-display-sans text-6xl font-black">Jan 12-14</h2>
+	<h2 class="flex items-center gap-4 font-display-sans text-6xl font-black">
+		<Calendar size={48} /> Jan 12-14
+	</h2>
+	<h2 class="flex items-center gap-4 font-display-sans text-6xl font-black">
+		<MapPin size={48} /> Ackerman Grand Ballroom
+	</h2>
 	<div class="divider" />
 	<a href="/apply" class="btn-primary btn-lg btn my-8">Applications are open! <Sparkles /></a>
 
@@ -85,7 +96,14 @@
 		</div>
 	</div>
 
-	<h2 class="my-4 mt-4 font-display-serif text-5xl">Sponsoring</h2>
+	<h2 class="my-4 mt-4 font-display-serif text-5xl">Sponsors</h2>
+
+	<div class="my-4 flex gap-8">
+		<Sponsor src={northrop_grumman} alt={'Northrop Grumman'} />
+		<Sponsor src={texas_instruments} alt={'Texas Instruments'} />
+		<Sponsor src={digikey} alt={'Digikey'} />
+		<Sponsor src={patient_safety_technology_challenge} alt={'Patient Safety Technology'} />
+	</div>
 
 	<p>
 		Interested in sponsoring IDEA Hacks? Check out our <a
