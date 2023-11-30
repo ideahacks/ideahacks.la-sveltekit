@@ -1,4 +1,5 @@
 <script>
+	import Schedule from '$lib/components/Schedule.svelte';
 	import { Sparkles } from 'lucide-svelte';
 </script>
 
@@ -30,6 +31,10 @@
 		Communication and announcements will happen through a Discord server we will set up for the
 		hackathon.
 	</p>
+
+	<h2 class="my-4 mt-4 font-display-serif text-5xl">Schedule</h2>
+
+	<Schedule />
 
 	<h2 class="mt-4 font-display-serif text-5xl">Frequently asked questions</h2>
 
