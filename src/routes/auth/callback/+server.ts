@@ -1,3 +1,5 @@
+
+
 import { redirect, type RequestEvent } from '@sveltejs/kit';
 
 export async function GET(event: RequestEvent) {
