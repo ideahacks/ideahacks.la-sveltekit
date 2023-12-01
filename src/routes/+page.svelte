@@ -1,14 +1,57 @@
 <script>
-	import { Sparkles } from 'lucide-svelte';
+	import cloud1 from '$lib/images/cloud1.png';
+	import cloud2 from '$lib/images/cloud2.png';
+	import cloud3 from '$lib/images/cloud3.png';
+	import cloud4 from '$lib/images/cloud4.png';
+	import cloud5 from '$lib/images/cloud5.png';
+	import Schedule from '$lib/components/Schedule.svelte';
+	import Sponsor from '$lib/components/Sponsor.svelte';
+	import { Calendar, MapPin, Sparkles } from 'lucide-svelte';
+
+	import northrop_grumman from '$lib/images/sponsors/northrop_grumman.svg';
+	import texas_instruments from '$lib/images/sponsors/texas_instruments.svg';
+	import digikey from '$lib/images/sponsors/digikey.svg';
+	import patient_safety_technology_challenge from '$lib/images/sponsors/patient_safety_technology_challenge.png';
 </script>
 
+<div class="m-10">
+<a href="/static/cloud.png" data-investors-avatar>
+	<div class="cloud-container">
+		<img class="cloud" src={cloud5} alt="ideahacks" />
+		<img class="cloud" src={cloud1} alt="ideahacks" />
+		<img class="cloud" src={cloud4} alt="ideahacks" />
+		<img class="cloud" src={cloud3} alt="ideahacks" />
+		<img class="cloud" src={cloud1} alt="ideahacks" />
+		<img class="cloud" src={cloud4} alt="ideahacks" />
+		<img class="cloud" src={cloud3} alt="ideahacks" />
+		<img class="cloud" src={cloud2} alt="ideahacks" />
+		<img class="cloud" src={cloud1} alt="ideahacks" />
+		<img class="cloud" src={cloud2} alt="ideahacks" />
+		<img class="cloud" src={cloud4} alt="ideahacks" />
+		<img class="cloud" src={cloud3} alt="ideahacks" />
+		<img class="cloud" src={cloud2} alt="ideahacks" />
+		<img class="cloud" src={cloud1} alt="ideahacks" />
+		<img class="cloud" src={cloud2} alt="ideahacks" />
+		<img class="cloud" src={cloud3} alt="ideahacks" />
+		<img class="cloud" src={cloud2} alt="ideahacks" />
+		<img class="cloud" src={cloud4} alt="ideahacks" />
+	</div>
+</a> 
+</div>
 <div class="m-12 justify-center md:m-16">
+	
 	<h1 class="font-display-serif text-8xl md:text-9xl">
 		<span> IDEA Hacks </span>
 		<span class="font-display-sans font-bold tabular-nums">2024</span>
 	</h1>
-	<h2 class="font-display-sans text-6xl font-black">Jan 12-14</h2>
+	<h2 class="flex items-center gap-4 font-display-sans text-6xl font-black">
+		<Calendar size={48} /> Jan 12-14
+	</h2>
+	<h2 class="flex items-center gap-4 font-display-sans text-6xl font-black">
+		<MapPin size={48} /> Ackerman Grand Ballroom
+	</h2>
 	<div class="divider" />
+	
 	<a href="/apply" class="btn-primary btn-lg btn my-8">Applications are open! <Sparkles /></a>
 
 	<p class="mb-4">
@@ -30,6 +73,10 @@
 		Communication and announcements will happen through a Discord server we will set up for the
 		hackathon.
 	</p>
+
+	<h2 class="my-4 mt-4 font-display-serif text-5xl">Schedule</h2>
+
+	<Schedule />
 
 	<h2 class="mt-4 font-display-serif text-5xl">Frequently asked questions</h2>
 
@@ -80,7 +127,14 @@
 		</div>
 	</div>
 
-	<h2 class="my-4 mt-4 font-display-serif text-5xl">Sponsoring</h2>
+	<h2 class="my-4 mt-4 font-display-serif text-5xl">Sponsors</h2>
+
+	<div class="my-4 flex gap-8">
+		<Sponsor src={northrop_grumman} alt={'Northrop Grumman'} />
+		<Sponsor src={texas_instruments} alt={'Texas Instruments'} />
+		<Sponsor src={digikey} alt={'Digikey'} />
+		<Sponsor src={patient_safety_technology_challenge} alt={'Patient Safety Technology'} />
+	</div>
 
 	<p>
 		Interested in sponsoring IDEA Hacks? Check out our <a
@@ -101,4 +155,31 @@
 			#f6c042 95.83%
 		);
 	}
+.cloud-container {
+  display: flex;
+  animation: scrollImages 10s linear infinite; /* Adjust time as needed */
+  margin: 0;
+  padding: 0;
+  width: max-content; /* Ensures the container fits the images exactly */
+}
+
+.cloud {
+  width: 200px; /* Adjust the width as needed */
+  height: auto; /* Maintains the aspect ratio */
+  margin-right: 0; /* Spacing between images */
+}
+
+.cloud:last-child {
+  margin-right: 0; /* Removes margin from the last image */
+}
+
+@keyframes scrollImages {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-60%);
+  }
+}
+
 </style>

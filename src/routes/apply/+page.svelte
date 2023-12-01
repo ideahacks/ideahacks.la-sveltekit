@@ -585,7 +585,6 @@
 							on:input={() => (inputFieldsUpdated.shirt_size = true)}
 						>
 							<option />
-							<option value="extra_small">Extra Small</option>
 							<option value="small">Small</option>
 							<option value="medium">Medium</option>
 							<option value="large">Large</option>
