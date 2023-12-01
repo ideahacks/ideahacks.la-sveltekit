@@ -14,32 +14,6 @@
 	import patient_safety_technology_challenge from '$lib/images/sponsors/patient_safety_technology_challenge.png';
 </script>
 
-<div class="m-10">
-<a href="/static/cloud.png" data-investors-avatar>
-	<div class="cloud-container">
-		<img class="cloud" src={cloud5} alt="ideahacks" />
-		<img class="cloud" src={cloud1} alt="ideahacks" />
-		<img class="cloud" src={cloud4} alt="ideahacks" />
-		<img class="cloud" src={cloud3} alt="ideahacks" />
-		<img class="cloud" src={cloud1} alt="ideahacks" />
-		<img class="cloud" src={cloud4} alt="ideahacks" />
-		<img class="cloud" src={cloud3} alt="ideahacks" />
-		<img class="cloud" src={cloud2} alt="ideahacks" />
-		<img class="cloud" src={cloud1} alt="ideahacks" />
-		<img class="cloud" src={cloud2} alt="ideahacks" />
-		<img class="cloud" src={cloud4} alt="ideahacks" />
-		<img class="cloud" src={cloud3} alt="ideahacks" />
-		<img class="cloud" src={cloud2} alt="ideahacks" />
-		<img class="cloud" src={cloud1} alt="ideahacks" />
-		<img class="cloud" src={cloud2} alt="ideahacks" />
-		<img class="cloud" src={cloud3} alt="ideahacks" />
-		<img class="cloud" src={cloud2} alt="ideahacks" />
-		<img class="cloud" src={cloud4} alt="ideahacks" />
-	</div>
-</a> 
-</div>
-<div class="m-12 justify-center md:m-16">
-	
 	<h1 class="font-display-serif text-8xl md:text-9xl">
 		<span> IDEA Hacks </span>
 		<span class="font-display-sans font-bold tabular-nums">2024</span>
@@ -51,7 +25,7 @@
 		<MapPin size={48} /> Ackerman Grand Ballroom
 	</h2>
 	<div class="divider" />
-	
+
 	<a href="/apply" class="btn-primary btn-lg btn my-8">Applications are open! <Sparkles /></a>
 
 	<p class="mb-4">
