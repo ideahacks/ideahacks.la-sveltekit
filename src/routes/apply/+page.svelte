@@ -162,8 +162,10 @@
 				hasSubmitted = true;
 			}
 		} else {
-			formStatus =
-				'Please recheck the red input boxes before submitting. These fields are required or contain invalid data.';
+			formStatus = 'Please recheck the red input boxes before submitting';
+			setTimeout(() => {
+				formStatus = '';
+			}, 3000);
 		}
 	}
 </script>
@@ -185,7 +187,9 @@
 		<h2 class="mb-4 text-center font-display-sans text-2xl font-bold tracking-wide text-gray-200">
 			Hi {session.user.email}!
 		</h2>
-		<form class="mx-auto w-full max-w-xl">
+		<form
+			class="mx-auto w-full max-w-xl rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5 opacity-90 bg-blend-normal"
+		>
 			<h2 class="mb-2 font-display-sans text-lg font-bold tracking-wide text-gray-200">PERSONAL</h2>
 
 			<div class="-mx-3 mb-6 flex flex-wrap">
@@ -199,8 +203,8 @@
 					<input
 						class="{rawFormData.full_name !== '' ||
 						(rawFormData.full_name === '' && !inputFieldsUpdated.full_name)
-							? 'bg-gray-200'
-							: 'bg-red-300 placeholder-red-500'} mb-3 block
+							? 'bg-gray-200 caret-gray-500 opacity-90'
+							: 'bg-red-300 placeholder-red-500 caret-red-600 opacity-70'} mb-3 block
 							w-full appearance-none
 							rounded px-4 py-3 leading-tight text-gray-700 focus:outline-none"
 						id="form-full-name"
@@ -220,8 +224,8 @@
 					<input
 						class="mb-3 block w-full appearance-none rounded {rawFormData.preferred_name !== '' ||
 						(rawFormData.preferred_name === '' && !inputFieldsUpdated.preferred_name)
-							? 'bg-gray-200'
-							: 'bg-red-300'} px-4 py-3 leading-tight text-gray-700 focus:outline-none"
+							? 'bg-gray-200 caret-gray-500 opacity-90'
+							: 'bg-red-300 caret-red-600 opacity-70'} px-4 py-3 leading-tight text-gray-700 focus:outline-none"
 						bind:value={rawFormData.preferred_name}
 						id="form-preferred-name"
 						type="text"
@@ -235,7 +239,7 @@
 						Email*
 					</label>
 					<input
-						class="block w-full appearance-none rounded bg-gray-200 px-4 py-3 leading-tight text-gray-500 focus:outline-none"
+						class="block w-full appearance-none rounded bg-gray-200 px-4 py-3 leading-tight text-gray-500 opacity-90 focus:outline-none"
 						id="form-email"
 						type="text"
 						placeholder=""
@@ -251,7 +255,7 @@
 						Pronouns
 					</label>
 					<input
-						class="block w-full appearance-none rounded bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:outline-none"
+						class="block w-full appearance-none rounded bg-gray-200 px-4 py-3 leading-tight text-gray-700 caret-gray-500 opacity-90 focus:outline-none"
 						id="form-pronouns"
 						type="text"
 						placeholder=""
@@ -271,7 +275,7 @@
 					</label>
 					<div class="relative">
 						<select
-							class="block w-full appearance-none rounded bg-gray-200 px-4 py-3 pr-8 leading-tight text-gray-700 focus:outline-none"
+							class="block w-full appearance-none rounded bg-gray-200 px-4 py-3 pr-8 leading-tight text-gray-700 caret-gray-500 opacity-90 focus:outline-none"
 							id="form-school"
 							bind:value={rawFormData.school_dropdown}
 						>
@@ -280,7 +284,7 @@
 							<option>Other</option>
 						</select>
 						<div
-							class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-200"
+							class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
 						>
 							<svg
 								class="h-4 w-4 fill-current"
@@ -301,7 +305,7 @@
 						School (If Other)
 					</label>
 					<input
-						class="block w-full appearance-none rounded bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:outline-none"
+						class="block w-full appearance-none rounded bg-gray-200 px-4 py-3 leading-tight text-gray-700 caret-gray-500 opacity-90 focus:outline-none"
 						id="form-other-school"
 						type="text"
 						placeholder=""
@@ -318,8 +322,8 @@
 					<input
 						class="mb-3 block w-full appearance-none rounded {rawFormData.major !== '' ||
 						(rawFormData.major === '' && !inputFieldsUpdated.major)
-							? 'bg-gray-200'
-							: 'bg-red-300 placeholder-red-500'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:outline-none"
+							? 'bg-gray-200 caret-gray-500 opacity-90'
+							: 'bg-red-300 placeholder-red-500 caret-red-600 opacity-70'} bg-gray-200 px-4 py-3 leading-tight text-gray-700 opacity-90 focus:outline-none"
 						id="form-major"
 						type="text"
 						placeholder="e.g. Electrical Engineering"
@@ -340,8 +344,8 @@
 								'' ||
 							(rawFormData.year_at_current_university === '' &&
 								!inputFieldsUpdated.year_at_current_university)
-								? 'bg-gray-200'
-								: 'bg-red-300'} px-4 py-3 leading-tight text-gray-700 focus:outline-none"
+								? 'bg-gray-200 caret-gray-500 opacity-90'
+								: 'bg-red-300 caret-red-600 opacity-70'} px-4 py-3 leading-tight text-gray-700 focus:outline-none"
 							id="form-year"
 							bind:value={rawFormData.year_at_current_university}
 							on:input={() => (inputFieldsUpdated.year_at_current_university = true)}
@@ -355,7 +359,7 @@
 							<option value="graduated">Graduated</option>
 						</select>
 						<div
-							class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-200"
+							class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
 						>
 							<svg
 								class="h-4 w-4 fill-current"
@@ -380,8 +384,8 @@
 						<select
 							class="mb-3 block w-full appearance-none rounded {rawFormData.is_transfer !== '' ||
 							(rawFormData.is_transfer === '' && !inputFieldsUpdated.is_transfer)
-								? 'bg-gray-200'
-								: 'bg-red-300'}  px-4 py-3 leading-tight text-gray-700 focus:outline-none"
+								? 'bg-gray-200 caret-gray-500 opacity-90'
+								: 'bg-red-300 caret-red-600 opacity-70'}  px-4 py-3 leading-tight text-gray-700 focus:outline-none"
 							id="form-transfer"
 							bind:value={rawFormData.is_transfer}
 							on:input={() => (inputFieldsUpdated.is_transfer = true)}
@@ -391,7 +395,7 @@
 							<option value="false">No</option>
 						</select>
 						<div
-							class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-200"
+							class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
 						>
 							<svg
 								class="h-4 w-4 fill-current"
@@ -422,8 +426,8 @@
 								!inputFieldsUpdated.prior_engineering_experience)) &&
 						countWords(rawFormData.prior_engineering_experience) <=
 							WORD_LIMITS.prior_engineering_experience
-							? 'bg-gray-200'
-							: 'bg-red-300'}  px-4 py-3 leading-tight text-gray-700 focus:outline-none"
+							? 'bg-gray-200 caret-gray-500 opacity-90'
+							: 'bg-red-300 caret-red-600 opacity-70'}  px-4 py-3 leading-tight text-gray-700 focus:outline-none"
 						id="form-q1"
 						rows="5"
 						placeholder=""
@@ -453,8 +457,8 @@
 						class="mb-3 block w-full appearance-none rounded {(rawFormData.why_ideahacks !== '' ||
 							(rawFormData.why_ideahacks === '' && !inputFieldsUpdated.why_ideahacks)) &&
 						countWords(rawFormData.why_ideahacks) <= WORD_LIMITS.why_ideahacks
-							? 'bg-gray-200'
-							: 'bg-red-300'} px-4 py-3 leading-tight text-gray-700 focus:outline-none"
+							? 'bg-gray-200 caret-gray-500 opacity-90'
+							: 'bg-red-300 caret-red-600 opacity-70'} px-4 py-3 leading-tight text-gray-700 focus:outline-none"
 						id="form-q2"
 						rows="5"
 						placeholder=""
@@ -483,8 +487,8 @@
 						class="mb-3 block w-full appearance-none rounded {(rawFormData.hackathon_ideas !== '' ||
 							(rawFormData.hackathon_ideas === '' && !inputFieldsUpdated.hackathon_ideas)) &&
 						countWords(rawFormData.hackathon_ideas) <= WORD_LIMITS.hackathon_ideas
-							? 'bg-gray-200'
-							: 'bg-red-300 placeholder-red-500'}  px-4 py-3 leading-tight text-gray-700 focus:outline-none"
+							? 'bg-gray-200 caret-gray-500 opacity-90'
+							: 'bg-red-300 placeholder-red-500 caret-red-600 opacity-70'}  px-4 py-3 leading-tight text-gray-700 focus:outline-none"
 						id="form-q3"
 						rows="5"
 						placeholder="Example: Compost Catapult"
@@ -513,8 +517,8 @@
 						class="mb-3 block w-full appearance-none rounded {countWords(
 							rawFormData.prior_hackathon_experience
 						) <= WORD_LIMITS.prior_hackathon_experience
-							? 'bg-gray-200'
-							: 'bg-red-300'}  px-4 py-3 leading-tight text-gray-700 focus:outline-none"
+							? 'bg-gray-200 caret-gray-500 opacity-90'
+							: 'bg-red-300 caret-red-600 opacity-70'}  px-4 py-3 leading-tight text-gray-700 focus:outline-none"
 						id="form-q5"
 						rows="3"
 						placeholder=""
@@ -544,8 +548,8 @@
 						class="mb-3 block w-full appearance-none rounded {countWords(
 							rawFormData.suggested_parts
 						) <= WORD_LIMITS.suggested_parts
-							? 'bg-gray-200'
-							: 'bg-red-300'}  px-4 py-3 leading-tight text-gray-700 focus:outline-none"
+							? 'bg-gray-200 caret-gray-500 opacity-90'
+							: 'bg-red-300 caret-red-600 opacity-70'}  px-4 py-3 leading-tight text-gray-700 focus:outline-none"
 						id="form-q6"
 						rows="3"
 						placeholder=""
@@ -578,8 +582,8 @@
 						<select
 							class="mb-3 block w-full appearance-none rounded {rawFormData.shirt_size !== '' ||
 							(rawFormData.shirt_size === '' && !inputFieldsUpdated.shirt_size)
-								? 'bg-gray-200'
-								: 'bg-red-300'}  px-4 py-3 leading-tight text-gray-700 focus:outline-none"
+								? 'bg-gray-200 caret-gray-500 opacity-90'
+								: 'bg-red-300 caret-red-600 opacity-70'}  px-4 py-3 leading-tight text-gray-700 focus:outline-none"
 							id="form-shirt-size"
 							bind:value={rawFormData.shirt_size}
 							on:input={() => (inputFieldsUpdated.shirt_size = true)}
@@ -591,7 +595,7 @@
 							<option value="extra_large">Extra Large</option>
 						</select>
 						<div
-							class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-200"
+							class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
 						>
 							<svg
 								class="h-4 w-4 fill-current"
@@ -613,7 +617,7 @@
 						dietary restrictions / food allergies
 					</label>
 					<input
-						class="block w-full appearance-none rounded bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:outline-none"
+						class="block w-full appearance-none rounded bg-gray-200 px-4 py-3 leading-tight text-gray-700 caret-gray-500 opacity-90 focus:outline-none"
 						id="form-allergies"
 						type="text"
 						placeholder=""
@@ -622,11 +626,9 @@
 				</div>
 			</div>
 
-			<button on:click={handleSubmit} class="btn-primary btn border-black px-4 py-2">
-				Submit
-			</button>
+			<button on:click={handleSubmit} class="btn-primary btn px-4 py-2"> Submit </button>
 
-			<p class="mb-2 h-3 p-1 font-display-sans text-xs tracking-wide text-gray-700">
+			<p class="mb-2 h-3 p-1 font-display-sans text-xs tracking-wide text-gray-200">
 				{formStatus}
 			</p>
 		</form>
