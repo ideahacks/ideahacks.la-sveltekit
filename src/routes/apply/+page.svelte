@@ -1,4 +1,6 @@
 <script>
+	import { Info } from 'lucide-svelte';
+
 	export let data;
 
 	let { session } = data;
@@ -181,12 +183,22 @@
 	</div>
 {:else}
 	<div class="mx-auto p-6">
-		<h1 class=" mb-2 text-center font-display-serif text-4xl font-bold tracking-wide text-gray-200">
-			IDEA Hacks Application
-		</h1>
-		<h2 class="mb-4 text-center font-display-sans text-2xl font-bold tracking-wide text-gray-200">
-			Hi {session.user.email}!
-		</h2>
+		<div class="flex flex-col items-center">
+			<h1 class="my-1 font-display-serif text-4xl font-bold tracking-wide text-gray-200">
+				IDEA Hacks Application
+			</h1>
+			<h2 class="my-2 font-display-sans text-2xl font-bold tracking-wide text-gray-200">
+				Hi {session.user.email}!
+			</h2>
+			<p class="my-2 mb-8 flex items-center gap-2 font-display-sans font-semibold">
+				Due 12/18 at 11:59 pm <span
+					class="tooltip tooltip-bottom"
+					data-tip="Message paulzzy on Discord if you have any technical issues!"
+					><span><Info /></span></span
+				>
+			</p>
+		</div>
+
 		<form
 			class="mx-auto w-full max-w-xl rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5 opacity-90 bg-blend-normal"
 		>

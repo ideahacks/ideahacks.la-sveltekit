@@ -20,9 +20,14 @@
 	<h2 class="flex items-center gap-4 font-display-sans text-6xl font-black">
 		<MapPin size={48} /> Ackerman Grand Ballroom
 	</h2>
+
 	<div class="divider" />
 
-	<a href="/apply" class="btn-primary btn-lg btn my-8">Applications are open! <Sparkles /></a>
+	<a href="/apply" class="btn-primary btn-lg btn my-2 flex-initial"
+		>Applications are open! <Sparkles /></a
+	>
+
+	<p class="my-4 mb-8 font-display-sans font-semibold">Due 12/18 at 11:59 pm!</p>
 
 	<p class="mb-4">
 		IEEE at UCLA is pleased to present the tenth anniversary of IDEA Hacks, the premier
