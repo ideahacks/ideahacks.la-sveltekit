@@ -191,7 +191,7 @@
 				Hi {session.user.email}!
 			</h2>
 			<p class="my-2 mb-8 flex items-center gap-2 font-display-sans font-semibold">
-				Due 12/18 at 11:59 pm <span
+				Due 12/23 at 11:59 pm <span
 					class="tooltip tooltip-bottom"
 					data-tip="Message paulzzy on Discord if you have any technical issues!"
 					><span><Info /></span></span
