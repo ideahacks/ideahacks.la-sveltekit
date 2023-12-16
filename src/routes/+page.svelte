@@ -27,7 +27,7 @@
 		>Applications are open! <Sparkles /></a
 	>
 
-	<p class="my-4 mb-8 font-display-sans font-semibold">Due 12/18 at 11:59 pm!</p>
+	<p class="my-4 mb-8 font-display-sans font-semibold">Due 12/23 at 11:59 pm!</p>
 
 	<p class="mb-4">
 		IEEE at UCLA is pleased to present the tenth anniversary of IDEA Hacks, the premier
