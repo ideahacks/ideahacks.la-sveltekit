@@ -1,5 +1,6 @@
 <script>
 	import { Info } from 'lucide-svelte';
+	import { onMount } from 'svelte';
 
 	export let data;
 
@@ -63,7 +64,7 @@
 
 	let formStatus = '';
 
-	let hasSubmitted = false;
+	let hasSubmitted = 0;
 
 	function countWords(inputText) {
 		if (inputText.trim() === '') {
@@ -161,7 +162,7 @@
 			const responseStatus = await response.json();
 
 			if (responseStatus) {
-				hasSubmitted = true;
+				hasSubmitted = 1;
 			}
 		} else {
 			formStatus = 'Please recheck the red input boxes before submitting';
@@ -170,9 +171,22 @@
 			}, 3000);
 		}
 	}
+
+	// when page loaded, check application status...
+	onMount(async () => {
+		const response = await fetch('/apply', {
+			method: 'GET'
+		});
+		const responseStatus = await response.json();
+		if (responseStatus) {
+			hasSubmitted = 1;
+		} else {
+			hasSubmitted = -1;
+		}
+	});
 </script>
 
-{#if hasSubmitted}
+{#if hasSubmitted === 1}
 	<div class="mx-auto p-6">
 		<h1 class="mb-2 text-center font-display-sans text-2xl font-bold tracking-wide text-gray-200">
 			APPLICATION SUBMITTED
@@ -180,6 +194,12 @@
 		<h2 class="mb-2 text-center font-display-sans text-lg tracking-wide text-gray-200">
 			Check your email for application updates!
 		</h2>
+	</div>
+{:else if hasSubmitted === 0}
+	<div class="mx-auto p-6">
+		<h1 class="mb-2 text-center font-display-sans text-2xl font-bold tracking-wide text-gray-200">
+			Loading...
+		</h1>
 	</div>
 {:else}
 	<div class="mx-auto p-6">
