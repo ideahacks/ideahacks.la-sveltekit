@@ -43,7 +43,7 @@ export async function GET({ request, locals: { supabase, getSession } }) {
 	if (data.length === 0) {
 		return json(null);
 	} else {
-		console.log(data[0]);
+		// console.log(data[0]);
 		return json(data[0]);
 	}
 }

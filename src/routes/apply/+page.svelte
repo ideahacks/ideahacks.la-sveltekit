@@ -105,7 +105,7 @@
 			shirt_size: !(rawFormData.shirt_size === '')
 		};
 
-		console.log(inputFieldsValid);
+		// console.log(inputFieldsValid);
 
 		// check if all fields are true
 		let result = true;
@@ -168,7 +168,7 @@
 				: applicationData.school;
 		rawFormData.major = applicationData.major;
 		rawFormData.year_at_current_university = applicationData.year_at_current_university;
-		rawFormData.is_transfer = applicationData.is_transfer;
+		rawFormData.is_transfer = applicationData.is_transfer ? 'true' : 'false';
 
 		rawFormData.prior_engineering_experience = applicationData.prior_engineering_experience;
 		rawFormData.why_ideahacks = applicationData.why_ideahacks;
@@ -184,7 +184,7 @@
 	async function handleSubmit(e) {
 		// set inputFieldsUpdated to all true (so that red boxes will show)
 
-		console.log(getFormData());
+		// console.log(getFormData());
 
 		for (const field in inputFieldsUpdated) {
 			inputFieldsUpdated[field] = true;
