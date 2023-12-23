@@ -31,13 +31,15 @@
 				<details class="dropdown-end dropdown">
 					<summary class="btn-primary btn-circle btn"><UserCircle2 /></summary>
 					<ul class="dropdown-content menu rounded-box bg-red-950 text-xl shadow-xl">
-						<li>
-							<span>
-								<Mail />
-								{session?.user.email}
-							</span>
-						</li>
-						<li><button on:click={signOut}><LogOut /> Sign out</button></li>
+						<a href="/login">
+							<li>
+								<span>
+									<Mail />
+									{session?.user.email}
+								</span>
+							</li>
+							<li><button on:click={signOut}><LogOut /> Sign out</button></li>
+						</a>
 					</ul>
 				</details>
 			</li>

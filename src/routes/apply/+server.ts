@@ -37,3 +37,13 @@ export async function POST({ request, locals: { supabase, getSession } }) {
 
 	return json(true);
 }
+
+export async function GET({ request, locals: { supabase, getSession } }) {
+	const { data } = await supabase.from('applications').select();
+	if (data.length === 0) {
+		return json(null);
+	} else {
+		// console.log(data[0]);
+		return json(data[0]);
+	}
+}

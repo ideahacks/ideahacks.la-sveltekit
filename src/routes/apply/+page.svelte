@@ -1,7 +1,13 @@
 <script>
 	import { Info } from 'lucide-svelte';
+	import { PencilLine } from 'lucide-svelte';
+	import { onMount } from 'svelte';
 
 	export let data;
+
+	const SUBMITTED_STATE = 1;
+	const APPLY_STATE = -1;
+	const LOADING_STATE = 0;
 
 	let { session } = data;
 	$: ({ session } = data);
@@ -63,7 +69,7 @@
 
 	let formStatus = '';
 
-	let hasSubmitted = false;
+	let applicationState = LOADING_STATE;
 
 	function countWords(inputText) {
 		if (inputText.trim() === '') {
@@ -99,7 +105,7 @@
 			shirt_size: !(rawFormData.shirt_size === '')
 		};
 
-		console.log(inputFieldsValid);
+		// console.log(inputFieldsValid);
 
 		// check if all fields are true
 		let result = true;
@@ -138,10 +144,47 @@
 		};
 	}
 
+	async function handleResubmit(e) {
+		applicationState = LOADING_STATE;
+
+		const response = await fetch('/apply', {
+			method: 'GET'
+		});
+		const applicationData = await response.json();
+
+		// set fields
+		rawFormData.full_name = applicationData.full_name;
+		rawFormData.preferred_name = applicationData.preferred_name;
+		rawFormData.pronouns = applicationData.pronouns;
+		rawFormData.school_dropdown =
+			applicationData.school === 'University of California, Los Angeles' ||
+			applicationData.school === 'University of Southern California'
+				? applicationData.school
+				: 'Other';
+		rawFormData.other_school =
+			applicationData.school === 'University of California, Los Angeles' ||
+			applicationData.school === 'University of Southern California'
+				? ''
+				: applicationData.school;
+		rawFormData.major = applicationData.major;
+		rawFormData.year_at_current_university = applicationData.year_at_current_university;
+		rawFormData.is_transfer = applicationData.is_transfer ? 'true' : 'false';
+
+		rawFormData.prior_engineering_experience = applicationData.prior_engineering_experience;
+		rawFormData.why_ideahacks = applicationData.why_ideahacks;
+		rawFormData.hackathon_ideas = applicationData.hackathon_ideas;
+		rawFormData.prior_hackathon_experience = applicationData.prior_hackathon_experience;
+		rawFormData.suggested_parts = applicationData.suggested_parts;
+		rawFormData.shirt_size = applicationData.shirt_size;
+		rawFormData.dietary_restrictions = applicationData.dietary_restrictions;
+
+		applicationState = APPLY_STATE;
+	}
+
 	async function handleSubmit(e) {
 		// set inputFieldsUpdated to all true (so that red boxes will show)
 
-		console.log(getFormData());
+		// console.log(getFormData());
 
 		for (const field in inputFieldsUpdated) {
 			inputFieldsUpdated[field] = true;
@@ -161,7 +204,7 @@
 			const responseStatus = await response.json();
 
 			if (responseStatus) {
-				hasSubmitted = true;
+				applicationState = SUBMITTED_STATE;
 			}
 		} else {
 			formStatus = 'Please recheck the red input boxes before submitting';
@@ -170,16 +213,40 @@
 			}, 3000);
 		}
 	}
+
+	// when page loaded, check application status...
+	onMount(async () => {
+		const response = await fetch('/apply', {
+			method: 'GET'
+		});
+		const responseStatus = await response.json();
+
+		if (responseStatus !== null) {
+			applicationState = SUBMITTED_STATE;
+		} else {
+			applicationState = APPLY_STATE;
+		}
+	});
 </script>
 
-{#if hasSubmitted}
-	<div class="mx-auto p-6">
+{#if applicationState === SUBMITTED_STATE}
+	<div class="mx-auto p-6 text-center">
 		<h1 class="mb-2 text-center font-display-sans text-2xl font-bold tracking-wide text-gray-200">
 			APPLICATION SUBMITTED
 		</h1>
 		<h2 class="mb-2 text-center font-display-sans text-lg tracking-wide text-gray-200">
 			Check your email for application updates!
 		</h2>
+		<br />
+		<button on:click={handleResubmit} class="btn-primary btn px-4 py-2">
+			Edit Application <PencilLine /></button
+		>
+	</div>
+{:else if applicationState === LOADING_STATE}
+	<div class="mx-auto p-6">
+		<h1 class="mb-2 text-center font-display-sans text-2xl font-bold tracking-wide text-gray-200">
+			Loading...
+		</h1>
 	</div>
 {:else}
 	<div class="mx-auto p-6">
