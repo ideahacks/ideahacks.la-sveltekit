@@ -158,12 +158,10 @@
 		rawFormData.pronouns = applicationData.pronouns;
 		rawFormData.school_dropdown =
 			applicationData.school === 'University of California, Los Angeles' ||
-			applicationData.school === 'University of Southern California'
 				? applicationData.school
 				: 'Other';
 		rawFormData.other_school =
 			applicationData.school === 'University of California, Los Angeles' ||
-			applicationData.school === 'University of Southern California'
 				? ''
 				: applicationData.school;
 		rawFormData.major = applicationData.major;
@@ -359,7 +357,6 @@
 							bind:value={rawFormData.school_dropdown}
 						>
 							<option selected>University of California, Los Angeles</option>
-							<option>University of Southern California</option>
 							<option>Other</option>
 						</select>
 						<div
