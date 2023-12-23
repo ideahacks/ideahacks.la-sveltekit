@@ -157,11 +157,11 @@
 		rawFormData.preferred_name = applicationData.preferred_name;
 		rawFormData.pronouns = applicationData.pronouns;
 		rawFormData.school_dropdown =
-			applicationData.school === 'University of California, Los Angeles' ||
+			applicationData.school === 'University of California, Los Angeles'
 				? applicationData.school
 				: 'Other';
 		rawFormData.other_school =
-			applicationData.school === 'University of California, Los Angeles' ||
+			applicationData.school === 'University of California, Los Angeles'
 				? ''
 				: applicationData.school;
 		rawFormData.major = applicationData.major;
