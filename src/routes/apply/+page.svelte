@@ -739,7 +739,8 @@
 				Check your email for application updates!
 			{:else}
 				Uh-oh, looks like you didn't submit an application on time. If you have questions, please
-				join the <a class="link" href="https://discord.gg/RREtsea">IEEE Discord</a>.
+				join the <a class="link" href="https://discord.gg/RREtsea">IEEE Discord</a> or email
+				<a class="link" href="mailto:webmaster@ieeebruins.com">webmaster@ieeebruins.com</a>.
 			{/if}
 		</h2>
 	</div>
