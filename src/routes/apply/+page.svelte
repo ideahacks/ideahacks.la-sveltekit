@@ -738,8 +738,8 @@
 			{#if applicationState === SUBMITTED_STATE}
 				Check your email for application updates!
 			{:else}
-				If you have questions, please join the
-				<a class="link" href="https://discord.gg/RREtsea">IEEE Discord</a>.
+				Uh-oh, looks like you didn't submit an application on time. If you have questions, please
+				join the <a class="link" href="https://discord.gg/RREtsea">IEEE Discord</a>.
 			{/if}
 		</h2>
 	</div>
