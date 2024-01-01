@@ -83,6 +83,109 @@
 			}
 		]
 	};
+
+	const website_panel_info = {
+		title: 'WEBSITE',
+		officers: [
+			{
+				name: 'PAUL ZHANG',
+				img_src: 'src/lib/images/officers/placeholder.png',
+				cat_img_src: 'src/lib/images/officers/paulzhang_cat.png'
+			},
+			{
+				name: 'BRANDON TRAN',
+				img_src: 'src/lib/images/officers/placeholder.png',
+				cat_img_src: 'src/lib/images/officers/brandontran_cat.png'
+			},
+			{
+				name: 'SHANNON WANG',
+				img_src: 'src/lib/images/officers/placeholder.png',
+				cat_img_src: 'src/lib/images/officers/shannonwang_cat.png'
+			},
+			{
+				name: 'KEVIN ZHANG',
+				img_src: 'src/lib/images/officers/placeholder.png',
+				cat_img_src: 'src/lib/images/officers/kevinzhang_cat.png'
+			},
+			{
+				name: 'ETHAN LAI',
+				img_src: 'src/lib/images/officers/placeholder.png',
+				cat_img_src: 'src/lib/images/officers/ethanlai_cat.png'
+			}
+		]
+	};
+
+	const outreach_panel_info = {
+		title: 'OUTREACH',
+		officers: [
+			{
+				name: 'NATHAN NGUYENDINH',
+				img_src: 'src/lib/images/officers/placeholder.png',
+				cat_img_src: 'src/lib/images/officers/nathannguyendinh_cat.png'
+			},
+			{
+				name: 'ELI FOERST',
+				img_src: 'src/lib/images/officers/placeholder.png',
+				cat_img_src: 'src/lib/images/officers/elifoerst_cat.png'
+			},
+			{
+				name: 'AYAH KASHKOUL',
+				img_src: 'src/lib/images/officers/placeholder.png',
+				cat_img_src: 'src/lib/images/officers/ayahkashkoul_cat.png'
+			},
+			{
+				name: 'JACQUELINE DUONG',
+				img_src: 'src/lib/images/officers/placeholder.png',
+				cat_img_src: 'src/lib/images/officers/jacquelineduong_cat.png'
+			}
+		]
+	};
+
+	const operations_panel_info = {
+		title: 'OPERATIONS',
+		officers: [
+			{
+				name: 'TIMOTHY JACQUES',
+				img_src: 'src/lib/images/officers/placeholder.png',
+				cat_img_src: 'src/lib/images/officers/timothyjacques_cat.png'
+			},
+			{
+				name: 'MEGAN CHEN',
+				img_src: 'src/lib/images/officers/placeholder.png',
+				cat_img_src: 'src/lib/images/officers/meganchen_cat.png'
+			},
+			{
+				name: 'SIDDHANT GUPTA',
+				img_src: 'src/lib/images/officers/placeholder.png',
+				cat_img_src: 'src/lib/images/officers/siddhantgupta_cat.png'
+			},
+			{
+				name: 'BENJI CRUZ',
+				img_src: 'src/lib/images/officers/placeholder.png',
+				cat_img_src: 'src/lib/images/officers/benjicruz_cat.png'
+			},
+			{
+				name: 'DOMINIC OLSON',
+				img_src: 'src/lib/images/officers/placeholder.png',
+				cat_img_src: 'src/lib/images/officers/dominicolson_cat.png'
+			},
+			{
+				name: 'JESSICA CHANG',
+				img_src: 'src/lib/images/officers/placeholder.png',
+				cat_img_src: 'src/lib/images/officers/jessicachang_cat.png'
+			}
+		]
+	};
+
+	let allTeams = [
+		director_panel_info,
+		design_panel_info,
+		food_panel_info,
+		corporate_panel_info,
+		website_panel_info,
+		outreach_panel_info,
+		operations_panel_info
+	];
 </script>
 
 <img
@@ -91,10 +194,9 @@
 	alt="ideahacks logo"
 />
 
-<TeamPanel teamInfo={director_panel_info} />
-<TeamPanel teamInfo={design_panel_info} />
-<TeamPanel teamInfo={food_panel_info} />
-<TeamPanel teamInfo={corporate_panel_info} />
+{#each allTeams as teamInfo}
+	<TeamPanel {teamInfo} />
+{/each}
 
 <style lang="postcss">
 	:global(body) {
