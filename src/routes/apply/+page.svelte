@@ -745,9 +745,3 @@
 		</h2>
 	</div>
 {/if}
-
-<style lang="postcss">
-	:global(body) {
-		background: linear-gradient(180deg, #240202 0%, #70130b 19.56%, #a53018 46.19%, #d97e2e 74.45%);
-	}
-</style>

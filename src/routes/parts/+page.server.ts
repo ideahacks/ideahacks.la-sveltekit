@@ -1,6 +1,9 @@
-import prisma from '$lib/prisma';
+export async function load({ locals: { supabase } }) {
+	const { data, error } = await supabase.from('parts').select();
 
-export async function load() {
-	const parts = await prisma.part.findMany();
-	return { parts };
+	if (error) {
+		return { parts: null };
+	}
+
+	return { parts: data };
 }

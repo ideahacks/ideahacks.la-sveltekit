@@ -26,9 +26,15 @@
 <div class="flex min-h-screen flex-col">
 	<Navbar {supabase} {session} />
 
-	<main>
+	<main class="flex-1">
 		<slot />
 	</main>
 
 	<Footer />
 </div>
+
+<style lang="postcss">
+	main {
+		background: linear-gradient(180deg, #240202 0%, #70130b 19.56%, #a53018 46.19%, #d97e2e 74.45%);
+	}
+</style>

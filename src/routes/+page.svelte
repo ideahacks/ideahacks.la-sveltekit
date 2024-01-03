@@ -163,16 +163,6 @@
 </div>
 
 <style lang="postcss">
-	:global(body) {
-		background: linear-gradient(
-			180deg,
-			#240202 0%,
-			#70130b 18.75%,
-			#a53018 44.27%,
-			#d97e2e 71.35%,
-			#f6c042 95.83%
-		);
-	}
 	.cloud-container {
 		display: flex;
 		animation: scrollImages 10s linear infinite; /* Adjust time as needed */
