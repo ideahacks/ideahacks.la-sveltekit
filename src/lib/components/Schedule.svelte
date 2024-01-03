@@ -5,6 +5,7 @@
 <div
 	class="my-4 rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5 opacity-90 bg-blend-normal"
 >
+	<h2 class="mb-8 font-display-serif text-5xl">Schedule</h2>
 	<h2 class="mb-4 font-display-sans text-3xl font-bold">Friday, January 12th</h2>
 	<div class="overflow-x-auto">
 		<table class="table-lg table">
@@ -54,11 +55,9 @@
 			</tbody>
 		</table>
 	</div>
-</div>
 
-<div
-	class="my-4 rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5 opacity-90 bg-blend-normal"
->
+	<div class="divider" />
+
 	<h2 class="mb-4 font-display-sans text-3xl font-bold">Saturday, January 13th</h2>
 	<div class="overflow-x-auto">
 		<table class="table-lg table">
@@ -108,11 +107,9 @@
 			</tbody>
 		</table>
 	</div>
-</div>
 
-<div
-	class="my-4 rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5 opacity-90 bg-blend-normal"
->
+	<div class="divider" />
+
 	<h2 class="mb-4 font-display-sans text-3xl font-bold">Sunday, January 14th</h2>
 	<div class="overflow-x-auto">
 		<table class="table-lg table">
