@@ -57,7 +57,7 @@
 		<div
 			class="my-4 rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5 opacity-90 bg-blend-normal"
 		>
-			<div class="min-h96 flex h-48 flex-wrap justify-center gap-2">
+			<div class="flex h-48 flex-wrap justify-center gap-2 overflow-y-auto">
 				{#each tagsAfterFiltering as tag}
 					<div class="has-[:checked]:btn-primary form-control btn-sm btn" transition:fade>
 						<label class="label cursor-pointer">
