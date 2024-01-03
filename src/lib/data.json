@@ -1,0 +1,27 @@
+[
+	{
+		"id": 1,
+		"name": "Coin Acceptor",
+		"quantity": 4
+	},
+	{
+		"id": 2,
+		"name": "DC Gearbox Motor - \"TT Motor\"",
+		"quantity": 33
+	},
+	{
+		"id": 3,
+		"name": "Foot Switch",
+		"quantity": 5
+	},
+	{
+		"id": 4,
+		"name": "High Torque Micro Servo",
+		"quantity": 5
+	},
+	{
+		"id": 5,
+		"name": "Sub-Micro Servo 3.7g",
+		"quantity": 9
+	}
+]

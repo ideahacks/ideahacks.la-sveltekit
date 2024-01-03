@@ -243,7 +243,7 @@
 				Check your email for application updates!
 			</h2>
 			<br />
-			<button on:click={handleResubmit} class="btn-primary btn px-4 py-2">
+			<button on:click={handleResubmit} class="btn btn-primary px-4 py-2">
 				Edit Application <PencilLine /></button
 			>
 		</div>
@@ -721,7 +721,7 @@
 					</div>
 				</div>
 
-				<button on:click={handleSubmit} class="btn-primary btn px-4 py-2"> Submit </button>
+				<button on:click={handleSubmit} class="btn btn-primary px-4 py-2"> Submit </button>
 
 				<p class="mb-2 h-3 p-1 font-display-sans text-xs tracking-wide text-gray-200">
 					{formStatus}
@@ -745,9 +745,3 @@
 		</h2>
 	</div>
 {/if}
-
-<style lang="postcss">
-	:global(body) {
-		background: linear-gradient(180deg, #240202 0%, #70130b 19.56%, #a53018 46.19%, #d97e2e 74.45%);
-	}
-</style>

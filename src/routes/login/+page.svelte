@@ -22,7 +22,7 @@
 		<div class="card-body items-center text-center">
 			<h1 class="card-title text-3xl">Join or sign in</h1>
 			<div class="card-actions">
-				<button on:click={signIn} class="btn-large btn-primary btn m-4">Sign in with Google</button>
+				<button on:click={signIn} class="btn-large btn btn-primary m-4">Sign in with Google</button>
 			</div>
 		</div>
 	</div>
@@ -36,14 +36,4 @@
 </div>
 
 <style lang="postcss">
-	:global(body) {
-		background: linear-gradient(
-			180deg,
-			#240202 0%,
-			#70130b 18.75%,
-			#a53018 44.27%,
-			#d97e2e 71.35%,
-			#f6c042 95.83%
-		);
-	}
 </style>
