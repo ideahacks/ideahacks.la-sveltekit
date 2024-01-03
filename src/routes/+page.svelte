@@ -1,7 +1,7 @@
 <script>
 	import Schedule from '$lib/components/Schedule.svelte';
 	import Sponsor from '$lib/components/Sponsor.svelte';
-	import { Calendar, MapPin, Sparkles } from 'lucide-svelte';
+	import { Calendar, Link, MapPin, Sparkles } from 'lucide-svelte';
 
 	import northrop_grumman from '$lib/images/sponsors/northrop_grumman.svg';
 	import texas_instruments from '$lib/images/sponsors/texas_instruments.svg';
@@ -23,100 +23,143 @@
 
 	<div class="divider" />
 
-	<a href="/apply" class="btn-primary btn-lg btn my-2 flex-initial"
-		>Applications are open! <Sparkles /></a
+	<div
+		class="my-4 rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5 opacity-90 bg-blend-normal"
 	>
+		<p class="mb-4">
+			IEEE at UCLA is pleased to present the tenth anniversary of IDEA Hacks, the premier
+			hardware-focused hackathon on the West Coast. Hosted by IEEE’s Student Branch at UCLA for 36
+			hours this upcoming January 12-14, 2024, it provides hundreds of students from both UCLA and
+			local community colleges with the opportunity to develop their own tangible products.
+			Throughout the experience, IEEE provides parts, tools, space, food, and workshops all for
+			free, so all students can focus solely on their projects.
+		</p>
+		<p class="mb-4">
+			This year will be the tenth anniversary of IDEA Hacks, and the theme “Celebrating Our
+			Communities” will encourage students from all backgrounds to embrace their unique backgrounds
+			and create something that will improve or benefit their communities, surroundings, and
+			environments.
+		</p>
+		<p class="mb-4">
+			The three sub-categories Sustainability, Accessibility, and “Go Touch Grass” aim to promote
+			the creation of projects that will benefit the health of the planet, improve usability, or
+			share the enjoyment of life. More information on these subcategories
+			<a
+				class="link"
+				target="_blank"
+				href="https://docs.google.com/document/d/1yFtEunybfpHEBj6Bx5U7BCU507Oiu2TjHr9MLfI-Ndg/edit?usp=sharing"
+				>can be found here</a
+			>.
+		</p>
+		<p class="mb-4">
+			Everything you need throughout the weekend, from parts to food to knowledge, will all be right
+			at your fingertips. Communication and announcements will happen through a Discord server we
+			will set up for the hackathon.
+		</p>
+	</div>
 
-	<p class="my-4 mb-8 font-display-sans font-semibold">Due 12/23 at 11:59 pm!</p>
-
-	<p class="mb-4">
-		IEEE at UCLA is pleased to present the tenth anniversary of IDEA Hacks, the premier
-		hardware-focused hackathon on the West Coast. Hosted by IEEE’s Student Branch at UCLA for 36
-		hours this upcoming January 12-14, 2024, it provides hundreds of students from both UCLA and
-		local community colleges with the opportunity to develop their own tangible products. Throughout
-		the experience, IEEE provides parts, tools, space, food, and workshops all for free, so all
-		students can focus solely on their projects.
-	</p>
-	<p class="mb-4">
-		This year will be the tenth anniversary of IDEA Hacks, and the theme “Celebrating Our
-		Communities” will encourage students from all backgrounds to embrace their unique backgrounds
-		and create something that will improve or benefit their communities, surroundings, and
-		environments. The three sub-categories - sustainability, accessibility, and “go touch grass”
-		(going outside) - are aimed to promote the creation of projects that will benefit the health of
-		the planet, improve usability, or share the enjoyment of life. Everything you need throughout
-		the weekend, from parts to food to knowledge, will all be right at your fingertips.
-		Communication and announcements will happen through a Discord server we will set up for the
-		hackathon.
-	</p>
-
-	<h2 class="my-4 mt-4 font-display-serif text-5xl">Schedule</h2>
+	<div
+		class="my-4 rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5 opacity-90 bg-blend-normal"
+	>
+		<h2 class="font-display-serif text-5xl">Prizes</h2>
+		<ul class="mt-4 space-y-4">
+			<li>
+				<span class="font-bold">Grand Prize:</span> GIGABYTE M27Q 27" 170Hz 1440P -KVM Gaming Monitor
+			</li>
+			<li>
+				<span class="font-bold">Second Place:</span> Nespresso VertuoPlus Coffee/Espresso Machine
+			</li>
+			<li>
+				<span class="font-bold">Third Place:</span> JBL Flip 6 Portable Waterproof Bluetooth Speaker
+			</li>
+			<li>
+				<span class="font-bold">Accessibility Track Prize:</span> $500 cash (divided amongst team)
+			</li>
+			<li>
+				<span class="font-bold">Sustainability Track Prize:</span> Bonsai Tree Kit and Hydroponic Indoor
+				Herb Garden Kit with LED Grow Light
+			</li>
+			<li>
+				<span class="font-bold">“Go Touch Grass” Track Prize:</span> Camping Hammock, 80”x 80” 3-Layer
+				Waterproof Outdoor Blanket, and White Stainless Steel 24oz HydroFlask
+			</li>
+		</ul>
+	</div>
 
 	<Schedule />
 
-	<h2 class="mt-4 font-display-serif text-5xl">Frequently asked questions</h2>
+	<div
+		class="my-4 rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5 opacity-90 bg-blend-normal"
+	>
+		<h2 class="mt-4 font-display-serif text-5xl">Frequently asked questions</h2>
 
-	<div class="grid gap-2 md:grid-cols-2">
-		<div class="card">
-			<div class="card-body">
-				<h3 class="card-title font-display-sans text-3xl">Who can attend?</h3>
-				<p>
-					All students interested are encouraged to apply regardless of your major or experience
-					level! And although most participants end up being UCLA engineering students, we would
-					love to welcome participants from any major and those outside the Bruin community :)
-				</p>
+		<div class="grid gap-2 md:grid-cols-2">
+			<div class="card">
+				<div class="card-body">
+					<h3 class="card-title font-display-sans text-3xl">Who can attend?</h3>
+					<p>
+						All students interested are encouraged to apply regardless of your major or experience
+						level! And although most participants end up being UCLA engineering students, we would
+						love to welcome participants from any major and those outside the Bruin community :)
+					</p>
+				</div>
 			</div>
-		</div>
-		<div class="card">
-			<div class="card-body">
-				<h3 class="card-title font-display-sans text-3xl">What if I don't have a team?</h3>
-				<p>
-					You are free to hack alone, but doing it with a team makes it all the more fun! We
-					encourage everyone to be on teams of around 4-5 hackers. Not only will this make it more
-					enjoyable, but more equipment will be available for your use.
-				</p>
+			<div class="card">
+				<div class="card-body">
+					<h3 class="card-title font-display-sans text-3xl">What if I don't have a team?</h3>
+					<p>
+						You are free to hack alone, but doing it with a team makes it all the more fun! We
+						encourage everyone to be on teams of around 4-5 hackers. Not only will this make it more
+						enjoyable, but more equipment will be available for your use.
+					</p>
+				</div>
 			</div>
-		</div>
-		<div class="card">
-			<div class="card-body">
-				<h3 class="card-title font-display-sans text-3xl">
-					What tools and hardware will be provided for my team?
-				</h3>
-				<p>
-					If you would like to see a specific part or device at the hackathon, you can specify so on
-					your application and we'll do our best to accommodate! You can also view a full list of
-					available parts on our Parts page closer to the start of the hackathon. We will also
-					provide soldering stations, 3D printers, and laser cutters for you to use on your
-					projects.
-				</p>
+			<div class="card">
+				<div class="card-body">
+					<h3 class="card-title font-display-sans text-3xl">
+						What tools and hardware will be provided for my team?
+					</h3>
+					<p>
+						If you would like to see a specific part or device at the hackathon, you can specify so
+						on your application and we'll do our best to accommodate! You can also view a full list
+						of available parts on our Parts page closer to the start of the hackathon. We will also
+						provide soldering stations, 3D printers, and laser cutters for you to use on your
+						projects.
+					</p>
+				</div>
 			</div>
-		</div>
-		<div class="card">
-			<div class="card-body">
-				<h3 class="card-title font-display-sans text-3xl">How do I contact IDEA Hacks?</h3>
-				<p>
-					Email us at <a href="mailto:evp@ieeebruins.com" class="link">evp@ieeebruins.com</a>! If
-					you have feedback on the website please reach out at
-					<a href="mailto:webmaster@ieeebruins.com" class="link">webmaster@ieeebruins.com</a>.
-				</p>
+			<div class="card">
+				<div class="card-body">
+					<h3 class="card-title font-display-sans text-3xl">How do I contact IDEA Hacks?</h3>
+					<p>
+						Email us at <a href="mailto:evp@ieeebruins.com" class="link">evp@ieeebruins.com</a>! If
+						you have feedback on the website please reach out at
+						<a href="mailto:webmaster@ieeebruins.com" class="link">webmaster@ieeebruins.com</a>.
+					</p>
+				</div>
 			</div>
 		</div>
 	</div>
 
-	<h2 class="my-4 mt-4 font-display-serif text-5xl">Sponsors</h2>
+	<div
+		class="my-4 rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5 opacity-90 bg-blend-normal"
+	>
+		<h2 class="my-4 mt-4 font-display-serif text-5xl">Sponsors</h2>
 
-	<div class="my-4 flex gap-8">
-		<Sponsor src={northrop_grumman} alt={'Northrop Grumman'} />
-		<Sponsor src={texas_instruments} alt={'Texas Instruments'} />
-		<Sponsor src={digikey} alt={'Digikey'} />
-		<Sponsor src={patient_safety_technology_challenge} alt={'Patient Safety Technology'} />
+		<div class="my-4 flex gap-8">
+			<Sponsor src={northrop_grumman} alt={'Northrop Grumman'} />
+			<Sponsor src={texas_instruments} alt={'Texas Instruments'} />
+			<Sponsor src={digikey} alt={'Digikey'} />
+			<Sponsor src={patient_safety_technology_challenge} alt={'Patient Safety Technology'} />
+		</div>
+
+		<p>
+			Interested in sponsoring IDEA Hacks? Check out our <a
+				href="https://drive.google.com/file/d/1KDASmkWqPmwoqTGyly87Hjs6MYoJ3MSI/view?usp=sharing"
+				class="link">sponsorship brochure</a
+			>!
+		</p>
 	</div>
-
-	<p>
-		Interested in sponsoring IDEA Hacks? Check out our <a
-			href="https://drive.google.com/file/d/1KDASmkWqPmwoqTGyly87Hjs6MYoJ3MSI/view?usp=sharing"
-			class="link">sponsorship brochure</a
-		>!
-	</p>
 </div>
 
 <style lang="postcss">
