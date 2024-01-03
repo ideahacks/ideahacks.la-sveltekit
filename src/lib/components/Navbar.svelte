@@ -16,17 +16,17 @@
 	}
 </script>
 
-<div class="navbar bg-red-950 font-display-sans">
+<div class="navbar bg-red-950 font-display-sans font-bold">
 	<div class="flex-1">
 		<a href="/">
 			<img class="mr-4 w-14" src={logo} alt="ideahacks" />
 		</a>
 	</div>
-	{#if session}
-		<ul class="mr-4">
-			<li>
-				<a href="/apply" class="mr-4">Apply</a>
-			</li>
+	<ul class="mr-4">
+		<li>
+			<a href="/parts" class="mr-4">Parts</a>
+		</li>
+		{#if session}
 			<li>
 				<details class="dropdown-end dropdown">
 					<summary class="btn-primary btn-circle btn"><UserCircle2 /></summary>
@@ -43,8 +43,8 @@
 					</ul>
 				</details>
 			</li>
-		</ul>
-	{:else}
-		<a href="/login" class="btn-primary btn">Login</a>
-	{/if}
+		{:else}
+			<a href="/login" class="btn-primary btn">Login</a>
+		{/if}
+	</ul>
 </div>
