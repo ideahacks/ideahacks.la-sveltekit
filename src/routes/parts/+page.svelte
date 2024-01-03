@@ -48,7 +48,7 @@
 		</p>
 		<div class="flex justify-center pb-4">
 			<input
-				class="input-bordered input w-1/2"
+				class="input input-bordered w-1/2"
 				placeholder="Search for a part..."
 				bind:value={search}
 			/>
@@ -59,7 +59,7 @@
 		>
 			<div class="flex h-48 flex-wrap justify-center gap-2 overflow-y-auto">
 				{#each tagsAfterFiltering as tag}
-					<div class="has-[:checked]:btn-primary form-control btn-sm btn" transition:fade>
+					<div class="btn form-control btn-sm has-[:checked]:btn-primary" transition:fade>
 						<label class="label cursor-pointer">
 							<input
 								type="checkbox"
@@ -87,7 +87,7 @@
 						<div class="card-actions">
 							<div class="tooltip tooltip-bottom" data-tip="description">
 								<button
-									class="btn-secondary btn-circle btn"
+									class="btn btn-circle btn-secondary"
 									on:click={(event) => {
 										event.currentTarget.nextElementSibling?.showModal();
 									}}><Info /></button
@@ -103,7 +103,7 @@
 								</dialog>
 							</div>
 							<div class="tooltip tooltip-bottom" data-tip="datasheet">
-								<a href={datasheet_url} target="_blank" class="btn-secondary btn-circle btn"
+								<a href={datasheet_url} target="_blank" class="btn btn-circle btn-secondary"
 									><FileText /></a
 								>
 							</div>

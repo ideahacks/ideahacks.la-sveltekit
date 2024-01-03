@@ -243,7 +243,7 @@
 				Check your email for application updates!
 			</h2>
 			<br />
-			<button on:click={handleResubmit} class="btn-primary btn px-4 py-2">
+			<button on:click={handleResubmit} class="btn btn-primary px-4 py-2">
 				Edit Application <PencilLine /></button
 			>
 		</div>
@@ -721,7 +721,7 @@
 					</div>
 				</div>
 
-				<button on:click={handleSubmit} class="btn-primary btn px-4 py-2"> Submit </button>
+				<button on:click={handleSubmit} class="btn btn-primary px-4 py-2"> Submit </button>
 
 				<p class="mb-2 h-3 p-1 font-display-sans text-xs tracking-wide text-gray-200">
 					{formStatus}

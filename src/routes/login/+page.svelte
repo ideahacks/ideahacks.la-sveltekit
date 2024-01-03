@@ -22,7 +22,7 @@
 		<div class="card-body items-center text-center">
 			<h1 class="card-title text-3xl">Join or sign in</h1>
 			<div class="card-actions">
-				<button on:click={signIn} class="btn-large btn-primary btn m-4">Sign in with Google</button>
+				<button on:click={signIn} class="btn-large btn btn-primary m-4">Sign in with Google</button>
 			</div>
 		</div>
 	</div>
