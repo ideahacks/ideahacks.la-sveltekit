@@ -19,9 +19,10 @@ export default {
 			{
 				'ideahacks-2024': {
 					primary: '#f1b21e',
-					secondary: '#130dc8',
-					accent: '#37cdbe',
+					secondary: '#58a3ba',
+					accent: '#ffffff',
 					neutral: '#3d4451',
+					'base-100': '#240202',
 					'base-content': '#ffffff'
 				}
 			}
