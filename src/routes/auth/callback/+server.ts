@@ -11,6 +11,7 @@ export async function GET(event: RequestEvent) {
 	if (code) {
 		const { error } = await supabase.auth.exchangeCodeForSession(code);
 		if (!error) {
+			console.log(next);
 			throw redirect(303, `/${next.slice(1)}`);
 		}
 	}
