@@ -44,6 +44,6 @@
 		"@supabase/supabase-js": "^2.38.4",
 		"@tailwindcss/typography": "^0.5.10",
 		"fuzzysort": "^2.0.4",
-		"lucide-svelte": "^0.269.0"
+		"lucide-svelte": "^0.309.0"
 	}
 }

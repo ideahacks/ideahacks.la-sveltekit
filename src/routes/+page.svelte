@@ -1,7 +1,15 @@
 <script>
 	import Schedule from '$lib/components/Schedule.svelte';
 	import Sponsor from '$lib/components/Sponsor.svelte';
-	import { Calendar, Info, Link, MapPin, Sparkles } from 'lucide-svelte';
+	import {
+		Award,
+		Calendar,
+		CalendarClock,
+		Info,
+		MapPin,
+		MessageCircleQuestion,
+		Sparkle
+	} from 'lucide-svelte';
 
 	import northrop_grumman from '$lib/images/sponsors/northrop_grumman.svg';
 	import texas_instruments from '$lib/images/sponsors/texas_instruments.svg';
@@ -20,6 +28,15 @@
 	<h2 class="flex items-center gap-4 font-display-sans text-6xl font-black">
 		<MapPin size={48} /> Ackerman Grand Ballroom
 	</h2>
+
+	<div class="divider" />
+
+	<div class="join join-vertical lg:join-horizontal">
+		<a href="#prizes" class="btn btn-primary join-item"><Award /> Prizes</a>
+		<a href="#schedule" class="btn btn-primary join-item"><CalendarClock /> Schedule</a>
+		<a href="#faq" class="btn btn-primary join-item"><MessageCircleQuestion /> FAQ</a>
+		<a href="#sponsors" class="btn btn-primary join-item"><Sparkle /> Sponsors</a>
+	</div>
 
 	<div class="divider" />
 
@@ -61,7 +78,7 @@
 	<div
 		class="my-4 rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5 opacity-90 bg-blend-normal"
 	>
-		<h2 class="font-display-serif text-5xl">Prizes</h2>
+		<h2 id="prizes" class="scroll-mt-8 font-display-serif text-5xl">Prizes</h2>
 		<ul class="mt-4 space-y-4">
 			<li>
 				<h3 class="font-bold">Grand Prize:</h3>
@@ -116,7 +133,9 @@
 	<div
 		class="my-4 rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5 opacity-90 bg-blend-normal"
 	>
-		<h2 class="mt-4 font-display-serif text-5xl">Frequently asked questions</h2>
+		<h2 id="faq" class="mt-4 scroll-mt-8 font-display-serif text-5xl">
+			Frequently asked questions
+		</h2>
 
 		<div class="grid gap-2 md:grid-cols-2">
 			<div class="card">
@@ -169,7 +188,7 @@
 	<div
 		class="my-4 rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5 opacity-90 bg-blend-normal"
 	>
-		<h2 class="my-4 mt-4 font-display-serif text-5xl">Sponsors</h2>
+		<h2 id="sponsors" class="my-4 mt-4 scroll-mt-8 font-display-serif text-5xl">Sponsors</h2>
 
 		<div class="my-4 flex gap-8">
 			<Sponsor src={northrop_grumman} alt={'Northrop Grumman'} />
