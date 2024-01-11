@@ -1,7 +1,7 @@
 <script>
 	import Schedule from '$lib/components/Schedule.svelte';
 	import Sponsor from '$lib/components/Sponsor.svelte';
-	import { Calendar, Link, MapPin, Sparkles } from 'lucide-svelte';
+	import { Calendar, Info, Link, MapPin, Sparkles } from 'lucide-svelte';
 
 	import northrop_grumman from '$lib/images/sponsors/northrop_grumman.svg';
 	import texas_instruments from '$lib/images/sponsors/texas_instruments.svg';
@@ -64,24 +64,49 @@
 		<h2 class="font-display-serif text-5xl">Prizes</h2>
 		<ul class="mt-4 space-y-4">
 			<li>
-				<span class="font-bold">Grand Prize:</span> GIGABYTE M27Q 27" 170Hz 1440P -KVM Gaming Monitor
+				<h3 class="font-bold">Grand Prize:</h3>
+				GIGABYTE M27Q 27" 170Hz 1440P -KVM Gaming Monitor
 			</li>
 			<li>
-				<span class="font-bold">Second Place:</span> Nespresso VertuoPlus Coffee/Espresso Machine
+				<h3 class="font-bold">Second Place:</h3>
+				TBA
 			</li>
 			<li>
-				<span class="font-bold">Third Place:</span> JBL Flip 6 Portable Waterproof Bluetooth Speaker
+				<h3 class="font-bold">Third Place:</h3>
+				JBL Flip 6 Portable Waterproof Bluetooth Speaker
 			</li>
 			<li>
-				<span class="font-bold">Accessibility Track Prize:</span> $500 cash (divided amongst team)
+				<h3 class="font-bold">Accessibility Track Prize:</h3>
+				TBA
 			</li>
 			<li>
-				<span class="font-bold">Sustainability Track Prize:</span> Bonsai Tree Kit and Hydroponic Indoor
-				Herb Garden Kit with LED Grow Light
+				<h3 class="font-bold">Sustainability Track Prize:</h3>
+				Bonsai Tree Kit and Hydroponic Indoor Herb Garden Kit with LED Grow Light
 			</li>
 			<li>
-				<span class="font-bold">“Go Touch Grass” Track Prize:</span> Camping Hammock, 80”x 80” 3-Layer
-				Waterproof Outdoor Blanket, and White Stainless Steel 24oz HydroFlask
+				<h3 class="font-bold">“Go Touch Grass” Track Prize:</h3>
+				Camping Hammock, 80”x 80” 3-Layer Waterproof Outdoor Blanket, and White Stainless Steel 24oz
+				HydroFlask
+			</li>
+			<li>
+				<h3 class="font-bold">Patient Safety Tech Prize:</h3>
+				<p>$500 (split between members)</p>
+				<div class="mt-4 flex gap-2">
+					<Info size={32} />
+					<div>
+						<p class="mb-4">
+							In order to be eligible to win the patient safety prize, your innovation must align
+							with one of the following five leading patient safety challenges facing health care
+							across the continuum of care: Medication errors, procedural/surgical errors, errors
+							during routine patient care (e.g. pressure ulcers, blood clots, falls), infections and
+							diagnostic safety.
+						</p>
+						<p>
+							The winning team will represent the most innovative, impactful, viable idea that
+							clearly understands the problem identified.
+						</p>
+					</div>
+				</div>
 			</li>
 		</ul>
 	</div>
