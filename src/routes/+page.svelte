@@ -69,7 +69,7 @@
 			</li>
 			<li>
 				<h3 class="font-bold">Second Place:</h3>
-				TBA
+				Electic Gooseneck Kettle, Pour Over Coffee Maker, 16 oz Carter Move Travel Mug
 			</li>
 			<li>
 				<h3 class="font-bold">Third Place:</h3>
@@ -77,7 +77,7 @@
 			</li>
 			<li>
 				<h3 class="font-bold">Accessibility Track Prize:</h3>
-				TBA
+				Luna 20 LB Weighted Blanket and Comfort Spa Backrest Pillow
 			</li>
 			<li>
 				<h3 class="font-bold">Sustainability Track Prize:</h3>
