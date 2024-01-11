@@ -18,7 +18,7 @@
 			<tbody>
 				<tr>
 					<th>Patient Safety Workshop</th>
-					<td>4:00 pm - 4:45 pm <span class="badge">Ackerman Grand Ballroom</span></td>
+					<td>4:00 pm - 4:45 pm <span class="badge">Ackerman Union 2408</span></td>
 				</tr>
 				<tr>
 					<th>Check In</th>
@@ -46,11 +46,11 @@
 				</tr>
 				<tr>
 					<th>Microcontroller Workshop</th>
-					<td>9:15 pm - 9:45 pm <span class="badge">Ackerman Grand Ballroom</span></td>
+					<td>9:15 pm - 10:00 pm <span class="badge">Ackerman Union 2408</span></td>
 				</tr>
 				<tr>
 					<th>Wireless Connectivity Workshop</th>
-					<td>10:00 pm - 10:45 pm <span class="badge">Ackerman Grand Ballroom</span></td>
+					<td>10:00 pm - 10:45 pm <span class="badge">Ackerman Union 2412</span></td>
 				</tr>
 			</tbody>
 		</table>
@@ -130,7 +130,9 @@
 				</tr>
 				<tr>
 					<th>Round 1 Judging</th>
-					<td>9:15 am - 10:45 am <span class="badge">TBD</span></td>
+					<td
+						>9:15 am - 10:45 am <span class="badge">Ackerman Union 2408, 2410, 2412, 3517</span></td
+					>
 				</tr>
 				<tr>
 					<th>Judging Finals</th>
