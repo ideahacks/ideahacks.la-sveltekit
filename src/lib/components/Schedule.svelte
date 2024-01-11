@@ -50,7 +50,7 @@
 				</tr>
 				<tr>
 					<th>Wireless Connectivity Workshop</th>
-					<td>10:00 pm - 10:30 pm <span class="badge">Ackerman Grand Ballroom</span></td>
+					<td>10:00 pm - 10:45 pm <span class="badge">Ackerman Grand Ballroom</span></td>
 				</tr>
 			</tbody>
 		</table>
