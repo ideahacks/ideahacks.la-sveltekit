@@ -17,7 +17,7 @@
 		return {
 			...part,
 			get all_ids() {
-				return `${[part.id, ...part.alt_ids].join(' ')}`;
+				return `${[part.part_id, ...part.alt_ids].join(' ')}`;
 			}
 		};
 	});
@@ -33,22 +33,22 @@
 
 	$: serverResponse = null;
 
-	let cart: { id: number; quantity: number }[] = [];
+	let cart: { part_id: number; quantity: number }[] = [];
 	let teamNumber: number | null;
 
-	function addToCart(id: number) {
-		const existingIdx = cart.findIndex((part) => part.id === id);
+	function addToCart(part_id: number) {
+		const existingIdx = cart.findIndex((part) => part.part_id === part_id);
 		if (existingIdx !== -1) {
 			cart[existingIdx].quantity += 1;
 			cart = cart;
 			return;
 		}
 
-		cart = [...cart, { id, quantity: 1 }];
+		cart = [...cart, { part_id, quantity: 1 }];
 	}
 
-	function removeFromCart(id: number) {
-		cart = cart.filter((part) => part.id !== id);
+	function removeFromCart(part_id: number) {
+		cart = cart.filter((part) => part.part_id !== part_id);
 	}
 
 	async function checkin() {
@@ -152,14 +152,14 @@
 				</p>
 
 				<div class="flex flex-wrap justify-center gap-4">
-					{#each results as { score, obj: { id, name, quantity, image_url, all_ids } }}
+					{#each results as { score, obj: { part_id, name, quantity, image_url, all_ids } }}
 						<div class="card w-60 border border-opacity-50">
 							<div class="card-body">
 								<div class="card-actions">
 									<button
 										class="btn btn-secondary"
 										on:click={() => {
-											addToCart(id);
+											addToCart(part_id);
 											search = '';
 										}}>Add to cart</button
 									>
@@ -191,7 +191,7 @@
 					<div class="my-2 flex flex-col gap-2">
 						{#each cart as part}
 							<div class="join">
-								<p class="join-item mr-4 place-self-center">Part {part.id}:</p>
+								<p class="join-item mr-4 place-self-center">Part {part.part_id}:</p>
 								<input
 									type="number"
 									min="1"
@@ -199,7 +199,7 @@
 									required
 									bind:value={part.quantity}
 								/>
-								<button class="btn btn-secondary join-item" on:click={() => removeFromCart(part.id)}
+								<button class="btn join-item" on:click={() => removeFromCart(part.part_id)}
 									>Remove from cart</button
 								>
 							</div>
