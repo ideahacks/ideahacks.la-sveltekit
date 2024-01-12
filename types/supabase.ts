@@ -3,38 +3,28 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export interface Database {
 	public: {
 		Tables: {
-			_prisma_migrations: {
+			admins: {
 				Row: {
-					applied_steps_count: number;
-					checksum: string;
-					finished_at: string | null;
-					id: string;
-					logs: string | null;
-					migration_name: string;
-					rolled_back_at: string | null;
-					started_at: string;
+					created_at: string;
+					user_id: string;
 				};
 				Insert: {
-					applied_steps_count?: number;
-					checksum: string;
-					finished_at?: string | null;
-					id: string;
-					logs?: string | null;
-					migration_name: string;
-					rolled_back_at?: string | null;
-					started_at?: string;
+					created_at?: string;
+					user_id: string;
 				};
 				Update: {
-					applied_steps_count?: number;
-					checksum?: string;
-					finished_at?: string | null;
-					id?: string;
-					logs?: string | null;
-					migration_name?: string;
-					rolled_back_at?: string | null;
-					started_at?: string;
+					created_at?: string;
+					user_id?: string;
 				};
-				Relationships: [];
+				Relationships: [
+					{
+						foreignKeyName: 'admins_user_id_fkey';
+						columns: ['user_id'];
+						isOneToOne: true;
+						referencedRelation: 'users';
+						referencedColumns: ['id'];
+					}
+				];
 			};
 			applications: {
 				Row: {
@@ -101,7 +91,7 @@ export interface Database {
 					}
 				];
 			};
-			Email: {
+			emails: {
 				Row: {
 					createdAt: string;
 					email: string;
@@ -157,6 +147,93 @@ export interface Database {
 					tags?: string[] | null;
 				};
 				Relationships: [];
+			};
+			teams: {
+				Row: {
+					created_at: string;
+					modified_at: string | null;
+					team_id: number;
+				};
+				Insert: {
+					created_at?: string;
+					modified_at?: string | null;
+					team_id?: number;
+				};
+				Update: {
+					created_at?: string;
+					modified_at?: string | null;
+					team_id?: number;
+				};
+				Relationships: [];
+			};
+			teams_parts: {
+				Row: {
+					created_at: string;
+					part_id: string;
+					quantity: number;
+					team_id: number;
+				};
+				Insert: {
+					created_at?: string;
+					part_id: string;
+					quantity: number;
+					team_id: number;
+				};
+				Update: {
+					created_at?: string;
+					part_id?: string;
+					quantity?: number;
+					team_id?: number;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'teams_parts_part_id_fkey';
+						columns: ['part_id'];
+						isOneToOne: false;
+						referencedRelation: 'parts';
+						referencedColumns: ['id'];
+					},
+					{
+						foreignKeyName: 'teams_parts_team_id_fkey';
+						columns: ['team_id'];
+						isOneToOne: false;
+						referencedRelation: 'teams';
+						referencedColumns: ['team_id'];
+					}
+				];
+			};
+			users: {
+				Row: {
+					created_at: string;
+					team_id: number | null;
+					user_id: string;
+				};
+				Insert: {
+					created_at?: string;
+					team_id?: number | null;
+					user_id: string;
+				};
+				Update: {
+					created_at?: string;
+					team_id?: number | null;
+					user_id?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'users_team_id_fkey';
+						columns: ['team_id'];
+						isOneToOne: false;
+						referencedRelation: 'teams';
+						referencedColumns: ['team_id'];
+					},
+					{
+						foreignKeyName: 'users_user_id_fkey';
+						columns: ['user_id'];
+						isOneToOne: true;
+						referencedRelation: 'users';
+						referencedColumns: ['id'];
+					}
+				];
 			};
 		};
 		Views: {

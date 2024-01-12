@@ -25,6 +25,7 @@
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.30.0",
+		"html5-qrcode": "^2.3.8",
 		"postcss": "^8.4.21",
 		"prettier": "^2.8.8",
 		"prettier-plugin-svelte": "^2.10.1",
@@ -44,7 +45,6 @@
 		"@supabase/supabase-js": "^2.38.4",
 		"@tailwindcss/typography": "^0.5.10",
 		"fuzzysort": "^2.0.4",
-		"lucide-svelte": "^0.309.0",
-		"vercel": "^33.1.0"
+		"lucide-svelte": "^0.309.0"
 	}
 }
