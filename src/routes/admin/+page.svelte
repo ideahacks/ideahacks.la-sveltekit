@@ -3,4 +3,5 @@
 <div class="flex flex-col items-center gap-4">
 	<a class="btn btn-primary" href="/admin/checkout">Parts Checkout</a>
 	<a class="btn btn-primary" href="/admin/checkin">Parts Check-In</a>
+	<a class="btn btn-primary" href="/admin/teams">Teams and Parts</a>
 </div>
