@@ -23,13 +23,10 @@ export async function POST({ request, locals: { supabase } }) {
 		throw error(500, 'Could not get existing parts');
 	}
 
-	console.log(existingParts);
-
 	const checkoutParts = cart.map((part) => {
 		part.id = String(part.id).padStart(4, '0');
 		const already_checked_out =
 			existingParts?.find((existingPart) => existingPart.part_id === part.id)?.quantity ?? 0;
-		console.log(already_checked_out);
 		return {
 			team_id: teamNumber,
 			part_id: part.id,

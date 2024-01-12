@@ -6,6 +6,16 @@
 	export let supabase: SupabaseClient;
 	export let session: Session;
 
+	async function isAdmin() {
+		const { data, error } = await supabase.from('admins').select();
+
+		if (error) {
+			console.log(`Error checking if user is admin: ${error}`);
+		}
+
+		return data && data.length > 0;
+	}
+
 	async function signOut() {
 		const { error } = await supabase.auth.signOut();
 
@@ -23,6 +33,13 @@
 		</a>
 	</div>
 	<ul class="mr-4">
+		{#await isAdmin() then isAdmin}
+			{#if isAdmin}
+				<li>
+					<a href="/admin" class="mr-4">Admin</a>
+				</li>
+			{/if}
+		{/await}
 		<li>
 			<a href="/parts" class="mr-4">Parts</a>
 		</li>

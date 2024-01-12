@@ -1,118 +1,207 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+	import { redirect } from '@sveltejs/kit';
 	import fuzzysort from 'fuzzysort';
-	import { FileText, Info, Puzzle } from 'lucide-svelte';
-	import { flip } from 'svelte/animate';
-	import { fade } from 'svelte/transition';
-
-	interface Part {
-		name: string;
-		quantity: number;
-		image_url: string;
-		datasheet_url: string;
-		description: string;
-		tags: string[];
-	}
+	import { ScanBarcode } from 'lucide-svelte';
+	import {
+		Html5QrcodeScanner,
+		type Html5QrcodeResult,
+		type QrcodeSuccessCallback
+	} from 'html5-qrcode';
+	import { onMount } from 'svelte';
 
 	export let data;
 
-	const parts: Part[] = data.parts ?? [];
-
-	let selectedTags: string[] = [];
+	$: partIds = data.parts.map((part) => {
+		return {
+			...part,
+			get all_ids() {
+				return `${[part.id, ...part.alt_ids].join(' ')}`;
+			}
+		};
+	});
 	let search = '';
 
-	$: tagFilteredParts =
-		selectedTags.length === 0
-			? parts
-			: parts.filter(({ tags }) =>
-					selectedTags.every((selectedTag: string) => tags.includes(selectedTag))
-			  );
-
-	$: tagsAfterFiltering = new Set(tagFilteredParts.flatMap((part) => part.tags).sort());
-
-	$: results = fuzzysort.go(search, tagFilteredParts, {
-		keys: ['name', 'description'],
-		all: true
+	$: results = fuzzysort.go(search, partIds, {
+		keys: ['all_ids'],
+		all: true,
+		threshold: -100
 	});
 
-	$: console.log(selectedTags);
+	$: firstResultId = results[0].obj.id;
+
+	$: serverResponse = null;
+
+	let cart: { id: number; quantity: number }[] = [];
+	let teamNumber: number | null;
+
+	function addToCart(id: number) {
+		if (cart.find((part) => part.id === id)) {
+			return;
+		}
+
+		cart = [...cart, { id, quantity: 1 }];
+	}
+
+	function removeFromCart(id: number) {
+		cart = cart.filter((part) => part.id !== id);
+	}
+
+	async function checkin() {
+		const response = await fetch($page.url.pathname, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ teamNumber, cart })
+		});
+
+		if (!response.ok) {
+			return;
+		}
+
+		serverResponse = await response.json();
+	}
+
+	function onScanSuccess(decodedText: string, decodedResult: Html5QrcodeResult) {
+		search = decodedText;
+		// FIXME: result sometimes doesn't update fast enough, so force a delay
+		setTimeout(() => {
+			addToCart(firstResultId);
+			search = '';
+		}, 100);
+	}
+
+	onMount(() => {
+		const html5QrcodeScanner = new Html5QrcodeScanner(
+			'barcode-scanner',
+			{ fps: 10, qrbox: 250 },
+			false
+		);
+
+		html5QrcodeScanner.render(onScanSuccess, () => {});
+	});
 </script>
 
-<div class="m-12 justify-center space-y-8">
-	<h1 class="flex justify-center font-display-serif text-7xl md:text-9xl">Parts</h1>
-	<br />
-
-	{#if data.parts && data.parts.length > 0}
-		<p class="text-center font-display-sans text-xl">
-			You're currently viewing {results.length}
-			{results.length === 1 ? 'part' : 'parts'}
-		</p>
-		<div class="flex justify-center pb-4">
-			<input
-				class="input input-bordered w-1/2"
-				placeholder="Search for a part..."
-				bind:value={search}
-			/>
-		</div>
-
-		<div
-			class="my-4 rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5 opacity-90 bg-blend-normal"
+{#if serverResponse}
+	<div class="m-12 flex flex-col justify-center gap-2 space-y-8">
+		<h1 class="text-center font-display-serif text-3xl md:text-4xl">Parts Check-in</h1>
+		<p class="text-center font-bold">Successful check-in for team {serverResponse.teamNumber}!</p>
+		<p class="text-center">Updated part quantities (removed from database if zero or negative):</p>
+		<p class="text-center">{JSON.stringify(serverResponse.updatedParts)}</p>
+		<button
+			class="btn btn-secondary"
+			on:click={() => {
+				serverResponse = null;
+				cart = [];
+				teamNumber = null;
+			}}>Return to Check-In Page</button
 		>
-			<div class="flex h-48 flex-wrap justify-center gap-2 overflow-y-auto">
-				{#each tagsAfterFiltering as tag}
-					<div class="btn form-control btn-sm has-[:checked]:btn-primary" transition:fade>
-						<label class="label cursor-pointer">
+	</div>
+{:else}
+	<div class="m-12 justify-center space-y-8">
+		<h1 class="text-center font-display-serif text-3xl md:text-4xl">Parts Check-In</h1>
+		<div class="flex">
+			<div class="m-4 w-1/2">
+				<h2 class="mb-4 text-center font-display-serif text-3xl">Search</h2>
+				<div class="flex flex-col items-center">
+					<div class="flex justify-center gap-2 pb-4">
+						<div class="form-control">
+							<label class="label cursor-pointer">
+								<span class="label-text"><ScanBarcode /></span>
+								<input
+									type="checkbox"
+									class="toggle toggle-secondary"
+									on:click={() => {
+										document.getElementById('barcode-scanner')?.classList.toggle('hidden');
+									}}
+								/>
+							</label>
+						</div>
+						<form
+							id="search"
+							on:submit={() => {
+								// FIXME: result sometimes doesn't update fast enough, so force a delay
+								setTimeout(() => {
+									addToCart(firstResultId);
+									search = '';
+								}, 100);
+							}}
+						>
+							<!-- svelte-ignore a11y-autofocus -->
 							<input
-								type="checkbox"
-								value={tag}
-								class="peer checkbox mr-2"
-								bind:group={selectedTags}
+								autofocus
+								class="input input-bordered"
+								placeholder="Search for a part by ID"
+								bind:value={search}
 							/>
-							<span class="label-text peer-checked:text-primary-content">{tag}</span>
-						</label>
+						</form>
 					</div>
-				{/each}
+					<div id="barcode-scanner" class="hidden w-64" />
+				</div>
+
+				<p class="my-4 text-center font-display-sans text-xl">
+					You're currently viewing {results.length}
+					{results.length === 1 ? 'part' : 'parts'}
+				</p>
+
+				<div class="flex flex-wrap justify-center gap-4">
+					{#each results as { score, obj: { id, name, quantity, image_url, all_ids } }}
+						<div class="card w-60 border border-opacity-50">
+							<div class="card-body">
+								<div class="card-actions">
+									<button
+										class="btn btn-secondary"
+										on:click={() => {
+											addToCart(id);
+											search = '';
+										}}>Add to cart</button
+									>
+								</div>
+								<p>IDs: {all_ids}</p>
+								<p>Search score: {score}</p>
+								<h2 class="card-title">{name}</h2>
+								<div class="badge">Quantity: {quantity}</div>
+							</div>
+							<figure>
+								<img src={image_url} alt={name} />
+							</figure>
+						</div>
+					{/each}
+				</div>
+			</div>
+			<div class="m-4 w-1/2">
+				<h2 class="mb-4 text-center font-display-serif text-3xl">Cart</h2>
+				<form on:submit|preventDefault={checkin}>
+					<input
+						class="input input-bordered mb-2"
+						type="number"
+						min="1"
+						required
+						placeholder="Team number"
+						bind:value={teamNumber}
+					/>
+					<button type="submit" class="btn btn-secondary">Finish Check-In</button>
+					<div class="my-2 flex flex-col gap-2">
+						{#each cart as part}
+							<div class="join">
+								<p class="join-item mr-4 place-self-center">Part {part.id}:</p>
+								<input
+									type="number"
+									min="1"
+									class="input join-item input-bordered w-24"
+									required
+									bind:value={part.quantity}
+								/>
+								<button class="btn btn-secondary join-item" on:click={() => removeFromCart(part.id)}
+									>Remove from cart</button
+								>
+							</div>
+						{/each}
+					</div>
+				</form>
 			</div>
 		</div>
-
-		<div class="flex flex-wrap justify-center gap-4">
-			{#each results as { obj: { name, quantity, image_url, description, tags, datasheet_url } }}
-				<div class="card w-60 border border-white border-opacity-50">
-					<figure>
-						<img src={image_url} alt={name} />
-					</figure>
-					<div class="card-body">
-						<h2 class="card-title">{name}</h2>
-						<div class="badge badge-primary">Quantity: {quantity}</div>
-						<p><span class="font-bold">Tags:</span> {tags.join(', ')}</p>
-						<div class="card-actions">
-							<div class="tooltip tooltip-bottom" data-tip="description">
-								<button
-									class="btn btn-circle btn-secondary"
-									on:click={(event) => {
-										event.currentTarget.nextElementSibling?.showModal();
-									}}><Info /></button
-								>
-								<dialog class="modal modal-bottom sm:modal-middle">
-									<div class="modal-box border border-primary border-opacity-50">
-										<article class="whitespace-pre-line text-base-content">{description}</article>
-										<p class="mt-4 text-primary">Click or tap outside to close</p>
-									</div>
-									<form method="dialog" class="modal-backdrop">
-										<button>close</button>
-									</form>
-								</dialog>
-							</div>
-							<div class="tooltip tooltip-bottom" data-tip="datasheet">
-								<a href={datasheet_url} target="_blank" class="btn btn-circle btn-secondary"
-									><FileText /></a
-								>
-							</div>
-						</div>
-					</div>
-				</div>
-			{/each}
-		</div>
-	{:else}
-		<p class="m-8">Could not load parts!</p>
-	{/if}
-</div>
+	</div>
+{/if}
