@@ -1,17 +1,11 @@
-import { redirect } from '@sveltejs/kit';
+export async function load({ locals: { supabase }, parent }) {
+	await parent();
 
-export async function load({ locals: { supabase, getSession } }) {
-	const session = await getSession();
+	const { data: parts, error: partsError } = await supabase.from('parts').select();
 
-	if (!session) {
-	 throw redirect(303, "/login?next=admin/checkin")
-	}
-
-	const { data, error } = await supabase.from('parts').select();
-
-	if (error) {
+	if (partsError) {
 		return { parts: null };
 	}
 
-	return { parts: data };
+	return { parts };
 }

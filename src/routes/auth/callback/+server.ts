@@ -1,4 +1,4 @@
-import { redirect, type RequestEvent } from '@sveltejs/kit';
+import { error, redirect, type RequestEvent } from '@sveltejs/kit';
 
 export async function GET(event: RequestEvent) {
 	const {
@@ -17,5 +17,5 @@ export async function GET(event: RequestEvent) {
 	}
 
 	// return the user to an error page with instructions
-	throw redirect(303, '/auth/auth-code-error');
+	throw error(500, 'Error logging in, please try again or email webmaster@ieeebruins.com');
 }
