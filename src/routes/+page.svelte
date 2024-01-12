@@ -18,14 +18,14 @@
 </script>
 
 <div class="m-12 justify-center md:m-16">
-	<h1 class="font-display-serif text-8xl md:text-9xl">
+	<h1 class="font-display-serif text-7xl md:text-9xl">
 		<span> IDEA Hacks </span>
 		<span class="font-display-sans font-bold tabular-nums">2024</span>
 	</h1>
-	<h2 class="flex items-center gap-4 font-display-sans text-6xl font-black">
+	<h2 class="flex items-center gap-4 font-display-sans text-3xl font-black md:text-6xl">
 		<Calendar size={48} /> Jan 12-14
 	</h2>
-	<h2 class="flex items-center gap-4 font-display-sans text-6xl font-black">
+	<h2 class="flex items-center gap-4 font-display-sans text-3xl font-black md:text-6xl">
 		<MapPin size={48} /> Ackerman Grand Ballroom
 	</h2>
 
@@ -86,7 +86,7 @@
 			</li>
 			<li>
 				<h3 class="font-bold">Second Place:</h3>
-				Electic Gooseneck Kettle, Pour Over Coffee Maker, 16 oz Carter Move Travel Mug
+				Electric Gooseneck Kettle, Pour Over Coffee Maker, 16 oz Carter Move Travel Mug
 			</li>
 			<li>
 				<h3 class="font-bold">Third Place:</h3>
