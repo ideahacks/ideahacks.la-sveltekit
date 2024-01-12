@@ -83,7 +83,9 @@
 			false
 		);
 
-		html5QrcodeScanner.render(onScanSuccess, () => {});
+		html5QrcodeScanner.render(onScanSuccess, () => {
+			/* Callback when no barcode is detected */
+		});
 	});
 </script>
 
