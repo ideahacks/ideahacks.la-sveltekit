@@ -14,6 +14,7 @@ export async function load({ locals: { supabase, getSession } }) {
 		throw error(500, 'Could not retrieve parts, please try again!');
 	}
 
+	// Only allow authenticated users in `admins` table
 	if (!data?.length) {
 		throw error(403, 'You are not authorized to access this page');
 	}
