@@ -1,118 +1,76 @@
 <script lang="ts">
 	import fuzzysort from 'fuzzysort';
-	import { FileText, Info, Puzzle } from 'lucide-svelte';
-	import { flip } from 'svelte/animate';
-	import { fade } from 'svelte/transition';
-
-	interface Part {
-		name: string;
-		quantity: number;
-		image_url: string;
-		datasheet_url: string;
-		description: string;
-		tags: string[];
-	}
 
 	export let data;
 
-	const parts: Part[] = data.parts ?? [];
-
-	let selectedTags: string[] = [];
+	$: partIds = data.parts.map((part) => {
+		return {
+			...part,
+			get all_ids() {
+				return `${[part.id, ...part.alt_ids].join(' ')}`;
+			}
+		};
+	});
 	let search = '';
 
-	$: tagFilteredParts =
-		selectedTags.length === 0
-			? parts
-			: parts.filter(({ tags }) =>
-					selectedTags.every((selectedTag: string) => tags.includes(selectedTag))
-			  );
-
-	$: tagsAfterFiltering = new Set(tagFilteredParts.flatMap((part) => part.tags).sort());
-
-	$: results = fuzzysort.go(search, tagFilteredParts, {
-		keys: ['name', 'description'],
-		all: true
+	$: results = fuzzysort.go(search, partIds, {
+		keys: ['all_ids'],
+		all: true,
+		threshold: -100
 	});
 
-	$: console.log(selectedTags);
+	let cart = new Set();
 </script>
 
-<div class="m-12 justify-center space-y-8">
-	<h1 class="flex justify-center font-display-serif text-7xl md:text-9xl">Parts</h1>
-	<br />
+<div class=" m-12 justify-center space-y-8">
+	<h1 class="text-center font-display-serif text-6xl md:text-8xl">Parts Checkout</h1>
+	<div class="flex">
+		<div class="w-1/2">
+			<h2 class="text-center font-display-serif text-3xl">Search</h2>
+			<div class="flex justify-center gap-2 pb-4">
+				<input
+					class="input input-bordered"
+					placeholder="Search for a part by ID"
+					bind:value={search}
+				/>
+			</div>
 
-	{#if data.parts && data.parts.length > 0}
-		<p class="text-center font-display-sans text-xl">
-			You're currently viewing {results.length}
-			{results.length === 1 ? 'part' : 'parts'}
-		</p>
-		<div class="flex justify-center pb-4">
-			<input
-				class="input input-bordered w-1/2"
-				placeholder="Search for a part..."
-				bind:value={search}
-			/>
-		</div>
+			<p class="text-center">Items in cart: [{[...cart].join(', ')}]</p>
 
-		<div
-			class="my-4 rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5 opacity-90 bg-blend-normal"
-		>
-			<div class="flex h-48 flex-wrap justify-center gap-2 overflow-y-auto">
-				{#each tagsAfterFiltering as tag}
-					<div class="btn form-control btn-sm has-[:checked]:btn-primary" transition:fade>
-						<label class="label cursor-pointer">
-							<input
-								type="checkbox"
-								value={tag}
-								class="peer checkbox mr-2"
-								bind:group={selectedTags}
-							/>
-							<span class="label-text peer-checked:text-primary-content">{tag}</span>
-						</label>
+			<p class="text-center font-display-sans text-xl">
+				You're currently viewing {results.length}
+				{results.length === 1 ? 'part' : 'parts'}
+			</p>
+
+			<div class="flex flex-wrap justify-center gap-4">
+				<!-- Exact match returns a score of 0 -->
+				{#each results as { score, obj: { id, name, quantity, image_url, all_ids } }}
+					<div class="card w-60 border border-opacity-50">
+						<div class="card-body">
+							<div class="card-actions">
+								<button
+									class="btn btn-primary"
+									on:click={() => {
+										cart.add(id);
+										// Necessary to trigger Svelte's reactivity
+										cart = cart;
+									}}>Add to cart</button
+								>
+							</div>
+							<p>IDs: {all_ids}</p>
+							<p>Score: {score}</p>
+							<h2 class="card-title">{name}</h2>
+							<div class="badge">Quantity: {quantity}</div>
+						</div>
+						<figure>
+							<img src={image_url} alt={name} />
+						</figure>
 					</div>
 				{/each}
 			</div>
 		</div>
-
-		<div class="flex flex-wrap justify-center gap-4">
-			{#each results as { obj: { name, quantity, image_url, description, tags, datasheet_url } }}
-				<div class="card w-60 border border-white border-opacity-50">
-					<figure>
-						<img src={image_url} alt={name} />
-					</figure>
-					<div class="card-body">
-						<h2 class="card-title">{name}</h2>
-						<div class="badge badge-primary">Quantity: {quantity}</div>
-						<p><span class="font-bold">Tags:</span> {tags.join(', ')}</p>
-						<div class="card-actions">
-							<div class="tooltip tooltip-bottom" data-tip="description">
-								<button
-									class="btn btn-circle btn-secondary"
-									on:click={(event) => {
-										event.currentTarget.nextElementSibling?.showModal();
-									}}><Info /></button
-								>
-								<dialog class="modal modal-bottom sm:modal-middle">
-									<div class="modal-box border border-primary border-opacity-50">
-										<article class="whitespace-pre-line text-base-content">{description}</article>
-										<p class="mt-4 text-primary">Click or tap outside to close</p>
-									</div>
-									<form method="dialog" class="modal-backdrop">
-										<button>close</button>
-									</form>
-								</dialog>
-							</div>
-							<div class="tooltip tooltip-bottom" data-tip="datasheet">
-								<a href={datasheet_url} target="_blank" class="btn btn-circle btn-secondary"
-									><FileText /></a
-								>
-							</div>
-						</div>
-					</div>
-				</div>
-			{/each}
+		<div class="w-1/2">
+			<h2 class="text-center font-display-serif text-3xl">Cart</h2>
 		</div>
-	{:else}
-		<p class="m-8">Could not load parts!</p>
-	{/if}
+	</div>
 </div>

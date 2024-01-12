@@ -11,7 +11,10 @@ export async function load({ locals: { supabase, getSession } }) {
 	const { data, error: adminError } = await supabase.from('admins').select();
 
 	if (adminError) {
-		throw error(500, 'Could not retrieve parts, please try again!');
+		throw error(
+			500,
+			'Could not retrieve parts, please try again or email webmaster@ieeebruins.com'
+		);
 	}
 
 	// Only allow authenticated users in `admins` table
