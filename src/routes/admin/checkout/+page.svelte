@@ -37,7 +37,10 @@
 	let teamNumber: number | null;
 
 	function addToCart(id: number) {
-		if (cart.find((part) => part.id === id)) {
+		const existingIdx = cart.findIndex((part) => part.id === id);
+		if (existingIdx !== -1) {
+			cart[existingIdx].quantity += 1;
+			cart = cart;
 			return;
 		}
 
