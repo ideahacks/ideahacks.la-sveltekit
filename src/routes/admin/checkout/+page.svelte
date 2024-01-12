@@ -4,6 +4,12 @@
 	import { redirect } from '@sveltejs/kit';
 	import fuzzysort from 'fuzzysort';
 	import { ScanBarcode } from 'lucide-svelte';
+	import {
+		Html5QrcodeScanner,
+		type Html5QrcodeResult,
+		type QrcodeSuccessCallback
+	} from 'html5-qrcode';
+	import { onMount } from 'svelte';
 
 	export let data;
 
@@ -23,10 +29,12 @@
 		threshold: -100
 	});
 
+	$: firstResultId = results[0].obj.id;
+
 	$: serverResponse = null;
 
 	let cart: { id: number; quantity: number }[] = [];
-	let teamNumber: number;
+	let teamNumber: number | null;
 
 	function addToCart(id: number) {
 		if (cart.find((part) => part.id === id)) {
@@ -55,6 +63,25 @@
 
 		serverResponse = await response.json();
 	}
+
+	function onScanSuccess(decodedText: string, decodedResult: Html5QrcodeResult) {
+		search = decodedText;
+		// FIXME: result sometimes doesn't update fast enough, so force a delay
+		setTimeout(() => {
+			addToCart(firstResultId);
+			search = '';
+		}, 100);
+	}
+
+	onMount(() => {
+		const html5QrcodeScanner = new Html5QrcodeScanner(
+			'barcode-scanner',
+			{ fps: 10, qrbox: 250 },
+			false
+		);
+
+		html5QrcodeScanner.render(onScanSuccess, () => {});
+	});
 </script>
 
 {#if serverResponse}
@@ -68,7 +95,7 @@
 			on:click={() => {
 				serverResponse = null;
 				cart = [];
-				teamNumber = undefined;
+				teamNumber = null;
 			}}>Return to Checkout Page</button
 		>
 	</div>
@@ -78,21 +105,40 @@
 		<div class="flex">
 			<div class="m-4 w-1/2">
 				<h2 class="mb-4 text-center font-display-serif text-3xl">Search</h2>
-				<div class="flex justify-center gap-2 pb-4">
-					<div class="btn btn-primary"><ScanBarcode /></div>
-					<form
-						on:submit={() => {
-							search = '';
-							addToCart(results[0].obj.id);
-						}}
-					>
-						<input
-							autofocus
-							class="input input-bordered"
-							placeholder="Search for a part by ID"
-							bind:value={search}
-						/>
-					</form>
+				<div class="flex flex-col items-center">
+					<div class="flex justify-center gap-2 pb-4">
+						<div class="form-control">
+							<label class="label cursor-pointer">
+								<span class="label-text"><ScanBarcode /></span>
+								<input
+									type="checkbox"
+									class="toggle toggle-primary"
+									on:click={() => {
+										document.getElementById('barcode-scanner')?.classList.toggle('hidden');
+									}}
+								/>
+							</label>
+						</div>
+						<form
+							id="search"
+							on:submit={() => {
+								// FIXME: result sometimes doesn't update fast enough, so force a delay
+								setTimeout(() => {
+									addToCart(firstResultId);
+									search = '';
+								}, 100);
+							}}
+						>
+							<!-- svelte-ignore a11y-autofocus -->
+							<input
+								autofocus
+								class="input input-bordered"
+								placeholder="Search for a part by ID"
+								bind:value={search}
+							/>
+						</form>
+					</div>
+					<div id="barcode-scanner" class="hidden w-64" />
 				</div>
 
 				<p class="my-4 text-center font-display-sans text-xl">
@@ -108,8 +154,8 @@
 									<button
 										class="btn btn-primary"
 										on:click={() => {
-											search = '';
 											addToCart(id);
+											search = '';
 										}}>Add to cart</button
 									>
 								</div>
