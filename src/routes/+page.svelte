@@ -1,7 +1,15 @@
 <script>
 	import Schedule from '$lib/components/Schedule.svelte';
 	import Sponsor from '$lib/components/Sponsor.svelte';
-	import { Calendar, Link, MapPin, Sparkles } from 'lucide-svelte';
+	import {
+		Award,
+		Calendar,
+		CalendarClock,
+		Info,
+		MapPin,
+		MessageCircleQuestion,
+		Sparkle
+	} from 'lucide-svelte';
 
 	import northrop_grumman from '$lib/images/sponsors/northrop_grumman.svg';
 	import texas_instruments from '$lib/images/sponsors/texas_instruments.svg';
@@ -10,16 +18,25 @@
 </script>
 
 <div class="m-12 justify-center md:m-16">
-	<h1 class="font-display-serif text-8xl md:text-9xl">
+	<h1 class="font-display-serif text-7xl md:text-9xl">
 		<span> IDEA Hacks </span>
 		<span class="font-display-sans font-bold tabular-nums">2024</span>
 	</h1>
-	<h2 class="flex items-center gap-4 font-display-sans text-6xl font-black">
+	<h2 class="flex items-center gap-4 font-display-sans text-3xl font-black md:text-6xl">
 		<Calendar size={48} /> Jan 12-14
 	</h2>
-	<h2 class="flex items-center gap-4 font-display-sans text-6xl font-black">
+	<h2 class="flex items-center gap-4 font-display-sans text-3xl font-black md:text-6xl">
 		<MapPin size={48} /> Ackerman Grand Ballroom
 	</h2>
+
+	<div class="divider" />
+
+	<div class="join join-vertical lg:join-horizontal">
+		<a href="#prizes" class="btn btn-primary join-item"><Award /> Prizes</a>
+		<a href="#schedule" class="btn btn-primary join-item"><CalendarClock /> Schedule</a>
+		<a href="#faq" class="btn btn-primary join-item"><MessageCircleQuestion /> FAQ</a>
+		<a href="#sponsors" class="btn btn-primary join-item"><Sparkle /> Sponsors</a>
+	</div>
 
 	<div class="divider" />
 
@@ -61,27 +78,52 @@
 	<div
 		class="my-4 rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5 opacity-90 bg-blend-normal"
 	>
-		<h2 class="font-display-serif text-5xl">Prizes</h2>
+		<h2 id="prizes" class="scroll-mt-8 font-display-serif text-5xl">Prizes</h2>
 		<ul class="mt-4 space-y-4">
 			<li>
-				<span class="font-bold">Grand Prize:</span> GIGABYTE M27Q 27" 170Hz 1440P -KVM Gaming Monitor
+				<h3 class="font-bold">Grand Prize:</h3>
+				GIGABYTE M27Q 27" 170Hz 1440P -KVM Gaming Monitor
 			</li>
 			<li>
-				<span class="font-bold">Second Place:</span> Nespresso VertuoPlus Coffee/Espresso Machine
+				<h3 class="font-bold">Second Place:</h3>
+				Electric Gooseneck Kettle, Pour Over Coffee Maker, 16 oz Carter Move Travel Mug
 			</li>
 			<li>
-				<span class="font-bold">Third Place:</span> JBL Flip 6 Portable Waterproof Bluetooth Speaker
+				<h3 class="font-bold">Third Place:</h3>
+				JBL Flip 6 Portable Waterproof Bluetooth Speaker
 			</li>
 			<li>
-				<span class="font-bold">Accessibility Track Prize:</span> $500 cash (divided amongst team)
+				<h3 class="font-bold">Accessibility Track Prize:</h3>
+				Luna 20 LB Weighted Blanket and Comfort Spa Backrest Pillow
 			</li>
 			<li>
-				<span class="font-bold">Sustainability Track Prize:</span> Bonsai Tree Kit and Hydroponic Indoor
-				Herb Garden Kit with LED Grow Light
+				<h3 class="font-bold">Sustainability Track Prize:</h3>
+				Bonsai Tree Kit and Hydroponic Indoor Herb Garden Kit with LED Grow Light
 			</li>
 			<li>
-				<span class="font-bold">“Go Touch Grass” Track Prize:</span> Camping Hammock, 80”x 80” 3-Layer
-				Waterproof Outdoor Blanket, and White Stainless Steel 24oz HydroFlask
+				<h3 class="font-bold">“Go Touch Grass” Track Prize:</h3>
+				Camping Hammock, 80”x 80” 3-Layer Waterproof Outdoor Blanket, and White Stainless Steel 24oz
+				HydroFlask
+			</li>
+			<li>
+				<h3 class="font-bold">Patient Safety Tech Prize:</h3>
+				<p>$500 (split between members)</p>
+				<div class="mt-4 flex gap-2">
+					<Info size={32} />
+					<div>
+						<p class="mb-4">
+							In order to be eligible to win the patient safety prize, your innovation must align
+							with one of the following five leading patient safety challenges facing health care
+							across the continuum of care: Medication errors, procedural/surgical errors, errors
+							during routine patient care (e.g. pressure ulcers, blood clots, falls), infections and
+							diagnostic safety.
+						</p>
+						<p>
+							The winning team will represent the most innovative, impactful, viable idea that
+							clearly understands the problem identified.
+						</p>
+					</div>
+				</div>
 			</li>
 		</ul>
 	</div>
@@ -91,7 +133,9 @@
 	<div
 		class="my-4 rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5 opacity-90 bg-blend-normal"
 	>
-		<h2 class="mt-4 font-display-serif text-5xl">Frequently asked questions</h2>
+		<h2 id="faq" class="mt-4 scroll-mt-8 font-display-serif text-5xl">
+			Frequently asked questions
+		</h2>
 
 		<div class="grid gap-2 md:grid-cols-2">
 			<div class="card">
@@ -144,7 +188,7 @@
 	<div
 		class="my-4 rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5 opacity-90 bg-blend-normal"
 	>
-		<h2 class="my-4 mt-4 font-display-serif text-5xl">Sponsors</h2>
+		<h2 id="sponsors" class="my-4 mt-4 scroll-mt-8 font-display-serif text-5xl">Sponsors</h2>
 
 		<div class="my-4 flex gap-8">
 			<Sponsor src={northrop_grumman} alt={'Northrop Grumman'} />
