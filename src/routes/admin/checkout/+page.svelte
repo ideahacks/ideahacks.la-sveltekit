@@ -61,6 +61,7 @@
 	<div class="m-12 flex flex-col justify-center gap-2 space-y-8">
 		<h1 class="text-center font-display-serif text-3xl md:text-4xl">Parts Checkout</h1>
 		<p class="text-center font-bold">Successful checkout for team {serverResponse.teamNumber}!</p>
+		<p class="text-center">Updated parts:</p>
 		<p class="text-center">{JSON.stringify(serverResponse.partsData)}</p>
 		<button
 			class="btn btn-primary"
@@ -79,8 +80,14 @@
 				<h2 class="mb-4 text-center font-display-serif text-3xl">Search</h2>
 				<div class="flex justify-center gap-2 pb-4">
 					<div class="btn btn-primary"><ScanBarcode /></div>
-					<form>
+					<form
+						on:submit={() => {
+							search = '';
+							addToCart(results[0].obj.id);
+						}}
+					>
 						<input
+							autofocus
 							class="input input-bordered"
 							placeholder="Search for a part by ID"
 							bind:value={search}
