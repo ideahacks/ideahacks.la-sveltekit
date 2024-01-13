@@ -11,9 +11,9 @@
 				const partMetadata = data.parts.find((part) => part.part_id === teamPart.part_id);
 				return {
 					part_id: teamPart.part_id,
-					name: partMetadata?.name,
 					quantity: teamPart.quantity,
-					total_quantity: partMetadata?.quantity
+					total_quantity: partMetadata?.quantity,
+					name: partMetadata?.name
 				};
 			});
 

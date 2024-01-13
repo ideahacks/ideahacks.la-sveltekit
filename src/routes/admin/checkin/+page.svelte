@@ -29,7 +29,7 @@
 		threshold: -100
 	});
 
-	$: firstResultId = results[0].obj.id;
+	$: firstResultId = results[0].obj.part_id;
 
 	$: serverResponse = null;
 

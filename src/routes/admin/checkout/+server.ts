@@ -24,12 +24,12 @@ export async function POST({ request, locals: { supabase } }) {
 	}
 
 	const checkoutParts = cart.map((part) => {
-		part.id = String(part.id).padStart(4, '0');
+		part.part_id = String(part.part_id).padStart(4, '0');
 		const already_checked_out =
-			existingParts?.find((existingPart) => existingPart.part_id === part.id)?.quantity ?? 0;
+			existingParts?.find((existingPart) => existingPart.part_id === part.part_id)?.quantity ?? 0;
 		return {
 			team_id: teamNumber,
-			part_id: part.id,
+			part_id: part.part_id,
 			quantity: part.quantity + already_checked_out
 		};
 	});
@@ -41,7 +41,10 @@ export async function POST({ request, locals: { supabase } }) {
 		.select();
 
 	if (partsError) {
-		throw error(500, `Could not upsert ${checkoutParts.length} parts: ${partsError.code}`);
+		throw error(
+			500,
+			`Could not upsert ${checkoutParts.length} parts: ${JSON.stringify(partsError)}`
+		);
 	}
 
 	return json({ teamNumber, partsData });

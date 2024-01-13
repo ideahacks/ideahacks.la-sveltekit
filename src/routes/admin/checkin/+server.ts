@@ -23,11 +23,13 @@ export async function POST({ request, locals: { supabase } }) {
 	}
 
 	const updatedParts = await Promise.all(
-		cart.map(async (part: { id: string; quantity: number }) => {
-			const existingPart = existingParts?.find((existingPart) => existingPart.part_id === part.id);
+		cart.map(async (part: { part_id: string; quantity: number }) => {
+			const existingPart = existingParts?.find(
+				(existingPart) => existingPart.part_id === part.part_id
+			);
 
 			if (!existingPart) {
-				return { warning: `Part ${part.id} is not owned by team ${teamNumber}` };
+				return { warning: `Part ${part.part_id} is not owned by team ${teamNumber}` };
 			}
 
 			const updatedQuantity = existingPart.quantity - part.quantity;
@@ -38,25 +40,25 @@ export async function POST({ request, locals: { supabase } }) {
 					.from('teams_parts')
 					.delete()
 					.eq('team_id', teamNumber)
-					.eq('part_id', part.id);
+					.eq('part_id', part.part_id);
 
 				if (deleteError) {
-					throw error(500, `Could not delete part ${part.id}: ${JSON.stringify(deleteError)}`);
+					throw error(500, `Could not delete part ${part.part_id}: ${JSON.stringify(deleteError)}`);
 				}
 			} else {
 				const { error: updateError } = await supabase
 					.from('teams_parts')
 					.update({ quantity: updatedQuantity })
 					.eq('team_id', teamNumber)
-					.eq('part_id', part.id);
+					.eq('part_id', part.part_id);
 
 				if (updateError) {
-					throw error(500, `Could not update part ${part.id}: ${JSON.stringify(updateError)}`);
+					throw error(500, `Could not update part ${part.part_id}: ${JSON.stringify(updateError)}`);
 				}
 
 				return {
 					team_id: teamNumber,
-					part_id: part.id,
+					part_id: part.part_id,
 					quantity: updatedQuantity
 				};
 			}
