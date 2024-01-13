@@ -63,7 +63,8 @@
 			{#if isIosSafariBecauseIStronglyDislikeTheirBrowser}
 				<p class="w-48 text-center font-display-sans">
 					iOS Safari is not a fan of this page, so the number of parts shown is limited. You can
-					discover more parts by searching or see all parts by switching to a laptop.
+					discover more parts by searching or see all parts by switching to a laptop or Android
+					phone.
 				</p>
 			{/if}
 			<input
