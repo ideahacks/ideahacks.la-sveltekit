@@ -1,13 +1,13 @@
 <script lang="ts">
 	import fuzzysort from 'fuzzysort';
-	import { FileText, Info, Puzzle } from 'lucide-svelte';
-	import { flip } from 'svelte/animate';
+	import { FileText, Hash, Info, MapPin, Rabbit, ScanBarcode } from 'lucide-svelte';
 	import { fade } from 'svelte/transition';
+	import placeholder_part_image from '$lib/images/placeholder_part.png';
 
 	interface Part {
 		name: string;
 		quantity: number;
-		image_url: string;
+		image_url: string | null;
 		datasheet_url: string;
 		description: string;
 		tags: string[];
@@ -31,15 +31,22 @@
 
 	$: results = fuzzysort.go(search, tagFilteredParts, {
 		keys: ['name', 'description'],
-		all: true
+		all: true,
+		threshold: -100
 	});
 
-	$: console.log(selectedTags);
+	function quantityInUse(part_id: string) {
+		return data.teamsParts
+			.filter((part) => part.part_id === part_id)
+			.reduce((sum, part) => {
+				sum += part.quantity;
+				return sum;
+			}, 0);
+	}
 </script>
 
-<div class="m-12 justify-center space-y-8">
-	<h1 class="flex justify-center font-display-serif text-7xl md:text-9xl">Parts</h1>
-	<br />
+<div class="m-12 justify-center space-y-4">
+	<h1 class="flex justify-center font-display-serif text-5xl md:text-7xl">Parts</h1>
 
 	{#if data.parts && data.parts.length > 0}
 		<p class="text-center font-display-sans text-xl">
@@ -75,14 +82,31 @@
 		</div>
 
 		<div class="flex flex-wrap justify-center gap-4">
-			{#each results as { obj: { name, quantity, image_url, description, tags, datasheet_url } }}
-				<div class="card w-60 border border-white border-opacity-50">
+			{#each results as { obj: { part_id, name, quantity, image_url, description, tags, datasheet_url, checkout_location, requires_checkout } }}
+				<div class="card w-64 border border-white border-opacity-50">
 					<figure>
-						<img src={image_url} alt={name} />
+						<img
+							src={image_url && image_url.length > 0 ? image_url : placeholder_part_image}
+							alt={name}
+						/>
 					</figure>
 					<div class="card-body">
 						<h2 class="card-title">{name}</h2>
-						<div class="badge badge-primary">Quantity: {quantity}</div>
+						<div class="badge badge-primary">
+							<Hash size={12} class="mr-1" />
+							{quantity} total, {quantityInUse(part_id)} in use
+						</div>
+						{#if requires_checkout}
+							<div class="badge badge-primary">
+								<MapPin size={12} class="mr-1" />
+								{checkout_location}
+							</div>
+						{:else}
+							<div class="badge badge-secondary">
+								<Rabbit size={12} class="mr-1" />
+								Grab & Go: {checkout_location}
+							</div>
+						{/if}
 						<p><span class="font-bold">Tags:</span> {tags.join(', ')}</p>
 						<div class="card-actions">
 							<div class="tooltip tooltip-bottom" data-tip="description">
@@ -102,11 +126,13 @@
 									</form>
 								</dialog>
 							</div>
-							<div class="tooltip tooltip-bottom" data-tip="datasheet">
-								<a href={datasheet_url} target="_blank" class="btn btn-circle btn-secondary"
-									><FileText /></a
-								>
-							</div>
+							{#if datasheet_url}
+								<div class="tooltip tooltip-bottom" data-tip="datasheet">
+									<a href={datasheet_url} target="_blank" class="btn btn-circle btn-secondary"
+										><FileText /></a
+									>
+								</div>
+							{/if}
 						</div>
 					</div>
 				</div>
