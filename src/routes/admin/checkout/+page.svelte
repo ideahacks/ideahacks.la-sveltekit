@@ -15,7 +15,7 @@
 		return {
 			...part,
 			get all_ids() {
-				return `${[part.part_id, ...part.alt_ids].join(' ')}`;
+				return `${[part.part_id, ...(part.alt_ids ?? [])].join(' ')}`;
 			}
 		};
 	});
