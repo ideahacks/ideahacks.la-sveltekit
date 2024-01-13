@@ -15,6 +15,11 @@
 
 	export let data;
 
+	// iOS Safari does not load /parts for some reason so I have to give it special treatment
+	const isIosSafariBecauseIStronglyDislikeTheirBrowser = /^((?!chrome|android).)*safari/i.test(
+		navigator.userAgent
+	);
+
 	const parts: Part[] = data.parts ?? [];
 
 	let selectedTags: string[] = [];
@@ -32,7 +37,8 @@
 	$: results = fuzzysort.go(search, tagFilteredParts, {
 		keys: ['name', 'description'],
 		all: true,
-		threshold: -100
+		threshold: -100,
+		limit: isIosSafariBecauseIStronglyDislikeTheirBrowser ? 50 : 1000
 	});
 
 	function quantityInUse(part_id: string) {
@@ -49,11 +55,15 @@
 	<h1 class="flex justify-center font-display-serif text-5xl md:text-7xl">Parts</h1>
 
 	{#if data.parts && data.parts.length > 0}
-		<p class="text-center font-display-sans text-xl">
-			You're currently viewing {results.length}
-			{results.length === 1 ? 'part' : 'parts'}
-		</p>
-		<div class="flex justify-center pb-4">
+		<div class="mb-4 flex flex-col items-center justify-center space-y-4">
+			<p class="text-center font-display-sans text-xl">
+				You're currently viewing {results.length}
+				{results.length === 1 ? 'part' : 'parts'} out of {data.parts.length}
+			</p>
+			<p class="w-96 text-center font-display-sans">
+				iOS Safari is not a fan of this page, so the number of parts shown is limited. You can
+				discover more parts by searching or see all parts by switching to a laptop.
+			</p>
 			<input
 				class="input input-bordered w-1/2"
 				placeholder="Search for a part..."
