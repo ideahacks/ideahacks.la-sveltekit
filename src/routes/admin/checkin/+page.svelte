@@ -109,7 +109,10 @@
 						<tr>
 							<td>{serverResponse.teamNumber}</td>
 							<td>{parts.part_id}</td>
-							<td>{data.parts.find((part) => part.part_id === parts.part_id).name}</td>
+							<td
+								>{data.parts.find((part) => part.part_id === parts.part_id)?.name ??
+									"Part deleted from this team, I'm too lazy to track it down"}</td
+							>
 							<td>{parts.quantity}</td>
 						</tr>
 					{/each}

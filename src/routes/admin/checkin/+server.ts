@@ -27,12 +27,17 @@ export async function POST({ request, locals: { supabase } }) {
 			const existingPart = existingParts?.find(
 				(existingPart) => existingPart.part_id === part.part_id
 			);
+			const updatedQuantity = (existingPart?.quantity ?? 0) - part.quantity;
+
+			const currentPart = {
+				team_id: teamNumber,
+				part_id: part.part_id,
+				quantity: updatedQuantity
+			};
 
 			if (!existingPart) {
-				return { warning: `Part ${part.part_id} is not owned by team ${teamNumber}` };
+				return currentPart;
 			}
-
-			const updatedQuantity = existingPart.quantity - part.quantity;
 
 			// Delete a part if entire quantity returned, update otherwise
 			if (updatedQuantity <= 0) {
@@ -55,13 +60,9 @@ export async function POST({ request, locals: { supabase } }) {
 				if (updateError) {
 					throw error(500, `Could not update part ${part.part_id}: ${JSON.stringify(updateError)}`);
 				}
-
-				return {
-					team_id: teamNumber,
-					part_id: part.part_id,
-					quantity: updatedQuantity
-				};
 			}
+
+			return currentPart;
 		})
 	);
 
