@@ -38,7 +38,7 @@
 		keys: ['name', 'description'],
 		all: true,
 		threshold: -100,
-		limit: isIosSafariBecauseIStronglyDislikeTheirBrowser ? 20 : 1000
+		limit: isIosSafariBecauseIStronglyDislikeTheirBrowser ? 10 : 1000
 	});
 
 	function quantityInUse(part_id: string) {
@@ -60,10 +60,12 @@
 				You're currently viewing {results.length}
 				{results.length === 1 ? 'part' : 'parts'} out of {data.parts.length}
 			</p>
-			<p class="w-96 text-center font-display-sans">
-				iOS Safari is not a fan of this page, so the number of parts shown is limited. You can
-				discover more parts by searching or see all parts by switching to a laptop.
-			</p>
+			{#if isIosSafariBecauseIStronglyDislikeTheirBrowser}
+				<p class="w-48 text-center font-display-sans">
+					iOS Safari is not a fan of this page, so the number of parts shown is limited. You can
+					discover more parts by searching or see all parts by switching to a laptop.
+				</p>
+			{/if}
 			<input
 				class="input input-bordered w-1/2"
 				placeholder="Search for a part..."
