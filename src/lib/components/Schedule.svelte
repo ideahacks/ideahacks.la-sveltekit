@@ -60,7 +60,9 @@
 					<td>9:15 pm - 10:00 pm <span class="badge">Ackerman Union 2408</span></td>
 				</tr>
 				<tr>
-					<th>Wireless Connectivity Workshop</th>
+					<th class="max-w-32"
+						>High Speed Data Acquisition, an introduction with Red Pitaya and Infineon</th
+					>
 					<td>10:15 pm - 11:00 pm <span class="badge">Ackerman Union 2408</span></td>
 				</tr>
 			</tbody>
@@ -84,7 +86,9 @@
 					<td>8:00 am - 10:00 am <span class="badge">Ackerman Grand Ballroom</span></td>
 				</tr>
 				<tr>
-					<th>Digikey: System Design Workshop</th>
+					<th class="max-w-80"
+						>High Speed Data Acquisition, an introduction with Red Pitaya and Infineon</th
+					>
 					<td>10:00 am - 11:00 am <span class="badge">Ackerman Union 2412</span></td>
 				</tr>
 				<tr>
