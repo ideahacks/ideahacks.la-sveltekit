@@ -61,7 +61,7 @@
 				</tr>
 				<tr>
 					<th>Wireless Connectivity Workshop</th>
-					<td>10:15 pm - 11:00 pm <span class="badge">Ackerman Union 2412</span></td>
+					<td>10:15 pm - 11:00 pm <span class="badge">Ackerman Union 2408</span></td>
 				</tr>
 			</tbody>
 		</table>
