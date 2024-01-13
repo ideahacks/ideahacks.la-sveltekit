@@ -18,7 +18,7 @@
 			<tbody>
 				<tr>
 					<th>Patient Safety Workshop</th>
-					<td>4:00 pm - 4:45 pm <span class="badge">Ackerman Union 2408</span></td>
+					<td>6:00 pm - 6:45 pm <span class="badge">Ackerman Union 2412</span></td>
 				</tr>
 				<tr>
 					<th>Check In</th>
@@ -30,7 +30,7 @@
 				</tr>
 				<tr>
 					<th>3D Printing Workshop</th>
-					<td>6:00 pm - 6:45 pm <span class="badge">Ackerman Union 2412</span></td>
+					<td>6:00 pm - 6:45 pm <span class="badge">Ackerman Union 2408</span></td>
 				</tr>
 				<tr>
 					<th>Team Building Workshop</th>
