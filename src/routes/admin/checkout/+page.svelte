@@ -70,6 +70,16 @@
 		serverResponse = await response.json();
 	}
 
+	function getShortPartName(part_id: number) {
+		const MAX_LENGTH = 15;
+		const name = data.parts.find((part) => part.part_id === part_id).name;
+		if (name.length <= MAX_LENGTH) {
+			return name;
+		} else {
+			return `${name.substring(0, MAX_LENGTH)}...`;
+		}
+	}
+
 	function onScanSuccess(decodedText: string, decodedResult: Html5QrcodeResult) {
 		search = decodedText;
 		// FIXME: result sometimes doesn't update fast enough, so force a delay
@@ -194,7 +204,10 @@
 					<div class="my-2 flex flex-col gap-2">
 						{#each cart as part}
 							<div class="join">
-								<p class="join-item mr-4 place-self-center">Part {part.part_id}:</p>
+								<div class="join-item mr-4 w-40">
+									<p>Part {part.part_id}</p>
+									<p>{getShortPartName(part.part_id)}</p>
+								</div>
 								<input
 									type="number"
 									min="1"
