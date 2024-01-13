@@ -108,6 +108,7 @@
 							</div>
 						{/if}
 						<p><span class="font-bold">Tags:</span> {tags.join(', ')}</p>
+						<p><span class="font-bold">ID:</span> {part_id}</p>
 						<div class="card-actions">
 							<div class="tooltip tooltip-bottom" data-tip="description">
 								<button
