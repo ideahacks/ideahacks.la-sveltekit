@@ -60,9 +60,7 @@
 					<td>9:15 pm - 10:00 pm <span class="badge">Ackerman Union 2408</span></td>
 				</tr>
 				<tr>
-					<th class="max-w-32"
-						>High Speed Data Acquisition, an introduction with Red Pitaya and Infineon</th
-					>
+					<th class="max-w-32">Wireless Connectivity Workshop</th>
 					<td>10:15 pm - 11:00 pm <span class="badge">Ackerman Union 2408</span></td>
 				</tr>
 			</tbody>
