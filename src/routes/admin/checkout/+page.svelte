@@ -27,7 +27,7 @@
 		threshold: -100
 	});
 
-	$: firstResultId = results[0].obj.part_id;
+	$: firstResultId = results[0]?.obj.part_id ?? 'xxxx';
 
 	$: serverResponse = null;
 
@@ -35,6 +35,11 @@
 	let teamNumber: number | null;
 
 	function addToCart(part_id: number) {
+		// `part_id` is not valid
+		if (!data.parts.find((part) => part.part_id === part_id)) {
+			return;
+		}
+
 		const existingIdx = cart.findIndex((part) => part.part_id === part_id);
 		if (existingIdx !== -1) {
 			cart[existingIdx].quantity += 1;
