@@ -24,7 +24,7 @@
 	let search = '';
 
 	$: results = fuzzysort.go(search, partIds, {
-		keys: ['all_ids'],
+		keys: ['all_ids', 'name'],
 		all: true,
 		threshold: -100
 	});
@@ -137,8 +137,8 @@
 							<!-- svelte-ignore a11y-autofocus -->
 							<input
 								autofocus
-								class="input input-bordered"
-								placeholder="Search for a part by ID"
+								class="input input-bordered w-72"
+								placeholder="Search for a part by ID or name"
 								bind:value={search}
 							/>
 						</form>
