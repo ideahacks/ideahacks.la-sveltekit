@@ -38,7 +38,7 @@
 		keys: ['name', 'description'],
 		all: true,
 		threshold: -100,
-		limit: isIosSafariBecauseIStronglyDislikeTheirBrowser ? 50 : 1000
+		limit: isIosSafariBecauseIStronglyDislikeTheirBrowser ? 20 : 1000
 	});
 
 	function quantityInUse(part_id: string) {
