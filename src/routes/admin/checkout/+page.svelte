@@ -103,13 +103,36 @@
 </script>
 
 {#if serverResponse}
-	<div class="m-12 flex flex-col justify-center gap-2 space-y-8">
+	<div class="m-12 flex flex-col items-center justify-center gap-2 space-y-8">
 		<h1 class="text-center font-display-serif text-3xl md:text-4xl">Parts Checkout</h1>
 		<p class="text-center font-bold">Successful checkout for team {serverResponse.teamNumber}!</p>
 		<p class="text-center">Updated parts:</p>
-		<p class="text-center">{JSON.stringify(serverResponse.partsData)}</p>
+		<div class="overflow-x-auto">
+			<table class="table max-w-96">
+				<thead>
+					<tr>
+						<th>Team Number</th>
+						<th>Part ID</th>
+						<th>Part name</th>
+						<th>Current Quantity Owned</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					{#each serverResponse.parts as parts}
+						<tr>
+							<td>{serverResponse.teamNumber}</td>
+							<td>{parts.part_id}</td>
+							<td>{data.parts.find((part) => part.part_id === parts.part_id).name}</td>
+							<td>{parts.quantity}</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+		<!-- <p class="text-center">{JSON.stringify(serverResponse.partsData)}</p> -->
 		<button
-			class="btn btn-primary"
+			class="btn btn-primary max-w-96 self-center"
 			on:click={() => {
 				serverResponse = null;
 				cart = [];

@@ -1,14 +1,8 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { redirect } from '@sveltejs/kit';
 	import fuzzysort from 'fuzzysort';
 	import { ScanBarcode } from 'lucide-svelte';
-	import {
-		Html5QrcodeScanner,
-		type Html5QrcodeResult,
-		type QrcodeSuccessCallback
-	} from 'html5-qrcode';
+	import { Html5QrcodeScanner, type Html5QrcodeResult } from 'html5-qrcode';
 	import { onMount } from 'svelte';
 
 	export let data;
@@ -90,11 +84,33 @@
 </script>
 
 {#if serverResponse}
-	<div class="m-12 flex flex-col justify-center gap-2 space-y-8">
+	<div class="m-12 flex flex-col items-center justify-center gap-2 space-y-8">
 		<h1 class="text-center font-display-serif text-3xl md:text-4xl">Parts Check-in</h1>
 		<p class="text-center font-bold">Successful check-in for team {serverResponse.teamNumber}!</p>
 		<p class="text-center">Updated part quantities (removed from database if zero or negative):</p>
-		<p class="text-center">{JSON.stringify(serverResponse.updatedParts)}</p>
+		<div class="overflow-x-auto">
+			<table class="max-w-128 table">
+				<thead>
+					<tr>
+						<th>Team Number</th>
+						<th>Part ID</th>
+						<th>Part name</th>
+						<th>Current Quantity Owned</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					{#each serverResponse.parts as parts}
+						<tr>
+							<td>{serverResponse.teamNumber}</td>
+							<td>{parts.part_id}</td>
+							<td>{data.parts.find((part) => part.part_id === parts.part_id).name}</td>
+							<td>{parts.quantity}</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
 		<button
 			class="btn btn-secondary"
 			on:click={() => {

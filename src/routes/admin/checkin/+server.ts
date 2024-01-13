@@ -22,7 +22,7 @@ export async function POST({ request, locals: { supabase } }) {
 		throw error(500, 'Could not get existing parts');
 	}
 
-	const updatedParts = await Promise.all(
+	const parts = await Promise.all(
 		cart.map(async (part: { part_id: string; quantity: number }) => {
 			const existingPart = existingParts?.find(
 				(existingPart) => existingPart.part_id === part.part_id
@@ -65,5 +65,5 @@ export async function POST({ request, locals: { supabase } }) {
 		})
 	);
 
-	return json({ teamNumber, updatedParts });
+	return json({ teamNumber, parts });
 }

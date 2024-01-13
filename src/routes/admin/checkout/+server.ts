@@ -35,7 +35,7 @@ export async function POST({ request, locals: { supabase } }) {
 	});
 
 	// Upsert all the checked out parts
-	const { data: partsData, error: partsError } = await supabase
+	const { data: parts, error: partsError } = await supabase
 		.from('teams_parts')
 		.upsert(checkoutParts)
 		.select();
@@ -47,5 +47,5 @@ export async function POST({ request, locals: { supabase } }) {
 		);
 	}
 
-	return json({ teamNumber, partsData });
+	return json({ teamNumber, parts });
 }
