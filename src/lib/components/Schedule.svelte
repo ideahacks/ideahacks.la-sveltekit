@@ -149,9 +149,7 @@
 				</tr>
 				<tr>
 					<th>Round 1 Judging</th>
-					<td
-						>9:15 am - 10:45 am <span class="badge">Ackerman Union 2408, 2410, 2412, 3517</span></td
-					>
+					<td>9:15 am - 10:45 am <span class="badge">Ackerman Union 2408, 2410, 2412</span></td>
 				</tr>
 				<tr>
 					<th>Judging Finals</th>
