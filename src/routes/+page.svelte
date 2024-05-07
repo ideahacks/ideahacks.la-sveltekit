@@ -33,11 +33,11 @@
 	<div class="divider" />
 
 	<div class="flex flex-wrap gap-4 md:flex-nowrap">
-		<a href="#prizes" class="btn-primary btn"><Award /> Prizes</a>
-		<a href="#schedule" class="btn-primary btn"><CalendarClock /> Schedule</a>
-		<a href="#faq" class="btn-primary btn"><MessageCircleQuestion /> FAQ</a>
-		<a href="#sponsors" class="btn-primary btn"><Sparkle /> Sponsors</a>
-		<a href="/team" class="btn-primary btn"><Users /> Meet the Team!</a>
+		<a href="#prizes" class="btn btn-primary"><Award /> Prizes</a>
+		<a href="#schedule" class="btn btn-primary"><CalendarClock /> Schedule</a>
+		<a href="#faq" class="btn btn-primary"><MessageCircleQuestion /> FAQ</a>
+		<a href="#sponsors" class="btn btn-primary"><Sparkle /> Sponsors</a>
+		<a href="/team" class="btn btn-primary"><Users /> Meet the Team!</a>
 	</div>
 
 	<div class="divider" />

@@ -45,9 +45,9 @@
 		</li>
 		{#if session}
 			<li>
-				<details class="dropdown-end dropdown">
-					<summary class="btn-primary btn-circle btn"><UserCircle2 /></summary>
-					<ul class="dropdown-content menu rounded-box bg-red-950 text-xl shadow-xl">
+				<details class="dropdown dropdown-end">
+					<summary class="btn btn-circle btn-primary"><UserCircle2 /></summary>
+					<ul class="menu dropdown-content rounded-box bg-red-950 text-xl shadow-xl">
 						<a href="/login">
 							<li>
 								<span>
@@ -61,7 +61,7 @@
 				</details>
 			</li>
 		{:else}
-			<a href="/login" class="btn-primary btn">Login</a>
+			<a href="/login" class="btn btn-primary">Login</a>
 		{/if}
 	</ul>
 </div>
