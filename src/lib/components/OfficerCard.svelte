@@ -1,5 +1,4 @@
 <script>
-	// @ts-nocheck
 	export let officerInfo;
 </script>
 

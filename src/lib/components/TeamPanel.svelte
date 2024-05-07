@@ -1,5 +1,4 @@
 <script>
-	// @ts-nocheck
 	import OfficerCard from '$lib/components/OfficerCard.svelte';
 	export let teamInfo;
 </script>
