@@ -8,7 +8,8 @@
 		Info,
 		MapPin,
 		MessageCircleQuestion,
-		Sparkle
+		Sparkle,
+		Users
 	} from 'lucide-svelte';
 
 	import northrop_grumman from '$lib/images/sponsors/northrop_grumman.svg';
@@ -31,11 +32,12 @@
 
 	<div class="divider" />
 
-	<div class="join join-vertical lg:join-horizontal">
-		<a href="#prizes" class="btn btn-primary join-item"><Award /> Prizes</a>
-		<a href="#schedule" class="btn btn-primary join-item"><CalendarClock /> Schedule</a>
-		<a href="#faq" class="btn btn-primary join-item"><MessageCircleQuestion /> FAQ</a>
-		<a href="#sponsors" class="btn btn-primary join-item"><Sparkle /> Sponsors</a>
+	<div class="flex flex-wrap gap-4 md:flex-nowrap">
+		<a href="#prizes" class="btn-primary btn"><Award /> Prizes</a>
+		<a href="#schedule" class="btn-primary btn"><CalendarClock /> Schedule</a>
+		<a href="#faq" class="btn-primary btn"><MessageCircleQuestion /> FAQ</a>
+		<a href="#sponsors" class="btn-primary btn"><Sparkle /> Sponsors</a>
+		<a href="/team" class="btn-primary btn"><Users /> Meet the Team!</a>
 	</div>
 
 	<div class="divider" />
