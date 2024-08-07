@@ -1,37 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
-/* @font-face at-rules generated with https://transfonter.org/ */
-
-@font-face {
-	font-family: 'Cehua';
-	src: url('$lib/fonts/Cehua/CehuaFree-Free.woff2') format('woff2');
-	font-weight: normal;
-	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Glacial Indifference';
-	src: url('$lib/fonts/GlacialIndifference/GlacialIndifference-Bold.woff2') format('woff2');
-	font-weight: bold;
-	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Glacial Indifference';
-	src: url('$lib/fonts/GlacialIndifference/GlacialIndifference-Regular.woff2') format('woff2');
-	font-weight: normal;
-	font-style: normal;
-	font-display: swap;
-}
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&family=Paytone+One&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@layer base {
-	h1 {
-		@apply font-display-serif;
-	}
-}

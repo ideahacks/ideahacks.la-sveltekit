@@ -1,4 +1,21 @@
-<article class="prose m-8 ml-auto mr-auto flex w-full flex-col items-center">
-	<h1>Sponsor IDEA Hacks</h1>
-	<p>Send us an email at <a href="mailto:corporate@ieeebruins.com">corporate@ieeebruins.com</a>!</p>
-</article>
+<script>
+	import brochure from '$lib/files/sponsorship-brochure.pdf';
+	import pixelclouds from '$lib/images/pixelclouds.png';
+</script>
+
+<a href="/" class="mx-12 mt-12 text-right font-encode font-bold text-white">Home</a>
+
+<div class="mx-5 max-w-xl text-white sm:ml-12">
+	<h1 class="my-10 font-paytone text-3xl">Sponsoring IDEA Hacks</h1>
+	<p class="font-encode">
+		View and download our sponsorship brochure
+		<a class="font-bold underline" href={brochure} target="_blank">here</a>!<br />
+
+		For any questions or sponsorship inquiries, please contact us at
+		<a href="mailto:corporate@ieeebruins.com">corporate@ieeebruins.com</a>
+	</p>
+</div>
+
+<div class="fixed bottom-0 h-24 w-full bg-contain" style="background-image: url({pixelclouds})" />
+
+<!-- <div class="h-24 w-full bg-contain" style="background-image: url({pixelclouds})" /> -->
