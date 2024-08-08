@@ -1,6 +1,8 @@
 <script lang="ts">
 	import pixelclouds from '$lib/images/pixelclouds.png';
 	import { Send } from 'lucide-svelte';
+
+	export let form;
 </script>
 
 <a href="/sponsor-us" class="mx-12 mt-12 text-right font-encode font-bold text-white">Sponsor Us!</a
@@ -11,7 +13,7 @@
 		<span> IDEA HACKS 2025</span>
 	</h1>
 	<div class="text-md mb-4 font-encode text-white xl:text-lg">
-		Get ready to create something amazing!  Join us for the 11th annual IDEA Hacks, the West Coast's
+		Get ready to create something amazing! Join us for the 11th annual IDEA Hacks, the West Coast's
 		premier hardware hackathon.
 	</div>
 
@@ -19,17 +21,18 @@
 		Want to be the first to know when applications drop? Enter your email below!
 	</div>
 
-	<div class="flex">
+	<form method="POST" class="flex">
 		<input
 			type="text"
+			name="email"
 			placeholder="Email"
 			class="input input-ghost w-full max-w-xs text-lg text-white placeholder-white caret-white focus:bg-opacity-30 focus:text-white focus:outline-none"
 		/>
 
 		<button class="btn btn-ghost mx-2 text-white"><Send /></button>
-	</div>
+	</form>
 
-	<!-- <a href="/sponsor-us" class="font-encode font-bold text-white">Sponsor Us!</a> -->
+	<div class="text-md mt-4 font-encode text-white">{form?.message ?? ''}</div>
 </div>
 
 <div class="fixed bottom-0 h-24 w-full bg-contain" style="background-image: url({pixelclouds})" />
