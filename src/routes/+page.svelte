@@ -13,12 +13,12 @@
 		<span> IDEA HACKS 2025</span>
 	</h1>
 	<div class="text-md mb-4 font-encode text-white xl:text-lg">
-		Get ready to create something amazing! Join us for the 11th annual IDEA Hacks, the West Coast's
+		Get ready to create something amazing! Join us for the 11th annual IDEA Hacks, the West Coast's
 		premier hardware hackathon.
 	</div>
 
 	<div class="text-md mb-4 font-encode text-white xl:text-lg">
-		Want to be the first to know when applications drop? Enter your email below!
+		Want to be the first to know when applications drop? Enter your email below!
 	</div>
 
 	<form method="POST" class="flex">
