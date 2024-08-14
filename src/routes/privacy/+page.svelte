@@ -1,5 +1,4 @@
 <script>
-	import brochure from '$lib/files/sponsorship-brochure.pdf';
 	import pixelclouds from '$lib/images/pixelclouds.png';
 </script>
 
