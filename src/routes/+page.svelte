@@ -35,12 +35,7 @@
 	<div class="text-md mt-4 font-encode text-white">{form?.message ?? ''}</div>
 </div>
 
+<a href="/privacy" class="mx-12 my-24 text-right font-encode font-bold text-white">Privacy Policy</a
+>
+
 <div class="fixed bottom-0 h-24 w-full bg-contain" style="background-image: url({pixelclouds})" />
-
-<div class="h-10" />
-
-<style lang="postcss">
-	:global(body) {
-		background: linear-gradient(180deg, #4152a9 0%, #bbcced 100%);
-	}
-</style>
