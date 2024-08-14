@@ -1,14 +1,17 @@
 <script lang="ts">
 	import pixelclouds from '$lib/images/pixelclouds.png';
+	import logo from '$lib/images/logo.png';
 	import { Send } from 'lucide-svelte';
 
 	export let form;
 </script>
 
+<img src={logo} alt="logo" class="fixed right-36 top-36 z-0 w-96 opacity-15" />
+
 <a href="/sponsor-us" class="mx-12 mt-12 text-right font-encode font-bold text-white">Sponsor Us!</a
 >
 
-<div class="mx-5 my-10 max-w-xl md:ml-24">
+<div class="z-10 mx-5 my-10 max-w-xl md:ml-24">
 	<h1 class="mb-4 font-paytone text-6xl text-white xl:text-8xl">
 		<span> IDEA HACKS 2025</span>
 	</h1>
@@ -35,12 +38,11 @@
 	<div class="text-md mt-4 font-encode text-white">{form?.message ?? ''}</div>
 </div>
 
-<div class="fixed bottom-0 h-24 w-full bg-contain" style="background-image: url({pixelclouds})" />
+<a href="/privacy" class="z-10 mx-12 my-24 text-right font-encode font-bold text-white"
+	>Privacy Policy</a
+>
 
-<div class="h-10" />
-
-<style lang="postcss">
-	:global(body) {
-		background: linear-gradient(180deg, #4152a9 0%, #bbcced 100%);
-	}
-</style>
+<div
+	class="fixed bottom-0 z-0 h-24 w-full bg-contain"
+	style="background-image: url({pixelclouds})"
+/>
