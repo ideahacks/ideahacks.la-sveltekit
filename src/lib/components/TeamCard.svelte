@@ -2,18 +2,24 @@
 	export let team_info;
 </script>
 
+<style>
+    .hyphenate {
+        hyphens: auto; /* Add hyphens where appropriate */
+    }
+</style>
+
 <div class="card max-w-[16rem] bg-base-100 bg-opacity-80 shadow-xl border-4 border-custom-red p-1">
 	<div class="card-body p-1">
 		<h2 class="card-title justify-center font-paytone text-md">Team {team_info.number}</h2>
         <p class="text-center font-encode">Number of members: {team_info.members.length}</p>
 		<h3 class="text-lg font-bold font-paytone">Members</h3>
-		<ul class="list-disc font-encode pl-4">
+		<ul class="list-disc font-encode pl-4 break-words hyphenate">
 			{#each team_info.members as member}
-				<li>{member}</li>
+				<li class="">{member}</li>
 			{/each}
 		</ul>
 		<h3 class="text-md font-bold font-paytone">Parts</h3>
-        <p class="font-encode break-normal">
+        <p class="font-encode">
             {#each team_info.parts as part, index}
                 {part}{#if index < team_info.parts.length - 1},&#8201;{/if}
             {/each}

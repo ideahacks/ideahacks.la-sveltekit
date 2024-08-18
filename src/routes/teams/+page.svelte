@@ -17,6 +17,11 @@
         members: ['just me lol as a RIDICULOUSLY long name'],
         parts: ['11111']
     };
+    const team4 = {
+        number: 4,
+        members: ['someonewithanextremelylongnameidkwhatelsetowritehere', 'short name'],
+        parts: ['12345'],
+    }
 </script>
 
 <h1 class="mt-12 mb-6 font-paytone text-5xl font-bold text-white text-center">Teams</h1>
@@ -34,7 +39,7 @@
     <TeamCard team_info={team1} />
     <TeamCard team_info={team2} />
     <TeamCard team_info={team3} />
-    <TeamCard team_info={team1} />
+    <TeamCard team_info={team4} />
     <TeamCard team_info={team1} />
     <TeamCard team_info={team1} />
     <TeamCard team_info={team1} />
