@@ -13,9 +13,9 @@
 			{/each}
 		</ul>
 		<h3 class="text-md font-bold font-paytone">Parts</h3>
-        <p class="font-encode">
+        <p class="font-encode break-normal">
             {#each team_info.parts as part, index}
-                {part}{#if index < team_info.parts.length - 1},&nbsp;{/if}
+                {part}{#if index < team_info.parts.length - 1},&#8201;{/if}
             {/each}
         </p>
 	</div>
