@@ -13,7 +13,7 @@
 		<h2 class="card-title justify-center font-paytone text-md">Team {team_info.number}</h2>
         <p class="text-center font-encode">Number of members: {team_info.members.length}</p>
 		<h3 class="text-lg font-bold font-paytone">Members</h3>
-		<ul class="list-disc font-encode pl-4 break-words hyphenate">
+		<ul class="list-disc font-encode pl-4 hyphenate">
 			{#each team_info.members as member}
 				<li class="">{member}</li>
 			{/each}
