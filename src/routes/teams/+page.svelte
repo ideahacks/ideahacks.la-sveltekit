@@ -35,6 +35,8 @@
     />
 </form>
 
+<p class="mt-4 text-sm text-center font-encode text-white">Showing 100 out of 100 teams</p>
+
 <div class="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-6 pb-24">
     <TeamCard team_info={team1} />
     <TeamCard team_info={team2} />
