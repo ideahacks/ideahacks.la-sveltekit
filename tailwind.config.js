@@ -7,6 +7,9 @@ export default {
 			fontFamily: {
 				paytone: ['Paytone One', 'sans-serif'],
 				encode: ['Encode Sans', 'sans-serif']
+			},
+			colors: {
+				'custom-red': '#FF6B6B'
 			}
 		}
 	},
