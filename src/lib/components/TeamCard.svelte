@@ -2,7 +2,9 @@
 	export let team_info;
 </script>
 
-<div class="card max-w-[16rem] border-4 border-custom-red bg-base-100 bg-opacity-80 p-1 shadow-xl">
+<div
+	class="card w-56 max-w-[16rem] border-4 border-custom-red bg-base-100 bg-opacity-80 p-1 shadow-xl"
+>
 	<div class="card-body p-1">
 		<h2 class="text-md card-title justify-center font-paytone">Team {team_info.number}</h2>
 		<p class="text-center font-encode">Number of members: {team_info.members.length}</p>

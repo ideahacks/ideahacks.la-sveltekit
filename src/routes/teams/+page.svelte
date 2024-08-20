@@ -37,9 +37,7 @@
 
 <p class="mt-4 text-center font-encode text-sm text-white">Showing 100 out of 100 teams</p>
 
-<div
-	class="xs:grid-cols-1 grid grid-cols-1 gap-4 p-6 pb-24 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
->
+<div class="flex flex-wrap justify-center gap-4 p-6 pb-24">
 	<TeamCard team_info={team1} />
 	<TeamCard team_info={team2} />
 	<TeamCard team_info={team3} />
