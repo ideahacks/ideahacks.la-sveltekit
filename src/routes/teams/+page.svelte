@@ -61,7 +61,7 @@
 	/>
 </form>
 
-<p class="mt-4 text-center font-encode text-sm text-white">
+<p class="mt-4 text-center font-encode text-xs text-white">
 	Showing {results.length} out of {targets.length} teams
 </p>
 

@@ -4,7 +4,7 @@
 
 <div class="card max-w-[16rem] border-4 border-custom-red bg-base-100 bg-opacity-80 p-1 shadow-xl">
 	<div class="card-body p-1">
-		<figure class="px-10 pt-1">
+		<figure class="px-12 pt-1">
 			<img src={part_info.picture} alt="Red LED" class="xl rounded" />
 		</figure>
 		<h2 class="hyphenate text-md card-title justify-center font-paytone">{part_info.title}</h2>
@@ -32,11 +32,6 @@
 				/>
 			</svg>
 			{part_info.location}
-			<!--
-            <p class="inline-block">
-				{part_info.location}
-			</p>
-            -->
 		</div>
 		<div>
 			<h3 class="hyphenate text-md font-encode">
@@ -50,11 +45,16 @@
 			<span class="font-paytone">ID: </span>{part_info.id}
 		</h3>
 		<div class="card-actions justify-center">
-			<a href={part_info.details} class="text-md btn btn-sm bg-custom-red font-paytone text-white"
-				>Details</a
-			>
-			<a href={part_info.datasheet} class="text-md btn btn-sm bg-custom-red font-paytone text-white"
-				>Datasheet</a
+			<a
+				href={part_info.details}
+				class="text-md btn btn-sm bg-custom-red font-paytone text-white"
+				target="_blank"
+				>Details
+			</a>
+			<a
+				href={part_info.datasheet}
+				class="text-md btn btn-sm bg-custom-red font-paytone text-white"
+				target="_blank">Datasheet</a
 			>
 		</div>
 	</div>
