@@ -9,7 +9,8 @@ export default {
 				encode: ['Encode Sans', 'sans-serif']
 			},
 			colors: {
-				'custom-red': '#FF6B6B'
+				'custom-red': '#FF6B6B',
+				'custom-green': '#6BCB76',
 			}
 		}
 	},
