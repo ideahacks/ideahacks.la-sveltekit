@@ -1,3 +1,4 @@
+
 <script lang="ts">
 	import TeamCard from '$lib/components/TeamCard.svelte';
 	import pixelclouds from '$lib/images/pixelclouds.png';
@@ -47,6 +48,7 @@
 	});
 
 	$: console.log(results);
+
 </script>
 
 <h1 class="mb-6 mt-12 text-center font-paytone text-5xl font-bold text-white">Teams</h1>
@@ -69,6 +71,7 @@
 	{#each results as team}
 		<TeamCard team_info={team.obj} />
 	{/each}
+
 </div>
 
 <div
