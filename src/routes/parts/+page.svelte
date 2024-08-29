@@ -15,6 +15,10 @@
 		datasheet: string;
 	}
 
+	interface Tag {
+		title: string;
+	}
+
 	const part1: Part = {
 		picture: 'https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/3645/MFG_L513SRD-C.jpg',
 		title: 'Red LED',
@@ -29,6 +33,11 @@
 	};
 
 	let search = ''; // search content
+	let dropdownOpen = false; // toggle dropdown
+
+	function toggleDropdown() {
+		dropdownOpen = !dropdownOpen;
+	}
 
 	const targets: Part[] = [part1];
 
@@ -51,6 +60,52 @@
 		class="input input-ghost w-full max-w-xs text-lg text-white placeholder-white caret-white focus:bg-opacity-30 focus:text-white focus:outline-none"
 	/>
 </form>
+
+<div class="dropdown dropdown-bottom mt-1 flex justify-center">
+	<button on:click={toggleDropdown}>
+		<div tabindex="0" role="button" class="btn btn-xs m-1 font-encode text-xs">
+			Filter by:
+			{#if dropdownOpen === false}<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="size-3"
+				>
+					<path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+				</svg>
+			{:else}
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="size-3"
+				>
+					<path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+				</svg>
+			{/if}
+		</div>
+	</button>
+	{#if dropdownOpen === true}
+		<ul tabindex="-1" class="menu dropdown-content z-[1] w-52 rounded-box bg-base-100 p-2 shadow">
+			<li>
+				<div class="form-control">
+					<input type="checkbox" checked={false} class="rounded-xs checkbox h-5 w-5" />
+					<span class="label-text font-encode text-xs">LED</span>
+				</div>
+			</li>
+			<li>
+				<div class="form-control">
+					<input type="checkbox" checked={false} class="rounded-xs checkbox h-5 w-5" />
+					<span class="label-text font-encode text-xs">Comparator</span>
+				</div>
+			</li>
+		</ul>
+	{/if}
+</div>
 
 <p class="mt-4 text-center font-encode text-xs text-white">
 	Showing {results.length} out of {targets.length} parts
