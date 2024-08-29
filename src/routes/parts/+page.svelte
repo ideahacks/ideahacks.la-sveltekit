@@ -2,6 +2,7 @@
 	import PartCard from '$lib/components/PartCard.svelte';
 	import pixelclouds from '$lib/images/pixelclouds.png';
 	import fuzzysort from 'fuzzysort';
+	import { Tag } from 'lucide-svelte';
 
 	interface Part {
 		picture: string;
@@ -13,10 +14,6 @@
 		id: string;
 		details: string;
 		datasheet: string;
-	}
-
-	interface Tag {
-		title: string;
 	}
 
 	const part1: Part = {
@@ -32,19 +29,57 @@
 		datasheet: 'https://www.aopled.com/AOP_PDFs/L513SRD-C.pdf'
 	};
 
+	const part2: Part = {
+		picture: '',
+		title: 'LM393 Comparator',
+		num_in_use: 1,
+		num_total: 50,
+		location: 'Table 5',
+		tags: ['comparator'],
+		id: '00001',
+		details: 'https://www.ti.com/product/LM393',
+		datasheet:
+			'https://www.ti.com/lit/ds/symlink/lm393.pdf?ts=1724833750559&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FLM393%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-null-null-GPN_EN-cpc-pf-google-wwe%2526utm_content%253DLM393%2526ds_k%253DLM393+Datasheet%2526DCM%253Dyes%2526gad_source%253D1%2526gclid%253DCjwKCAjw4_K0BhBsEiwAfVVZ_8ohohZCAz5NkbyQWgLZqUaVdfJBslQHvShqaGbmZI7StUlPJFH0EhoCKKEQAvD_BwE%2526gclsrc%253Daw.ds'
+	};
+
+	const part3: Part = {
+		picture: 'https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/1135/151051VS04000.JPG',
+		title: 'Green LED',
+		num_in_use: 3,
+		num_total: 100,
+		location: 'Table 3',
+		tags: ['green', 'LED'],
+		id: '00002',
+		details:
+			'https://www.digikey.com/en/products/detail/w-rth-elektronik/732-5017-ND/4490015?utm_adgroup=&utm_source=google&utm_medium=cpc&utm_campaign=PMax%20Shopping_Product_Medium%20ROAS%20Categories&utm_term=&utm_content=&utm_id=go_cmp-20223376311_adg-_ad-__dev-c_ext-_prd-4490015_sig-CjwKCAjwlbu2BhA3EiwA3yXyuxG6KGBn796gjaV37F8lJLh9ZXs2G56Gbej_ss8a_HF6qLeGStjkKBoCmK8QAvD_BwE&gad_source=1&gclid=CjwKCAjwlbu2BhA3EiwA3yXyuxG6KGBn796gjaV37F8lJLh9ZXs2G56Gbej_ss8a_HF6qLeGStjkKBoCmK8QAvD_BwE',
+		datasheet: 'https://www.we-online.com/components/products/datasheet/151051VS04000.pdf'
+	};
+
 	let search = ''; // search content
-	let dropdownOpen = false; // toggle dropdown
+	let searchTag = ''; // search tag
+	let selectedTags: string[] = [];
 
-	function toggleDropdown() {
-		dropdownOpen = !dropdownOpen;
-	}
+	const targets: Part[] = [part1, part2, part3];
 
-	const targets: Part[] = [part1];
+	$: tagFilteredParts =
+		selectedTags.length === 0
+			? targets
+			: targets.filter(({ tags }) =>
+					selectedTags.every((selectedTag: string) => tags.includes(selectedTag))
+			  );
 
-	$: results = fuzzysort.go(search, targets, {
+	$: tagsAfterFiltering = Array.from(new Set(tagFilteredParts.flatMap((part) => part.tags).sort()));
+
+	$: results = fuzzysort.go(search, tagFilteredParts, {
 		key: 'title',
 		all: true
 	});
+
+	$: results_tags = fuzzysort
+		.go(searchTag, tagsAfterFiltering, {
+			all: true
+		})
+		.map((result) => result.target);
 
 	$: console.log(results);
 </script>
@@ -62,49 +97,34 @@
 </form>
 
 <div class="dropdown dropdown-bottom mt-1 flex justify-center">
-	<button on:click={toggleDropdown}>
-		<div tabindex="0" role="button" class="btn btn-xs m-1 font-encode text-xs">
-			Filter by:
-			{#if dropdownOpen === false}<svg
-					xmlns="http://www.w3.org/2000/svg"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke-width="1.5"
-					stroke="currentColor"
-					class="size-3"
-				>
-					<path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-				</svg>
-			{:else}
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke-width="1.5"
-					stroke="currentColor"
-					class="size-3"
-				>
-					<path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-				</svg>
-			{/if}
-		</div>
-	</button>
-	{#if dropdownOpen === true}
-		<ul tabindex="-1" class="menu dropdown-content z-[1] w-52 rounded-box bg-base-100 p-2 shadow">
+	<div tabindex="0" role="button" class="btn btn-xs m-1 font-encode text-xs">Filter by:</div>
+	<ul
+		tabindex="-1"
+		class="menu dropdown-content z-[1] w-52 cursor-default overflow-y-auto overflow-x-hidden rounded-box bg-base-100 p-2"
+	>
+		<input
+			type="text"
+			name="search"
+			bind:value={searchTag}
+			placeholder="Search tag"
+			class="input input-ghost text-xs text-black"
+		/>
+		{#each results_tags as tag}
 			<li>
-				<div class="form-control">
-					<input type="checkbox" checked={false} class="rounded-xs checkbox h-5 w-5" />
-					<span class="label-text font-encode text-xs">LED</span>
-				</div>
+				<label class="label cursor-pointer">
+					<div class="items-center">
+						<input
+							type="checkbox"
+							value={tag}
+							bind:group={selectedTags}
+							class="rounded-xs checkbox h-5 w-5"
+						/>
+						<span class="label-text ml-2 font-encode text-xs">{tag}</span>
+					</div>
+				</label>
 			</li>
-			<li>
-				<div class="form-control">
-					<input type="checkbox" checked={false} class="rounded-xs checkbox h-5 w-5" />
-					<span class="label-text font-encode text-xs">Comparator</span>
-				</div>
-			</li>
-		</ul>
-	{/if}
+		{/each}
+	</ul>
 </div>
 
 <p class="mt-4 text-center font-encode text-xs text-white">

@@ -1,11 +1,18 @@
 <script>
 	export let part_info;
+	import default_part_image from '$lib/images/defaultPartPicture.png';
 </script>
 
 <div class="card max-w-[16rem] border-4 border-custom-red bg-base-100 bg-opacity-80 p-1 shadow-xl">
 	<div class="card-body p-1">
 		<figure class="px-12 pt-1">
-			<img src={part_info.picture} alt="Red LED" class="xl rounded" />
+			<img
+				src={part_info.picture && part_info.picture.length > 0
+					? part_info.picture
+					: default_part_image}
+				alt="default"
+				class="xl rounded"
+			/>
 		</figure>
 		<h2 class="hyphenate text-md card-title justify-center font-paytone">{part_info.title}</h2>
 		<p class="text-center font-encode text-xs">
