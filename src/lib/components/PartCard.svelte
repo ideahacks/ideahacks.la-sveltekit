@@ -14,7 +14,7 @@
 				class="xl rounded"
 			/>
 		</figure>
-		<h2 class="hyphenate text-md card-title justify-center font-paytone">{part_info.title}</h2>
+		<h2 class="hyphenate text-md card-title justify-center font-paytone">{part_info.name}</h2>
 		<p class="text-center font-encode text-xs">
 			{part_info.num_in_use} out of {part_info.num_total} in use
 		</p>
@@ -52,17 +52,26 @@
 			<span class="font-paytone">ID: </span>{part_info.id}
 		</h3>
 		<div class="card-actions justify-center">
-			<a
-				href={part_info.details}
-				class="text-md btn btn-sm bg-custom-red font-paytone text-white"
-				target="_blank"
-				>Details
-			</a>
+			<label for={part_info.name} class="text-md btn btn-sm bg-custom-red font-paytone text-white"
+				>Details</label
+			>
+			<input type="checkbox" id={part_info.name} class="modal-toggle" />
+			<div class="modal" role="dialog">
+				<div class="modal-box">
+					<p class="hyphenate font-encode text-sm">{part_info.details}</p>
+					<div class="modal-action">
+						<label for={part_info.name} class="btn">Close</label>
+					</div>
+				</div>
+				<label class="modal-backdrop" for={part_info.name}>Close</label>
+				<!--add the above line so clicking outside modal will also close the thing-->
+			</div>
 			<a
 				href={part_info.datasheet}
 				class="text-md btn btn-sm bg-custom-red font-paytone text-white"
-				target="_blank">Datasheet</a
-			>
+				target="_blank"
+				>Datasheet
+			</a>
 		</div>
 	</div>
 </div>

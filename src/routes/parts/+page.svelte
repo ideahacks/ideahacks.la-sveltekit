@@ -6,7 +6,7 @@
 
 	interface Part {
 		picture: string;
-		title: string;
+		name: string;
 		num_in_use: number;
 		num_total: number;
 		location: string;
@@ -18,7 +18,7 @@
 
 	const part1: Part = {
 		picture: 'https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/3645/MFG_L513SRD-C.jpg',
-		title: 'Red LED',
+		name: 'Red LED',
 		num_in_use: 5,
 		num_total: 100,
 		location: 'Table 3',
@@ -31,7 +31,7 @@
 
 	const part2: Part = {
 		picture: '',
-		title: 'LM393 Comparator',
+		name: 'LM393 Comparator',
 		num_in_use: 1,
 		num_total: 50,
 		location: 'Table 5',
@@ -44,7 +44,7 @@
 
 	const part3: Part = {
 		picture: 'https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/1135/151051VS04000.JPG',
-		title: 'Green LED',
+		name: 'Green LED',
 		num_in_use: 3,
 		num_total: 100,
 		location: 'Table 3',
@@ -55,11 +55,25 @@
 		datasheet: 'https://www.we-online.com/components/products/datasheet/151051VS04000.pdf'
 	};
 
+	const part4: Part = {
+		picture:
+			'https://cdn.sparkfun.com//assets/parts/1/3/5/0/8/15569-Ultrasonic_Distance_Sensor_-_HC-SR04-01a.jpg',
+		name: 'Ultrasonic Distance Sensor',
+		num_in_use: 10,
+		num_total: 21,
+		location: 'Drawer 2',
+		tags: ['5V compatible'],
+		id: '00003',
+		details:
+			'This is the HC-SR04 ultrasonic distance sensor. This economical sensor provides 2cm to 400cm of non-contact measurement functionality with a ranging accuracy that can reach up to 3mm. Each HC-SR04 module includes an ultrasonic transmitter, a receiver and a control circuit. There are only four pins that you need to worry about on the HC-SR04: VCC (Power), Trig (Trigger), Echo (Receive), and GND (Ground). You will find this sensor very easy to set up and use for your next range-finding project! This sensor has additional control circuitry that can prevent inconsistent "bouncy" data depending on the application.',
+		datasheet: 'https://www.sparkfun.com/products/15569'
+	};
+
 	let search = ''; // search content
 	let searchTag = ''; // search tag
 	let selectedTags: string[] = [];
 
-	const targets: Part[] = [part1, part2, part3];
+	const targets: Part[] = [part1, part2, part3, part4];
 
 	$: tagFilteredParts =
 		selectedTags.length === 0
@@ -71,7 +85,7 @@
 	$: tagsAfterFiltering = Array.from(new Set(tagFilteredParts.flatMap((part) => part.tags).sort()));
 
 	$: results = fuzzysort.go(search, tagFilteredParts, {
-		key: 'title',
+		key: 'name',
 		all: true
 	});
 
