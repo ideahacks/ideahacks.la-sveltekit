@@ -10,7 +10,7 @@ export default {
 			},
 			colors: {
 				'custom-red': '#FF6B6B',
-				'custom-green': '#6BCB76',
+				'custom-green': '#6BCB76'
 			}
 		}
 	},
