@@ -1,53 +1,52 @@
 <script>
 	import PartInfoCard from '$lib/components/PartInfoCard.svelte';
 
-	let part1_data = {
-		name: 'Servo',
-		img: 'https://www.electronicwings.com/storage/PlatformSection/TopicContent/236/description/servo.jpg',
-		quantity: 20,
-		id: 1443
-	};
-	let part2_data = {
-		name: 'Arduino Uno',
-		img: 'https://upload.wikimedia.org/wikipedia/commons/3/38/Arduino_Uno_-_R3.jpg',
-		quantity: 5,
-		id: 1550
-	};
 	let parts = [
 		{
 			name: 'Arduino Uno',
 			img: 'https://upload.wikimedia.org/wikipedia/commons/3/38/Arduino_Uno_-_R3.jpg',
 			quantity: 5,
-			id: 1550
+			id: '1550'
 		},
 		{
 			name: 'Servo',
 			img: 'https://www.electronicwings.com/storage/PlatformSection/TopicContent/236/description/servo.jpg',
 			quantity: 20,
-			id: 1443
+			id: '1443'
 		},
 		{
 			name: 'Servo',
 			img: 'https://www.electronicwings.com/storage/PlatformSection/TopicContent/236/description/servo.jpg',
 			quantity: 20,
-			id: 1443
+			id: '1443'
 		},
 		{
 			name: 'Servo',
 			img: 'https://www.electronicwings.com/storage/PlatformSection/TopicContent/236/description/servo.jpg',
 			quantity: 20,
-			id: 1443
+			id: '1443'
 		},
 		{
 			name: 'Servo',
 			img: 'https://www.electronicwings.com/storage/PlatformSection/TopicContent/236/description/servo.jpg',
 			quantity: 20,
-			id: 1443
+			id: '1443'
 		}
 	];
+	let filter_text = '';
+	let filtered_parts = parts;
+	$: filtered_parts = parts.filter(
+		(app) =>
+			app.name.toLowerCase().includes(filter_text.toLowerCase()) ||
+			app.id.toLowerCase().includes(filter_text.toLowerCase())
+	);
+
 	let grouped_parts = [];
-	for (let i = 0; i < parts.length; i += 4) {
-		grouped_parts.push(parts.slice(i, i + 4));
+	$: {
+		grouped_parts = [];
+		for (let i = 0; i < filtered_parts.length; i += 4) {
+			grouped_parts.push(filtered_parts.slice(i, i + 4));
+		}
 	}
 </script>
 
@@ -58,7 +57,12 @@
 			<label class="search-label" for="search-input">Search</label>
 			<!-- <div class="search-bar-container">-->
 			<div class="change-bar">
-				<input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
+				<input
+					type="text"
+					placeholder="Search by name or ID"
+					class="input input-bordered w-full max-w-xs"
+					bind:value={filter_text}
+				/>
 			</div>
 		</div>
 		<!--</div>-->
@@ -85,7 +89,7 @@
 		<div class="cart-input-group">
 			<input
 				type="text"
-				placeholder="Type here"
+				placeholder="Team Number"
 				class="cart-input input input-bordered w-full max-w-xs"
 			/>
 			<button class="btn btn-error">Finish Checkout</button>
@@ -125,7 +129,7 @@
 	.search-bar-container {
 		display: flex;
 		flex-direction: column;
-		align-items: center; 
+		align-items: center;
 		margin-top: 16px;
 	}
 	.cards-container {
@@ -134,7 +138,7 @@
 
 		margin-top: 5px;
 		flex-wrap: wrap;
-		gap: 8px; 
+		gap: 8px;
 		width: 100%;
 	}
 	.carousel {
@@ -154,14 +158,17 @@
 	.cart-container {
 		display: flex;
 		flex-direction: column;
-		align-items: center; 
+		align-items: center;
 		margin-top: 16px;
 	}
 	.cart-input-group {
 		display: flex;
-		align-items: center; 
+		align-items: center;
 	}
 	.cart-input {
-		margin-right: 8px; 
+		margin-right: 8px;
+	}
+	.btn {
+		font-family: 'Paytone One';
 	}
 </style>
