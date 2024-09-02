@@ -5,13 +5,13 @@
 	let statusClass = '';
 	$: {
 		if (application.status === 'Accepted') {
-			statusClass = 'bg-green-500';
+			statusClass = 'bg-warning';
 		} else if (application.status === 'Waitlisted') {
-			statusClass = 'bg-yellow-500';
+			statusClass = 'bg-success';
 		} else if (application.status === 'Rejected') {
-			statusClass = 'bg-red-500';
+			statusClass = 'bg-info';
 		} else if (application.status === 'Pending') {
-			statusClass = 'bg-blue-500';
+			statusClass = 'bg-primary';
 		}
 	}
 </script>
@@ -27,7 +27,7 @@
 		display: flex;
 		align-items: center;
 		flex-direction: row;
-		justify-content: space-between; 
+		justify-content: space-between;
 		padding: 16px;
 		border-radius: 8px;
 		color: white;
@@ -38,7 +38,7 @@
 
 	.card p {
 		margin: 0;
-		padding: 0 8px; 
+		padding: 0 8px;
 		font-family: 'Paytone one', sans-serif;
 	}
 </style>

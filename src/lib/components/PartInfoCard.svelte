@@ -20,7 +20,7 @@
 	.card {
 		flex: 1 8;
 		min-width: 160px;
-		
+
 		box-sizing: border-box;
 		max-width: 250px;
 		background-color: #f0f0f0;
@@ -41,5 +41,6 @@
 	}
 	.btn {
 		flex: 1 1 calc(50% - 16px);
+		font-family: 'Paytone One', sans-serif;
 	}
 </style>
