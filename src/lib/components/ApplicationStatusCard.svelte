@@ -25,21 +25,20 @@
 <style>
 	.card {
 		display: flex;
-		align-items: center; /* Align items vertically in the center */
-		justify-content: flex-start; /* Align items to the start */
+		align-items: center;
+		flex-direction: row;
+		justify-content: space-between; 
 		padding: 16px;
 		border-radius: 8px;
 		color: white;
 		margin: 8px;
-		max-width: 900px;
+		max-width: 200x;
 		align-self: center;
 	}
 
-	
 	.card p {
 		margin: 0;
-		padding: 0 8px; /* Add some padding between the items */
+		padding: 0 8px; 
+		font-family: 'Paytone one', sans-serif;
 	}
-
-	
 </style>
