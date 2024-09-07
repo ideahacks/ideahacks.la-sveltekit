@@ -2,12 +2,10 @@
 	import '../app.css';
 
 	import NavBar from '$lib/components/NavBar.svelte';
-
-	let isAdmin = true;
 </script>
 
 <div class="flex min-h-screen flex-col">
-	<NavBar {isAdmin} />
+	<NavBar />
 
 	<slot />
 </div>
