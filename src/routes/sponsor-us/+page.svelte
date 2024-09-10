@@ -1,6 +1,5 @@
 <script>
 	import brochure from '$lib/files/sponsorship-brochure.pdf';
-	import pixelclouds from '$lib/images/pixelclouds.png';
 </script>
 
 <a href="/" class="mx-12 mt-12 text-right font-encode font-bold text-white">Home</a>
@@ -15,7 +14,5 @@
 		<a href="mailto:corporate@ieeebruins.com">corporate@ieeebruins.com</a>
 	</p>
 </div>
-
-<div class="fixed bottom-0 h-24 w-full bg-contain" style="background-image: url({pixelclouds})" />
 
 <!-- <div class="h-24 w-full bg-contain" style="background-image: url({pixelclouds})" /> -->

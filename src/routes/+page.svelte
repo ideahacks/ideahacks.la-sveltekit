@@ -43,6 +43,6 @@
 >
 
 <div
-	class="fixed bottom-0 z-0 h-24 w-full bg-contain"
+	class="fixed bottom-0 z-0 h-12 w-full bg-contain sm:h-24"
 	style="background-image: url({pixelclouds})"
 />
