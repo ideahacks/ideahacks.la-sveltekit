@@ -1,5 +1,4 @@
 <script lang="ts">
-	import pixelclouds from '$lib/images/pixelclouds.png';
 	import logo from '$lib/images/logo.png';
 	import { Send } from 'lucide-svelte';
 
@@ -41,8 +40,3 @@
 <a href="/privacy" class="z-10 mx-12 my-24 text-right font-encode font-bold text-white"
 	>Privacy Policy</a
 >
-
-<div
-	class="fixed bottom-0 z-0 h-12 w-full bg-contain sm:h-24"
-	style="background-image: url({pixelclouds})"
-/>
