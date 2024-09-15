@@ -1,7 +1,5 @@
 <script>
-	export let application; // Default status
-
-	// Determine the class based on the status
+	export let application;
 	let statusClass = '';
 	$: {
 		if (application.status === 'Accepted') {
@@ -16,29 +14,10 @@
 	}
 </script>
 
-<div class={`card ${statusClass}`}>
-	<p>{application.names}</p>
-	<p>{application.year}</p>
-	<p>{application.status}</p>
+<div
+	class={`card ${statusClass} m-2 flex-initial flex-row items-center justify-between self-center rounded-lg p-4 text-white`}
+>
+	<p class="m-0 px-8 py-0 font-paytone">{application.names}</p>
+	<p class="m-0 px-8 py-0 font-paytone">{application.year}</p>
+	<p class="m-0 px-8 py-0 font-paytone">{application.status}</p>
 </div>
-
-<style>
-	.card {
-		display: flex;
-		align-items: center;
-		flex-direction: row;
-		justify-content: space-between;
-		padding: 16px;
-		border-radius: 8px;
-		color: white;
-		margin: 8px;
-		max-width: 200x;
-		align-self: center;
-	}
-
-	.card p {
-		margin: 0;
-		padding: 0 8px;
-		font-family: 'Paytone one', sans-serif;
-	}
-</style>

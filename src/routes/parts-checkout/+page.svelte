@@ -50,13 +50,16 @@
 	}
 </script>
 
-<div class="title">Parts Checkout</div>
-<div class="layout">
-	<div class="left-side">
-		<div class="search-bar-container">
-			<label class="search-label" for="search-input">Search</label>
+<div class="title mb-4 text-center font-paytone text-[5em] text-white">Parts Checkout</div>
+<div class="layout grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))]">
+	<div class="left-side flex flex-col place-self-center place-self-stretch">
+		<div class="search-bar-container mt-4 flex flex-col items-center">
+			<label
+				class="search-label mb-2 block text-center font-paytone text-[3em] font-bold text-white"
+				for="search-input">Search</label
+			>
 			<!-- <div class="search-bar-container">-->
-			<div class="change-bar">
+			<div class="change-bar mb-2.5 flex items-center self-center">
 				<input
 					type="text"
 					placeholder="Search by name or ID"
@@ -67,10 +70,10 @@
 		</div>
 		<!--</div>-->
 
-		<div class="carousel w-full">
+		<div class="carousel w-full justify-self-center">
 			{#each grouped_parts as item, index}
-				<div id={'item' + (index + 1)} class="carousel-item w-full">
-					<div class="cards-container">
+				<div id={'item' + (index + 1)} class="carousel-item w-full justify-self-center">
+					<div class="cards-container mt-[5px] flex w-full flex-wrap items-stretch gap-2">
 						{#each item as card}
 							<PartInfoCard part_data={card} />
 						{/each}
@@ -80,95 +83,22 @@
 		</div>
 		<div class="flex w-full justify-center gap-2 py-2">
 			{#each grouped_parts as item, index}
-				<a href={'#item' + (index + 1)} class="btn btn-xs">{index + 1}</a>
+				<a href={'#item' + (index + 1)} class="btn btn-xs font-paytone">{index + 1}</a>
 			{/each}
 		</div>
 	</div>
-	<div class="cart-container">
-		<label class="search-label" for="cart-input">Cart</label>
-		<div class="cart-input-group">
+	<div class="cart-container mt-4 flex flex-col items-center">
+		<label
+			class="search-label mb-2 block text-center font-paytone text-[3em] font-bold text-white"
+			for="cart-input">Cart</label
+		>
+		<div class="cart-input-group flex items-center">
 			<input
 				type="text"
 				placeholder="Team Number"
-				class="cart-input input input-bordered w-full max-w-xs"
+				class="cart-input input input-bordered mr-2 w-full max-w-xs"
 			/>
-			<button class="btn btn-error">Finish Checkout</button>
+			<button class="btn btn-error font-paytone text-white">Finish Checkout</button>
 		</div>
 	</div>
 </div>
-
-<style>
-	.title {
-		text-align: center;
-		font-size: 5em;
-		margin-bottom: 16px;
-		font-family: 'Paytone One', sans-serif;
-		color: #ffffff;
-	}
-	.left-side {
-		display: flex;
-		flex-direction: column;
-		place-self: center stretch;
-	}
-	.search-label {
-		font-family: 'Paytone One', sans-serif;
-		color: #ffffff;
-		font-size: 3em;
-	}
-
-	.change-bar {
-		align-items: center;
-		align-self: center;
-		display: flex;
-		margin-bottom: 10px;
-	}
-	.layout {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-	}
-	.search-bar-container {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		margin-top: 16px;
-	}
-	.cards-container {
-		display: flex;
-		align-items: stretch;
-
-		margin-top: 5px;
-		flex-wrap: wrap;
-		gap: 8px;
-		width: 100%;
-	}
-	.carousel {
-		justify-self: center;
-	}
-	.carousel-item {
-		justify-self: center;
-	}
-	.search-label {
-		font-weight: bold;
-		margin-bottom: 8px;
-
-		display: block;
-		text-align: center;
-	}
-
-	.cart-container {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		margin-top: 16px;
-	}
-	.cart-input-group {
-		display: flex;
-		align-items: center;
-	}
-	.cart-input {
-		margin-right: 8px;
-	}
-	.btn {
-		font-family: 'Paytone One';
-	}
-</style>
