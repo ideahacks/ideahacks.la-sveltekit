@@ -2,45 +2,20 @@
 	export let part_data;
 </script>
 
-<div class="card w-96 bg-base-100 shadow-xl">
+<div
+	class="card box-border w-96 min-w-40 max-w-64 flex-[1_8] rounded-lg bg-base-100 bg-slate-100 shadow-[0_4px_8px_rgba(0,0,0,0.1)] shadow-xl"
+>
 	<figure>
-		<img src={part_data.img} alt="" />
+		<img class="w-full rounded-t-[10px]" src={part_data.img} alt="" />
 	</figure>
-	<div class="card-body">
-		<h2 class="card-title">{part_data.name}</h2>
-		<p>Quantity: {part_data.quantity}</p>
-		<p>ID: {part_data.id}</p>
+	<div class="card-body p-5">
+		<h2 class="card-title font-paytone">{part_data.name}</h2>
+		<p class="font-paytone">Quantity: {part_data.quantity}</p>
+		<p class="font-paytone">ID: {part_data.id}</p>
 		<div class="card-actions justify-end">
-			<button class="btn btn-error">Add to Cart</button>
+			<button class="btn btn-error flex-[1_1_calc(50%-16px)] font-paytone text-white"
+				>Add to Cart</button
+			>
 		</div>
 	</div>
 </div>
-
-<style>
-	.card {
-		flex: 1 8;
-		min-width: 160px;
-
-		box-sizing: border-box;
-		max-width: 250px;
-		background-color: #f0f0f0;
-		border-radius: 10px;
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	}
-	.card img {
-		width: 100%;
-		border-top-left-radius: 10px;
-		border-top-right-radius: 10px;
-	}
-	.card-body {
-		padding: 20px;
-	}
-	.card-body h2,
-	p {
-		font-family: 'Paytone One', sans-serif;
-	}
-	.btn {
-		flex: 1 1 calc(50% - 16px);
-		font-family: 'Paytone One', sans-serif;
-	}
-</style>

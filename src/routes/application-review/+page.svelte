@@ -72,54 +72,54 @@
 	}
 </script>
 
-<div class="title">Application Review</div>
-<div class="card-container">
-	<div class="card w-96 bg-error p-4 text-neutral-content">
+<div class="title mb-4 text-center font-paytone text-[4.3em] text-white">Application Review</div>
+<div class="card-container flex flex-wrap justify-center gap-20">
+	<div class="card w-[150px] bg-error p-4 text-neutral-content">
 		<div class="card-body items-center text-center">
-			<h2 class="card-title">{app_status.applications}</h2>
-			<p>Applications</p>
+			<h2 class="card-title font-paytone">{app_status.applications}</h2>
+			<p class="font-paytone">Applications</p>
 		</div>
 	</div>
 
-	<div class="card w-96 bg-warning p-4 text-neutral-content">
+	<div class="card w-[150px] bg-warning p-4 text-neutral-content">
 		<div class="card-body items-center text-center">
-			<h2 class="card-title">{app_status.accepted}</h2>
-			<p>Accepted</p>
+			<h2 class="card-title font-paytone">{app_status.accepted}</h2>
+			<p class="font-paytone">Accepted</p>
 		</div>
 	</div>
 
-	<div class="card w-96 bg-success p-4 text-neutral-content">
+	<div class="card w-[150px] bg-success p-4 text-neutral-content">
 		<div class="card-body items-center text-center">
-			<h2 class="card-title">{app_status.waitlisted}</h2>
-			<p>Waitlisted</p>
+			<h2 class="card-title font-paytone">{app_status.waitlisted}</h2>
+			<p class="font-paytone">Waitlisted</p>
 		</div>
 	</div>
 
-	<div class="card w-96 bg-info p-4 text-neutral-content">
+	<div class="card w-[150px] bg-info p-4 text-neutral-content">
 		<div class="card-body items-center text-center">
-			<h2 class="card-title">{app_status.rejected}</h2>
-			<p>Rejected</p>
+			<h2 class="card-title font-paytone">{app_status.rejected}</h2>
+			<p class="font-paytone">Rejected</p>
 		</div>
 	</div>
 
-	<div class="card w-96 bg-primary p-4 text-neutral-content">
+	<div class="card w-[150px] bg-primary p-4 text-neutral-content">
 		<div class="card-body items-center text-center">
-			<h2 class="card-title">{app_status.pending}</h2>
-			<p>Pending</p>
+			<h2 class="card-title font-paytone">{app_status.pending}</h2>
+			<p class="font-paytone">Pending</p>
 		</div>
 	</div>
 </div>
 <input
 	type="text"
 	placeholder="Search by name, year, or status"
-	class="input input-bordered input-info w-full max-w-xs"
+	class="input input-bordered input-info mt-[40px] w-full max-w-xs self-center"
 	bind:value={filter_text}
 />
-<div class="display">
-	<div class="carousel w-full">
+<div class="display flex flex-col items-center justify-center">
+	<div class="carousel flex w-full items-center">
 		{#each grouped_apps as item, index}
 			<div id={'item' + (index + 1)} class="carousel-item w-full">
-				<div class="cards-container">
+				<div class="cards-container justify center flex grow flex-col items-stretch">
 					{#each item as card}
 						<ApplicationStatusCard application={card} />
 					{/each}
@@ -129,57 +129,7 @@
 	</div>
 	<div class="flex w-full justify-center gap-2 py-2">
 		{#each grouped_apps as item, index}
-			<a href={'#item' + (index + 1)} class="btn btn-xs">{index + 1}</a>
+			<a href={'#item' + (index + 1)} class="btn btn-xs font-paytone">{index + 1}</a>
 		{/each}
 	</div>
 </div>
-
-<style>
-	.cards-container {
-		display: flex;
-		flex-grow: 1;
-		flex-direction: column;
-		align-items: stretch;
-		justify-content: center;
-	}
-	.display {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-	.carousel {
-		display: flex;
-		align-items: center;
-	}
-	.title {
-		text-align: center;
-		font-size: 4.3em;
-		margin-bottom: 16px;
-		font-family: 'Paytone One', sans-serif;
-		color: #ffffff;
-	}
-	.card-container {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 80px;
-	}
-
-	.card {
-		width: 150px;
-	}
-	.card-title {
-		font-family: 'Paytone One', sans-serif;
-	}
-	.card p {
-		font-family: 'Paytone One', sans-serif;
-	}
-	.input {
-		align-self: center;
-		margin-top: 40px;
-	}
-	.btn {
-		font-family: 'Paytone One';
-	}
-</style>
