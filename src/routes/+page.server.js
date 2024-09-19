@@ -24,7 +24,6 @@ export const actions = {
 
 		// check for duplicates
 		const { data } = await supabase.from('emails_2025').select().eq('email', email);
-		console.log(data);
 
 		if (data && data.length > 0) {
 			return {
