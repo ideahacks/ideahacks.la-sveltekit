@@ -2,7 +2,8 @@
 	import pixelclouds from '$lib/images/pixelclouds.png';
 	import logo from '$lib/images/logo.png';
 	import { Send } from 'lucide-svelte';
-	import { supabase } from '$lib/supabaseClient';
+	import type { Session, SupabaseClient } from '@supabase/supabase-js';
+	export let supabase: SupabaseClient;
 
 	export let form;
 	export let data;
