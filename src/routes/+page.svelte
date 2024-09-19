@@ -2,14 +2,36 @@
 	import pixelclouds from '$lib/images/pixelclouds.png';
 	import logo from '$lib/images/logo.png';
 	import { Send } from 'lucide-svelte';
+	import type { Session, SupabaseClient } from '@supabase/supabase-js';
+	export let supabase: SupabaseClient;
 
 	export let form;
+	export let data;
+
+	let { session } = data;
+	$: ({ session } = data);
+
+	const email = session?.user.email;
+
+	async function signOut() {
+		const { error } = await supabase.auth.signOut();
+
+		// TODO: Actual error handling
+		if (error) {
+			console.log(`Error signing out: ${error}`);
+		}
+
+		console.log('Signed out?');
+	}
 </script>
 
 <img src={logo} alt="logo" class="fixed right-36 top-36 z-0 w-96 opacity-15" />
 
 <a href="/sponsor-us" class="mx-12 mt-12 text-right font-encode font-bold text-white">Sponsor Us!</a
 >
+
+<div>Hi {email}!</div>
+<button on:click={signOut}> SIGN OUT </button>
 
 <div class="z-10 mx-5 my-10 max-w-xl md:ml-24">
 	<h1 class="mb-4 font-paytone text-6xl text-white xl:text-8xl">
