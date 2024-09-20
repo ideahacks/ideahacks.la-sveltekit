@@ -1,35 +1,52 @@
 <script lang="ts">
+	import { invalidateAll } from '$app/navigation';
 	import ApplicationStatusCard from '$lib/components/ApplicationStatusCard.svelte';
+
 	export let data;
 	let { supabase } = data;
 	$: ({ supabase } = data);
 
 	let apps = data.applications;
+	export async function updateApplication(status, email) {
+		const { error } = await supabase
+			.from('applications')
+			.update({ status: status })
+			.eq('email', email);
+
+		if (!error) {
+			// Update the local apps array
+			apps = apps.map((app) => (app.email === email ? { ...app, status: status } : app));
+			// Recalculate app_status
+			updateAppStatus();
+		}
+	}
 	console.log(apps);
 	let filter_text = '';
 	let filtered_apps = apps;
 	let app_status = { applications: 0, accepted: 0, waitlisted: 0, rejected: 0, pending: 0 };
-	let i = 0;
-	app_status.applications = apps.length;
-	for (i = 0; i < apps.length; i++) {
-		switch (apps[i].status) {
-			case 'Accepted':
-				app_status.accepted++;
-				break;
-			case 'Waitlisted':
-				app_status.waitlisted++;
-				break;
-			case 'Rejected':
-				app_status.rejected++;
-				break;
-			case 'Pending':
-				app_status.pending++;
-				break;
-			case null:
-				app_status.pending++;
-				break;
+	function updateAppStatus() {
+		app_status = { applications: 0, accepted: 0, waitlisted: 0, rejected: 0, pending: 0 };
+		app_status.applications = apps.length;
+		for (let app of apps) {
+			switch (app.status) {
+				case 'Accepted':
+					app_status.accepted++;
+					break;
+				case 'Waitlisted':
+					app_status.waitlisted++;
+					break;
+				case 'Rejected':
+					app_status.rejected++;
+					break;
+				case 'Pending':
+				case null:
+					app_status.pending++;
+					app.status = 'Pending';
+					break;
+			}
 		}
 	}
+	$: updateAppStatus();
 
 	$: filtered_apps = apps.filter(
 		(app) =>
@@ -47,24 +64,8 @@
 	}
 
 	async function changeStatus(status, email) {
-		const recordToUpdate = apps.find((record) => record.email === email);
-		if (recordToUpdate) {
-			const id = recordToUpdate.id;
-			console.log('ID of the record to update:', id);
-
-			const { error } = await supabase
-				.from('applications')
-				.update({ status: status })
-				.eq('email', email);
-
-			if (error) {
-				console.error('Error updating record:', error);
-			} else {
-				console.log('Record updated successfully');
-			}
-		} else {
-			console.log('Record not found');
-		}
+		await updateApplication(status, email);
+		console.log('Successfully changed record');
 	}
 </script>
 
@@ -116,9 +117,9 @@
 		{#each grouped_apps as item, index}
 			<div id={'item' + (index + 1)} class="carousel-item w-full">
 				<div class="cards-container justify center flex grow flex-col items-stretch">
-					{#each item as card}
-						<ApplicationStatusCard application={card} {index} />
-						<dialog id={`modal_${index}`} class="modal">
+					{#each item as card, cardIndex}
+						<ApplicationStatusCard application={card} index={index * 4 + cardIndex} />
+						<dialog id={`modal_${index * 4 + cardIndex}`} class="modal">
 							<div class="modal-box">
 								<h3 class="text-lg font-bold">{card.full_name}</h3>
 								<p class="py-4">Year: {card.year_at_current_university}</p>
