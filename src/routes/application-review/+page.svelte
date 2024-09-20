@@ -1,11 +1,11 @@
 <script lang="ts">
 	import ApplicationStatusCard from '$lib/components/ApplicationStatusCard.svelte';
-export let data;
-let { supabase } = data;
+	export let data;
+	let { supabase } = data;
 	$: ({ supabase } = data);
 
-	let apps = data.applications
-console.log(apps)
+	let apps = data.applications;
+	console.log(apps);
 	let filter_text = '';
 	let filtered_apps = apps;
 	let app_status = { applications: 0, accepted: 0, waitlisted: 0, rejected: 0, pending: 0 };
@@ -34,8 +34,8 @@ console.log(apps)
 	$: filtered_apps = apps.filter(
 		(app) =>
 			app.full_name.toLowerCase().includes(filter_text.toLowerCase()) ||
-			app.year_at_current_university.toLowerCase().includes(filter_text.toLowerCase()) 
-				||  (app.status?.toLowerCase().includes(filter_text.toLowerCase()) ?? false)
+			app.year_at_current_university.toLowerCase().includes(filter_text.toLowerCase()) ||
+			(app.status?.toLowerCase().includes(filter_text.toLowerCase()) ?? false)
 	);
 
 	let grouped_apps = [];
@@ -47,23 +47,25 @@ console.log(apps)
 	}
 
 	async function changeStatus(status, email) {
-	const recordToUpdate = apps.find(record => record.email === email);
-	if (recordToUpdate) {
-    const id = recordToUpdate.id;
-    console.log('ID of the record to update:', id);
+		const recordToUpdate = apps.find((record) => record.email === email);
+		if (recordToUpdate) {
+			const id = recordToUpdate.id;
+			console.log('ID of the record to update:', id);
 
-   
-    const { error } = await supabase.from('applications').update({ status: status }).eq('email', email);
+			const { error } = await supabase
+				.from('applications')
+				.update({ status: status })
+				.eq('email', email);
 
-    if (error) {
-      console.error('Error updating record:', error);
-    } else {
-      console.log('Record updated successfully');
-    }
-  } else {
-    console.log('Record not found');
-  }
-  }
+			if (error) {
+				console.error('Error updating record:', error);
+			} else {
+				console.log('Record updated successfully');
+			}
+		} else {
+			console.log('Record not found');
+		}
+	}
 </script>
 
 <div class="title mb-4 text-center font-paytone text-[4.3em] text-white">Application Review</div>
@@ -115,28 +117,34 @@ console.log(apps)
 			<div id={'item' + (index + 1)} class="carousel-item w-full">
 				<div class="cards-container justify center flex grow flex-col items-stretch">
 					{#each item as card}
-						<ApplicationStatusCard application={card} index={index}/>
+						<ApplicationStatusCard application={card} {index} />
 						<dialog id={`modal_${index}`} class="modal">
 							<div class="modal-box">
-							  <h3 class="text-lg font-bold">{card.full_name}</h3>
-							  <p class="py-4">Year: {card.year_at_current_university}</p>
-							  <p class="py-4">Status: {card.status}</p>
-							  <div class="modal-action">
-								<form method="dialog">
-									<button class="btn bg-warning" on:click={changeStatus("Accepted",card.email)}>Accept</button>
-									<button class="btn bg-success" on:click={changeStatus("Waitlisted",card.email)}>Waitlist</button>
-									<button class="btn bg-info" on:click={changeStatus("Rejected",card.email)}>Reject</button>
-								  <button class="btn bg-primary" >Close</button>
-								</form>
-							  </div>
+								<h3 class="text-lg font-bold">{card.full_name}</h3>
+								<p class="py-4">Year: {card.year_at_current_university}</p>
+								<p class="py-4">Status: {card.status}</p>
+								<div class="modal-action">
+									<form method="dialog">
+										<button class="btn bg-warning" on:click={changeStatus('Accepted', card.email)}
+											>Accept</button
+										>
+										<button class="btn bg-success" on:click={changeStatus('Waitlisted', card.email)}
+											>Waitlist</button
+										>
+										<button class="btn bg-info" on:click={changeStatus('Rejected', card.email)}
+											>Reject</button
+										>
+										<button class="btn bg-primary">Close</button>
+									</form>
+								</div>
 							</div>
-						  </dialog>
+						</dialog>
 					{/each}
 				</div>
 			</div>
 		{/each}
 	</div>
-	<div class="flex flex-wrap w-full justify-center gap-2 py-2">
+	<div class="flex w-full flex-wrap justify-center gap-2 py-2">
 		{#each grouped_apps as item, index}
 			<a href={'#item' + (index + 1)} class="btn btn-xs font-paytone">{index + 1}</a>
 		{/each}
