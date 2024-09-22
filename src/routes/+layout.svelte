@@ -1,14 +1,11 @@
 <script lang="ts">
 	import '../app.css';
-	import pixelclouds from '$lib/images/pixelclouds.png';
+	import cityscape from '$lib/images/cityscape.png';
 </script>
 
 <div class="flex min-h-screen flex-col">
 	<slot />
-	<div
-		class="fixed bottom-0 h-12 w-full bg-contain sm:h-24"
-		style="background-image: url({pixelclouds});"
-	/>
+	<div class="fixed bottom-0 h-24 w-full bg-contain" style="background-image: url({cityscape});" />
 </div>
 
 <style lang="postcss">
