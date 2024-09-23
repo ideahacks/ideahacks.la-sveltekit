@@ -3,7 +3,7 @@
 	import cityscape from '$lib/images/cityscape.png';
 </script>
 
-<div class="flex min-h-screen flex-col">
+<div class="z-0 flex min-h-screen flex-col">
 	<slot />
 	<div class="fixed bottom-0 h-24 w-full bg-contain" style="background-image: url({cityscape});" />
 </div>

@@ -5,6 +5,13 @@
 	import cloud2 from '$lib/images/CLOUDS_2.png';
 	import cloud3 from '$lib/images/CLOUDS_3.png';
 	import cloud4 from '$lib/images/CLOUDS_4.png';
+
+	import ideahacks2020 from '$lib/images/ideahacks2020.png';
+	import ideahacks2021 from '$lib/images/ideahacks2021.png';
+	import ideahacks2022 from '$lib/images/ideahacks2022.png';
+	import ideahacks2023 from '$lib/images/ideahacks2023.png';
+	import ideahacks2024 from '$lib/images/ideahacks2024.png';
+
 	import Typewriter from 'svelte-typewriter';
 
 	import { fly } from 'svelte/transition';
@@ -57,10 +64,16 @@
 	/>
 {/if}
 
-<a href="/sponsor-us" class="z-10 mx-12 mt-12 text-right font-encode font-bold text-white"
+<a
+	href="/privacy"
+	class="z-10 mx-12 mt-12 text-right font-encode font-bold text-white hover:opacity-75">Privacy</a
+><a
+	href="/sponsor-us"
+	class="absolute z-10 mx-5 mt-12 font-encode font-bold text-white hover:opacity-75 md:mx-24"
 	>Sponsor Us!</a
 >
-<div class="z-10 mx-5 my-10 max-w-xl md:ml-24">
+
+<div class="z-10 mx-5 my-10 max-w-4xl rounded-lg bg-white bg-opacity-10 p-4 shadow-md md:mx-24">
 	<h1 class="mb-4 font-paytone text-6xl text-white xl:text-8xl">
 		<span>IDEA HACKS 2025</span>
 	</h1>
@@ -73,11 +86,8 @@
 	</h3>
 	<div class="text-md mb-4 font-encode text-white xl:text-lg">
 		Get ready to create something amazing! Join us for the 11th annual IDEA Hacks, the West Coast's
-		premier hardware hackathon.
-	</div>
-
-	<div class="text-md mb-4 font-encode text-white xl:text-lg">
-		Want to be the first to know when applications drop? Enter your email below!
+		premier hardware hackathon. Want to be the first to know when applications drop? Enter your
+		email below!
 	</div>
 
 	<form method="POST" class="flex">
@@ -93,5 +103,62 @@
 
 	<div class="text-md mt-4 font-encode text-white">{form?.message ?? ''}</div>
 	<br />
-	<a href="/privacy" class="z-10 mb-48 font-encode font-bold text-white">Privacy Policy</a>
+
+	<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
+		<span>About</span>
+	</h1>
+	<div class="text-md mb-4 font-encode text-white xl:text-lg">
+		For the eleventh time, IEEE at UCLA is pleased to present IDEA Hacks, the largest hardware
+		hackathon on the West Coast! We provide all our hackers with all the hardware, tools, and
+		equipment that they need, including 3D printers and soldering stations, free of charge. Our
+		hundreds of hackers will not only code, but create tangible products from scratch over the
+		course of 36 hours.
+	</div>
+
+	<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
+		<span>History</span>
+	</h1>
+	<div class="text-md mb-4 font-encode text-white xl:text-lg">
+		IDEA Hacks was founded in 2014 by members of UCLA IEEE and Theta Tau Upsilon Delta. Ever since
+		our first hackathon in January 2015, IDEA Hacks’ vision has been to provide engineering students
+		with a space to learn, create, and inspire one another. As the first and largest hardware
+		hackathon in California, we encourage interdisciplinary teams to build hands-on components as
+		opposed to a software hackathon.
+	</div>
+
+	<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
+		<span>Previous Events</span>
+	</h1>
+	<div class="text-md mb-4 space-x-1 font-encode text-white xl:text-lg">
+		<a
+			href="https://idea-hacks-2024.devpost.com"
+			target="_blank"
+			class="inline-block h-20 w-20 text-center hover:opacity-80"
+			><img src={ideahacks2024} class="rounded-full opacity-75" alt="ideahacks 2023 logo" />2024</a
+		>
+		<a
+			href="https://idea-hacks-2023.devpost.com"
+			target="_blank"
+			class="inline-block h-20 w-20 text-center hover:opacity-80"
+			><img src={ideahacks2023} class="rounded-full opacity-75" alt="ideahacks 2023 logo" />2023</a
+		>
+		<a
+			href="https://ideahacks2022.devpost.com"
+			target="_blank"
+			class="inline-block h-20 w-20 text-center hover:opacity-80"
+			><img src={ideahacks2022} class="rounded-full opacity-75" alt="ideahacks 2022 logo" />2022</a
+		>
+		<a
+			href="https://ideahacks2021.devpost.com"
+			target="_blank"
+			class="inline-block h-20 w-20 text-center hover:opacity-80"
+			><img src={ideahacks2021} class="rounded-full opacity-75" alt="ideahacks 2021 logo" />2021</a
+		>
+		<a
+			href="https://ideahacks2020.devpost.com"
+			target="_blank"
+			class="inline-block h-20 w-20 text-center hover:opacity-80"
+			><img src={ideahacks2020} class="rounded-full opacity-75" alt="ideahacks 2020 logo" />2020</a
+		>
+	</div>
 </div>
