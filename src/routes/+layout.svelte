@@ -5,7 +5,10 @@
 
 <div class="z-0 flex min-h-screen flex-col">
 	<slot />
-	<div class="fixed bottom-0 h-24 w-full bg-contain" style="background-image: url({cityscape});" />
+	<div
+		class="fixed bottom-0 z-20 h-24 w-full bg-contain"
+		style="background-image: url({cityscape});"
+	/>
 </div>
 
 <style lang="postcss">

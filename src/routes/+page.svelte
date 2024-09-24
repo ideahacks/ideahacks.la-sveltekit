@@ -73,7 +73,7 @@
 	>Sponsor Us!</a
 >
 
-<div class="z-10 mx-5 my-10 max-w-4xl rounded-lg bg-white bg-opacity-10 p-4 shadow-md md:mx-24">
+<div class="z-10 mx-5 my-10 max-w-4xl md:mx-24">
 	<h1 class="mb-4 font-paytone text-6xl text-white xl:text-8xl">
 		<span>IDEA HACKS 2025</span>
 	</h1>
@@ -129,35 +129,35 @@
 	<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
 		<span>Previous Events</span>
 	</h1>
-	<div class="text-md mb-4 space-x-1 font-encode text-white xl:text-lg">
+	<div class="text-md mb-24 font-encode text-white xl:text-lg">
 		<a
 			href="https://idea-hacks-2024.devpost.com"
 			target="_blank"
-			class="inline-block h-20 w-20 text-center hover:opacity-80"
+			class="m-2 inline-block h-20 w-20 text-center hover:opacity-80"
 			><img src={ideahacks2024} class="rounded-full opacity-75" alt="ideahacks 2023 logo" />2024</a
 		>
 		<a
 			href="https://idea-hacks-2023.devpost.com"
 			target="_blank"
-			class="inline-block h-20 w-20 text-center hover:opacity-80"
+			class="m-2 inline-block h-20 w-20 text-center hover:opacity-80"
 			><img src={ideahacks2023} class="rounded-full opacity-75" alt="ideahacks 2023 logo" />2023</a
 		>
 		<a
 			href="https://ideahacks2022.devpost.com"
 			target="_blank"
-			class="inline-block h-20 w-20 text-center hover:opacity-80"
+			class="m-2 inline-block h-20 w-20 text-center hover:opacity-80"
 			><img src={ideahacks2022} class="rounded-full opacity-75" alt="ideahacks 2022 logo" />2022</a
 		>
 		<a
 			href="https://ideahacks2021.devpost.com"
 			target="_blank"
-			class="inline-block h-20 w-20 text-center hover:opacity-80"
+			class="m-2 inline-block h-20 w-20 text-center hover:opacity-80"
 			><img src={ideahacks2021} class="rounded-full opacity-75" alt="ideahacks 2021 logo" />2021</a
 		>
 		<a
 			href="https://ideahacks2020.devpost.com"
 			target="_blank"
-			class="inline-block h-20 w-20 text-center hover:opacity-80"
+			class="m-2 inline-block h-20 w-20 text-center hover:opacity-80"
 			><img src={ideahacks2020} class="rounded-full opacity-75" alt="ideahacks 2020 logo" />2020</a
 		>
 	</div>
