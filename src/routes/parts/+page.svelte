@@ -10,36 +10,17 @@
 
 	let parts = data.parts ?? [];
 
-	interface Part {
-		image_url: string;
-		name: string;
-		num_in_use: number;
-		quantity: number;
-		checkout_location: string;
-		tags: string[];
-		part_id: number;
-		alt_ids: string[];
-		description: string;
-		datasheet_url: string;
-		requires_checkout: Boolean;
-	}
-
+	// handle the fuzzysort here
 	let search = ''; // search content
 	let searchTag = ''; // search tag
 	let selectedTags: string[] = [];
 
-	$: parts = parts.map((part) => {
-		part.tags = JSON.parse(part.tags);
-		return part;
-	});
-
 	$: tagFilteredParts =
 		selectedTags.length === 0
 			? parts
-			: parts.filter(({ tags }) => {
-					console.log('Selected tags:', selectedTags); // Debugging selected tags
-					return selectedTags.every((selectedTag: string) => tags.includes(selectedTag));
-			  });
+			: parts.filter(({ tags }) =>
+					selectedTags.every((selectedTag: string) => tags.includes(selectedTag))
+			  );
 
 	$: tagsAfterFiltering = Array.from(new Set(tagFilteredParts.flatMap((part) => part.tags).sort()));
 
@@ -54,7 +35,13 @@
 		})
 		.map((result) => result.target);
 
-	$: console.log('Updated selectedTags:', selectedTags);
+	// handle the pagination here
+	$: currentPage = 1;
+	const itemsPerPage = 25;
+	$: totalPages = Math.ceil(results.length / itemsPerPage);
+	$: totalPagesArray = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+	$: paginatedResults = results.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 </script>
 
 <h1 class="mb-6 mt-12 text-center font-paytone text-5xl font-bold text-white">Parts</h1>
@@ -73,7 +60,7 @@
 	<div tabindex="0" role="button" class="btn btn-xs m-1 font-encode text-xs">Filter by:</div>
 	<ul
 		tabindex="-1"
-		class="menu dropdown-content z-[1] w-52 cursor-default overflow-y-auto overflow-x-hidden rounded-box bg-base-100 p-2"
+		class="menu dropdown-content z-[1] w-52 cursor-default rounded-box bg-base-100 p-2"
 	>
 		<input
 			type="text"
@@ -104,9 +91,23 @@
 	Showing {results.length} out of {parts.length} parts
 </p>
 
-<div class="flex flex-wrap justify-center gap-4 p-6 pb-24">
-	{#each results as part}
+<div class="flex flex-wrap justify-center gap-4 p-6 pb-12">
+	{#each paginatedResults as part}
 		<PartCard part_info={part.obj} />
+	{/each}
+</div>
+
+<div class="join mb-24 mt-0 justify-center">
+	{#each totalPagesArray as pageNum}
+		<input
+			class="active:bg-custom-yellow hover:bg-custom-yellow focus:bg-custom-yellow btn btn-square join-item bg-white"
+			type="radio"
+			name="options"
+			value={pageNum}
+			bind:group={currentPage}
+			aria-label={String(pageNum)}
+			checked={currentPage === pageNum}
+		/>
 	{/each}
 </div>
 
