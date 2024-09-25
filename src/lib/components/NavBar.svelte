@@ -28,18 +28,19 @@
 				</li>
 			{:else}
 				<li>
-					<details class="dropdown-center dropdown dropdown-end">
-						<summary tabindex="-1" class="mr-4" id="dropdown-button">ADMIN</summary>
+					<div class="dropdown dropdown-end dropdown-hover">
+						<div tabindex="-1" class="ml-2 mr-4">
+							<span class="hover:underline">ADMIN</span>
+						</div>
 						<ul
 							tabindex="-1"
-							id="dropdown-menu"
-							class="menu dropdown-content z-[1] mt-6 w-48 items-center rounded-box bg-custom-yellow p-1 text-sm"
+							class="menu dropdown-content z-[1] w-52 items-center rounded-box border-2 border-custom-yellow bg-base-100 p-1 text-sm"
 						>
 							<li><a href="/teams">Teams</a></li>
 							<li><a href="/">Checking Parts</a></li>
 							<li><a href="/">Application Review</a></li>
 						</ul>
-					</details>
+					</div>
 				</li>
 				<li>
 					<a href="/" class="ml-2 mr-4 text-custom-brown">SIGN OUT</a>
@@ -48,3 +49,9 @@
 		</ul>
 	</div>
 </div>
+
+<style>
+	details[open] hover {
+		text-decoration: underline;
+	}
+</style>
