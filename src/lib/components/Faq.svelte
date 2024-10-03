@@ -1,21 +1,14 @@
-<div class="collapse collapse-arrow bg-base-200">
-	<input type="radio" name="my-accordion-2" checked="checked" />
-	<div class="collapse-title text-xl font-medium">Click to open this one and close others</div>
-	<div class="collapse-content">
-		<p>hello</p>
-	</div>
-</div>
-<div class="collapse collapse-arrow bg-base-200">
+<script>
+	export let question = 'FAQ';
+	export let answer = 'Answers to common questions about IDEA Hacks';
+</script>
+
+<div class="collapse collapse-arrow mb-4 bg-base-200 bg-opacity-20">
 	<input type="radio" name="my-accordion-2" />
-	<div class="collapse-title text-xl font-medium">Click to open this one and close others</div>
-	<div class="collapse-content">
-		<p>hello</p>
-	</div>
-</div>
-<div class="collapse collapse-arrow bg-base-200">
-	<input type="radio" name="my-accordion-2" />
-	<div class="collapse-title text-xl font-medium">Click to open this one and close others</div>
-	<div class="collapse-content">
-		<p>hello</p>
+	<div class="collapse-title font-paytone text-xl font-medium">{question}</div>
+	<div class="collapse-content font-mono">
+		<p>
+			{answer}
+		</p>
 	</div>
 </div>
