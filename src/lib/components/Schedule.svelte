@@ -3,10 +3,9 @@
 </script>
 
 <div class="font-pantone py-4 text-center text-2xl font-extrabold">IDEA Hacks Schedule</div>
-<div class="flex flex-wrap justify-around gap-4 p-4">
+<div class="gap-4 rounded-box bg-white bg-opacity-30 p-4 lg:flex lg:bg-opacity-0">
 	<div
-		class="timeline timeline-vertical timeline-snap-icon rounded-box p-4 max-md:timeline-compact"
-		style="background-color:rgba(255, 255, 255, 0.3)"
+		class="timeline timeline-vertical timeline-snap-icon w-full rounded-box p-4 max-[500px]:timeline-compact lg:w-auto lg:bg-white lg:bg-opacity-30"
 	>
 		<div class="rounded-box py-4 text-center font-mono text-xl font-extrabold">FRIDAY, JAN. 17</div>
 		<TimelineItem
@@ -41,8 +40,7 @@
 	</div>
 
 	<div
-		class="timeline timeline-vertical timeline-snap-icon rounded-box p-4 max-md:timeline-compact"
-		style="background-color:rgba(255, 255, 255, 0.3)"
+		class="timeline timeline-vertical timeline-snap-icon w-full rounded-box p-4 max-[500px]:timeline-compact lg:w-auto lg:bg-white lg:bg-opacity-30"
 	>
 		<div class="py-4 text-center font-mono text-xl font-extrabold">SATURDAY, JAN. 18</div>
 		<TimelineItem
@@ -77,8 +75,7 @@
 	</div>
 
 	<div
-		class="timeline timeline-vertical timeline-snap-icon rounded-box p-4 max-md:timeline-compact"
-		style="background-color:rgba(255, 255, 255, 0.3)"
+		class="timeline timeline-vertical timeline-snap-icon w-full rounded-box p-4 max-[500px]:timeline-compact lg:w-auto lg:bg-white lg:bg-opacity-30"
 	>
 		<div class="py-4 text-center font-mono text-xl font-extrabold">SUNDAY, JAN. 19</div>
 		<TimelineItem
