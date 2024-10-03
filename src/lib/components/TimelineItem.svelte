@@ -1,12 +1,16 @@
 <script>
 	export let time;
 	export let title;
-	export let location = ''; // Optional, default empty
+	export let location = 'Ackerman Grand Ballroom';
 	export let alignment = 'start'; // 'start' or 'end' for alignment
+	export let first = false;
+	export let last = false;
 </script>
 
 <li>
-	<hr />
+	{#if !first}
+		<hr />
+	{/if}
 	<div class="timeline-middle px-2">
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
 			<path
@@ -16,10 +20,12 @@
 			/>
 		</svg>
 	</div>
-	<div class="timeline-{alignment} mb-10 {alignment === 'start' ? 'md:text-end' : ''}">
+	<div class="timeline-{alignment} mb-10 {alignment === 'start' ? 'md:text-end' : ''} pt-1.5">
 		<time class="font-mono italic">{time}</time>
 		<div class="font-paytone text-lg font-black">{title}</div>
 		<div>{location}</div>
 	</div>
-	<hr />
+	{#if !last}
+		<hr />
+	{/if}
 </li>

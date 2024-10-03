@@ -2,4 +2,6 @@
 	import Schedule from '$lib/components/Schedule.svelte';
 </script>
 
-<Schedule />
+<div class="flex min-h-screen flex-col p-4">
+	<Schedule />
+</div>
