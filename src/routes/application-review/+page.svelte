@@ -145,9 +145,17 @@
 									<p class="py">Hackathon Ideas Question: {card.hackathon_ideas}</p>
 									<p class="py">Prior Hackathon Experience Question: {card.hackathon_ideas}</p>
 								</div>
-								<p class="py">Suggested Parts: {card.suggested_parts}</p>
+								{#if card.suggested_parts == ''}
+									<p class="py">Suggested Parts: None</p>
+								{:else}
+									<p class="py">Suggested Parts: {card.suggested_parts}</p>
+								{/if}
 								<p class="py">Shirt Size: {card.shirt_size}</p>
-								<p class="py">Dietary Restriction: {card.shirt_size}</p>
+								{#if card.dietary_restrictions == ''}
+									<p class="py">Dietary Restriction: None</p>
+								{:else}
+									<p class="py">Dietary Restriction: {card.dietary_restrictions}</p>
+								{/if}
 								<div class="modal-action">
 									<form method="dialog">
 										<button class="btn bg-warning" on:click={changeStatus('Accepted', card.email)}
