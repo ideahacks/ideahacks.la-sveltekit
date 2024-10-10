@@ -6,6 +6,8 @@
 	let { supabase } = data;
 	$: ({ supabase } = data);
 
+	const APPS_PER_PAGE = 40;
+
 	let apps = data.applications;
 	export async function updateApplication(status, email) {
 		const { error } = await supabase
@@ -58,8 +60,8 @@
 	let grouped_apps = [];
 	$: {
 		grouped_apps = [];
-		for (let i = 0; i < filtered_apps.length; i += 4) {
-			grouped_apps.push(filtered_apps.slice(i, i + 4));
+		for (let i = 0; i < filtered_apps.length; i += APPS_PER_PAGE) {
+			grouped_apps.push(filtered_apps.slice(i, i + APPS_PER_PAGE));
 		}
 	}
 
@@ -116,10 +118,10 @@
 	<div class="carousel flex w-full items-center">
 		{#each grouped_apps as item, index}
 			<div id={'item' + (index + 1)} class="carousel-item w-full">
-				<div class="cards-container justify center flex grow flex-col items-stretch">
+				<div class="cards-container flex flex-wrap justify-center">
 					{#each item as card, cardIndex}
-						<ApplicationStatusCard application={card} index={index * 4 + cardIndex} />
-						<dialog id={`modal_${index * 4 + cardIndex}`} class="modal">
+						<ApplicationStatusCard application={card} index={index * APPS_PER_PAGE + cardIndex} />
+						<dialog id={`modal_${index * APPS_PER_PAGE + cardIndex}`} class="modal">
 							<div class="modal-box">
 								<h3 class="text-lg font-bold">{card.full_name}</h3>
 								<p class="py-4">Year: {card.year_at_current_university}</p>

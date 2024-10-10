@@ -25,17 +25,15 @@
 </script>
 
 <div
-	class={`card ${statusClass} m-2 flex-initial shrink flex-row flex-wrap items-center justify-between self-center rounded-lg p-4 text-white`}
+	class={`card ${statusClass} m-2 w-64 flex-initial shrink justify-between self-center rounded-lg p-4 text-white`}
+	on:click={() => document.getElementById(`modal_${index}`).showModal()}
 >
 	<div class="firstRow">
-		<p class="m-0 px-8 py-0 font-paytone">{application.full_name}</p>
-		<p class="m-0 px-8 py-0 font-paytone">
+		<p class="m-0 px-4 py-0 font-encode">{application.full_name}</p>
+		<p class="m-0 px-4 py-0 font-encode">
 			{application.year_at_current_university[0].toUpperCase() +
 				application.year_at_current_university.slice(1)}
 		</p>
-		<p class="m-0 px-8 py-0 font-paytone">{status}</p>
+		<p class="m-0 px-4 py-0 font-paytone">{status}</p>
 	</div>
-	<button class="btn" on:click={() => document.getElementById(`modal_${index}`).showModal()}>
-		Actions
-	</button>
 </div>
