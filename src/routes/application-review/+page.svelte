@@ -123,9 +123,31 @@
 						<ApplicationStatusCard application={card} index={index * APPS_PER_PAGE + cardIndex} />
 						<dialog id={`modal_${index * APPS_PER_PAGE + cardIndex}`} class="modal">
 							<div class="modal-box">
-								<h3 class="text-lg font-bold">{card.full_name}</h3>
-								<p class="py-4">Year: {card.year_at_current_university}</p>
-								<p class="py-4">Status: {card.status}</p>
+								<div class="firstSection pb-5">
+									<h3 class="text-lg font-bold">{card.full_name}</h3>
+									<p class="py">Preferred Name: {card.preferred_name}</p>
+									<p class="py">Email: {card.email}</p>
+									<p class="py">Status: {card.status}</p>
+									<p class="py">Pronouns: {card.pronouns}</p>
+									<p class="py">School: {card.school}</p>
+									<p class="py">Year: {card.year_at_current_university}</p>
+									{#if card.is_transfer == 'true'}
+										<p class="py">Transfer: Yes</p>
+									{:else}
+										<p class="py">Transfer: No</p>
+									{/if}
+									<p class="py">Major: {card.major}</p>
+								</div>
+								<div class="firstSection pb-5">
+									<p class="py">Experience Question: {card.prior_engineering_experience}</p>
+									<p class="py">Why IdeaHacks Question:</p>
+									<p class="py">{card.why_ideahacks}</p>
+									<p class="py">Hackathon Ideas Question: {card.hackathon_ideas}</p>
+									<p class="py">Prior Hackathon Experience Question: {card.hackathon_ideas}</p>
+								</div>
+								<p class="py">Suggested Parts: {card.suggested_parts}</p>
+								<p class="py">Shirt Size: {card.shirt_size}</p>
+								<p class="py">Dietary Restriction: {card.shirt_size}</p>
 								<div class="modal-action">
 									<form method="dialog">
 										<button class="btn bg-warning" on:click={changeStatus('Accepted', card.email)}
