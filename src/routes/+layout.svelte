@@ -5,7 +5,7 @@
 	import '../app.css';
 
 	import NavBar from '$lib/components/NavBar.svelte';
-  
+
 	export let data;
 	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
@@ -24,7 +24,7 @@
 </script>
 
 <div class="flex min-h-screen flex-col">
-	<NavBar />
+	<NavBar {supabase} {session} />
 
 	<slot />
 </div>
