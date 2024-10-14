@@ -1,5 +1,3 @@
-import { supabase } from '$lib/supabaseClient';
-
 function validateEmail(email) {
 	return String(email)
 		.toLowerCase()
@@ -9,9 +7,9 @@ function validateEmail(email) {
 }
 
 export const actions = {
-	default: async (event) => {
+	default: async ({ request, locals: { supabase } }) => {
 		// extract email from form data
-		const formData = await event.request.formData();
+		const formData = await request.formData();
 		const email = formData.get('email');
 
 		// ensure email is valid
@@ -24,7 +22,6 @@ export const actions = {
 
 		// check for duplicates
 		const { data } = await supabase.from('emails_2025').select().eq('email', email);
-		console.log(data);
 
 		if (data && data.length > 0) {
 			return {
