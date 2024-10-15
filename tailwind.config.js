@@ -14,7 +14,9 @@ export default {
 			}
 		}
 	},
-	plugins: [daisyui],
+	plugins: [
+		daisyui,
+	    require('@tailwindcss/aspect-ratio')],
 	daisyui: {
 		themes: ['light']
 	}

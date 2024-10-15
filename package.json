@@ -43,6 +43,7 @@
 	"dependencies": {
 		"@supabase/ssr": "^0.0.10",
 		"@supabase/supabase-js": "^2.45.4",
+		"@tailwindcss/aspect-ratio": "^0.4.2",
 		"@tailwindcss/typography": "^0.5.10",
 		"fuzzysort": "^2.0.4",
 		"lucide-svelte": "^0.309.0"

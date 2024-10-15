@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Clouds from '$lib/components/Clouds.svelte';
 	import TeamCard from '$lib/components/TeamCard.svelte';
 	import pixelclouds from '$lib/images/pixelclouds.png';
 	import fuzzysort from 'fuzzysort';
@@ -71,7 +72,4 @@
 	{/each}
 </div>
 
-<div
-	class="fixed bottom-0 z-0 h-24 w-full bg-contain"
-	style="background-image: url({pixelclouds})"
-/>
+<Clouds />
