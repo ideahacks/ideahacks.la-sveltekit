@@ -42,6 +42,8 @@
 	$: totalPagesArray = Array.from({ length: totalPages }, (_, i) => i + 1);
 
 	$: paginatedResults = results.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+	// do some sort of reasoning; as soon as the tags or search is changed then change your default page back to page 1
 </script>
 
 <h1 class="mb-6 mt-12 text-center font-paytone text-5xl font-bold text-white">Parts</h1>
