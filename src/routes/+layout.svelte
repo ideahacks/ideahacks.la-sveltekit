@@ -5,7 +5,7 @@
 	import '../app.css';
 
 	import NavBar from '$lib/components/NavBar.svelte';
-  
+
 	export let data;
 	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
@@ -24,13 +24,14 @@
 </script>
 
 <div class="flex min-h-screen flex-col">
-	<NavBar />
+	<NavBar {supabase} {session} />
 
 	<slot />
 </div>
 
 <style lang="postcss">
 	:global(body) {
-		background: linear-gradient(180deg, #4152a9 0%, #bbcced 100%);
+		background: linear-gradient(180deg, #2775af 0%, #83c3e8 100%);
+		background-color: #83c3e8;
 	}
 </style>
