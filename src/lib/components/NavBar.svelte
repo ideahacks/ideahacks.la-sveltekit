@@ -1,6 +1,4 @@
 <script lang="ts">
-	export let isAdmin = true;
-	export let isLoggedIn = true;
 	import type { Session, SupabaseClient } from '@supabase/supabase-js';
 
 	export let supabase: SupabaseClient;
@@ -55,21 +53,18 @@
 							</ul>
 						</div>
 					</li>
-					<li>
-						<a href="/" class="ml-2 mr-4 text-custom-brown">SIGN OUT</a>
-					</li>
-				{:else}
-					<li>
-						<a href="/" class="ml-2 mr-4 text-custom-brown">SIGN OUT</a>
-					</li>
 				{/if}
 			{/await}
 
-			{#if email.length === 0}
+			{#if email && email.length > 0}
 				<li>
-					<a href="/" class="ml-2 mr-4 text-custom-brown underline">LOGIN</a>
+					<a href="/" class="ml-2 mr-4 text-custom-brown">SIGN OUT</a>
 				</li>
-			{:else if isAdmin === false}{:else}{/if}
+			{:else}
+				<li>
+					<a href="/login" class="ml-2 mr-4 text-custom-brown underline">LOGIN</a>
+				</li>
+			{/if}
 		</ul>
 	</div>
 </div>
