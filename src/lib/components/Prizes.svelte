@@ -4,6 +4,9 @@
 	import pillar3 from '$lib/images/PILLAR_3.png';
 	import topPrize from '$lib/images/tesla_model_s.png';
 	import pixelclouds from '$lib/images/pixelclouds.png';
+	import superHumanPrize from '$lib/images/Super_Mario.png';
+	import nostalgicPrize from '$lib/images/Old_Radio.png';
+	import insanePrize from '$lib/images/Frakenstein_Statue.png';
 </script>
 
 <div class="relative overflow-hidden rounded-xl bg-white bg-opacity-30 p-5">
@@ -48,6 +51,27 @@
 				Tesla Model S
 			</p>
 			<img src={pillar3} alt="Pillar 3" />
+		</div>
+	</div>
+</div>
+
+<div class="relative mt-5 overflow-hidden rounded-xl bg-white bg-opacity-30 p-5">
+	<h1 class="pt-4 text-center font-paytone text-4xl text-white">TRACK PRIZES</h1>
+	<div class="grid grid-cols-1 gap-4 px-4 md:grid-cols-2 lg:grid-cols-3">
+		<div class="flex flex-col items-center justify-center">
+			<h2 class="pb-2 pt-4 text-center font-paytone text-2xl text-white">Super Human</h2>
+			<img src={superHumanPrize} alt="Super Human Prize" class="mx-auto w-32" />
+			<p class="pt-2 text-center font-encode text-xl text-white">Super Mario Action Figure!</p>
+		</div>
+		<div class="items-center justify-center">
+			<h2 class="pb-2 pt-4 text-center font-paytone text-2xl text-white">Super Nostalgic</h2>
+			<img src={nostalgicPrize} alt="Nostalgic Prize" class="mx-auto w-80" />
+			<p class="pt-2 text-center font-encode text-xl text-white">Your Grandma's Old Radio</p>
+		</div>
+		<div class="items-center justify-center md:col-span-2 lg:col-span-1">
+			<h2 class="pb-2 pt-4 text-center font-paytone text-2xl text-white">Super (in)sane</h2>
+			<img src={insanePrize} alt="Insane Prize" class="mx-auto w-56" />
+			<p class="pt-2 text-center font-encode text-xl text-white">$200 Frankenstein Statue</p>
 		</div>
 	</div>
 </div>
