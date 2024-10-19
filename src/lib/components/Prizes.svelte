@@ -57,7 +57,7 @@
 
 <div class="relative mt-5 overflow-hidden rounded-xl bg-white bg-opacity-30 p-5">
 	<h1 class="pt-4 text-center font-paytone text-4xl text-white">TRACK PRIZES</h1>
-	<div class="grid grid-cols-1 gap-4 px-4 md:grid-cols-2 lg:grid-cols-3">
+	<div class="grid grid-cols-1 place-items-center gap-4 px-4 md:grid-cols-2 lg:grid-cols-3">
 		<div class="flex flex-col items-center justify-center">
 			<h2 class="pb-2 pt-4 text-center font-paytone text-2xl text-white">Super Human</h2>
 			<img src={superHumanPrize} alt="Super Human Prize" class="mx-auto w-32" />
