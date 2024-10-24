@@ -10,8 +10,8 @@
 
 <SuperDebug data={$form} />
 
-<form method="POST" use:enhance class="mx-auto w-full max-w-xl text-white">
-	<div class="mt-4 font-bold">Personal</div>
+<form method="POST" use:enhance class="mx-auto w-full max-w-xl">
+	<div class="mt-4 font-bold text-white max-sm:text-center">Personal</div>
 
 	<div class="mx-auto flex flex-col items-center justify-center gap-3 sm:flex-row">
 		<!-- Name -->
@@ -88,7 +88,7 @@
 	</div>
 
 	<!-- EDUCATIOn -->
-	<div class="mt-4 font-bold">Education</div>
+	<div class="mt-4 font-bold text-white max-sm:text-center">Education</div>
 
 	<div class="mx-auto flex flex-col items-center justify-center gap-3 sm:flex-row">
 		<!-- College -->
@@ -161,7 +161,7 @@
 		{/if}
 	</label>
 
-	<div class="mt-4 font-bold">Short Answer</div>
+	<div class="mt-4 font-bold text-white max-sm:text-center">Short Answer</div>
 	<!-- Engineering experince -->
 	<label class="form-control mx-auto flex w-full max-sm:max-w-xs">
 		<div class="label">
@@ -268,7 +268,7 @@
 		{/if}
 	</label>
 
-	<div class="mt-4 font-bold">Miscellaneous</div>
+	<div class="mt-4 font-bold text-white max-sm:text-center">Miscellaneous</div>
 
 	<div class="mx-auto flex flex-col items-center justify-center gap-3 sm:flex-row">
 		<!-- NAME -->
