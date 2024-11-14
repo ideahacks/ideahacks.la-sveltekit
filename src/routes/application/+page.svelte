@@ -27,9 +27,9 @@
 				class="input input-bordered w-full max-w-xs"
 			/>
 			{#if $errors.full_name}
-				<small class="text-red-300">{$errors.full_name}</small>
+				<small class="h-4 text-custom-yellow">{$errors.full_name}</small>
 			{:else}
-				<br />
+				<div class="h-4" />
 			{/if}
 		</label>
 
@@ -45,16 +45,16 @@
 				class="input input-bordered w-full max-w-xs"
 			/>
 			{#if $errors.preferred_name}
-				<small>{$errors.preferred_name}</small>
+				<small class="h-4 text-custom-yellow">{$errors.preferred_name}</small>
 			{:else}
-				<br />
+				<div class="h-4" />
 			{/if}
 		</label>
 	</div>
 
 	<div class="mx-auto flex flex-col items-center justify-center gap-3 sm:flex-row">
-		<!-- NAME -->
-		<label class="form-control w-full max-w-xs">
+		<!-- EMAIL -->
+		<label class="form-control w-full max-w-xs align-top">
 			<div class="label">
 				<span class="label-text text-white">EMAIL*</span>
 			</div>
@@ -66,12 +66,14 @@
 				class="input input-bordered w-full max-w-xs"
 			/>
 			{#if $errors.email}
-				<small>{$errors.email}</small>
+				<small class="h-4 text-custom-yellow">{$errors.email}</small>
+			{:else}
+				<div class="h-4" />
 			{/if}
 		</label>
 
-		<!-- EMAIL -->
-		<label class="form-control w-full max-w-xs">
+		<!-- PRONOUNS -->
+		<label class="form-control w-full max-w-xs align-top">
 			<div class="label">
 				<span class="label-text text-white">PRONOUNS</span>
 			</div>
@@ -82,7 +84,9 @@
 				class="input input-bordered w-full max-w-xs"
 			/>
 			{#if $errors.pronouns}
-				<small>{$errors.pronouns}</small>
+				<small class="h-4 text-custom-yellow">{$errors.pronouns}</small>
+			{:else}
+				<div class="h-4" />
 			{/if}
 		</label>
 	</div>
@@ -104,7 +108,9 @@
 				class="input input-bordered w-full max-w-xs"
 			/>
 			{#if $errors.school}
-				<small>{$errors.school}</small>
+				<small class="h-4 text-custom-yellow">{$errors.school}</small>
+			{:else}
+				<div class="h-4" />
 			{/if}
 		</label>
 
@@ -121,7 +127,9 @@
 				class="input input-bordered w-full max-w-xs"
 			/>
 			{#if $errors.school_if_other}
-				<small>{$errors.school_if_other}</small>
+				<small class="h-4 text-custom-yellow">{$errors.school_if_other}</small>
+			{:else}
+				<div class="h-4" />
 			{/if}
 		</label>
 	</div>
@@ -157,7 +165,7 @@
 			class="input input-bordered w-full"
 		/>
 		{#if $errors.year_at_current_university}
-			<small>{$errors.year_at_current_university}</small>
+			<small class="text-custom-yellow">{$errors.year_at_current_university}</small>
 		{/if}
 	</label>
 
@@ -165,9 +173,7 @@
 	<!-- Engineering experince -->
 	<label class="form-control mx-auto flex w-full max-sm:max-w-xs">
 		<div class="label">
-			<span class="label-text text-white"
-				>1. What are your previous engineering experiences (250 words max) *</span
-			>
+			<span class="label-text text-white">1. What are your previous engineering experiences*</span>
 		</div>
 		<textarea
 			name="prior_engineering_experience"
@@ -176,19 +182,19 @@
 			class="textarea textarea-bordered w-full"
 		/>
 		<div class="label">
-			<span class="label-text-alt">Word Count: 0/250</span>
+			<span class="label-text-alt text-white"
+				>Characters: {$form.prior_engineering_experience.length}/1250</span
+			>
 		</div>
 		{#if $errors.prior_engineering_experience}
-			<small>{$errors.prior_engineering_experience}</small>
+			<small class="text-custom-yellow">{$errors.prior_engineering_experience}</small>
 		{/if}
 	</label>
 
 	<!-- Why do you want to participate -->
 	<label class="form-control mx-auto flex w-full max-sm:max-w-xs">
 		<div class="label">
-			<span class="label-text text-white"
-				>2. Why do you want to participate in IDEA Hacks? (250 words max)*</span
-			>
+			<span class="label-text text-white">2. Why do you want to participate in IDEA Hacks?*</span>
 		</div>
 		<textarea
 			name="why_ideahacks"
@@ -197,10 +203,10 @@
 			class="textarea textarea-bordered w-full"
 		/>
 		<div class="label">
-			<span class="label-text-alt">Word Count: 0/250</span>
+			<span class="label-text-alt text-white">Word Count: {$form.why_ideahacks.length}/1250</span>
 		</div>
 		{#if $errors.why_ideahacks}
-			<small>{$errors.why_ideahacks}</small>
+			<small class="text-custom-yellow">{$errors.why_ideahacks}</small>
 		{/if}
 	</label>
 
@@ -208,8 +214,7 @@
 	<label class="form-control mx-auto flex w-full max-sm:max-w-xs">
 		<div class="label">
 			<span class="label-text text-white"
-				>3. Do you have an idea to hack for this year's theme? It's ok if you don't yet! (100 words
-				max)*</span
+				>3. Do you have an idea to hack for this year's theme? It's ok if you don't yet!*</span
 			>
 		</div>
 		<textarea
@@ -219,18 +224,19 @@
 			class="textarea textarea-bordered w-full"
 		/>
 		<div class="label">
-			<span class="label-text-alt">Word Count: 0/250</span>
+			<span
+				class={$errors.hackathon_ideas
+					? 'label-text-alt text-custom-yellow'
+					: 'label-text-alt text-white'}>Characters: {$form.hackathon_ideas.length}/500</span
+			>
 		</div>
-		{#if $errors.hackathon_ideas}
-			<small>{$errors.hackathon_ideas}</small>
-		{/if}
 	</label>
 
-	<!-- Parts request -->
+	<!-- Prior hackathon experience -->
 	<label class="form-control mx-auto flex w-full max-sm:max-w-xs">
 		<div class="label">
 			<span class="label-text text-white"
-				>4. If you have prior hackathon experience, please share with us. (50 words max)</span
+				>4. If you have prior hackathon experience, please share with us.</span
 			>
 		</div>
 		<textarea
@@ -240,18 +246,20 @@
 			class="textarea textarea-bordered w-full"
 		/>
 		<div class="label">
-			<span class="label-text-alt">Word Count: 0/250</span>
+			<span class="label-text-alt text-white"
+				>Characters: {$form.prior_hackathon_experience.length}/250</span
+			>
 		</div>
 		{#if $errors.prior_hackathon_experience}
-			<small>{$errors.prior_hackathon_experience}</small>
+			<small class="text-custom-yellow">{$errors.prior_hackathon_experience}</small>
 		{/if}
 	</label>
 
-	<!-- Idea for this years theme -->
+	<!-- Parts suggestion -->
 	<label class="form-control mx-auto flex w-full max-sm:max-w-xs">
 		<div class="label">
 			<span class="label-text text-white"
-				>5. What parts would you like to see at this years IDEA Hacks? (100 words max)</span
+				>5. What parts would you like to see at this years IDEA Hacks?</span
 			>
 		</div>
 		<textarea
@@ -261,7 +269,7 @@
 			class="textarea textarea-bordered w-full"
 		/>
 		<div class="label">
-			<span class="label-text-alt">Word Count: 0/250</span>
+			<span class="label-text-alt text-white">Characters: {$form.suggested_parts.length}/500</span>
 		</div>
 		{#if $errors.suggested_parts}
 			<small>{$errors.suggested_parts}</small>
@@ -271,7 +279,7 @@
 	<div class="mt-4 font-bold text-white max-sm:text-center">Miscellaneous</div>
 
 	<div class="mx-auto flex flex-col items-center justify-center gap-3 sm:flex-row">
-		<!-- NAME -->
+		<!-- Shirt Size -->
 		<label class="form-control w-full max-w-xs">
 			<div class="label">
 				<span class="label-text text-white">Shirt Size*</span>
@@ -284,7 +292,9 @@
 				class="input input-bordered w-full max-w-xs"
 			/>
 			{#if $errors.shirt_size}
-				<small>{$errors.shirt_size}</small>
+				<small class="h-4 text-custom-yellow">{$errors.shirt_size}</small>
+			{:else}
+				<div class="h-4" />
 			{/if}
 		</label>
 
@@ -300,10 +310,12 @@
 				class="input input-bordered w-full max-w-xs"
 			/>
 			{#if $errors.dietary_restrictions}
-				<small>{$errors.dietary_restrictions}</small>
+				<small class="h-4 text-custom-yellow">{$errors.dietary_restrictions}</small>
+			{:else}
+				<div class="h-4 text-custom-yellow" />
 			{/if}
 		</label>
 	</div>
 
-	<div><button class="btn btn-primary my-10">Submit</button></div>
+	<div><button class="btn btn-primary my-6">Submit</button></div>
 </form>
