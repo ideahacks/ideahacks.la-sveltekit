@@ -79,7 +79,7 @@
 	</h1>
 	<h3 class="mb-4 font-paytone text-lg text-white xl:text-xl">
 		<Typewriter mode="loop" interval={75} style="--cursor-color: 'blue'"
-			><span>January 17-19, Ackerman Grand Ballroom</span><span
+			><span>January 10-12, Ackerman Grand Ballroom</span><span
 				>The West Coast's Premier Hardware Hackathon!</span
 			></Typewriter
 		>
