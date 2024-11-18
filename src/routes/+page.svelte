@@ -24,6 +24,8 @@
 
 	setTimeout(() => (wave1 = true), 0);
 	setTimeout(() => (wave2 = true), 15000);
+
+	let alert = true;
 </script>
 
 <img src={logo} alt="logo" class="fixed right-36 top-36 z-0 w-96 opacity-15" />
@@ -74,6 +76,28 @@
 >
 
 <div class="z-10 mx-5 my-10 max-w-4xl md:mx-24">
+	{#if alert}
+		<div role="alert" class="alert opacity-60 shadow-lg">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				fill="none"
+				viewBox="0 0 24 24"
+				class="h-6 w-6 shrink-0 stroke-info"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+				/>
+			</svg>
+			<div>
+				<h3 class="font-bold">Attention Hackers!</h3>
+				<div class="text-sm">IDEA Hacks has been moved up a week to Jan 10-12!</div>
+			</div>
+			<button class="btn btn-sm" on:click={() => (alert = false)}>Okay</button>
+		</div>
+	{/if}
 	<h1 class="mb-4 font-paytone text-6xl text-white xl:text-8xl">
 		<span>IDEA HACKS 2025</span>
 	</h1>
