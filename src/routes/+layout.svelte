@@ -3,30 +3,15 @@
 	import { onMount } from 'svelte';
 
 	import '../app.css';
-
-	import NavBar from '$lib/components/NavBar.svelte';
-
-	export let data;
-	let { supabase, session } = data;
-	$: ({ supabase, session } = data);
-
-	onMount(() => {
-		const {
-			data: { subscription }
-		} = supabase.auth.onAuthStateChange(async (event, _session) => {
-			if (_session?.expires_at !== session?.expires_at) {
-				invalidate('supabase:auth');
-			}
-		});
-
-		return () => subscription.unsubscribe();
-	});
+	import cityscape from '$lib/images/cityscape.png';
 </script>
 
-<div class="flex min-h-screen flex-col">
-	<NavBar {supabase} {session} />
-
+<div class="z-0 flex min-h-screen flex-col">
 	<slot />
+	<div
+		class="fixed bottom-0 z-20 h-24 w-full bg-contain"
+		style="background-image: url({cityscape});"
+	/>
 </div>
 
 <style lang="postcss">
