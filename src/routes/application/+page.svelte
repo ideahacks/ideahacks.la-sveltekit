@@ -1,8 +1,15 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms';
 	import SuperDebug from 'sveltekit-superforms';
+	import type { Session, SupabaseClient } from '@supabase/supabase-js';
+	import { onMount } from 'svelte';
 
 	export let data;
+
+	let { session } = data;
+	$: ({ session } = data);
+
+	const user_email = session?.user.email;
 
 	// Client API:
 	const { form, errors, enhance } = superForm(data.form);
@@ -33,7 +40,7 @@
 			{/if}
 		</label>
 
-		<!-- Email -->
+		<!-- Pref Name -->
 		<label class="form-control w-full max-w-xs">
 			<div class="label">
 				<span class="label-text text-white">Preferred Name</span>
@@ -56,20 +63,15 @@
 		<!-- EMAIL -->
 		<label class="form-control w-full max-w-xs align-top">
 			<div class="label">
-				<span class="label-text text-white">EMAIL*</span>
+				<span class="label-text text-white">EMAIL</span>
 			</div>
 			<input
 				name="email"
-				bind:value={$form.email}
-				type="email"
-				placeholder="Type here"
+				value={user_email}
+				disabled
 				class="input input-bordered w-full max-w-xs"
 			/>
-			{#if $errors.email}
-				<small class="h-4 text-custom-yellow">{$errors.email}</small>
-			{:else}
-				<div class="h-4" />
-			{/if}
+			<div class="h-4" />
 		</label>
 
 		<!-- PRONOUNS -->
@@ -100,13 +102,12 @@
 			<div class="label">
 				<span class="label-text text-white">SCHOOL*</span>
 			</div>
-			<input
-				name="school"
-				bind:value={$form.school}
-				type="text"
-				placeholder="Type here"
-				class="input input-bordered w-full max-w-xs"
-			/>
+			<select class="select w-full max-w-xs" name="school" bind:value={$form.school}>
+				<option disabled selected />
+				<option>University of California, Los Angeles</option>
+				<option>University of Southern California</option>
+				<option>Other</option>
+			</select>
 			{#if $errors.school}
 				<small class="h-4 text-custom-yellow">{$errors.school}</small>
 			{:else}
@@ -147,7 +148,7 @@
 			class="input input-bordered w-full"
 		/>
 		{#if $errors.major}
-			<small>{$errors.major}</small>
+			<small class="text-custom-yellow">{$errors.major}</small>
 		{/if}
 	</label>
 
@@ -157,13 +158,19 @@
 		<div class="label">
 			<span class="label-text text-white">YEAR*</span>
 		</div>
-		<input
+		<select
+			class="select w-full max-w-xs"
 			name="year_at_current_university"
 			bind:value={$form.year_at_current_university}
-			type="text"
-			placeholder="e.g. Electrical Engineering"
-			class="input input-bordered w-full"
-		/>
+		>
+			<option disabled selected />
+			<option>Freshman</option>
+			<option>Second Year</option>
+			<option>Third Year</option>
+			<option>Fourth Year</option>
+			<option>Graduated</option>
+			<option>Other</option>
+		</select>
 		{#if $errors.year_at_current_university}
 			<small class="text-custom-yellow">{$errors.year_at_current_university}</small>
 		{/if}
@@ -317,5 +324,7 @@
 		</label>
 	</div>
 
-	<div><button class="btn btn-primary my-6">Submit</button></div>
+	<div class="mx-auto">
+		<button class="btn float-right my-6">Submit</button>
+	</div>
 </form>

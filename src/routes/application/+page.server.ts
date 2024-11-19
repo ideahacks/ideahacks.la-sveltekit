@@ -5,34 +5,31 @@ import { z } from 'zod';
 
 // Define outside the load function so the adapter can be cached
 const formSchema = z.object({
-	full_name: z.string().min(1, 'Full name must be at least 1 character'),
+	full_name: z.string().min(1, 'Please fill out this field'),
 	preferred_name: z.string(),
-	email: z.string().email(),
 	pronouns: z.string(),
-	school: z.string().min(1, 'School name must be at least 1 character'),
+	school: z.string().min(1, 'Please fill out this field'),
 	school_if_other: z.string(),
-	major: z.string().min(1, 'Major must be at least 1 character'),
-	year_at_current_university: z
-		.string()
-		.min(1, 'Year at current university must be at least 1 character'),
+	major: z.string().min(1, 'Please fill out this field'),
+	year_at_current_university: z.string().min(1, 'Please pick a year'),
 	prior_engineering_experience: z
 		.string()
-		.min(1, 'Must be at least 1 character')
+		.min(1, 'Please fill out this field')
 		.max(1250, 'Must be at most 1250 characters'),
 	why_ideahacks: z
 		.string()
-		.min(1, 'Must be at least 1 character')
+		.min(1, 'Please fill out this field')
 		.max(1250, 'Must be at most 1250 characters'),
 	hackathon_ideas: z
 		.string()
-		.min(1, 'Must be at least 1 character')
+		.min(1, 'Please fill out this field')
 		.max(500, 'Must be at most 500 character'),
 	prior_hackathon_experience: z
 		.string()
-		.min(1, 'Must be at least 1 character')
+		.min(1, 'Please fill out this field')
 		.max(250, 'Must be at most 250 characters'),
 	suggested_parts: z.string(),
-	shirt_size: z.string().min(1, 'Must be at least 1 character'),
+	shirt_size: z.string().min(1, 'Please fill out this field'),
 	dietary_restrictions: z.string()
 });
 
@@ -44,9 +41,15 @@ export const load = async () => {
 };
 
 export const actions = {
-	default: async ({ request, locals: { supabase } }) => {
+	default: async ({ request, locals: { supabase, getSession } }) => {
 		const form = await superValidate(request, zod(formSchema));
-		console.log(form);
+		const session = await getSession();
+
+		if (!session) {
+			return fail(500, {
+				form
+			});
+		}
 
 		if (!form.valid) {
 			return fail(400, {
@@ -54,10 +57,13 @@ export const actions = {
 			});
 		} else {
 			const new_form = {
-				user_id: '1234', // This should be the user's ID
-				...form.data
+				user_id: session.user.id, // This should be the user's ID
+				email: session.user.email,
+				...form.data,
+				school: form.data.school != 'Other' ? form.data.school : form.data.school_if_other
 			};
-			const { error } = await supabase.from('applications_2025').upsert(form.data).select();
+
+			const { error } = await supabase.from('applications_2025').upsert(new_form).select();
 
 			if (!error) {
 				console.log('Application submitted successfully!');
