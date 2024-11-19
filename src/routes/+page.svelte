@@ -22,7 +22,7 @@
 
 		console.log('Signed out?');
 	}
-  
+
 	import cloud1 from '$lib/images/CLOUDS_1.png';
 	import cloud2 from '$lib/images/CLOUDS_2.png';
 	import cloud3 from '$lib/images/CLOUDS_3.png';
@@ -38,8 +38,6 @@
 
 	import { fly } from 'svelte/transition';
 	import { linear } from 'svelte/easing';
-
-	export let form;
 
 	let wave1 = false;
 	let wave2 = false;

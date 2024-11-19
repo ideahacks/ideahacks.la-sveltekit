@@ -13,16 +13,68 @@
 
 	// Client API:
 	const { form, errors, enhance } = superForm(data.form);
+
+	// Clouds!
+	import cloud1 from '$lib/images/CLOUDS_1.png';
+	import cloud2 from '$lib/images/CLOUDS_2.png';
+	import cloud3 from '$lib/images/CLOUDS_3.png';
+	import cloud4 from '$lib/images/CLOUDS_4.png';
+	import { fly } from 'svelte/transition';
+	import { linear } from 'svelte/easing';
+
+	let wave1 = false;
+	let wave2 = false;
+
+	setTimeout(() => (wave1 = true), 0);
+	setTimeout(() => (wave2 = true), 15000);
 </script>
 
-<SuperDebug data={$form} />
+{#if wave1}
+	<img
+		src={cloud1}
+		transition:fly={{ duration: 50000, x: '150vw', opacity: 1, easing: linear }}
+		alt="cloud"
+		class="fixed -left-96 top-10 z-0 w-96 opacity-25"
+	/>
+	<img
+		src={cloud2}
+		transition:fly={{ duration: 20000, x: '50vw', opacity: 1, easing: linear }}
+		alt="cloud"
+		class="fixed -left-96 top-96 z-0 w-96 opacity-25"
+	/>
+	<img
+		src={cloud2}
+		transition:fly={{ duration: 30000, x: '100vw', opacity: 1, easing: linear }}
+		alt="cloud"
+		class="fixed -left-96 bottom-20 z-0 w-96 opacity-25"
+	/>
+{/if}
 
-<form method="POST" use:enhance class="mx-auto w-full max-w-xl">
+{#if wave2}
+	<img
+		src={cloud3}
+		transition:fly={{ duration: 50000, x: '150vw', opacity: 1, easing: linear }}
+		alt="cloud"
+		class="fixed -left-96 top-36 z-0 w-96 opacity-25"
+	/>
+	<img
+		src={cloud4}
+		transition:fly={{ duration: 50000, x: '125vw', opacity: 1, easing: linear }}
+		alt="cloud"
+		class="fixed -left-96 bottom-36 z-0 w-96 opacity-25"
+	/>
+{/if}
+
+<!-- <SuperDebug data={$form} /> -->
+<h1 class="mx-auto my-10 font-paytone text-3xl text-white">IDEA Hacks Application</h1>
+<form method="POST" use:enhance class="z-10 mx-auto w-full max-w-xl">
 	<div class="mt-4 font-bold text-white max-sm:text-center">Personal</div>
 
 	<div class="mx-auto flex flex-col items-center justify-center gap-3 sm:flex-row">
 		<!-- Name -->
-		<label class="form-control w-full max-w-xs">
+		<label
+			class="form-control w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
+		>
 			<div class="label">
 				<span class="label-text text-white">Full Name*</span>
 			</div>
@@ -31,17 +83,19 @@
 				bind:value={$form.full_name}
 				type="text"
 				placeholder="Type here"
-				class="input input-bordered w-full max-w-xs"
+				class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
 			/>
 			{#if $errors.full_name}
-				<small class="h-4 text-custom-yellow">{$errors.full_name}</small>
+				<small class="label h-4 text-custom-yellow">{$errors.full_name}</small>
 			{:else}
 				<div class="h-4" />
 			{/if}
 		</label>
 
 		<!-- Pref Name -->
-		<label class="form-control w-full max-w-xs">
+		<label
+			class="form-control w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
+		>
 			<div class="label">
 				<span class="label-text text-white">Preferred Name</span>
 			</div>
@@ -49,10 +103,10 @@
 				name="preferred_name"
 				bind:value={$form.preferred_name}
 				placeholder="Type here"
-				class="input input-bordered w-full max-w-xs"
+				class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
 			/>
 			{#if $errors.preferred_name}
-				<small class="h-4 text-custom-yellow">{$errors.preferred_name}</small>
+				<small class="label h-4 text-custom-yellow">{$errors.preferred_name}</small>
 			{:else}
 				<div class="h-4" />
 			{/if}
@@ -61,7 +115,9 @@
 
 	<div class="mx-auto flex flex-col items-center justify-center gap-3 sm:flex-row">
 		<!-- EMAIL -->
-		<label class="form-control w-full max-w-xs align-top">
+		<label
+			class="form-control w-full max-w-xs bg-opacity-10 align-top text-white placeholder-gray-200 focus:outline-none"
+		>
 			<div class="label">
 				<span class="label-text text-white">EMAIL</span>
 			</div>
@@ -69,13 +125,15 @@
 				name="email"
 				value={user_email}
 				disabled
-				class="input input-bordered w-full max-w-xs"
+				class="input w-full max-w-xs disabled:border-none disabled:bg-opacity-10 disabled:text-white disabled:placeholder-gray-200"
 			/>
 			<div class="h-4" />
 		</label>
 
 		<!-- PRONOUNS -->
-		<label class="form-control w-full max-w-xs align-top">
+		<label
+			class="form-control w-full max-w-xs bg-opacity-10 align-top text-white placeholder-gray-200 focus:outline-none"
+		>
 			<div class="label">
 				<span class="label-text text-white">PRONOUNS</span>
 			</div>
@@ -83,10 +141,10 @@
 				name="pronouns"
 				bind:value={$form.pronouns}
 				placeholder="Type here"
-				class="input input-bordered w-full max-w-xs"
+				class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
 			/>
 			{#if $errors.pronouns}
-				<small class="h-4 text-custom-yellow">{$errors.pronouns}</small>
+				<small class="label h-4 text-custom-yellow">{$errors.pronouns}</small>
 			{:else}
 				<div class="h-4" />
 			{/if}
@@ -98,25 +156,33 @@
 
 	<div class="mx-auto flex flex-col items-center justify-center gap-3 sm:flex-row">
 		<!-- College -->
-		<label class="form-control w-full max-w-xs">
+		<label
+			class="form-control w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
+		>
 			<div class="label">
 				<span class="label-text text-white">SCHOOL*</span>
 			</div>
-			<select class="select w-full max-w-xs" name="school" bind:value={$form.school}>
+			<select
+				class="select w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
+				name="school"
+				bind:value={$form.school}
+			>
 				<option disabled selected />
 				<option>University of California, Los Angeles</option>
 				<option>University of Southern California</option>
 				<option>Other</option>
 			</select>
 			{#if $errors.school}
-				<small class="h-4 text-custom-yellow">{$errors.school}</small>
+				<small class="label h-4 text-custom-yellow">{$errors.school}</small>
 			{:else}
 				<div class="h-4" />
 			{/if}
 		</label>
 
 		<!-- EMAIL -->
-		<label class="form-control w-full max-w-xs">
+		<label
+			class="form-control w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
+		>
 			<div class="label">
 				<span class="label-text text-white">SCHOOL (IF OTHER)</span>
 			</div>
@@ -125,10 +191,10 @@
 				bind:value={$form.school_if_other}
 				type="text"
 				placeholder="Type here"
-				class="input input-bordered w-full max-w-xs"
+				class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
 			/>
 			{#if $errors.school_if_other}
-				<small class="h-4 text-custom-yellow">{$errors.school_if_other}</small>
+				<small class="label h-4 text-custom-yellow">{$errors.school_if_other}</small>
 			{:else}
 				<div class="h-4" />
 			{/if}
@@ -145,10 +211,10 @@
 			bind:value={$form.major}
 			type="text"
 			placeholder="e.g. Electrical Engineering"
-			class="input input-bordered w-full"
+			class="input w-full bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
 		/>
 		{#if $errors.major}
-			<small class="text-custom-yellow">{$errors.major}</small>
+			<small class="label text-custom-yellow">{$errors.major}</small>
 		{/if}
 	</label>
 
@@ -159,7 +225,7 @@
 			<span class="label-text text-white">YEAR*</span>
 		</div>
 		<select
-			class="select w-full max-w-xs"
+			class="select w-full bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
 			name="year_at_current_university"
 			bind:value={$form.year_at_current_university}
 		>
@@ -172,7 +238,7 @@
 			<option>Other</option>
 		</select>
 		{#if $errors.year_at_current_university}
-			<small class="text-custom-yellow">{$errors.year_at_current_university}</small>
+			<small class="label text-custom-yellow">{$errors.year_at_current_university}</small>
 		{/if}
 	</label>
 
@@ -186,7 +252,7 @@
 			name="prior_engineering_experience"
 			rows="4"
 			bind:value={$form.prior_engineering_experience}
-			class="textarea textarea-bordered w-full"
+			class="textarea bg-opacity-10 text-white focus:outline-none"
 		/>
 		<div class="label">
 			<span class="label-text-alt text-white"
@@ -194,7 +260,7 @@
 			>
 		</div>
 		{#if $errors.prior_engineering_experience}
-			<small class="text-custom-yellow">{$errors.prior_engineering_experience}</small>
+			<small class="label text-custom-yellow">{$errors.prior_engineering_experience}</small>
 		{/if}
 	</label>
 
@@ -207,13 +273,13 @@
 			name="why_ideahacks"
 			rows="4"
 			bind:value={$form.why_ideahacks}
-			class="textarea textarea-bordered w-full"
+			class="textarea bg-opacity-10 text-white focus:outline-none"
 		/>
 		<div class="label">
 			<span class="label-text-alt text-white">Word Count: {$form.why_ideahacks.length}/1250</span>
 		</div>
 		{#if $errors.why_ideahacks}
-			<small class="text-custom-yellow">{$errors.why_ideahacks}</small>
+			<small class="label label text-custom-yellow">{$errors.why_ideahacks}</small>
 		{/if}
 	</label>
 
@@ -221,14 +287,14 @@
 	<label class="form-control mx-auto flex w-full max-sm:max-w-xs">
 		<div class="label">
 			<span class="label-text text-white"
-				>3. Do you have an idea to hack for this year's theme? It's ok if you don't yet!*</span
+				>3. Do you have an idea to hack for this year's theme? It's ok if you don't yet!</span
 			>
 		</div>
 		<textarea
 			name="hackathon_ideas"
 			rows="4"
 			bind:value={$form.hackathon_ideas}
-			class="textarea textarea-bordered w-full"
+			class="textarea bg-opacity-10 text-white focus:outline-none"
 		/>
 		<div class="label">
 			<span
@@ -250,7 +316,7 @@
 			name="prior_hackathon_experience"
 			rows="4"
 			bind:value={$form.prior_hackathon_experience}
-			class="textarea textarea-bordered w-full"
+			class="textarea bg-opacity-10 text-white focus:outline-none"
 		/>
 		<div class="label">
 			<span class="label-text-alt text-white"
@@ -258,7 +324,7 @@
 			>
 		</div>
 		{#if $errors.prior_hackathon_experience}
-			<small class="text-custom-yellow">{$errors.prior_hackathon_experience}</small>
+			<small class="label text-custom-yellow">{$errors.prior_hackathon_experience}</small>
 		{/if}
 	</label>
 
@@ -273,7 +339,7 @@
 			name="suggested_parts"
 			rows="4"
 			bind:value={$form.suggested_parts}
-			class="textarea textarea-bordered w-full"
+			class="textarea bg-opacity-10 text-white focus:outline-none"
 		/>
 		<div class="label">
 			<span class="label-text-alt text-white">Characters: {$form.suggested_parts.length}/500</span>
@@ -287,7 +353,9 @@
 
 	<div class="mx-auto flex flex-col items-center justify-center gap-3 sm:flex-row">
 		<!-- Shirt Size -->
-		<label class="form-control w-full max-w-xs">
+		<label
+			class="form-control w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
+		>
 			<div class="label">
 				<span class="label-text text-white">Shirt Size*</span>
 			</div>
@@ -296,17 +364,19 @@
 				bind:value={$form.shirt_size}
 				type="text"
 				placeholder="Type here"
-				class="input input-bordered w-full max-w-xs"
+				class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
 			/>
 			{#if $errors.shirt_size}
-				<small class="h-4 text-custom-yellow">{$errors.shirt_size}</small>
+				<small class="label h-4 text-custom-yellow">{$errors.shirt_size}</small>
 			{:else}
 				<div class="h-4" />
 			{/if}
 		</label>
 
 		<!-- EMAIL -->
-		<label class="form-control w-full max-w-xs">
+		<label
+			class="form-control w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
+		>
 			<div class="label">
 				<span class="label-text text-white">Dietary Restrictions/Food Allergies</span>
 			</div>
@@ -314,10 +384,10 @@
 				name="dietary_restrictions"
 				bind:value={$form.dietary_restrictions}
 				placeholder="Type here"
-				class="input input-bordered w-full max-w-xs"
+				class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
 			/>
 			{#if $errors.dietary_restrictions}
-				<small class="h-4 text-custom-yellow">{$errors.dietary_restrictions}</small>
+				<small class="label h-4 text-custom-yellow">{$errors.dietary_restrictions}</small>
 			{:else}
 				<div class="h-4 text-custom-yellow" />
 			{/if}
@@ -325,6 +395,10 @@
 	</div>
 
 	<div class="mx-auto">
-		<button class="btn float-right my-6">Submit</button>
+		<button
+			class="btn float-left my-6 border-none bg-opacity-50"
+			on:click={(e) => e.preventDefault()}>Save</button
+		>
+		<button class="btn float-right my-6 border-none bg-opacity-50">Submit</button>
 	</div>
 </form>

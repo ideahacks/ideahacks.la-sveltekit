@@ -20,16 +20,10 @@ const formSchema = z.object({
 		.string()
 		.min(1, 'Please fill out this field')
 		.max(1250, 'Must be at most 1250 characters'),
-	hackathon_ideas: z
-		.string()
-		.min(1, 'Please fill out this field')
-		.max(500, 'Must be at most 500 character'),
-	prior_hackathon_experience: z
-		.string()
-		.min(1, 'Please fill out this field')
-		.max(250, 'Must be at most 250 characters'),
+	hackathon_ideas: z.string().max(500, 'Must be at most 500 character'),
+	prior_hackathon_experience: z.string().max(250, 'Must be at most 250 characters'),
 	suggested_parts: z.string(),
-	shirt_size: z.string().min(1, 'Please fill out this field'),
+	shirt_size: z.string().min(1, 'Please select a size'),
 	dietary_restrictions: z.string()
 });
 
