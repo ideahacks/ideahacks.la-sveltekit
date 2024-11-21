@@ -3,6 +3,7 @@
 	import SuperDebug from 'sveltekit-superforms';
 	import type { Session, SupabaseClient } from '@supabase/supabase-js';
 	import { onMount } from 'svelte';
+	import cityscape from '$lib/images/cityscape.png';
 
 	export let data;
 
@@ -65,8 +66,12 @@
 	/>
 {/if}
 
-<!-- <SuperDebug data={$form} /> -->
-<h1 class="mx-auto my-10 font-paytone text-3xl text-white">IDEA Hacks Application</h1>
+<a href="/" class="mx-12 mt-12 text-right font-encode font-bold text-white hover:opacity-75">Home</a
+>
+
+<h1 class="mx-auto my-10 text-center font-paytone text-3xl text-white max-sm:max-w-xs">
+	IDEA Hacks Application
+</h1>
 <form method="POST" use:enhance class="z-10 mx-auto w-full max-w-xl">
 	<div class="mt-4 font-bold text-white max-sm:text-center">Personal</div>
 
@@ -86,9 +91,9 @@
 				class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
 			/>
 			{#if $errors.full_name}
-				<small class="label h-4 text-custom-yellow">{$errors.full_name}</small>
+				<small class="label h-8 text-custom-yellow">{$errors.full_name}</small>
 			{:else}
-				<div class="h-4" />
+				<div class="h-8" />
 			{/if}
 		</label>
 
@@ -106,9 +111,9 @@
 				class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
 			/>
 			{#if $errors.preferred_name}
-				<small class="label h-4 text-custom-yellow">{$errors.preferred_name}</small>
+				<small class="label h-8 text-custom-yellow">{$errors.preferred_name}</small>
 			{:else}
-				<div class="h-4" />
+				<div class="h-8" />
 			{/if}
 		</label>
 	</div>
@@ -127,7 +132,7 @@
 				disabled
 				class="input w-full max-w-xs disabled:border-none disabled:bg-opacity-10 disabled:text-white disabled:placeholder-gray-200"
 			/>
-			<div class="h-4" />
+			<div class="h-8" />
 		</label>
 
 		<!-- PRONOUNS -->
@@ -144,9 +149,9 @@
 				class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
 			/>
 			{#if $errors.pronouns}
-				<small class="label h-4 text-custom-yellow">{$errors.pronouns}</small>
+				<small class="label h-8 text-custom-yellow">{$errors.pronouns}</small>
 			{:else}
-				<div class="h-4" />
+				<div class="h-8" />
 			{/if}
 		</label>
 	</div>
@@ -173,9 +178,9 @@
 				<option>Other</option>
 			</select>
 			{#if $errors.school}
-				<small class="label h-4 text-custom-yellow">{$errors.school}</small>
+				<small class="label h-8 text-custom-yellow">{$errors.school}</small>
 			{:else}
-				<div class="h-4" />
+				<div class="h-8" />
 			{/if}
 		</label>
 
@@ -194,9 +199,9 @@
 				class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
 			/>
 			{#if $errors.school_if_other}
-				<small class="label h-4 text-custom-yellow">{$errors.school_if_other}</small>
+				<small class="label h-8 text-custom-yellow">{$errors.school_if_other}</small>
 			{:else}
-				<div class="h-4" />
+				<div class="h-8" />
 			{/if}
 		</label>
 	</div>
@@ -255,13 +260,16 @@
 			class="textarea bg-opacity-10 text-white focus:outline-none"
 		/>
 		<div class="label">
-			<span class="label-text-alt text-white"
+			<span
+				class="label-text-alt {$form.prior_engineering_experience.length <= 1250
+					? 'text-white'
+					: 'text-custom-yellow'}"
 				>Characters: {$form.prior_engineering_experience.length}/1250</span
 			>
+			{#if $errors.prior_engineering_experience}
+				<small class="label text-custom-yellow">{$errors.prior_engineering_experience}</small>
+			{/if}
 		</div>
-		{#if $errors.prior_engineering_experience}
-			<small class="label text-custom-yellow">{$errors.prior_engineering_experience}</small>
-		{/if}
 	</label>
 
 	<!-- Why do you want to participate -->
@@ -276,11 +284,15 @@
 			class="textarea bg-opacity-10 text-white focus:outline-none"
 		/>
 		<div class="label">
-			<span class="label-text-alt text-white">Word Count: {$form.why_ideahacks.length}/1250</span>
+			<span
+				class="label-text-alt {$form.why_ideahacks.length <= 1250
+					? 'text-white'
+					: 'text-custom-yellow'}">Characters: {$form.why_ideahacks.length}/1250</span
+			>
+			{#if $errors.why_ideahacks}
+				<small class="label text-custom-yellow">{$errors.why_ideahacks}</small>
+			{/if}
 		</div>
-		{#if $errors.why_ideahacks}
-			<small class="label label text-custom-yellow">{$errors.why_ideahacks}</small>
-		{/if}
 	</label>
 
 	<!-- Idea for this years theme -->
@@ -298,9 +310,9 @@
 		/>
 		<div class="label">
 			<span
-				class={$errors.hackathon_ideas
-					? 'label-text-alt text-custom-yellow'
-					: 'label-text-alt text-white'}>Characters: {$form.hackathon_ideas.length}/500</span
+				class="label-text-alt {$form.hackathon_ideas.length <= 500
+					? 'text-white'
+					: 'text-custom-yellow'}">Characters: {$form.hackathon_ideas.length}/500</span
 			>
 		</div>
 	</label>
@@ -319,8 +331,10 @@
 			class="textarea bg-opacity-10 text-white focus:outline-none"
 		/>
 		<div class="label">
-			<span class="label-text-alt text-white"
-				>Characters: {$form.prior_hackathon_experience.length}/250</span
+			<span
+				class="label-text-alt {$form.prior_hackathon_experience.length <= 250
+					? 'text-white'
+					: 'text-custom-yellow'}">Characters: {$form.prior_hackathon_experience.length}/250</span
 			>
 		</div>
 		{#if $errors.prior_hackathon_experience}
@@ -342,7 +356,11 @@
 			class="textarea bg-opacity-10 text-white focus:outline-none"
 		/>
 		<div class="label">
-			<span class="label-text-alt text-white">Characters: {$form.suggested_parts.length}/500</span>
+			<span
+				class="label-text-alt {$form.suggested_parts.length <= 500
+					? 'text-white'
+					: 'text-custom-yellow'}">Characters: {$form.suggested_parts.length}/500</span
+			>
 		</div>
 		{#if $errors.suggested_parts}
 			<small>{$errors.suggested_parts}</small>
@@ -359,17 +377,21 @@
 			<div class="label">
 				<span class="label-text text-white">Shirt Size*</span>
 			</div>
-			<input
+			<select
+				class="select w-full bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
 				name="shirt_size"
 				bind:value={$form.shirt_size}
-				type="text"
-				placeholder="Type here"
-				class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
-			/>
+			>
+				<option disabled selected />
+				<option>Small</option>
+				<option>Medium</option>
+				<option>Large</option>
+				<option>Extra Large</option>
+			</select>
 			{#if $errors.shirt_size}
-				<small class="label h-4 text-custom-yellow">{$errors.shirt_size}</small>
+				<small class="label h-8 text-custom-yellow">{$errors.shirt_size}</small>
 			{:else}
-				<div class="h-4" />
+				<div class="h-8" />
 			{/if}
 		</label>
 
@@ -387,18 +409,20 @@
 				class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
 			/>
 			{#if $errors.dietary_restrictions}
-				<small class="label h-4 text-custom-yellow">{$errors.dietary_restrictions}</small>
+				<small class="label h-8 text-custom-yellow">{$errors.dietary_restrictions}</small>
 			{:else}
-				<div class="h-4 text-custom-yellow" />
+				<div class="h-8 text-custom-yellow" />
 			{/if}
 		</label>
 	</div>
 
-	<div class="mx-auto">
+	<div class="mx-auto max-sm:max-w-xs">
 		<button
-			class="btn float-left my-6 border-none bg-opacity-50"
+			class="btn float-left my-6 border-none bg-opacity-50 text-opacity-70"
 			on:click={(e) => e.preventDefault()}>Save</button
 		>
-		<button class="btn float-right my-6 border-none bg-opacity-50">Submit</button>
+		<button class="btn float-right my-6 border-none bg-opacity-50 text-opacity-70">Submit</button>
 	</div>
 </form>
+
+<div class="z-20 h-24 w-full bg-contain" style="background-image: url({cityscape});" />

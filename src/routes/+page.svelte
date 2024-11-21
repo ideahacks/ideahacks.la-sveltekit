@@ -2,12 +2,12 @@
 	import logo from '$lib/images/logo.png';
 	import { Send } from 'lucide-svelte';
 	import type { Session, SupabaseClient } from '@supabase/supabase-js';
-	export let supabase: SupabaseClient;
+	// export let supabase: SupabaseClient;
+	import cityscape from '$lib/images/cityscape.png';
 
-	export let form;
 	export let data;
-
-	let { session } = data;
+	export let form;
+	let { supabase, session } = data;
 	$: ({ session } = data);
 
 	const email = session?.user.email;
@@ -86,6 +86,8 @@
 	/>
 {/if}
 
+<!-- <button on:click={signOut}>Sign Out</button>
+<p>hello {email}</p> -->
 <a
 	href="/privacy"
 	class="z-10 mx-12 mt-12 text-right font-encode font-bold text-white hover:opacity-75">Privacy</a
@@ -97,7 +99,7 @@
 
 <div class="z-10 mx-5 my-10 max-w-4xl md:mx-24">
 	{#if alert}
-		<div role="alert" class="alert opacity-60 shadow-lg">
+		<div role="alert" class="alert mb-4 opacity-60 shadow-lg">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
@@ -112,8 +114,10 @@
 				/>
 			</svg>
 			<div>
-				<h3 class="font-bold">Attention Hackers!</h3>
-				<div class="text-sm">IDEA Hacks has been moved up a week to Jan 10-12!</div>
+				<h3 class="font-bold">Applications are now open!</h3>
+				<div class="text-sm">
+					Date Change: IDEA Hacks has been pushed up a week to Jan 10-12, 2025!
+				</div>
 			</div>
 			<button class="btn btn-sm" on:click={() => (alert = false)}>Okay</button>
 		</div>
@@ -130,10 +134,9 @@
 	</h3>
 	<div class="text-md mb-4 font-encode text-white xl:text-lg">
 		Get ready to create something amazing! Join us for the 11th annual IDEA Hacks, the West Coast's
-		premier hardware hackathon. Want to be the first to know when applications drop? Enter your
-		email below!
+		premier hardware hackathon. Applications are now open!
 	</div>
-
+	<!-- 
 	<form method="POST" class="flex">
 		<input
 			type="text"
@@ -143,7 +146,11 @@
 		/>
 
 		<button class="btn btn-ghost mx-2 text-white"><Send /></button>
-	</form>
+	</form> -->
+
+	<a href={session ? '/application' : '/login'} class="btn border-none bg-opacity-30 text-white"
+		>Apply Now!</a
+	>
 
 	<div class="text-md mt-4 font-encode text-white">{form?.message ?? ''}</div>
 	<br />
@@ -206,3 +213,5 @@
 		>
 	</div>
 </div>
+
+<div class="z-20 h-24 w-full bg-contain" style="background-image: url({cityscape});" />

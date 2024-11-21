@@ -3,12 +3,27 @@
 	import { onMount } from 'svelte';
 
 	import '../app.css';
-	import cityscape from '$lib/images/cityscape.png';
+
+	// export let data;
+
+	// let { supabase, session } = data;
+	// $: ({ supabase, session } = data);
+
+	// onMount(() => {
+	// 	const {
+	// 		data: { subscription }
+	// 	} = supabase.auth.onAuthStateChange((event, _session) => {
+	// 		if (_session?.expires_at !== session?.expires_at) {
+	// 			invalidate('supabase:auth');
+	// 		}
+	// 	});
+
+	// 	return () => subscription.unsubscribe();
+	// });
 </script>
 
 <div class="z-0 flex min-h-screen flex-col">
 	<slot />
-	<div class="z-20 h-24 w-full bg-contain" style="background-image: url({cityscape});" />
 </div>
 
 <style lang="postcss">
