@@ -1,5 +1,5 @@
 import { superValidate } from 'sveltekit-superforms/server';
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import { zod } from 'sveltekit-superforms/adapters';
 import { z } from 'zod';
 
@@ -46,6 +46,7 @@ export const actions = {
 		}
 
 		if (!form.valid) {
+			console.log('trippin');
 			return fail(400, {
 				form
 			});
@@ -61,11 +62,11 @@ export const actions = {
 
 			if (!error) {
 				console.log('Application submitted successfully!');
+				throw redirect(302, '/application/success');
 			} else {
 				console.log(error);
+				throw redirect(302, '/application/error');
 			}
 		}
-
-		return { form };
 	}
 };
