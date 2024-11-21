@@ -5,23 +5,23 @@
 	// export let supabase: SupabaseClient;
 	import cityscape from '$lib/images/cityscape.png';
 
-	export let data;
+	// export let data;
 	export let form;
-	let { supabase, session } = data;
-	$: ({ session } = data);
+	// let { supabase, session } = data;
+	// $: ({ session } = data);
 
-	const email = session?.user.email;
+	// const email = session?.user.email;
 
-	async function signOut() {
-		const { error } = await supabase.auth.signOut();
+	// async function signOut() {
+	// 	const { error } = await supabase.auth.signOut();
 
-		// TODO: Actual error handling
-		if (error) {
-			console.log(`Error signing out: ${error}`);
-		}
+	// 	// TODO: Actual error handling
+	// 	if (error) {
+	// 		console.log(`Error signing out: ${error}`);
+	// 	}
 
-		console.log('Signed out?');
-	}
+	// 	console.log('Signed out?');
+	// }
 
 	import cloud1 from '$lib/images/CLOUDS_1.png';
 	import cloud2 from '$lib/images/CLOUDS_2.png';
@@ -148,9 +148,7 @@
 		<button class="btn btn-ghost mx-2 text-white"><Send /></button>
 	</form> -->
 
-	<a href={session ? '/application' : '/login'} class="btn border-none bg-opacity-30 text-white"
-		>Apply Now!</a
-	>
+	<a href="/application" class="btn border-none bg-opacity-30 text-white">Apply Now!</a>
 
 	<div class="text-md mt-4 font-encode text-white">{form?.message ?? ''}</div>
 	<br />

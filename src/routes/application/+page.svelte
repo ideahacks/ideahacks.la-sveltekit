@@ -1,16 +1,11 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms';
 	import SuperDebug from 'sveltekit-superforms';
-	import type { Session, SupabaseClient } from '@supabase/supabase-js';
+	// import type { Session, SupabaseClient } from '@supabase/supabase-js';
 	import { onMount } from 'svelte';
 	import cityscape from '$lib/images/cityscape.png';
 
 	export let data;
-
-	let { session } = data;
-	$: ({ session } = data);
-
-	const user_email = session?.user.email;
 
 	// Client API:
 	const { form, errors, enhance } = superForm(data.form);
@@ -68,7 +63,6 @@
 
 <a href="/" class="mx-12 mt-12 text-right font-encode font-bold text-white hover:opacity-75">Home</a
 >
-
 <h1 class="mx-auto my-10 text-center font-paytone text-3xl text-white max-sm:max-w-xs">
 	IDEA Hacks Application
 </h1>
@@ -124,15 +118,18 @@
 			class="form-control w-full max-w-xs bg-opacity-10 align-top text-white placeholder-gray-200 focus:outline-none"
 		>
 			<div class="label">
-				<span class="label-text text-white">EMAIL</span>
+				<span class="label-text text-white">EMAIL*</span>
 			</div>
 			<input
 				name="email"
-				value={user_email}
-				disabled
-				class="input w-full max-w-xs disabled:border-none disabled:bg-opacity-10 disabled:text-white disabled:placeholder-gray-200"
+				bind:value={$form.email}
+				class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
 			/>
-			<div class="h-8" />
+			{#if $errors.email}
+				<small class="label h-8 text-custom-yellow">{$errors.email}</small>
+			{:else}
+				<div class="h-8" />
+			{/if}
 		</label>
 
 		<!-- PRONOUNS -->
@@ -156,7 +153,7 @@
 		</label>
 	</div>
 
-	<!-- EDUCATIOn -->
+	<!-- EDUCATION -->
 	<div class="mt-4 font-bold text-white max-sm:text-center">Education</div>
 
 	<div class="mx-auto flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -417,10 +414,10 @@
 	</div>
 
 	<div class="mx-auto max-sm:max-w-xs">
-		<button
+		<!-- <button
 			class="btn float-left my-6 border-none bg-opacity-50 text-opacity-70"
 			on:click={(e) => e.preventDefault()}>Save</button
-		>
+		> -->
 		<button class="btn float-right my-6 border-none bg-opacity-50 text-opacity-70">Submit</button>
 	</div>
 </form>

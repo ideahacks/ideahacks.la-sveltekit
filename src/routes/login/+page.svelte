@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { page } from '$app/stores';
 
 	export let data;
@@ -34,4 +34,4 @@
 </div>
 
 <style lang="postcss">
-</style>
+</style> -->
