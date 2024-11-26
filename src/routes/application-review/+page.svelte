@@ -7,12 +7,11 @@
 	const APPS_PER_PAGE = 10;
 
 	let apps = data.applications;
+	let authenticated = data.authenticated;
 
 	// console.log(apps);
 	let filter_text = '';
 	let filtered_apps = apps;
-
-	let authenticated = false;
 
 	let grouped_apps = [];
 	$: {
@@ -31,7 +30,7 @@
 	let admin_password = '';
 </script>
 
-{#if form?.success === true}
+{#if form?.success === true || authenticated}
 	<div class="mx-auto my-10 text-center font-paytone text-3xl text-white max-sm:max-w-xs">
 		Application Review
 	</div>

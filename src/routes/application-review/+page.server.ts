@@ -1,13 +1,14 @@
 import { error } from '@sveltejs/kit';
 import { PASSWORD } from '$env/static/private';
-export const load = async ({ locals: { supabase } }) => {
+export const load = async ({ locals: { supabase }, cookies }) => {
+	const authenticated = cookies.get('authenticated');
 	const { data: applications, error: applicationError } = await supabase
 		.from('applications_2025')
 		.select();
 	if (applicationError) {
 		throw error(500, 'Could not retrieve apps, try again or email webmaster@ieeebruins.com');
 	}
-	return { applications: applications ?? [] };
+	return { applications: applications ?? [], authenticated: authenticated === 'true' };
 };
 
 export const actions = {
@@ -86,8 +87,9 @@ export const actions = {
 			};
 		}
 	},
-	authenticate: async ({ request }) => {
+	authenticate: async ({ request, cookies }) => {
 		const formData = await request.formData();
+		cookies.set('authenticated', 'true', { path: '/' });
 		return { success: formData.get('password') === PASSWORD };
 	}
 };
