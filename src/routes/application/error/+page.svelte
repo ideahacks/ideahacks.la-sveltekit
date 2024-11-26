@@ -2,5 +2,6 @@
 >
 <h1 class="mx-auto my-10 text-center font-paytone text-3xl text-white max-sm:max-w-xs">Error!</h1>
 <p class="mx-auto my-10 text-center font-encode text-xl text-white max-sm:max-w-xs">
-	There was an error submitting the application
+	There was an error submitting the application. Please contact webmaster@ieeebruins.com or
+	agariomasster on Discord for any questions.
 </p>

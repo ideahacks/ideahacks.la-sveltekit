@@ -118,10 +118,11 @@
 			class="form-control w-full max-w-xs bg-opacity-10 align-top text-white placeholder-gray-200 focus:outline-none"
 		>
 			<div class="label">
-				<span class="label-text text-white">EMAIL*</span>
+				<span class="label-text text-white">SCHOOL EMAIL*</span>
 			</div>
 			<input
 				name="email"
+				placeholder="joebruin@g.ucla.edu"
 				bind:value={$form.email}
 				class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
 			/>
