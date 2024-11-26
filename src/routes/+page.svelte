@@ -136,6 +136,7 @@
 		Get ready to create something amazing! Join us for the 11th annual IDEA Hacks, the West Coast's
 		premier hardware hackathon. Applications are now open!
 	</div>
+	<div class="text-md mb-4 font-encode font-bold text-white xl:text-lg">Due 12/15/2024</div>
 	<!-- 
 	<form method="POST" class="flex">
 		<input
@@ -162,6 +163,25 @@
 		equipment that they need, including 3D printers and soldering stations, free of charge. Our
 		hundreds of hackers will not only code, but create tangible products from scratch over the
 		course of 36 hours.
+	</div>
+
+	<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
+		<span>Theme & Tracks</span>
+	</h1>
+	<div class="text-md mb-4 font-encode text-white xl:text-lg">
+		Welcome to Supercharge! This year, we're bringing an electrifying mix of innovation and energy
+		to our hackathon!
+	</div>
+	<div class="text-md mb-4 font-encode text-white xl:text-lg">
+		<span class="font-bold">⭐ Super Human ⭐</span> - Enhance aspects of your daily life and become
+		your best self!
+	</div>
+	<div class="text-md mb-4 font-encode text-white xl:text-lg">
+		<span class="font-bold">☁️ Super Nostalgic ☁️</span> - Take a journey back to your roots and embrace
+		your old self!
+	</div>
+	<div class="text-md mb-4 font-encode text-white xl:text-lg">
+		<span class="font-bold">⚡ Super (in)Sane ⚡</span> - Break the mold and discover your true self!
 	</div>
 
 	<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
