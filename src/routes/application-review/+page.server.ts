@@ -89,7 +89,12 @@ export const actions = {
 	},
 	authenticate: async ({ request, cookies }) => {
 		const formData = await request.formData();
-		cookies.set('authenticated', 'true', { path: '/' });
+		if (formData.get('password') === PASSWORD) {
+			cookies.set('authenticated', 'true', { path: '/' });
+		} else {
+			cookies.set('authenticated', 'false', { path: '/' });
+		}
+
 		return { success: formData.get('password') === PASSWORD };
 	}
 };
