@@ -2,6 +2,7 @@
 	import logo from '$lib/images/logo.png';
 	import { Send } from 'lucide-svelte';
 	import type { Session, SupabaseClient } from '@supabase/supabase-js';
+	import BigFaq from '$lib/components/BigFaq.svelte';
 	// export let supabase: SupabaseClient;
 	import cityscape from '$lib/images/cityscape.png';
 
@@ -183,6 +184,11 @@
 	<div class="text-md mb-4 font-encode text-white xl:text-lg">
 		<span class="font-bold">⚡ Super (in)Sane ⚡</span> - Break the mold and discover your true self!
 	</div>
+
+	<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
+		<span>FAQs</span>
+	</h1>
+	<BigFaq />
 
 	<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
 		<span>History</span>

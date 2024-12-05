@@ -5,8 +5,8 @@
 
 <div class="collapse collapse-arrow mb-4 bg-base-200 bg-opacity-20">
 	<input type="radio" name="my-accordion-2" />
-	<div class="collapse-title font-paytone text-xl font-medium">{question}</div>
-	<div class="collapse-content font-mono">
+	<div class="collapse-title font-encode text-lg font-semibold xl:text-xl">{question}</div>
+	<div class="collapse-content font-encode text-base xl:text-lg">
 		<p>
 			{answer}
 		</p>
