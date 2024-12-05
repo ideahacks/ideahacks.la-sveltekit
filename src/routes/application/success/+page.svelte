@@ -9,7 +9,7 @@
 </p>
 
 <p class="text-md mx-auto text-center font-encode text-gray-200 max-sm:max-w-xs">
-	(You will recieve an email once we've made a decision)
+	(You will receive an email once we've made a decision)
 </p>
 
 <div class="mx-auto inline-block text-center">
