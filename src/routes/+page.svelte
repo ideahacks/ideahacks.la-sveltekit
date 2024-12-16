@@ -46,6 +46,13 @@
 	setTimeout(() => (wave2 = true), 15000);
 
 	let alert = true;
+
+	// Getting The Current Date & Time And Setting It
+	let currentDateTime = new Date();
+	let dueDate = new Date('2024-12-22T11:59');
+
+	// Compare the dates
+	let isDue = currentDateTime.getTime() > dueDate.getTime();
 </script>
 
 <img src={logo} alt="logo" class="fixed right-36 top-36 z-0 w-96 opacity-15" />
@@ -114,7 +121,11 @@
 				/>
 			</svg>
 			<div>
-				<h3 class="font-bold">Applications are now open!</h3>
+				{#if !isDue}
+					<h3 class="font-bold">Applications have been extended by a week!</h3>
+				{:else}
+					<h3 class="font-bold">Applications have closed</h3>
+				{/if}
 				<div class="text-sm">
 					Date Change: IDEA Hacks has been pushed up a week to Jan 10-12, 2025!
 				</div>
@@ -150,8 +161,12 @@
 
 		<button class="btn btn-ghost mx-2 text-white"><Send /></button>
 	</form> -->
-
-	<a href="/application" class="btn border-none bg-opacity-30 text-white">Apply Now!</a>
+	{#if !isDue}
+		<a
+			href="/application"
+			class="btn border-none bg-opacity-30 text-white {isDue ? 'disabled' : ''}">Apply Now!</a
+		>
+	{/if}
 
 	<div class="text-md mt-4 font-encode text-white">{form?.message ?? ''}</div>
 	<br />
