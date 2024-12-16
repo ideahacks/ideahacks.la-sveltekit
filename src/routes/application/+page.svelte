@@ -67,7 +67,7 @@
 	IDEA Hacks Application
 </h1>
 <div class="text-md mb-4 text-center font-encode font-bold text-white xl:text-lg">
-	Due 12/15/2024
+	Due 12/22/2024, 11:59 PM
 </div>
 <form method="POST" use:enhance class="z-10 mx-auto w-full max-w-xl">
 	<div class="mt-4 font-bold text-white max-sm:text-center">Personal</div>

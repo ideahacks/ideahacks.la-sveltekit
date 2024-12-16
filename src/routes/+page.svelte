@@ -136,7 +136,9 @@
 		Get ready to create something amazing! Join us for the 11th annual IDEA Hacks, the West Coast's
 		premier hardware hackathon. Applications are now open!
 	</div>
-	<div class="text-md mb-4 font-encode font-bold text-white xl:text-lg">Due 12/15/2024</div>
+	<div class="text-md mb-4 font-encode font-bold text-white xl:text-lg">
+		Due 12/22/2024, 11:59 PM
+	</div>
 	<!-- 
 	<form method="POST" class="flex">
 		<input
