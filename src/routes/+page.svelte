@@ -47,6 +47,11 @@
 	setTimeout(() => (wave2 = true), 15000);
 
 	let alert = true;
+
+	let current = new Date();
+	let dueDate = new Date('2024-12-22T23:59:59-08:00');
+
+	let isDue = current.getTime() > dueDate.getTime();
 </script>
 
 <img src={logo} alt="logo" class="fixed right-36 top-36 z-0 w-96 opacity-15" />
@@ -114,12 +119,11 @@
 					d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
 				/>
 			</svg>
-			<div>
-				<h3 class="font-bold">Applications are now open!</h3>
-				<div class="text-sm">
-					Date Change: IDEA Hacks has been pushed up a week to Jan 10-12, 2025!
-				</div>
-			</div>
+			{#if !isDue}
+				<h3 class="">Applications have been extended to 12/22!</h3>
+			{:else}
+				<h3 class="">Applications have closed</h3>
+			{/if}
 			<button class="btn btn-sm" on:click={() => (alert = false)}>Okay</button>
 		</div>
 	{/if}
@@ -135,9 +139,9 @@
 	</h3>
 	<div class="text-md mb-4 font-encode text-white xl:text-lg">
 		Get ready to create something amazing! Join us for the 11th annual IDEA Hacks, the West Coast's
-		premier hardware hackathon. Applications are now open!
+		premier hardware hackathon!
 	</div>
-	<div class="text-md mb-4 font-encode font-bold text-white xl:text-lg">Due 12/15/2024</div>
+
 	<!-- 
 	<form method="POST" class="flex">
 		<input
@@ -150,7 +154,15 @@
 		<button class="btn btn-ghost mx-2 text-white"><Send /></button>
 	</form> -->
 
-	<a href="/application" class="btn border-none bg-opacity-30 text-white">Apply Now!</a>
+	{#if !isDue}
+		<div class="text-md mb-4 font-encode font-bold text-white xl:text-lg">
+			Due 12/22/2024, 11:59 PM
+		</div>
+		<a
+			href="/application"
+			class="btn border-none bg-opacity-30 text-white {isDue ? 'disabled' : ''}">Apply Now!</a
+		>
+	{/if}
 
 	<div class="text-md mt-4 font-encode text-white">{form?.message ?? ''}</div>
 	<br />

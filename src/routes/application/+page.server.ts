@@ -54,7 +54,10 @@ export const actions = {
 				delete new_form.school_if_other;
 			}
 
-			const { error } = await supabase.from('applications_2025').upsert(new_form, {onConflict: 'email'}).select();
+			const { error } = await supabase
+				.from('applications_2025')
+				.upsert(new_form, { onConflict: 'email' })
+				.select();
 
 			if (!error) {
 				console.log('Application submitted successfully!');
