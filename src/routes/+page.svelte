@@ -49,7 +49,7 @@
 
 	// Getting The Current Date & Time And Setting It
 	let currentDateTime = new Date();
-	let dueDate = new Date('2024-12-22T11:59');
+	let dueDate = new Date('2024-12-22T23:59:59-08:00');
 
 	// Compare the dates
 	let isDue = currentDateTime.getTime() > dueDate.getTime();
