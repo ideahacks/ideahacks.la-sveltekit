@@ -35,6 +35,14 @@
 	import ideahacks2023 from '$lib/images/ideahacks2023.png';
 	import ideahacks2024 from '$lib/images/ideahacks2024.png';
 
+	// https://www.ti.com/
+	// https://www.infineon.com/
+	// https://www.digikey.com/
+
+	import digikey from '$lib/images/sponsors/digikey.svg';
+	import infineon from '$lib/images/sponsors/infineon.svg';
+	import ti from '$lib/images/sponsors/ti.svg';
+
 	import Typewriter from 'svelte-typewriter';
 
 	import { fly } from 'svelte/transition';
@@ -246,6 +254,30 @@
 			target="_blank"
 			class="m-2 inline-block h-20 w-20 text-center hover:opacity-80"
 			><img src={ideahacks2020} class="rounded-full opacity-75" alt="ideahacks 2020 logo" />2020</a
+		>
+	</div>
+
+	<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
+		<span>Sponsors</span>
+	</h1>
+	<div class="center-align">
+		<a
+			href="https://www.digikey.com/"
+			target="_blank"
+			class="m-2 inline-block w-48 text-center hover:opacity-80"
+			><img src={digikey} class="" alt="digikey logo" /></a
+		>
+		<a
+			href="https://www.infineon.com/"
+			target="_blank"
+			class="m-2 inline-block w-48 text-center hover:opacity-80"
+			><img src={infineon} class="" alt="infineon logo" /></a
+		>
+		<a
+			href="https://www.ti.com/"
+			target="_blank"
+			class="m-2 inline-block w-48 text-center hover:opacity-80"
+			><img src={ti} class="" alt="ti logo" /></a
 		>
 	</div>
 </div>
