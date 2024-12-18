@@ -1,6 +1,7 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import PartCard from '$lib/components/PartCard.svelte';
 	import pixelclouds from '$lib/images/pixelclouds.png';
+	import lightning from '$lib/images/lightning.png';
 	import fuzzysort from 'fuzzysort';
 	import { Tag } from 'lucide-svelte';
 
@@ -98,6 +99,7 @@
 		<PartCard part_info={part.obj} />
 	{/each}
 </div>
+
 
 <div class="join mb-24 mt-0 justify-center">
 	{#each totalPagesArray as pageNum}
