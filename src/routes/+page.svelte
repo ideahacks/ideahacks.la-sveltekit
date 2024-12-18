@@ -57,7 +57,7 @@
 	let alert = true;
 
 	let current = new Date();
-	let dueDate = new Date('2024-12-22T23:59:59-08:00');
+	let dueDate = new Date('2024-12-20T23:59:59-08:00');
 
 	let isDue = current.getTime() > dueDate.getTime();
 </script>
@@ -128,7 +128,7 @@
 				/>
 			</svg>
 			{#if !isDue}
-				<h3 class="">Applications have been extended to 12/22!</h3>
+				<h3 class="">Applications have been extended to 12/20 11:59PM!</h3>
 			{:else}
 				<h3 class="">Applications have closed</h3>
 			{/if}
@@ -164,7 +164,7 @@
 
 	{#if !isDue}
 		<div class="text-md mb-4 font-encode font-bold text-white xl:text-lg">
-			Due 12/22/2024, 11:59 PM
+			Due 12/20/2024, 11:59 PM
 		</div>
 		<a
 			href="/application"

@@ -46,7 +46,7 @@
 
 	<Faq
 		question="How do I apply?"
-		answer="Hackers can apply on this website! Applications are out now and will remain open until early January. Applications are reviewed and accepted on a first come first serve basis, so apply early! Make sure to apply by December 15, 2024 to ensure you get your preferred shirt size, make sure we can order any preferred parts you list on your application, and be entered into a special raffle as a thanks for applying early!"
+		answer="Hackers can apply on this website! Applications are out now and will remain open until late December. Applications are reviewed and accepted on a first come first serve basis, so apply early! Make sure to apply by December 20, 2024 to ensure you get your preferred shirt size, make sure we can order any preferred parts you list on your application, and be entered into a special raffle as a thanks for applying early!"
 	/>
 
 	<Faq

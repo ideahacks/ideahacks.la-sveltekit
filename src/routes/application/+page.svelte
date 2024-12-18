@@ -25,7 +25,7 @@
 	setTimeout(() => (wave2 = true), 15000);
 
 	let currentDateTime = new Date();
-	let dueDate = new Date('2024-12-22T23:59:59-08:00');
+	let dueDate = new Date('2024-12-20T23:59:59-08:00');
 
 	// Compare the dates
 	let isDue = currentDateTime.getTime() > dueDate.getTime();
@@ -76,7 +76,7 @@
 		IDEA Hacks Application
 	</h1>
 	<div class="text-md mb-4 text-center font-encode font-bold text-white xl:text-lg">
-		Due 12/22/2024, 11:59 PM
+		Due 12/20/2024, 11:59 PM
 	</div>
 	<form method="POST" use:enhance class="z-10 mx-auto w-full max-w-xl">
 		<div class="mt-4 font-bold text-white max-sm:text-center">Personal</div>
@@ -183,9 +183,9 @@
 					bind:value={$form.school}
 				>
 					<option disabled selected />
-					<option>University of California, Los Angeles</option>
-					<option>University of Southern California</option>
-					<option>Other</option>
+					<option class="text-black">University of California, Los Angeles</option>
+					<option class="text-black">University of Southern California</option>
+					<option class="text-black">Other</option>
 				</select>
 				{#if $errors.school}
 					<small class="label h-8 text-custom-yellow">{$errors.school}</small>
