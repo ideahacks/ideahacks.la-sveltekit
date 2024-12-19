@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { page } from '$app/stores';
 
 	export let data;
@@ -7,7 +7,10 @@
 
 	async function signIn() {
 		await supabase.auth.signInWithOAuth({
-			provider: 'google'
+			provider: 'google',
+			options: {
+				redirectTo: `${window.location.origin}/application`
+			}
 		});
 	}
 </script>
@@ -26,9 +29,9 @@
 			href="mailto:webmaster@ieeebruins.com"
 			class="link">webmaster@ieeebruins.com</a
 		>
-		or <span class="font-mono">paulzzy</span> on Discord.
+		or <span class="font-mono">agariomasster</span> on Discord.
 	</p>
 </div>
 
 <style lang="postcss">
-</style>
+</style> -->

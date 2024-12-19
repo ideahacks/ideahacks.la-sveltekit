@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import PartCard from '$lib/components/PartCard.svelte';
 	import pixelclouds from '$lib/images/pixelclouds.png';
 	import lightning from '$lib/images/lightning.png';
@@ -152,4 +152,4 @@
 
 <div class="fixed bottom-0 z-0 h-24 w-full bg-contain" style="background-image: url({pixelclouds})">
 	<img src={lightning} alt="lightning" class="absolute bottom-2 right-2 h-24 w-24 object-contain" />
-</div>
+</div> -->
