@@ -26,6 +26,35 @@
 	let filter_text = '';
 	let filtered_apps = apps;
 	let app_status = { applications: 0, accepted: 0, waitlisted: 0, rejected: 0, pending: 0 };
+
+	function capitalizeShirt(shirt) {
+		switch (shirt) {
+			case 'small':
+				return 'Small';
+			case 'medium':
+				return 'Medium';
+
+			case 'large':
+				return 'Large';
+			case 'extra_large':
+				return 'Extra Large';
+		}
+	}
+	function capitalizeYear(year) {
+		switch (year) {
+			case 'first':
+				return 'First';
+			case 'second':
+				return 'Second';
+
+			case 'third':
+				return 'Third';
+			case 'fourth':
+				return 'Fourth';
+			default:
+				return 'Graduated';
+		}
+	}
 	function updateAppStatus() {
 		app_status = { applications: 0, accepted: 0, waitlisted: 0, rejected: 0, pending: 0 };
 		app_status.applications = apps.length;
@@ -130,7 +159,7 @@
 									<p class="py">Status: {card.status}</p>
 									<p class="py">Pronouns: {card.pronouns}</p>
 									<p class="py">School: {card.school}</p>
-									<p class="py">Year: {card.year_at_current_university}</p>
+									<p class="py">Year: {capitalizeYear(card.year_at_current_university)}</p>
 									{#if card.is_transfer == 'true'}
 										<p class="py">Transfer: Yes</p>
 									{:else}
@@ -150,7 +179,7 @@
 								{:else}
 									<p class="py">Suggested Parts: {card.suggested_parts}</p>
 								{/if}
-								<p class="py">Shirt Size: {card.shirt_size}</p>
+								<p class="py">Shirt Size: {capitalizeShirt(card.shirt_size)}</p>
 								{#if card.dietary_restrictions == ''}
 									<p class="py">Dietary Restriction: None</p>
 								{:else}

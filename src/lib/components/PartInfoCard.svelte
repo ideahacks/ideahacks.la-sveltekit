@@ -1,5 +1,6 @@
 <script>
 	export let part_data;
+	//import {addToCart} from '../../routes/parts-checkout/+page.svelte'
 </script>
 
 <div

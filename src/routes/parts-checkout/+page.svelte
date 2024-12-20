@@ -1,6 +1,32 @@
 <script>
 	import PartInfoCard from '$lib/components/PartInfoCard.svelte';
-
+	import CartCard from '$lib/components/CartCard.svelte';
+	let cart = [
+		{
+			name: 'Toy',
+			id: '1220'
+		},
+		{
+			name: 'Motor',
+			id: '1000'
+		},
+		{
+			name: 'Toy',
+			id: '1220'
+		},
+		{
+			name: 'Motor',
+			id: '1000'
+		},
+		{
+			name: 'Toy',
+			id: '1220'
+		},
+		{
+			name: 'Motor',
+			id: '1000'
+		}
+	];
 	let parts = [
 		{
 			name: 'Arduino Uno',
@@ -18,21 +44,34 @@
 			name: 'Servo',
 			img: 'https://www.electronicwings.com/storage/PlatformSection/TopicContent/236/description/servo.jpg',
 			quantity: 20,
-			id: '1443'
+			id: '1420'
 		},
 		{
 			name: 'Servo',
 			img: 'https://www.electronicwings.com/storage/PlatformSection/TopicContent/236/description/servo.jpg',
 			quantity: 20,
-			id: '1443'
+			id: '1003'
 		},
 		{
 			name: 'Servo',
 			img: 'https://www.electronicwings.com/storage/PlatformSection/TopicContent/236/description/servo.jpg',
 			quantity: 20,
-			id: '1443'
+			id: '1981'
 		}
 	];
+	let parts_in_cart = {};
+	let parts_in_cart_array = [];
+	export async function addToCart(part) {
+		//for now let's just do some local changes
+		part.quantity -= 1;
+		console.log('function call ');
+		if (part.id in parts_in_cart) {
+			parts_in_cart['part.name'] += 1;
+		} else {
+			parts_in_cart['part.name'] = 1;
+		}
+	}
+
 	let filter_text = '';
 	let filtered_parts = parts;
 	$: filtered_parts = parts.filter(
@@ -40,7 +79,11 @@
 			app.name.toLowerCase().includes(filter_text.toLowerCase()) ||
 			app.id.toLowerCase().includes(filter_text.toLowerCase())
 	);
-
+	$: {
+		for (const element of Object.keys(parts_in_cart)) {
+			parts_in_cart_array.push({ element: parts_in_cart[element] });
+		}
+	}
 	let grouped_parts = [];
 	$: {
 		grouped_parts = [];
@@ -87,18 +130,29 @@
 			{/each}
 		</div>
 	</div>
-	<div class="cart-container mt-4 flex flex-col items-center">
+	<div class="cart-container mt-4 flex w-full max-w-full flex-col items-center px-4">
 		<label
-			class="search-label mb-2 block text-center font-paytone text-[3em] font-bold text-white"
+			class="search-label mb-2 block text-center font-paytone text-3xl font-bold text-white md:text-4xl lg:text-5xl"
 			for="cart-input">Cart</label
 		>
-		<div class="cart-input-group flex items-center">
-			<input
-				type="text"
-				placeholder="Team Number"
-				class="cart-input input input-bordered mr-2 w-full max-w-xs"
-			/>
-			<button class="btn btn-error font-paytone text-white">Finish Checkout</button>
+
+		<div class="cart-content flex w-full max-w-md flex-col">
+			<div class="cart-input-group mb-4 flex flex-wrap items-center gap-2">
+				<input
+					type="text"
+					placeholder="Team Number"
+					class="cart-input input input-bordered min-w-[200px] flex-grow"
+				/>
+				<button class="btn btn-error whitespace-nowrap font-paytone text-white"
+					>Finish Checkout</button
+				>
+			</div>
+
+			<div class="cart-items grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
+				{#each cart as card}
+					<CartCard checkout={card} />
+				{/each}
+			</div>
 		</div>
 	</div>
 </div>
