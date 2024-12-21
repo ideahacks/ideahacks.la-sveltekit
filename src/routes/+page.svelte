@@ -5,6 +5,8 @@
 	import BigFaq from '$lib/components/BigFaq.svelte';
 	// export let supabase: SupabaseClient;
 	import cityscape from '$lib/images/cityscape.png';
+	import Prizes from '$lib/components/Prizes.svelte';
+	import Schedule from '$lib/components/Schedule.svelte';
 
 	// export let data;
 	export let form;
@@ -204,6 +206,13 @@
 	<div class="text-md mb-4 font-encode text-white xl:text-lg">
 		<span class="font-bold">⚡ Super (in)Sane ⚡</span> - Break the mold and discover your true self!
 	</div>
+
+	<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
+		<span>Prizes</span>
+	</h1>
+	<Prizes />
+
+	<Schedule />
 
 	<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
 		<span>FAQs</span>

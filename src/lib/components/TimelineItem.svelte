@@ -11,7 +11,7 @@
 	{#if !first}
 		<hr />
 	{/if}
-	<div class="timeline-middle px-2">
+	<div class="timeline-middle px-2 text-black">
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
 			<path
 				fill-rule="evenodd"
@@ -20,9 +20,13 @@
 			/>
 		</svg>
 	</div>
-	<div class="timeline-{alignment} mb-10 {alignment === 'start' ? 'md:text-end' : ''} pt-1.5">
-		<time class="font-mono italic">{time}</time>
-		<div class="font-paytone text-lg font-black">{title}</div>
+	<div
+		class="timeline-{alignment} mb-10 text-white {alignment === 'start'
+			? 'md:text-end'
+			: ''} pt-1.5"
+	>
+		<time class="text-md font-mono italic">{time}</time>
+		<div class="text-md font-paytone font-black">{title}</div>
 		<div>{location}</div>
 	</div>
 	{#if !last}

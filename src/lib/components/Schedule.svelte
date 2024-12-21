@@ -2,12 +2,20 @@
 	import TimelineItem from './TimelineItem.svelte';
 </script>
 
-<div class="font-pantone py-4 text-center text-2xl font-extrabold">IDEA Hacks Schedule</div>
-<div class="gap-4 rounded-box bg-white bg-opacity-30 p-4 lg:flex lg:bg-opacity-0">
+<h1 class="font-paytone text-2xl text-white xl:text-4xl">
+	<span>Schedule</span>
+</h1>
+<div
+	class="gap-4 rounded-box bg-white bg-opacity-0 pb-4 pt-2 text-sm text-white md:flex lg:flex lg:bg-opacity-0"
+>
 	<div
-		class="timeline timeline-vertical timeline-snap-icon w-full rounded-box p-4 max-[500px]:timeline-compact lg:w-auto lg:bg-white lg:bg-opacity-30"
+		class="lg:to-opacity-20 timeline timeline-vertical timeline-snap-icon w-full rounded-box px-2 max-[500px]:timeline-compact md:bg-gradient-to-b md:from-transparent md:to-[#83c3e8] lg:w-auto lg:bg-gradient-to-b lg:from-transparent lg:to-[#83c3e8]"
 	>
-		<div class="rounded-box py-4 text-center font-mono text-xl font-extrabold">FRIDAY, JAN. 17</div>
+		<div
+			class="rounded-box pt-4 font-mono text-lg font-extrabold md:pb-4 md:text-center lg:pb-4 lg:text-center"
+		>
+			FRIDAY, JAN. 17
+		</div>
 		<TimelineItem
 			time="6:00-6:45 PM"
 			title="IDEA Hacks Kickoff"
@@ -40,9 +48,13 @@
 	</div>
 
 	<div
-		class="timeline timeline-vertical timeline-snap-icon w-full rounded-box p-4 max-[500px]:timeline-compact lg:w-auto lg:bg-white lg:bg-opacity-30"
+		class="lg:to-opacity-20 timeline timeline-vertical timeline-snap-icon w-full rounded-box px-2 max-[500px]:timeline-compact md:bg-gradient-to-b md:from-transparent md:to-[#83c3e8] lg:w-auto lg:bg-gradient-to-b lg:from-transparent lg:to-[#83c3e8]"
 	>
-		<div class="py-4 text-center font-mono text-xl font-extrabold">SATURDAY, JAN. 18</div>
+		<div
+			class="pt-4 font-mono text-lg font-extrabold md:pb-4 md:text-center lg:pb-4 lg:text-center"
+		>
+			SATURDAY, JAN. 18
+		</div>
 		<TimelineItem
 			time="6:00-6:45 PM"
 			title="IDEA Hacks Kickoff"
@@ -75,9 +87,13 @@
 	</div>
 
 	<div
-		class="timeline timeline-vertical timeline-snap-icon w-full rounded-box p-4 max-[500px]:timeline-compact lg:w-auto lg:bg-white lg:bg-opacity-30"
+		class="timeline timeline-vertical timeline-snap-icon w-full rounded-box px-2 max-[500px]:timeline-compact md:bg-gradient-to-b md:from-transparent md:to-[#83c3e8] lg:w-auto lg:bg-opacity-20 lg:bg-gradient-to-b lg:from-transparent lg:to-[#83c3e8]"
 	>
-		<div class="py-4 text-center font-mono text-xl font-extrabold">SUNDAY, JAN. 19</div>
+		<div
+			class="pt-4 font-mono text-lg font-extrabold md:pb-4 md:text-center lg:pb-4 lg:text-center"
+		>
+			SUNDAY, JAN. 19
+		</div>
 		<TimelineItem
 			time="6:00-6:45 PM"
 			title="IDEA Hacks Kickoff"
