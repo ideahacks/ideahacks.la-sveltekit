@@ -1,6 +1,3 @@
-<a href="/" class="mx-12 mt-12 text-right font-encode font-bold text-white hover:opacity-75">Home</a
->
-
 <div class="mx-5 max-w-xl text-white sm:ml-12">
 	<h1 class="my-10 font-paytone text-3xl">Privacy Policy</h1>
 	<p class="font-encode font-bold">Information Collection and Use</p>

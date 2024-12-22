@@ -104,14 +104,14 @@
 
 <!-- <button on:click={signOut}>Sign Out</button>
 <p>hello {email}</p> -->
-<a
+<!-- <a
 	href="/privacy"
 	class="z-10 mx-12 mt-12 text-right font-encode font-bold text-white hover:opacity-75">Privacy</a
 ><a
 	href="/sponsor-us"
 	class="absolute z-10 mx-5 mt-12 font-encode font-bold text-white hover:opacity-75 md:mx-24"
 	>Sponsor Us!</a
->
+> -->
 
 <div class="z-10 mx-5 my-10 max-w-4xl md:mx-24">
 	{#if alert}
@@ -207,12 +207,12 @@
 		<span class="font-bold">⚡ Super (in)Sane ⚡</span> - Break the mold and discover your true self!
 	</div>
 
-	<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
+	<!-- <h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
 		<span>Prizes</span>
-	</h1>
-	<Prizes />
+	</h1> -->
+	<!-- <Prizes />
 
-	<Schedule />
+	<Schedule /> -->
 
 	<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
 		<span>FAQs</span>
