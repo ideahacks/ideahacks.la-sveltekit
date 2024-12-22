@@ -65,13 +65,27 @@
 		//for now let's just do some local changes
 		part.quantity -= 1;
 		console.log('function call ');
-		if (part.id in parts_in_cart) {
-			parts_in_cart['part.name'] += 1;
-		} else {
-			parts_in_cart['part.name'] = 1;
+	}
+
+	function handleAddCart(part) {
+		if (part.quantity > 0) {
+			part.quantity -= 1;
+			parts_in_cart_array = [
+				...parts_in_cart_array,
+				{ name: part.name, id: part.id, cartId: `${part.id}-${parts_in_cart_array.length}` }
+			];
+			parts = [...parts];
 		}
 	}
 
+	function handleRemoveFromCart(part, cartId) {
+		const partToIncrease = parts.find((p) => p.id === part.id);
+		if (partToIncrease) {
+			partToIncrease.quantity += 1;
+			parts = [...parts];
+		}
+		parts_in_cart_array = parts_in_cart_array.filter((item) => item.cartId !== cartId);
+	}
 	let filter_text = '';
 	let filtered_parts = parts;
 	$: filtered_parts = parts.filter(
@@ -118,7 +132,7 @@
 				<div id={'item' + (index + 1)} class="carousel-item w-full justify-self-center">
 					<div class="cards-container mt-[5px] flex w-full flex-wrap items-stretch gap-2">
 						{#each item as card}
-							<PartInfoCard part_data={card} />
+							<PartInfoCard part_data={card} {handleAddCart} />
 						{/each}
 					</div>
 				</div>
@@ -149,8 +163,8 @@
 			</div>
 
 			<div class="cart-items grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
-				{#each cart as card}
-					<CartCard checkout={card} />
+				{#each parts_in_cart_array as card}
+					<CartCard checkout={card} {handleRemoveFromCart} />
 				{/each}
 			</div>
 		</div>

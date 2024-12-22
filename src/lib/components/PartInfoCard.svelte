@@ -1,6 +1,7 @@
 <script>
 	export let part_data;
 	//import {addToCart} from '../../routes/parts-checkout/+page.svelte'
+	export let handleAddCart;
 </script>
 
 <div
@@ -14,8 +15,9 @@
 		<p class="font-paytone">Quantity: {part_data.quantity}</p>
 		<p class="font-paytone">ID: {part_data.id}</p>
 		<div class="card-actions justify-end">
-			<button class="btn btn-error flex-[1_1_calc(50%-16px)] font-paytone text-white"
-				>Add to Cart</button
+			<button
+				on:click={() => handleAddCart(part_data)}
+				class="btn btn-error flex-[1_1_calc(50%-16px)] font-paytone text-white">Add to Cart</button
 			>
 		</div>
 	</div>
