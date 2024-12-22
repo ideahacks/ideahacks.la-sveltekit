@@ -60,16 +60,20 @@
 					<a href="/sponsor-us">Sponsor Us!</a>
 				</li>
 				<li><a href="/privacy">Privacy</a></li>
-				<li>
-					{#if data.session}
-						<a href="/account">Account</a>
+				<li />
+				{#if data.is_admin}
+					<li><a href="/admin">Admin</a></li>
+				{/if}
+				{#if data.session}
+					<li><a href="/account">Account</a></li>
+					<li>
 						<form action="/logout" method="POST">
 							<button type="submit" class="">Log out</button>
 						</form>
-					{:else}
-						<a href="/login">Login</a>
-					{/if}
-				</li>
+					</li>
+				{:else}
+					<li><a href="/login">Log in</a></li>
+				{/if}
 			</ul>
 		</div>
 	</div>
@@ -79,7 +83,9 @@
 				<a href="/sponsor-us">Sponsor Us!</a>
 			</li>
 			<li><a href="/privacy">Privacy</a></li>
-
+			{#if data.is_admin}
+				<li><a href="/admin">Admin</a></li>
+			{/if}
 			{#if data.session}
 				<li><a href="/account">Account</a></li>
 				<li>
@@ -89,7 +95,7 @@
 				</li>
 			{:else}
 				<li>
-					<a href="/login">Login</a>
+					<a href="/login">Log in</a>
 				</li>
 			{/if}
 		</ul>

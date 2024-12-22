@@ -5,8 +5,8 @@
 	import BigFaq from '$lib/components/BigFaq.svelte';
 	// export let supabase: SupabaseClient;
 	import cityscape from '$lib/images/cityscape.png';
-	import Prizes from '$lib/components/Prizes.svelte';
-	import Schedule from '$lib/components/Schedule.svelte';
+	// import Prizes from '$lib/components/Prizes.svelte';
+	// import Schedule from '$lib/components/Schedule.svelte';
 
 	// export let data;
 	export let form;
@@ -56,7 +56,7 @@
 	setTimeout(() => (wave1 = true), 0);
 	setTimeout(() => (wave2 = true), 15000);
 
-	let alert = true;
+	let alert = false;
 
 	let current = new Date();
 	let dueDate = new Date('2024-12-20T23:59:59-08:00');

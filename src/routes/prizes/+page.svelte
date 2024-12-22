@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	import Prizes from '$lib/components/Prizes.svelte';
 	import SmallPrizes from '$lib/components/SmallPrizes.svelte';
 </script>
@@ -7,4 +7,4 @@
 	<Prizes />
 	<p />
 	<SmallPrizes />
-</div>
+</div> -->

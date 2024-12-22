@@ -9,7 +9,7 @@ export const load = async ({ locals }) => {
 	if (adminError) {
 		throw error(500, 'Error checking admin status');
 	}
-	console.log(admin);
+	// console.log(admin);
 	if (admin.length > 0) {
 		const { data: applications, error: applicationError } = await locals.sb
 			.from('applications_2025')
