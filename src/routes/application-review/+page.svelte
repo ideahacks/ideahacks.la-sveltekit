@@ -6,8 +6,9 @@
 
 	const APPS_PER_PAGE = 10;
 
+	const is_admin = data.is_admin;
+
 	let apps = data.applications;
-	let authenticated = data.authenticated;
 
 	// console.log(apps);
 	let filter_text = '';
@@ -26,11 +27,9 @@
 			app.full_name.toLowerCase().includes(filter_text.toLowerCase()) ||
 			(app.status?.toLowerCase().includes(filter_text.toLowerCase()) ?? false)
 	);
-
-	let admin_password = '';
 </script>
 
-{#if form?.success === true || authenticated}
+{#if is_admin}
 	<div class="mx-auto my-10 text-center font-paytone text-3xl text-white max-sm:max-w-xs">
 		Application Review
 	</div>
@@ -178,14 +177,8 @@
 		</div>
 	</div>
 {:else}
-	<form method="POST" action="?/authenticate">
-		<input
-			name="password"
-			type="text"
-			placeholder="Enter Password"
-			bind:value={admin_password}
-			class="input m-8 w-full max-w-xs self-center bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
-		/>
-		<button>Login</button>
-	</form>
+	<h1 class="m-auto max-w-xl text-center font-encode text-lg text-white">
+		You are not an admin! Contact webmaster@ieeebruins.com or agariomasster on discord for any
+		questions!
+	</h1>
 {/if}

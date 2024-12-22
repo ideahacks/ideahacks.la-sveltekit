@@ -1,23 +1,34 @@
 import { error } from '@sveltejs/kit';
-import { PASSWORD } from '$env/static/private';
-export const load = async ({ locals: { supabase }, cookies }) => {
-	const authenticated = cookies.get('authenticated');
-	const { data: applications, error: applicationError } = await supabase
-		.from('applications_2025')
-		.select();
-	if (applicationError) {
-		throw error(500, 'Could not retrieve apps, try again or email webmaster@ieeebruins.com');
+import type { Actions } from './$types';
+
+export const load = async ({ locals }) => {
+	const { data: admin, error: adminError } = await locals.sb
+		.from('admins_2025')
+		.select()
+		.eq('email', locals.session?.user.email);
+	if (adminError) {
+		throw error(500, 'Error checking admin status');
 	}
-	return { applications: applications ?? [], authenticated: authenticated === 'true' };
+	console.log(admin);
+	if (admin.length > 0) {
+		const { data: applications, error: applicationError } = await locals.sb
+			.from('applications_2025')
+			.select();
+		if (applicationError) {
+			throw error(500, 'Could not retrieve apps, try again or email webmaster@ieeebruins.com');
+		}
+		return { applications: applications ?? [], is_admin: true };
+	}
+	return { applications: [], is_admin: false };
 };
 
-export const actions = {
+export const actions: Actions = {
 	close: () => {
 		console.log('nada');
 	},
-	pending: async ({ request, locals: { supabase } }) => {
+	pending: async ({ request, locals }) => {
 		const formData = await request.formData();
-		const { error } = await supabase
+		const { error } = await locals.sb
 			.from('applications_2025')
 			.update({ status: 'Pending' })
 			.eq('email', formData.get('email'));
@@ -33,9 +44,9 @@ export const actions = {
 			};
 		}
 	},
-	accept: async ({ request, locals: { supabase } }) => {
+	accept: async ({ request, locals }) => {
 		const formData = await request.formData();
-		const { error } = await supabase
+		const { error } = await locals.sb
 			.from('applications_2025')
 			.update({ status: 'Accepted' })
 			.eq('email', formData.get('email'));
@@ -51,9 +62,9 @@ export const actions = {
 			};
 		}
 	},
-	reject: async ({ request, locals: { supabase } }) => {
+	reject: async ({ request, locals }) => {
 		const formData = await request.formData();
-		const { error } = await supabase
+		const { error } = await locals.sb
 			.from('applications_2025')
 			.update({ status: 'Rejected' })
 			.eq('email', formData.get('email'));
@@ -69,9 +80,9 @@ export const actions = {
 			};
 		}
 	},
-	waitlist: async ({ request, locals: { supabase } }) => {
+	waitlist: async ({ request, locals }) => {
 		const formData = await request.formData();
-		const { error } = await supabase
+		const { error } = await locals.sb
 			.from('applications_2025')
 			.update({ status: 'Waitlisted' })
 			.eq('email', formData.get('email'));
@@ -86,15 +97,5 @@ export const actions = {
 				message: 'Updated!'
 			};
 		}
-	},
-	authenticate: async ({ request, cookies }) => {
-		const formData = await request.formData();
-		if (formData.get('password') === PASSWORD) {
-			cookies.set('authenticated', 'true', { path: '/' });
-		} else {
-			cookies.set('authenticated', 'false', { path: '/' });
-		}
-
-		return { success: formData.get('password') === PASSWORD };
 	}
 };

@@ -31,10 +31,9 @@
 		</div>
 	</div>
 	<p class="mb-4 max-w-md">
-		Glad you're here! If you have any issues with login, please reach out to <a
-			href="mailto:webmaster@ieeebruins.com"
-			class="link">webmaster@ieeebruins.com</a
-		>
+		Please log in with the same email you submitted your application with! If you have any issues
+		with login, please reach out to
+		<a href="mailto:webmaster@ieeebruins.com" class="link">webmaster@ieeebruins.com</a>
 		or <span class="font-mono">agariomasster</span> on Discord.
 	</p>
 </div>
