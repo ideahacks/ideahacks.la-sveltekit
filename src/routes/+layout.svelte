@@ -30,7 +30,7 @@
 	<div class="navbar-start">
 		<ul class="font-paytone">
 			<a href="/" class="btn btn-ghost text-xl"
-				><img src={logo} class="h-10 w-10" alt="navbar logo" />IDEA HACKS</a
+				><img src={logo} class="h-10 w-10 max-sm:hidden" alt="navbar logo" />IDEA HACKS</a
 			>
 		</ul>
 	</div>
