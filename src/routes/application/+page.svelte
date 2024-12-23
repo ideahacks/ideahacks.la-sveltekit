@@ -10,66 +10,12 @@
 	// Client API:
 	const { form, errors, enhance } = superForm(data.form);
 
-	// Clouds!
-	import cloud1 from '$lib/images/CLOUDS_1.png';
-	import cloud2 from '$lib/images/CLOUDS_2.png';
-	import cloud3 from '$lib/images/CLOUDS_3.png';
-	import cloud4 from '$lib/images/CLOUDS_4.png';
-	import { fly } from 'svelte/transition';
-	import { linear } from 'svelte/easing';
-
-	let wave1 = false;
-	let wave2 = false;
-
-	setTimeout(() => (wave1 = true), 0);
-	setTimeout(() => (wave2 = true), 15000);
-
 	let currentDateTime = new Date();
 	let dueDate = new Date('2024-12-20T23:59:59-08:00');
 
 	// Compare the dates
 	let isDue = currentDateTime.getTime() > dueDate.getTime();
 </script>
-
-{#if wave1}
-	<img
-		src={cloud1}
-		transition:fly={{ duration: 50000, x: '150vw', opacity: 1, easing: linear }}
-		alt="cloud"
-		class="fixed -left-96 top-10 z-0 w-96 opacity-25"
-	/>
-	<img
-		src={cloud2}
-		transition:fly={{ duration: 20000, x: '50vw', opacity: 1, easing: linear }}
-		alt="cloud"
-		class="fixed -left-96 top-96 z-0 w-96 opacity-25"
-	/>
-	<img
-		src={cloud2}
-		transition:fly={{ duration: 30000, x: '100vw', opacity: 1, easing: linear }}
-		alt="cloud"
-		class="fixed -left-96 bottom-20 z-0 w-96 opacity-25"
-	/>
-{/if}
-
-{#if wave2}
-	<img
-		src={cloud3}
-		transition:fly={{ duration: 50000, x: '150vw', opacity: 1, easing: linear }}
-		alt="cloud"
-		class="fixed -left-96 top-36 z-0 w-96 opacity-25"
-	/>
-	<img
-		src={cloud4}
-		transition:fly={{ duration: 50000, x: '125vw', opacity: 1, easing: linear }}
-		alt="cloud"
-		class="fixed -left-96 bottom-36 z-0 w-96 opacity-25"
-	/>
-{/if}
-
-<a href="/" class="z-10 mx-12 mt-12 text-right font-encode font-bold text-white hover:opacity-75"
-	>Home</a
->
 
 {#if !isDue}
 	<h1 class="mx-auto my-10 text-center font-paytone text-3xl text-white max-sm:max-w-xs">

@@ -26,11 +26,6 @@
 	// 	console.log('Signed out?');
 	// }
 
-	import cloud1 from '$lib/images/CLOUDS_1.png';
-	import cloud2 from '$lib/images/CLOUDS_2.png';
-	import cloud3 from '$lib/images/CLOUDS_3.png';
-	import cloud4 from '$lib/images/CLOUDS_4.png';
-
 	import ideahacks2020 from '$lib/images/ideahacks2020.png';
 	import ideahacks2021 from '$lib/images/ideahacks2021.png';
 	import ideahacks2022 from '$lib/images/ideahacks2022.png';
@@ -50,12 +45,6 @@
 	import { fly } from 'svelte/transition';
 	import { linear } from 'svelte/easing';
 
-	let wave1 = false;
-	let wave2 = false;
-
-	setTimeout(() => (wave1 = true), 0);
-	setTimeout(() => (wave2 = true), 15000);
-
 	let alert = false;
 
 	let current = new Date();
@@ -65,42 +54,6 @@
 </script>
 
 <img src={logo} alt="logo" class="fixed right-36 top-36 z-0 w-96 opacity-15" />
-
-{#if wave1}
-	<img
-		src={cloud1}
-		transition:fly={{ duration: 50000, x: '150vw', opacity: 1, easing: linear }}
-		alt="cloud"
-		class="fixed -left-96 top-10 z-0 w-96 opacity-25"
-	/>
-	<img
-		src={cloud2}
-		transition:fly={{ duration: 20000, x: '50vw', opacity: 1, easing: linear }}
-		alt="cloud"
-		class="fixed -left-96 top-96 z-0 w-96 opacity-25"
-	/>
-	<img
-		src={cloud2}
-		transition:fly={{ duration: 30000, x: '100vw', opacity: 1, easing: linear }}
-		alt="cloud"
-		class="fixed -left-96 bottom-20 z-0 w-96 opacity-25"
-	/>
-{/if}
-
-{#if wave2}
-	<img
-		src={cloud3}
-		transition:fly={{ duration: 50000, x: '150vw', opacity: 1, easing: linear }}
-		alt="cloud"
-		class="fixed -left-96 top-36 z-0 w-96 opacity-25"
-	/>
-	<img
-		src={cloud4}
-		transition:fly={{ duration: 50000, x: '125vw', opacity: 1, easing: linear }}
-		alt="cloud"
-		class="fixed -left-96 bottom-36 z-0 w-96 opacity-25"
-	/>
-{/if}
 
 <!-- <button on:click={signOut}>Sign Out</button>
 <p>hello {email}</p> -->

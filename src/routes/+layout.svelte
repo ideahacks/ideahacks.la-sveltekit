@@ -22,6 +22,19 @@
 			subscription.unsubscribe();
 		};
 	});
+
+	import { fly } from 'svelte/transition';
+	import { linear } from 'svelte/easing';
+
+	let wave1 = false;
+	let wave2 = false;
+
+	import cloud1 from '$lib/images/CLOUDS_1.png';
+	import cloud2 from '$lib/images/CLOUDS_2.png';
+	import cloud3 from '$lib/images/CLOUDS_3.png';
+	import cloud4 from '$lib/images/CLOUDS_4.png';
+	setTimeout(() => (wave1 = true), 0);
+	setTimeout(() => (wave2 = true), 15000);
 </script>
 
 <!-- NAVBAR -->
@@ -102,18 +115,42 @@
 	</div>
 </div>
 
-<!-- <h1>SvelteKit & Supabase Auth</h1>
-{#if data.session}
-	<p>Welcome, {data.session.user.email}</p>
-	<form action="/logout" method="POST">
-		<button type="submit" class="btn btn-primary">Logout</button>
-	</form>
-{:else}
-	<p>Let's learn how to register and login users!</p>
-	<div class="">
-		<a href="/login" class="btn btn-primary">Login</a>
-	</div>
-{/if} -->
+<!-- CLOUDS -->
+{#if wave1}
+	<img
+		src={cloud1}
+		transition:fly={{ duration: 50000, x: '150vw', opacity: 1, easing: linear }}
+		alt="cloud"
+		class="fixed -left-96 top-10 z-0 w-96 opacity-25"
+	/>
+	<img
+		src={cloud2}
+		transition:fly={{ duration: 20000, x: '50vw', opacity: 1, easing: linear }}
+		alt="cloud"
+		class="fixed -left-96 top-96 z-0 w-96 opacity-25"
+	/>
+	<img
+		src={cloud2}
+		transition:fly={{ duration: 30000, x: '100vw', opacity: 1, easing: linear }}
+		alt="cloud"
+		class="fixed -left-96 bottom-20 z-0 w-96 opacity-25"
+	/>
+{/if}
+
+{#if wave2}
+	<img
+		src={cloud3}
+		transition:fly={{ duration: 50000, x: '150vw', opacity: 1, easing: linear }}
+		alt="cloud"
+		class="fixed -left-96 top-36 z-0 w-96 opacity-25"
+	/>
+	<img
+		src={cloud4}
+		transition:fly={{ duration: 50000, x: '125vw', opacity: 1, easing: linear }}
+		alt="cloud"
+		class="fixed -left-96 bottom-36 z-0 w-96 opacity-25"
+	/>
+{/if}
 
 <div class="z-0 flex min-h-screen flex-col">
 	<slot />
