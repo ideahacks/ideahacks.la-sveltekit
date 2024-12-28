@@ -1,13 +1,14 @@
 <script>
 	import { supabaseClient } from '$lib/supabase';
 	import { SupabaseClient } from '@supabase/supabase-js';
-
+	import { RotateCw } from 'lucide-svelte';
 	export let data;
 
 	let currentTeam = data.team;
 	let teamLoading = false;
 	let currentParticipant = data.participant;
 	let participantLoading = false;
+	let regenerateTeamLoading = false;
 
 	let teamMembers = data.members;
 	console.log(teamMembers);
@@ -238,7 +239,42 @@
 		teamMembers = null;
 	}
 
-	async function generateNewTeamName() {}
+	async function generateNewTeamName() {
+		regenerateTeamLoading = true;
+		let keepGenerating = true;
+		let team_name = '';
+		while (keepGenerating) {
+			team_name = generateTeamName();
+			const { data: teamExists, error: teamExistsError } = await supabaseClient
+				.from('teams_2025')
+				.select()
+				.eq('team_name', team_name);
+
+			if (teamExistsError) {
+				alert('Error checking if team exists');
+				return;
+			}
+
+			if (!teamExists || teamExists.length === 0) {
+				keepGenerating = false;
+			} else {
+				// console.log(team_name);
+			}
+		}
+
+		// update the team name
+		const { data: updatedTeam, error: teamUpdateError } = await supabaseClient
+			.from('teams_2025')
+			.update({ team_name: team_name })
+			.eq('id', currentTeam.id)
+			.select();
+		if (teamUpdateError) {
+			console.log(teamUpdateError);
+			alert('Error creating team!');
+		}
+		currentTeam = updatedTeam[0];
+		regenerateTeamLoading = false;
+	}
 
 	async function acceptInvitation() {
 		participantLoading = true;
@@ -295,8 +331,19 @@
 					>Join!</button
 				>
 			{:else}
-				<p>Team Name: <span class="text-xl font-bold">{currentTeam.team_name}</span></p>
-
+				<p class="">
+					Team Name: <span class="text-xl font-bold">{currentTeam.team_name}</span>
+				</p>
+				{#if !regenerateTeamLoading}
+					<button
+						class="btn btn-ghost p-1 hover:bg-white hover:bg-opacity-10"
+						on:click={generateNewTeamName}>Generate New Name<RotateCw class="h-5 w-5" /></button
+					>
+				{:else}
+					<button class="btn btn-ghost p-1 hover:bg-white hover:bg-opacity-10"
+						><span class="loading loading-ring loading-md" /></button
+					>
+				{/if}
 				<p>Join Code: <span class="text-xl font-bold">{currentTeam.team_code}</span></p>
 				<br />
 
@@ -311,7 +358,9 @@
 				{/if}
 
 				<br />
-				<p>Send the join code to your teammates so they can join! Max 5 people per team</p>
+				<p>
+					Send the join code to your teammates so they can join! Teams must consist of 4-5 hackers!
+				</p>
 				<br />
 				<button class="btn btn-ghost border-white border-opacity-10" on:click={leaveTeam}
 					>Leave Team</button
