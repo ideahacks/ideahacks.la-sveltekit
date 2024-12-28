@@ -9,6 +9,8 @@
 	let currentParticipant = data.participant;
 	let participantLoading = false;
 
+	let teamMembers = data.members;
+	console.log(teamMembers);
 	function generateTeamCode() {
 		const randomNumber = Math.floor(Math.random() * 10000); // Generate a random number between 0 and 9999
 		return randomNumber.toString().padStart(4, '0'); // Pad the number with leading zeros to ensure 4 digits
@@ -61,48 +63,41 @@
 		];
 
 		const adjectives = [
-			'Computing',
-			'Processors',
-			'Cores',
-			'RAM',
-			'ROM',
-			'Bandwidth',
-			'Latency',
-			'Throughput',
-			'Electronics',
-			'Transistors',
-			'Diodes',
-			'ICs',
-			'PCBs',
-			'Microchips',
-			'Sensors',
-			'Actuators',
-			'Networks',
-			'Nodes',
-			'Routers',
-			'Switches',
-			'Protocols',
-			'Topologies',
-			'Bandwidth',
-			'Latency',
-			'Software',
-			'Hash Maps',
-			'Sets',
-			'Arrays',
-			'Search Trees',
-			'Code',
-			'Algorithms',
-			'APIs',
-			'Libraries',
-			'Frameworks',
-			'Data Structures',
-			'Cybersecurity',
-			'Encryption',
-			'Firewalls',
-			'Intrusion Detection',
-			'Vulnerability',
-			'Threat',
-			'Risk'
+			'Digital',
+			'Binary',
+			'Boolean',
+			'Integrated',
+			'Encoded',
+			'Discrete',
+			'Virtual',
+			'Electrical',
+			'Charged',
+			'Conductive',
+			'Amplified',
+			'Resistive',
+			'Inductive',
+			'Capacitive',
+			'Computational',
+			'Algorithmic',
+			'Recursive',
+			'Iterative',
+			'Parallel',
+			'Distributed',
+			'Cloud-Based',
+			'Embedded',
+			'Integrated',
+			'Compact',
+			'Real-time',
+			'Resource-constrained',
+			'Intelligent',
+			'Autonomous',
+			'Cyber',
+			'Secure',
+			'Resilient',
+			'Protected',
+			'Encrypted',
+			'Virtualized',
+			'Networked'
 		];
 		const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
 		const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
@@ -124,6 +119,7 @@
 			console.log(teamExists);
 			if (teamExistsError) {
 				alert('Error checking if team exists');
+				return;
 			}
 
 			if (!teamExists || teamExists.length === 0) {
@@ -141,20 +137,108 @@
 		if (teamError) {
 			console.log(teamError);
 			alert('Error creating team!');
-		}
+		} else {
+			// add curr user to the team
+			const { data: newParticipant, error: participantError } = await supabaseClient
+				.from('participants_2025')
+				.update({ team_id: team[0].id })
+				.eq('email', data.session?.user.email)
+				.select();
 
-		// add curr user to the team
-		const { error: participantError } = await supabaseClient
-			.from('participants_2025')
-			.update({ team_id: team[0].id })
-			.eq('email', data.session?.user.email);
-		if (participantError) {
-			alert('Error adding user to team!');
+			if (participantError) {
+				alert('Error adding user to team!');
+			} else {
+				currentParticipant = newParticipant[0];
+				currentTeam = team[0];
+				teamMembers = [currentParticipant];
+			}
 		}
-
-		currentTeam = team[0];
-		teamLoading = false;
 	}
+
+	let currentTeamCode = '';
+	async function joinTeam() {
+		const { data: teamToJoin, error: teamToJoinError } = await supabaseClient
+			.from('teams_2025')
+			.select()
+			.eq('team_code', currentTeamCode);
+		if (teamToJoinError) {
+			alert('Error checking team!');
+			return;
+		}
+		if (teamToJoin.length === 0) {
+			alert('Team code is invalid!');
+		} else {
+			// check team size
+			const { data: members, error: membersError } = await supabaseClient
+				.from('participants_2025')
+				.select()
+				.eq('team_id', teamToJoin[0].id);
+			if (membersError) {
+				alert('Error getting team members after joining!');
+				return;
+			}
+
+			if (members.length >= 2) {
+				alert('Team is full!');
+				return;
+			}
+
+			// have participant point to team
+			const { data: participant, error: participantError } = await supabaseClient
+				.from('participants_2025')
+				.update({ team_id: teamToJoin[0].id })
+				.eq('id', currentParticipant.id)
+				.select();
+			if (participantError) {
+				alert('error updating participant team!');
+				return;
+			}
+
+			currentParticipant = participant[0];
+			currentTeam = teamToJoin[0];
+			teamMembers = [currentParticipant, ...members];
+		}
+	}
+
+	async function leaveTeam() {
+		// remove current member from team
+		const { data: newParticipant, error: removeError } = await supabaseClient
+			.from('participants_2025')
+			.update({ team_id: null })
+			.eq('id', currentParticipant.id)
+			.select();
+		if (removeError) {
+			alert('Error removing user from team!');
+			return;
+		}
+
+		// delete team if no members point to it
+		const { data: participants, error: participantError } = await supabaseClient
+			.from('participants_2025')
+			.select()
+			.eq('team_id', currentTeam.id);
+		if (participantError) {
+			alert('Error checking if any participants left in team!');
+			return;
+		}
+		if (participants.length === 0) {
+			const { error: deleteError } = await supabaseClient
+				.from('teams_2025')
+				.delete()
+				.eq('id', currentParticipant.team_id);
+			if (deleteError) {
+				alert(deleteError);
+				return;
+			}
+		}
+
+		// update client side
+		currentParticipant = newParticipant[0];
+		currentTeam = null;
+		teamMembers = null;
+	}
+
+	async function generateNewTeamName() {}
 
 	async function acceptInvitation() {
 		participantLoading = true;
@@ -162,7 +246,7 @@
 			.from('applications_2025')
 			.select()
 			.ilike('email', '%' + data.session?.user.email?.split('@')[0] + '@%');
-		if (applicationError || application == null) {
+		if (applicationError) {
 			alert('Error checking application status');
 		}
 		const { data: participant, error: createUserError } = await supabaseClient
@@ -204,11 +288,34 @@
 				<input
 					name="preferred_name"
 					placeholder="Enter Team Code"
+					bind:value={currentTeamCode}
 					class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
 				/>
+				<button class="btn btn-ghost border-white border-opacity-10" on:click={joinTeam}
+					>Join!</button
+				>
 			{:else}
-				<p>Team Name: {currentTeam.team_name}</p>
-				<p>Join Code: {currentTeam.team_code}</p>
+				<p>Team Name: <span class="text-xl font-bold">{currentTeam.team_name}</span></p>
+
+				<p>Join Code: <span class="text-xl font-bold">{currentTeam.team_code}</span></p>
+				<br />
+
+				{#if teamMembers}
+					<p class="font-bold">Team Members ({teamMembers.length}/5)</p>
+					{#each teamMembers as member}
+						<p>{member.full_name} -- {member.email}</p>
+					{/each}
+				{:else}
+					<p class="font-bold">Team Members</p>
+					<p>None</p>
+				{/if}
+
+				<br />
+				<p>Send the join code to your teammates so they can join! Max 5 people per team</p>
+				<br />
+				<button class="btn btn-ghost border-white border-opacity-10" on:click={leaveTeam}
+					>Leave Team</button
+				>
 			{/if}
 
 			<h1 class="mt-10 font-paytone text-2xl">Parts</h1>
