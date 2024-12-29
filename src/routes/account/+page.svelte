@@ -5,10 +5,14 @@
 	export let data;
 
 	let currentTeam = data.team;
-	let teamLoading = false;
+
 	let currentParticipant = data.participant;
+
+	let teamLoading = false;
 	let participantLoading = false;
 	let regenerateTeamLoading = false;
+	let joinTeamLoading = false;
+	let leaveTeamLoading = false;
 
 	let teamMembers = data.members;
 	console.log(teamMembers);
@@ -37,6 +41,7 @@
 			'Actuators',
 			'Networks',
 			'Nodes',
+			'Motors',
 			'Routers',
 			'Switches',
 			'Protocols',
@@ -60,7 +65,22 @@
 			'Intrusion Detection',
 			'Vulnerability',
 			'Threat',
-			'Risk'
+			'Risk',
+			'Wire cutters',
+			'Soldering Iron',
+			'Solder',
+			'Solder Suckers',
+			'Multimeters',
+			'Calipers',
+			'Wire Strippers',
+			'Heat Guns',
+			'Electrical Tape',
+			'Heat Shrink Tubing',
+			'Zip Ties',
+			'Razor Blades',
+			'Flashlights',
+			'Magnifying Glasses',
+			'Calipers'
 		];
 
 		const adjectives = [
@@ -88,8 +108,8 @@
 			'Embedded',
 			'Integrated',
 			'Compact',
-			'Real-time',
-			'Resource-constrained',
+			'Real-Time',
+			'Resource-Constrained',
 			'Intelligent',
 			'Autonomous',
 			'Cyber',
@@ -120,13 +140,12 @@
 			console.log(teamExists);
 			if (teamExistsError) {
 				alert('Error checking if team exists');
+				teamLoading = false;
 				return;
 			}
 
 			if (!teamExists || teamExists.length === 0) {
 				keepGenerating = false;
-			} else {
-				console.log(team_name);
 			}
 		}
 
@@ -154,20 +173,24 @@
 				teamMembers = [currentParticipant];
 			}
 		}
+		teamLoading = false;
 	}
 
 	let currentTeamCode = '';
 	async function joinTeam() {
+		joinTeamLoading = true;
 		const { data: teamToJoin, error: teamToJoinError } = await supabaseClient
 			.from('teams_2025')
 			.select()
 			.eq('team_code', currentTeamCode);
 		if (teamToJoinError) {
 			alert('Error checking team!');
+			joinTeamLoading = false;
 			return;
 		}
 		if (teamToJoin.length === 0) {
 			alert('Team code is invalid!');
+			joinTeamLoading = false;
 		} else {
 			// check team size
 			const { data: members, error: membersError } = await supabaseClient
@@ -176,11 +199,13 @@
 				.eq('team_id', teamToJoin[0].id);
 			if (membersError) {
 				alert('Error getting team members after joining!');
+				joinTeamLoading = false;
 				return;
 			}
 
-			if (members.length >= 2) {
+			if (members.length >= 5) {
 				alert('Team is full!');
+				joinTeamLoading = false;
 				return;
 			}
 
@@ -192,16 +217,19 @@
 				.select();
 			if (participantError) {
 				alert('error updating participant team!');
+				joinTeamLoading = false;
 				return;
 			}
 
 			currentParticipant = participant[0];
 			currentTeam = teamToJoin[0];
 			teamMembers = [currentParticipant, ...members];
+			joinTeamLoading = false;
 		}
 	}
 
 	async function leaveTeam() {
+		leaveTeamLoading = true;
 		// remove current member from team
 		const { data: newParticipant, error: removeError } = await supabaseClient
 			.from('participants_2025')
@@ -210,6 +238,7 @@
 			.select();
 		if (removeError) {
 			alert('Error removing user from team!');
+			leaveTeamLoading = false;
 			return;
 		}
 
@@ -220,6 +249,7 @@
 			.eq('team_id', currentTeam.id);
 		if (participantError) {
 			alert('Error checking if any participants left in team!');
+			leaveTeamLoading = false;
 			return;
 		}
 		if (participants.length === 0) {
@@ -228,7 +258,8 @@
 				.delete()
 				.eq('id', currentParticipant.team_id);
 			if (deleteError) {
-				alert(deleteError);
+				alert('Error deleting empty team!');
+				leaveTeamLoading = false;
 				return;
 			}
 		}
@@ -237,6 +268,7 @@
 		currentParticipant = newParticipant[0];
 		currentTeam = null;
 		teamMembers = null;
+		leaveTeamLoading = false;
 	}
 
 	async function generateNewTeamName() {
@@ -252,13 +284,12 @@
 
 			if (teamExistsError) {
 				alert('Error checking if team exists');
+				regenerateTeamLoading = false;
 				return;
 			}
 
 			if (!teamExists || teamExists.length === 0) {
 				keepGenerating = false;
-			} else {
-				// console.log(team_name);
 			}
 		}
 
@@ -269,7 +300,7 @@
 			.eq('id', currentTeam.id)
 			.select();
 		if (teamUpdateError) {
-			console.log(teamUpdateError);
+			regenerateTeamLoading = false;
 			alert('Error creating team!');
 		}
 		currentTeam = updatedTeam[0];
@@ -284,6 +315,8 @@
 			.ilike('email', '%' + data.session?.user.email?.split('@')[0] + '@%');
 		if (applicationError) {
 			alert('Error checking application status');
+			participantLoading = false;
+			return;
 		}
 		const { data: participant, error: createUserError } = await supabaseClient
 			.from('participants_2025')
@@ -295,9 +328,12 @@
 			.select();
 		if (createUserError) {
 			alert('Error creating user!');
+			participantLoading = false;
+			return;
 		}
 
 		currentParticipant = participant[0];
+		participantLoading = false;
 	}
 </script>
 
@@ -313,10 +349,16 @@
 			{#if currentTeam == null}
 				<p>No team yet? Create one!</p>
 				<p>If you don't have a team in mind, there is no need to fill it out</p>
-
-				<button class="btn border-none bg-opacity-10 text-white" on:click={createTeam}
-					>Create Team</button
-				>
+				{#if !teamLoading}
+					<button
+						class="btn border-none bg-opacity-10 text-white hover:bg-opacity-10"
+						on:click={createTeam}>Create Team</button
+					>
+				{:else}
+					<button class="btn btn-ghost hover:bg-white hover:bg-opacity-10"
+						><span class="loading loading-ring loading-md" /></button
+					>
+				{/if}
 
 				<br />
 				<br />
@@ -327,9 +369,14 @@
 					bind:value={currentTeamCode}
 					class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
 				/>
-				<button class="btn btn-ghost border-white border-opacity-10" on:click={joinTeam}
-					>Join!</button
-				>
+
+				{#if !joinTeamLoading}
+					<button class="btn btn-ghost border-white border-opacity-10" on:click={joinTeam}
+						>Join!</button
+					>
+				{:else}
+					<span class="loading loading-ring loading-sm mx-5" />
+				{/if}
 			{:else}
 				<p class="">
 					Team Name: <span class="text-xl font-bold">{currentTeam.team_name}</span>
@@ -337,7 +384,7 @@
 				{#if !regenerateTeamLoading}
 					<button
 						class="btn btn-ghost p-1 hover:bg-white hover:bg-opacity-10"
-						on:click={generateNewTeamName}>Generate New Name<RotateCw class="h-5 w-5" /></button
+						on:click={generateNewTeamName}><RotateCw class="h-5 w-5" />Generate New Name</button
 					>
 				{:else}
 					<button class="btn btn-ghost p-1 hover:bg-white hover:bg-opacity-10"
@@ -362,9 +409,15 @@
 					Send the join code to your teammates so they can join! Teams must consist of 4-5 hackers!
 				</p>
 				<br />
-				<button class="btn btn-ghost border-white border-opacity-10" on:click={leaveTeam}
-					>Leave Team</button
-				>
+				{#if !leaveTeamLoading}
+					<button class="btn btn-ghost border-white border-opacity-10" on:click={leaveTeam}
+						>Leave Team</button
+					>
+				{:else}
+					<button class="btn btn-ghost hover:bg-white hover:bg-opacity-10"
+						><span class="loading loading-ring loading-md" /></button
+					>
+				{/if}
 			{/if}
 
 			<h1 class="mt-10 font-paytone text-2xl">Parts</h1>
@@ -383,9 +436,15 @@
 			{#if data.application.status === 'Accepted'}
 				<p class="">I will be attending IDEA Hacks</p>
 
-				<button class="btn border-none bg-opacity-10 text-white" on:click={acceptInvitation}
-					>Yes!</button
-				>
+				{#if !participantLoading}
+					<button class="btn border-none bg-opacity-10 text-white" on:click={acceptInvitation}
+						>Yes!</button
+					>
+				{:else}
+					<button class="btn btn-ghost hover:bg-white hover:bg-opacity-10"
+						><span class="loading loading-ring loading-md" /></button
+					>
+				{/if}
 
 				<p />
 				<h1 class="mt-10 font-paytone text-2xl">Your Team</h1>
