@@ -321,11 +321,12 @@
 			participantLoading = false;
 			return;
 		}
+
 		const { data: participant, error: createUserError } = await supabaseClient
 			.from('participants_2025')
 			.insert({
 				full_name: application[0].full_name,
-				email: application[0].email,
+				email: data.session?.user.email,
 				app_id: application[0].uid
 			})
 			.select();

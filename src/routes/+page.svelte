@@ -84,7 +84,7 @@
 			</svg>
 
 			<p>
-				<span class="font-bold">Team Creation:</span> Once you've signed in and accepted your invite,
+				<span class="font-bold">Team Creation:</span> Once you've signed in and can confirm you're going,
 				head over to Account, Accept Invitation, and Create/Join a Team!
 			</p>
 			<button class="btn btn-sm" on:click={() => (alert = false)}>Okay</button>
