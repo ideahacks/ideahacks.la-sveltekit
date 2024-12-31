@@ -45,7 +45,7 @@
 	import { fly } from 'svelte/transition';
 	import { linear } from 'svelte/easing';
 
-	let alert = false;
+	let alert = true;
 
 	let current = new Date();
 	let dueDate = new Date('2024-12-20T23:59:59-08:00');
@@ -82,11 +82,11 @@
 					d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
 				/>
 			</svg>
-			{#if !isDue}
-				<h3 class="">Applications have been extended to 12/20 11:59PM!</h3>
-			{:else}
-				<h3 class="">Applications have closed</h3>
-			{/if}
+
+			<p>
+				<span class="font-bold">Team Creation:</span> Once you've signed in and accepted your invite,
+				head over to Account, Accept Invitation, and Create/Join a Team!
+			</p>
 			<button class="btn btn-sm" on:click={() => (alert = false)}>Okay</button>
 		</div>
 	{/if}

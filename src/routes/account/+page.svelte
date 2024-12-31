@@ -311,7 +311,6 @@
 	}
 
 	async function acceptInvitation() {
-		alert('BLURH');
 		participantLoading = true;
 		const { data: application, error: applicationError } = await supabaseClient
 			.from('applications_2025')
@@ -327,11 +326,13 @@
 			.insert({
 				full_name: application[0].full_name,
 				email: application[0].email,
-				app_id: application[0].user_id
+				app_id: application[0].uid
 			})
 			.select();
 		if (createUserError) {
+			console.log(createUserError);
 			alert('Error creating user!');
+
 			participantLoading = false;
 			return;
 		}
