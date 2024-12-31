@@ -1,6 +1,7 @@
 <script>
 	import { supabaseClient } from '$lib/supabase';
 	import { SupabaseClient } from '@supabase/supabase-js';
+	import { error } from '@sveltejs/kit';
 	import { RotateCw } from 'lucide-svelte';
 	export let data;
 
@@ -14,8 +15,10 @@
 	let joinTeamLoading = false;
 	let leaveTeamLoading = false;
 
+	let errorMessage = '';
+
 	let teamMembers = data.members;
-	console.log(teamMembers);
+	// console.log(teamMembers);
 	function generateTeamCode() {
 		const randomNumber = Math.floor(Math.random() * 10000); // Generate a random number between 0 and 9999
 		return randomNumber.toString().padStart(4, '0'); // Pad the number with leading zeros to ensure 4 digits
@@ -66,7 +69,7 @@
 			'Vulnerability',
 			'Threat',
 			'Risk',
-			'Wire cutters',
+			'Wire Cutters',
 			'Soldering Iron',
 			'Solder',
 			'Solder Suckers',
@@ -189,7 +192,7 @@
 			return;
 		}
 		if (teamToJoin.length === 0) {
-			alert('Team code is invalid!');
+			showError('Join Code Invalid!');
 			joinTeamLoading = false;
 		} else {
 			// check team size
@@ -308,6 +311,7 @@
 	}
 
 	async function acceptInvitation() {
+		alert('BLURH');
 		participantLoading = true;
 		const { data: application, error: applicationError } = await supabaseClient
 			.from('applications_2025')
@@ -335,7 +339,20 @@
 		currentParticipant = participant[0];
 		participantLoading = false;
 	}
+
+	function showError(msg) {
+		errorMessage = msg;
+		setTimeout(() => (errorMessage = ''), 750);
+	}
 </script>
+
+{#if errorMessage !== ''}
+	<div class="toast toast-center toast-top">
+		<div class=" alert">
+			<span class="">{errorMessage}</span>
+		</div>
+	</div>
+{/if}
 
 <div class="z-10 mx-5 my-10 max-w-4xl font-encode text-white md:mx-24">
 	{#if data.session}
@@ -348,7 +365,7 @@
 
 			{#if currentTeam == null}
 				<p>No team yet? Create one!</p>
-				<p>If you don't have a team in mind, there is no need to fill it out</p>
+
 				{#if !teamLoading}
 					<button
 						class="btn border-none bg-opacity-10 text-white hover:bg-opacity-10"
@@ -371,11 +388,11 @@
 				/>
 
 				{#if !joinTeamLoading}
-					<button class="btn btn-ghost border-white border-opacity-10" on:click={joinTeam}
+					<button class="btn btn-ghost mt-2 border-white border-opacity-10" on:click={joinTeam}
 						>Join!</button
 					>
 				{:else}
-					<span class="loading loading-ring loading-sm mx-5" />
+					<span class="loading loading-ring loading-sm mx-5 mt-5" />
 				{/if}
 			{:else}
 				<p class="">
@@ -391,7 +408,7 @@
 						><span class="loading loading-ring loading-md" /></button
 					>
 				{/if}
-				<p>Join Code: <span class="text-xl font-bold">{currentTeam.team_code}</span></p>
+				<p>Team Code: <span class="text-xl font-bold">{currentTeam.team_code}</span></p>
 				<br />
 
 				{#if teamMembers}
@@ -399,14 +416,18 @@
 					{#each teamMembers as member}
 						<p>{member.full_name} -- {member.email}</p>
 					{/each}
+					<br />
+					{#if teamMembers.length < 4}
+						<p class="">You need at least {4 - teamMembers.length} more member(s)!</p>
+					{/if}
 				{:else}
 					<p class="font-bold">Team Members</p>
 					<p>None</p>
+					<br />
 				{/if}
-
-				<br />
 				<p>
-					Send the join code to your teammates so they can join! Teams must consist of 4-5 hackers!
+					Send the team code to your teammates so they can join your team! Teams must consist of 4-5
+					hackers!
 				</p>
 				<br />
 				{#if !leaveTeamLoading}
@@ -434,11 +455,11 @@
 			<p><span class="font-bold">Status:</span> {data.application.status}</p>
 			<br />
 			{#if data.application.status === 'Accepted'}
-				<p class="">I will be attending IDEA Hacks</p>
+				<p class="mb-2">Congrats! You've been accepted to participate in IDEA Hacks!</p>
 
 				{#if !participantLoading}
 					<button class="btn border-none bg-opacity-10 text-white" on:click={acceptInvitation}
-						>Yes!</button
+						>Accept Invitation</button
 					>
 				{:else}
 					<button class="btn btn-ghost hover:bg-white hover:bg-opacity-10"

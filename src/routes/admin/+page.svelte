@@ -5,7 +5,7 @@
 {#if data.is_admin}
 	<div class="z-10 mx-5 my-10 max-w-4xl font-encode text-white md:mx-24">
 		<ul class="font-bold">
-			<li class="hover:opacity-50"><a href="/admin/application-review">Application Review</a></li>
+			<li class="hover:opacity-50"><a href="/admin/teams">View Teams</a></li>
 		</ul>
 	</div>
 {:else}
