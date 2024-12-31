@@ -84,8 +84,10 @@
 			</svg>
 
 			<p>
-				<span class="font-bold">Team Creation:</span> Once you've signed in and can confirm you're going,
-				head over to Account, Accept Invitation, and Create/Join a Team!
+				<span class="font-bold">Team Creation:</span> If you encountered an issue earlier in accepting
+				the invitation, the problem has been resolved. However, if you submitted the application using
+				an email address that doesn’t support Google Sign In, please email webmaster@ieeebruins.com to
+				change it.
 			</p>
 			<button class="btn btn-sm" on:click={() => (alert = false)}>Okay</button>
 		</div>
