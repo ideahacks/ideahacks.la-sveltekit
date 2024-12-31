@@ -207,7 +207,7 @@
 			}
 
 			if (members.length >= 5) {
-				alert('Team is full!');
+				showError('Team is Full!');
 				joinTeamLoading = false;
 				return;
 			}
