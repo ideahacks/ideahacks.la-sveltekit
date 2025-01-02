@@ -49,7 +49,7 @@
 			</h3>
 		</div>
 		<h3 class="text-md font-encode">
-			<span class="font-paytone">ID: </span>{part_info.id}
+			<span class="font-paytone">ID: </span>{part_info.part_id}
 		</h3>
 		<div class="card-actions justify-center">
 			<label for={part_info.name} class="text-md btn btn-sm bg-custom-red font-paytone text-white"
