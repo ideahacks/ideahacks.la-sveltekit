@@ -53,7 +53,7 @@
 		name="search"
 		bind:value={search}
 		placeholder="Search part"
-		class="input input-ghost w-full max-w-xs text-lg text-white placeholder-white caret-white focus:bg-opacity-30 focus:text-white focus:outline-none"
+		class="input input-ghost w-full max-w-xs font-encode text-lg text-white placeholder-white caret-white focus:bg-opacity-30 focus:text-white focus:outline-none"
 	/>
 </form>
 
@@ -83,22 +83,25 @@
 		name="search"
 		bind:value={searchTag}
 		placeholder="Search tag"
-		class="text-md input input-sm input-ghost mx-auto mb-5 block w-48 text-white placeholder-white caret-white focus:bg-opacity-30 focus:text-white focus:outline-none"
+		class="text-md input input-sm input-ghost mx-auto mb-5 block w-48 font-encode text-white placeholder-white caret-white focus:bg-opacity-30 focus:text-white focus:outline-none"
 	/>
-
-	<div class="flex h-48 flex-wrap justify-center gap-2 overflow-y-auto">
-		{#each results_tags as tag}
-			<div class="btn form-control btn-sm border-none bg-opacity-10 has-[:hover]:btn-ghost">
-				<label class="label cursor-pointer">
-					<input type="checkbox" value={tag} class=" checkbox mr-2" bind:group={selectedTags} />
-					<span class="label-text text-white">{tag}</span>
-				</label>
-			</div>
-		{/each}
+	<div class="h-48">
+		<div class="flex max-h-48 flex-wrap justify-center gap-2 overflow-y-auto">
+			{#each results_tags as tag}
+				<div
+					class="btn form-control btn-sm border-none bg-opacity-10 font-encode font-thin has-[:hover]:btn-ghost"
+				>
+					<label class="label cursor-pointer">
+						<input type="checkbox" value={tag} class=" checkbox mr-2" bind:group={selectedTags} />
+						<span class="label-text text-white">{tag}</span>
+					</label>
+				</div>
+			{/each}
+		</div>
 	</div>
 </div>
 
-<p class="mt-4 text-center font-encode text-xs text-white">
+<p class="m-4 text-center font-encode text-xs text-white">
 	Showing {results.length} out of {parts.length} parts
 </p>
 
@@ -111,7 +114,7 @@
 <div class="join my-10 justify-center">
 	{#each totalPagesArray as pageNum}
 		<input
-			class="btn btn-square join-item bg-white"
+			class="btn join-item bg-white bg-opacity-10 text-white"
 			type="radio"
 			name="options"
 			value={pageNum}
