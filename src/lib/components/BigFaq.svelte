@@ -51,7 +51,7 @@
 
 	<Faq
 		question="What if I don't have a team?"
-		answer="You are free to hack alone, but doing it with a team makes it all the more fun! We encourage everyone to be on teams of around 4-5 hackers. Not only will this make it more enjoyable, but more equipment will be available for your use. Before hacking begins, we will hold a team formation social so that everyone can have the opportunity to meet new people and form a team!"
+		answer="We require everyone to be on teams of around 4-5 hackers. Not only will this make it more enjoyable, but more equipment will be available for your use. Before hacking begins, we will hold a team formation social so that everyone can have the opportunity to meet new people and form a team!"
 	/>
 
 	<div class="mb-4 mt-4 font-encode text-xl font-bold text-white xl:text-2xl">Sustainability</div>
