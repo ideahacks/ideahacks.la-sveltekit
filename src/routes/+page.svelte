@@ -102,9 +102,10 @@
 	{#if alert}
 		<div role="alert" class="alert mb-4 opacity-60 shadow-lg">
 			<p>
-				<span class="font-bold">Team Creation:</span> If you submitted the application using an email
-				address that doesn’t support Google Sign In, please email webmaster@ieeebruins.com with your
-				personal gmail account.
+				<span class="font-bold">Event Status:</span> For the most up-to-date information on the
+				status of IDEA Hacks during this time, join our
+				<a class="font-bold text-[#7785cc]" href="https://discord.gg/H9HnkNADnM">Discord</a> to view
+				announcements.
 			</p>
 			<button class="btn btn-sm" on:click={() => (alert = false)}>OK</button>
 		</div>
@@ -147,40 +148,6 @@
 	{/if}
 
 	<div class="text-md mt-4 font-encode text-white">{form?.message ?? ''}</div>
-	<br />
-
-	<div class="flex flex-row space-x-4 text-white">
-		<!-- Days -->
-		<div
-			class="flex flex-col items-center space-y-1 rounded-lg bg-gray-100 bg-opacity-[20%] p-4 shadow-md"
-		>
-			<div class="font-paytone text-4xl font-light">{toEventDate.days}</div>
-			<div class="text-sm uppercase tracking-wide">Days</div>
-		</div>
-		<!-- Hours -->
-		<div
-			class="flex flex-col items-center space-y-1 rounded-lg bg-gray-100 bg-opacity-[23%] p-4 shadow-md"
-		>
-			<div class="font-paytone text-4xl">{toEventDate.hours}</div>
-			<div class="text-sm uppercase tracking-wide">Hours</div>
-		</div>
-		<!-- Minutes -->
-		<div
-			class="flex flex-col items-center space-y-1 rounded-lg bg-gray-100 bg-opacity-[26%] p-4 shadow-md"
-		>
-			<div class="font-paytone text-4xl">{toEventDate.minutes}</div>
-			<div class="text-sm uppercase tracking-wide">Minutes</div>
-		</div>
-		<!-- Seconds -->
-		<div
-			class="flex flex-col items-center space-y-1 rounded-lg bg-gray-100 bg-opacity-30 p-4 shadow-md"
-		>
-			<div class="font-paytone text-4xl">{toEventDate.seconds}</div>
-			<div class="text-sm uppercase tracking-wide">Seconds</div>
-		</div>
-	</div>
-
-	<br />
 	<br />
 
 	<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
