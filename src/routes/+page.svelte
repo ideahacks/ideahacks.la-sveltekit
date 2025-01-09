@@ -3,6 +3,7 @@
 	import { Send } from 'lucide-svelte';
 	import type { Session, SupabaseClient } from '@supabase/supabase-js';
 	import BigFaq from '$lib/components/BigFaq.svelte';
+	import Schedule from '$lib/components/Schedule.svelte';
 	// export let supabase: SupabaseClient;
 	import cityscape from '$lib/images/cityscape.png';
 	// import Prizes from '$lib/components/Prizes.svelte';
@@ -49,8 +50,39 @@
 
 	let current = new Date();
 	let dueDate = new Date('2024-12-20T23:59:59-08:00');
+	let eventDate = new Date('2025-01-10T21:00:00');
 
 	let isDue = current.getTime() > dueDate.getTime();
+
+	// Calculate the difference in milliseconds
+	const calculateTimeDifference = (from: Date, to: Date) => {
+		let diff: number = to.getTime() - from.getTime();
+
+		if (diff < 0) {
+			// event is over
+			return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+		}
+
+		const days: number = Math.floor(diff / (1000 * 60 * 60 * 24));
+		diff -= days * (1000 * 60 * 60 * 24);
+
+		const hours: number = Math.floor(diff / (1000 * 60 * 60));
+		diff -= hours * (1000 * 60 * 60);
+
+		const minutes: number = Math.floor(diff / (1000 * 60));
+		diff -= minutes * (1000 * 60);
+
+		const seconds: number = Math.floor(diff / 1000);
+
+		return { days, hours, minutes, seconds };
+	};
+	let toEventDate = calculateTimeDifference(current, eventDate);
+
+	// Update `current` time and recalculate every second
+	setInterval(() => {
+		current = new Date();
+		toEventDate = calculateTimeDifference(current, eventDate);
+	}, 1000);
 </script>
 
 <img src={logo} alt="logo" class="fixed right-36 top-36 z-0 w-96 opacity-15" />
@@ -69,27 +101,12 @@
 <div class="z-10 mx-5 my-10 max-w-4xl md:mx-24">
 	{#if alert}
 		<div role="alert" class="alert mb-4 opacity-60 shadow-lg">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 24 24"
-				class="h-6 w-6 shrink-0 stroke-info"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-				/>
-			</svg>
-
 			<p>
-				<span class="font-bold">Team Creation:</span> If you encountered an issue earlier in accepting
-				the invitation, the problem has been resolved. However, if you submitted the application using
-				an email address that doesn’t support Google Sign In, please email webmaster@ieeebruins.com to
-				change it.
+				<span class="font-bold">Team Creation:</span> If you submitted the application using an email
+				address that doesn’t support Google Sign In, please email webmaster@ieeebruins.com with your
+				personal gmail account.
 			</p>
-			<button class="btn btn-sm" on:click={() => (alert = false)}>Okay</button>
+			<button class="btn btn-sm" on:click={() => (alert = false)}>OK</button>
 		</div>
 	{/if}
 	<h1 class="mb-4 font-paytone text-6xl text-white xl:text-8xl">
@@ -132,6 +149,40 @@
 	<div class="text-md mt-4 font-encode text-white">{form?.message ?? ''}</div>
 	<br />
 
+	<div class="flex flex-row space-x-4 text-white">
+		<!-- Days -->
+		<div
+			class="flex flex-col items-center space-y-1 rounded-lg bg-gray-100 bg-opacity-[20%] p-4 shadow-md"
+		>
+			<div class="font-paytone text-4xl font-light">{toEventDate.days}</div>
+			<div class="text-sm uppercase tracking-wide">Days</div>
+		</div>
+		<!-- Hours -->
+		<div
+			class="flex flex-col items-center space-y-1 rounded-lg bg-gray-100 bg-opacity-[23%] p-4 shadow-md"
+		>
+			<div class="font-paytone text-4xl">{toEventDate.hours}</div>
+			<div class="text-sm uppercase tracking-wide">Hours</div>
+		</div>
+		<!-- Minutes -->
+		<div
+			class="flex flex-col items-center space-y-1 rounded-lg bg-gray-100 bg-opacity-[26%] p-4 shadow-md"
+		>
+			<div class="font-paytone text-4xl">{toEventDate.minutes}</div>
+			<div class="text-sm uppercase tracking-wide">Minutes</div>
+		</div>
+		<!-- Seconds -->
+		<div
+			class="flex flex-col items-center space-y-1 rounded-lg bg-gray-100 bg-opacity-30 p-4 shadow-md"
+		>
+			<div class="font-paytone text-4xl">{toEventDate.seconds}</div>
+			<div class="text-sm uppercase tracking-wide">Seconds</div>
+		</div>
+	</div>
+
+	<br />
+	<br />
+
 	<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
 		<span>About</span>
 	</h1>
@@ -161,7 +212,7 @@
 	<div class="text-md mb-4 font-encode text-white xl:text-lg">
 		<span class="font-bold">⚡ Super (in)Sane ⚡</span> - Break the mold and discover your true self!
 	</div>
-
+	<Schedule />
 	<!-- <h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
 		<span>Prizes</span>
 	</h1> -->

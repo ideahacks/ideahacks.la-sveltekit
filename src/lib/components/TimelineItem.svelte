@@ -26,7 +26,7 @@
 			: ''} pt-1.5"
 	>
 		<time class="text-md font-mono italic">{time}</time>
-		<div class="text-md font-paytone font-black">{title}</div>
+		<div class="text-md font-encode font-black">{title}</div>
 		<div>{location}</div>
 	</div>
 	{#if !last}
