@@ -178,7 +178,7 @@
 		<div
 			class="rounded-box pt-4 font-mono text-lg font-extrabold md:pb-4 md:text-center lg:pb-4 lg:text-center"
 		>
-			FRIDAY, JAN. 17
+			FRIDAY
 		</div>
 		{#each fridaySchedule as event, index}
 			<TimelineItem
@@ -198,7 +198,7 @@
 		<div
 			class="pt-4 font-mono text-lg font-extrabold md:pb-4 md:text-center lg:pb-4 lg:text-center"
 		>
-			SATURDAY, JAN. 18
+			SATURDAY
 		</div>
 		{#each saturdaySchedule as event, index}
 			<TimelineItem
@@ -218,7 +218,7 @@
 		<div
 			class="pt-4 font-mono text-lg font-extrabold md:pb-4 md:text-center lg:pb-4 lg:text-center"
 		>
-			SUNDAY, JAN. 19
+			SUNDAY
 		</div>
 		{#each sundaySchedule as event, index}
 			<TimelineItem

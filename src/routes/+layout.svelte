@@ -28,17 +28,18 @@
 
 	let wave1 = false;
 	let wave2 = false;
-
+	let wave3 = false;
 	import cloud1 from '$lib/images/CLOUDS_1.png';
 	import cloud2 from '$lib/images/CLOUDS_2.png';
 	import cloud3 from '$lib/images/CLOUDS_3.png';
 	import cloud4 from '$lib/images/CLOUDS_4.png';
 	setTimeout(() => (wave1 = true), 0);
 	setTimeout(() => (wave2 = true), 15000);
+	setTimeout(() => (wave3 = true), 30000);
 </script>
 
 <!-- NAVBAR -->
-
+<img src={logo} alt="logo" class="fixed right-36 top-36 z-0 w-96 opacity-15" />
 <div class="navbar z-50 h-6 w-full text-white">
 	<div class="navbar-start">
 		<ul class="font-paytone">
@@ -149,6 +150,27 @@
 		transition:fly={{ duration: 50000, x: '125vw', opacity: 1, easing: linear }}
 		alt="cloud"
 		class="fixed -left-96 bottom-36 z-0 w-96 opacity-25"
+	/>
+{/if}
+
+{#if wave3}
+	<img
+		src={cloud3}
+		transition:fly={{ duration: 50000, x: '100vw', opacity: 1, easing: linear }}
+		alt="cloud"
+		class="fixed -left-96 bottom-32 z-0 w-96 opacity-25"
+	/>
+	<img
+		src={cloud1}
+		transition:fly={{ duration: 50000, x: '150vw', opacity: 1, easing: linear }}
+		alt="cloud"
+		class="fixed -left-96 top-10 z-0 w-96 opacity-25"
+	/>
+	<img
+		src={cloud4}
+		transition:fly={{ duration: 50000, x: '125vw', opacity: 1, easing: linear }}
+		alt="cloud"
+		class="fixed -left-96 top-96 z-0 w-96 opacity-25"
 	/>
 {/if}
 

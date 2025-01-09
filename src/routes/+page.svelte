@@ -85,8 +85,6 @@
 	}, 1000);
 </script>
 
-<img src={logo} alt="logo" class="fixed right-36 top-36 z-0 w-96 opacity-15" />
-
 <!-- <button on:click={signOut}>Sign Out</button>
 <p>hello {email}</p> -->
 <!-- <a
@@ -102,10 +100,10 @@
 	{#if alert}
 		<div role="alert" class="alert mb-4 opacity-60 shadow-lg">
 			<p>
-				<span class="font-bold">Event Status:</span> For the most up-to-date information on the
-				status of IDEA Hacks during this time, join our
-				<a class="font-bold text-[#7785cc]" href="https://discord.gg/H9HnkNADnM">Discord</a> to view
-				announcements.
+				<span class="font-bold">IDEA Hacks has been postponed. </span>We are currently exploring new
+				dates and will share them as soon as they are confirmed. Please join the
+				<a class="font-bold text-[#7785cc]" href="https://discord.gg/H9HnkNADnM">Discord Server</a> for
+				further announcements.
 			</p>
 			<button class="btn btn-sm" on:click={() => (alert = false)}>OK</button>
 		</div>
@@ -115,7 +113,7 @@
 	</h1>
 	<h3 class="mb-4 font-paytone text-lg text-white xl:text-xl">
 		<Typewriter mode="loop" interval={75} style="--cursor-color: 'blue'"
-			><span>January 10-12, Ackerman Grand Ballroom</span><span
+			><span>Ackerman Grand Ballroom (Date TBD)</span><span
 				>The West Coast's Premier Hardware Hackathon!</span
 			></Typewriter
 		>
