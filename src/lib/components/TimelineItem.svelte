@@ -21,9 +21,9 @@
 		</svg>
 	</div>
 	<div
-		class="timeline-{alignment} mb-10 text-white {alignment === 'start'
+		class="timeline-{alignment} mb-10 text-white max-[500px]:timeline-end {alignment === 'start'
 			? 'md:text-end'
-			: ''} pt-1.5"
+			: ''}  pt-1.5 min-[500px]:timeline-box min-[500px]:bg-white min-[500px]:bg-opacity-10"
 	>
 		<time class="text-md font-mono italic">{time}</time>
 		<div class="text-md font-encode font-black">{title}</div>

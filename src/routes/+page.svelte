@@ -112,11 +112,11 @@
 		<span>IDEA HACKS 2025</span>
 	</h1>
 	<h3 class="mb-4 font-paytone text-lg text-white xl:text-xl">
-		<Typewriter mode="loop" interval={75} style="--cursor-color: 'blue'"
+		<!-- <Typewriter mode="loop" interval={75} style="--cursor-color: 'blue'"
 			><span>Ackerman Grand Ballroom (Date TBD)</span><span
 				>The West Coast's Premier Hardware Hackathon!</span
 			></Typewriter
-		>
+		> -->
 	</h3>
 	<div class="text-md mb-4 font-encode text-white xl:text-lg">
 		Get ready to create something amazing! Join us for the 11th annual IDEA Hacks, the West Coast's

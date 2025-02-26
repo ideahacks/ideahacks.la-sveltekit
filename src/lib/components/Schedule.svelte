@@ -1,5 +1,39 @@
 <script>
 	import TimelineItem from './TimelineItem.svelte';
+
+	/**
+	 * @type {HTMLSpanElement}
+	 */
+	let rippleElement;
+
+	/**
+	 * @param {{ currentTarget: { getBoundingClientRect: () => any; appendChild: (arg0: HTMLSpanElement) => void; }; clientX: number; clientY: number; }} event
+	 */
+	function handleClick(event) {
+		const rect = event.currentTarget.getBoundingClientRect();
+		const x = event.clientX - rect.left;
+		const y = event.clientY - rect.top;
+
+		// Reset ripple
+		if (rippleElement) {
+			rippleElement.remove();
+		}
+
+		// Create new ripple
+		rippleElement = document.createElement('span');
+		rippleElement.classList.add('ripple');
+		rippleElement.style.left = `${x}px`;
+		rippleElement.style.top = `${y}px`;
+
+		event.currentTarget.appendChild(rippleElement);
+
+		// Remove ripple after animation
+		setTimeout(() => {
+			if (rippleElement) {
+				rippleElement.remove();
+			}
+		}, 600);
+	}
 	const fridaySchedule = [
 		{
 			Start: '4:30 PM',
@@ -164,71 +198,83 @@
 			Location: ''
 		}
 	];
+	let currDay = 'Friday';
 </script>
 
-<h1 class="font-paytone text-2xl text-white xl:text-4xl">
+<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
 	<span>Schedule</span>
 </h1>
+<button
+	class="btn {currDay === 'Friday'
+		? 'btn-active bg-opacity-40'
+		: 'btn-ghost text-white'} interactive-element rounded-full bg-base-200 bg-opacity-10 text-white hover:bg-base-200 hover:bg-opacity-60"
+	on:click={() => (currDay = 'Friday')}
+	on:click={handleClick}>Friday</button
+>
+<button
+	class="btn {currDay === 'Saturday'
+		? 'btn-active bg-opacity-40'
+		: 'btn-ghost text-white'} interactive-element rounded-full bg-base-200 bg-opacity-10 text-white hover:bg-base-200 hover:bg-opacity-60"
+	on:click={() => (currDay = 'Saturday')}
+	on:click={handleClick}>Saturday</button
+>
+
+<button
+	class="btn {currDay === 'Sunday'
+		? 'btn-active bg-opacity-40'
+		: 'btn-ghost text-white'} interactive-element rounded-full bg-base-200 bg-opacity-10 text-white hover:bg-base-200 hover:bg-opacity-60"
+	on:click={() => (currDay = 'Sunday')}
+	on:click={handleClick}>Sunday</button
+>
 <div
 	class="gap-4 rounded-box bg-white bg-opacity-0 pb-4 pt-2 text-sm text-white md:flex lg:flex lg:bg-opacity-0"
 >
-	<div
-		class=" lg:to-opacity-20 timeline timeline-vertical timeline-snap-icon w-full rounded-box px-2 max-[500px]:timeline-compact md:bg-gradient-to-b md:from-transparent md:to-[#83c3e8] lg:w-1/3 lg:bg-gradient-to-b lg:from-transparent lg:to-[#83c3e8]"
-	>
+	{#if currDay === 'Friday'}
 		<div
-			class="rounded-box pt-4 font-mono text-lg font-extrabold md:pb-4 md:text-center lg:pb-4 lg:text-center"
+			class="fade-in lg:to-opacity-20 timeline timeline-vertical timeline-snap-icon rounded-box px-2 max-[500px]:timeline-compact"
 		>
-			FRIDAY
+			{#each fridaySchedule as event, index}
+				<TimelineItem
+					first={index === 0}
+					time={event.Start + (event.End.length > 0 ? ' - ' + event.End : '')}
+					title={event.Event}
+					location={event.Location}
+					alignment={index % 2 === 0 ? 'end' : 'start'}
+					last={index === fridaySchedule.length - 1}
+				/>
+			{/each}
 		</div>
-		{#each fridaySchedule as event, index}
-			<TimelineItem
-				first={index === 0}
-				time={event.Start + (event.End.length > 0 ? ' - ' + event.End : '')}
-				title={event.Event}
-				location={event.Location}
-				alignment={index % 2 === 0 ? 'end' : 'start'}
-				last={index === fridaySchedule.length - 1}
-			/>
-		{/each}
-	</div>
-
-	<div
-		class="lg:to-opacity-20 timeline timeline-vertical timeline-snap-icon w-full rounded-box px-2 max-[500px]:timeline-compact md:bg-gradient-to-b md:from-transparent md:to-[#83c3e8] lg:w-1/3 lg:bg-gradient-to-b lg:from-transparent lg:to-[#83c3e8]"
-	>
+	{/if}
+	{#if currDay === 'Saturday'}
 		<div
-			class="pt-4 font-mono text-lg font-extrabold md:pb-4 md:text-center lg:pb-4 lg:text-center"
+			class="fade-in lg:to-opacity-20 timeline timeline-vertical timeline-snap-icon rounded-box px-2 max-[500px]:timeline-compact"
 		>
-			SATURDAY
+			{#each saturdaySchedule as event, index}
+				<TimelineItem
+					first={index === 0}
+					time={event.Start + (event.End.length > 0 ? ' - ' + event.End : '')}
+					title={event.Event}
+					location={event.Location}
+					alignment={index % 2 === 0 ? 'end' : 'start'}
+					last={index === saturdaySchedule.length - 1}
+				/>
+			{/each}
 		</div>
-		{#each saturdaySchedule as event, index}
-			<TimelineItem
-				first={index === 0}
-				time={event.Start + (event.End.length > 0 ? ' - ' + event.End : '')}
-				title={event.Event}
-				location={event.Location}
-				alignment={index % 2 === 0 ? 'end' : 'start'}
-				last={index === saturdaySchedule.length - 1}
-			/>
-		{/each}
-	</div>
-
-	<div
-		class="timeline timeline-vertical timeline-snap-icon w-full rounded-box px-2 max-[500px]:timeline-compact md:bg-gradient-to-b md:from-transparent md:to-[#83c3e8] lg:w-1/3 lg:bg-opacity-20 lg:bg-gradient-to-b lg:from-transparent lg:to-[#83c3e8]"
-	>
+	{/if}
+	{#if currDay === 'Sunday'}
 		<div
-			class="pt-4 font-mono text-lg font-extrabold md:pb-4 md:text-center lg:pb-4 lg:text-center"
+			class="fade-in timeline timeline-vertical timeline-snap-icon rounded-box px-2 max-[500px]:timeline-compact"
 		>
-			SUNDAY
+			{#each sundaySchedule as event, index}
+				<TimelineItem
+					first={index === 0}
+					time={event.Start + (event.End.length > 0 ? '-' + event.End : '')}
+					title={event.Event}
+					location={event.Location}
+					alignment={index % 2 === 0 ? 'end' : 'start'}
+					last={index === sundaySchedule.length - 1}
+				/>
+			{/each}
 		</div>
-		{#each sundaySchedule as event, index}
-			<TimelineItem
-				first={index === 0}
-				time={event.Start + (event.End.length > 0 ? '-' + event.End : '')}
-				title={event.Event}
-				location={event.Location}
-				alignment={index % 2 === 0 ? 'end' : 'start'}
-				last={index === sundaySchedule.length - 1}
-			/>
-		{/each}
-	</div>
+	{/if}
 </div>
