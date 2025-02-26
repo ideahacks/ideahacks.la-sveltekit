@@ -46,3 +46,18 @@
 		opacity: 0;
 	}
 }
+
+/* Hover Movement Animation */
+.hover-lift {
+	transform: translateY(0);
+	transition: all 0.2s ease;
+}
+
+.hover-lift:hover {
+	transform: translateY(-2px);
+}
+
+.hover-lift:active {
+	transform: translateY(2px);
+	transition: transform 0.1s ease;
+}

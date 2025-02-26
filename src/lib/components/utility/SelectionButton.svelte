@@ -42,7 +42,7 @@
 </script>
 
 <button
-	class="{className} interactive-element btn my-1 rounded-full bg-base-200 bg-opacity-10 text-white hover:bg-base-200 hover:bg-opacity-60"
+	class="{className} interactive-element hover-lift btn my-1 rounded-full bg-base-200 bg-opacity-10 text-white hover:bg-base-200 hover:bg-opacity-60"
 	on:click={handleClick}
 >
 	{text}

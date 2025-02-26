@@ -1,5 +1,6 @@
 <script>
 	import TimelineItem from './TimelineItem.svelte';
+	import SelectionButton from './utility/SelectionButton.svelte';
 
 	/**
 	 * @type {HTMLSpanElement}
@@ -204,28 +205,22 @@
 <h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
 	<span>Schedule</span>
 </h1>
-<button
-	class="btn {currDay === 'Friday'
-		? 'btn-active bg-opacity-40'
-		: 'btn-ghost text-white'} interactive-element rounded-full bg-base-200 bg-opacity-10 text-white hover:bg-base-200 hover:bg-opacity-60"
-	on:click={() => (currDay = 'Friday')}
-	on:click={handleClick}>Friday</button
->
-<button
-	class="btn {currDay === 'Saturday'
-		? 'btn-active bg-opacity-40'
-		: 'btn-ghost text-white'} interactive-element rounded-full bg-base-200 bg-opacity-10 text-white hover:bg-base-200 hover:bg-opacity-60"
-	on:click={() => (currDay = 'Saturday')}
-	on:click={handleClick}>Saturday</button
->
 
-<button
-	class="btn {currDay === 'Sunday'
-		? 'btn-active bg-opacity-40'
-		: 'btn-ghost text-white'} interactive-element rounded-full bg-base-200 bg-opacity-10 text-white hover:bg-base-200 hover:bg-opacity-60"
-	on:click={() => (currDay = 'Sunday')}
-	on:click={handleClick}>Sunday</button
->
+<SelectionButton
+	className={currDay === 'Friday' ? 'btn-active bg-opacity-40' : 'btn-ghost text-white'}
+	onClick={() => (currDay = 'Friday')}
+	text="Friday"
+/>
+<SelectionButton
+	className={currDay === 'Saturday' ? 'btn-active bg-opacity-40' : 'btn-ghost text-white'}
+	onClick={() => (currDay = 'Saturday')}
+	text="Saturday"
+/>
+<SelectionButton
+	className={currDay === 'Sunday' ? 'btn-active bg-opacity-40' : 'btn-ghost text-white'}
+	onClick={() => (currDay = 'Sunday')}
+	text="Sunday"
+/>
 <div
 	class="gap-4 rounded-box bg-white bg-opacity-0 pb-4 pt-2 text-sm text-white md:flex lg:flex lg:bg-opacity-0"
 >

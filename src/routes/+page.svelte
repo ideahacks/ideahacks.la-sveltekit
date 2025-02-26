@@ -45,6 +45,7 @@
 
 	import { fly } from 'svelte/transition';
 	import { linear } from 'svelte/easing';
+	import SelectionButton from '$lib/components/utility/SelectionButton.svelte';
 
 	let alert = true;
 
@@ -100,40 +101,50 @@
 	{#if alert}
 		<div role="alert" class="alert mb-4 opacity-60 shadow-lg">
 			<p>
-				<span class="font-bold">IDEA Hacks has been postponed. </span>We are currently exploring new
-				dates and will share them as soon as they are confirmed. Please join the
-				<a class="font-bold text-[#7785cc]" href="https://discord.gg/H9HnkNADnM">Discord Server</a> for
-				further announcements.
+				<span class="font-bold"
+					>IDEA Hacks will be this May 2 to May 4 at the Covel Commons Grand Horizon Room!
+				</span>Please fill out this
+
+				<a
+					class="font-bold text-[#7785cc]"
+					href="https://docs.google.com/forms/d/e/1FAIpQLSdAupqJc3tYzbXrYdHJGwEymJFl2aD0S4F7NYlZm-t-rzP04w/viewform"
+					target="_blank">continued interest form</a
+				>
+				for to let us know if you can make the new date by <span class="font-bold">3/4/25</span>!
 			</p>
-			<button class="btn btn-sm" on:click={() => (alert = false)}>OK</button>
+			<button
+				class="hover-lift btn my-1 rounded-full bg-base-300 hover:bg-opacity-60"
+				on:click={() => (alert = false)}>OK</button
+			>
 		</div>
 	{/if}
 	<h1 class="mb-4 font-paytone text-6xl text-white xl:text-8xl">
 		<span>IDEA HACKS 2025</span>
 	</h1>
 	<h3 class="mb-4 font-paytone text-lg text-white xl:text-xl">
-		<!-- <Typewriter mode="loop" interval={75} style="--cursor-color: 'blue'"
-			><span>Ackerman Grand Ballroom (Date TBD)</span><span
-				>The West Coast's Premier Hardware Hackathon!</span
-			></Typewriter
-		> -->
+		<span>Covel Commons Grand Horizon Room -- May 2-4</span>
 	</h3>
 	<div class="text-md mb-4 font-encode text-white xl:text-lg">
 		Get ready to create something amazing! Join us for the 11th annual IDEA Hacks, the West Coast's
 		premier hardware hackathon!
 	</div>
-
-	<!-- 
-	<form method="POST" class="flex">
-		<input
-			type="text"
-			name="email"
-			placeholder="Email"
-			class="input input-ghost w-full max-w-xs font-encode text-lg text-white placeholder-white caret-white focus:bg-opacity-30 focus:text-white focus:outline-none"
-		/>
-
-		<button class="btn btn-ghost mx-2 text-white"><Send /></button>
-	</form> -->
+	<div class="text-md mb-4 font-encode text-white xl:text-lg">
+		Because of this date change, we require all participants to fill out the continued interest
+		form. If you don't complete this form, you won't be able to participate! The deadline is <span
+			class="font-bold">3/4/25</span
+		>!
+	</div>
+	<div class="text-md mb-4 font-encode text-white xl:text-lg">
+		If you're interested in joining IDEA Hacks but missed the original deadline, we encourage you to
+		fill out the form as well! There's a separate section for first-time applicants only and as
+		spots open up, we'll reach out to offer them to new participants.
+	</div>
+	<a
+		href="https://docs.google.com/forms/d/e/1FAIpQLSdAupqJc3tYzbXrYdHJGwEymJFl2aD0S4F7NYlZm-t-rzP04w/viewform"
+		target="_blank"
+		class="hover-lift btn my-1 rounded-full bg-base-200 bg-opacity-10 text-white hover:bg-base-200 hover:bg-opacity-60"
+		>Continued Interest Form</a
+	>
 
 	{#if !isDue}
 		<div class="text-md mb-4 font-encode font-bold text-white xl:text-lg">
