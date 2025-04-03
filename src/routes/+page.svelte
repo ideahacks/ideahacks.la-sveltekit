@@ -47,7 +47,7 @@
 	import { linear } from 'svelte/easing';
 	import SelectionButton from '$lib/components/utility/SelectionButton.svelte';
 
-	let alert = true;
+	let alert = false;
 
 	let current = new Date();
 	let dueDate = new Date('2024-12-20T23:59:59-08:00');
@@ -188,7 +188,8 @@
 	<div class="text-md mb-4 font-encode text-white xl:text-lg">
 		<span class="font-bold">⚡ Super (in)Sane ⚡</span> - Break the mold and discover your true self!
 	</div>
-	<Schedule />
+	<!-- <Schedule /> -->
+
 	<!-- <h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
 		<span>Prizes</span>
 	</h1> -->
