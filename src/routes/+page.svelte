@@ -128,7 +128,7 @@
 		Get ready to create something amazing! Join us for the 11th annual IDEA Hacks, the West Coast's
 		premier hardware hackathon!
 	</div>
-	<div class="text-md mb-4 font-encode text-white xl:text-lg">
+	<!-- <div class="text-md mb-4 font-encode text-white xl:text-lg">
 		Because of this date change, we require all participants to fill out the continued interest
 		form. If you don't complete this form, you won't be able to participate! The deadline is <span
 			class="font-bold">3/4/25</span
@@ -144,7 +144,7 @@
 		target="_blank"
 		class="hover-lift btn my-1 rounded-full bg-base-200 bg-opacity-10 text-white hover:bg-base-200 hover:bg-opacity-60"
 		>Continued Interest Form</a
-	>
+	> -->
 
 	{#if !isDue}
 		<div class="text-md mb-4 font-encode font-bold text-white xl:text-lg">
