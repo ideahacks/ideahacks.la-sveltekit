@@ -8,6 +8,7 @@
 	import cityscape from '$lib/images/cityscape.png';
 	// import Prizes from '$lib/components/Prizes.svelte';
 	// import Schedule from '$lib/components/Schedule.svelte';
+	import uclaSamueliLogo from '$lib/images/UCLA_Samueli_Engineering_block-1.png';
 
 	// export let data;
 	export let form;
@@ -216,7 +217,7 @@
 	<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
 		<span>Previous Events</span>
 	</h1>
-	<div class="text-md mb-24 font-encode text-white xl:text-lg">
+	<div class="text-md mb-8 font-encode text-white xl:text-lg">
 		<a
 			href="https://idea-hacks-2024.devpost.com"
 			target="_blank"
@@ -256,22 +257,31 @@
 		<a
 			href="https://www.digikey.com/"
 			target="_blank"
-			class="m-2 inline-block w-48 text-center hover:opacity-80"
+			class="m-2 mt-0 inline-block w-48 text-center hover:opacity-80"
 			><img src={digikey} class="" alt="digikey logo" /></a
 		>
 		<a
 			href="https://www.infineon.com/"
 			target="_blank"
-			class="m-2 inline-block w-48 text-center hover:opacity-80"
+			class="m-2 mt-0 inline-block w-48 text-center hover:opacity-80"
 			><img src={infineon} class="" alt="infineon logo" /></a
 		>
 		<a
 			href="https://www.ti.com/"
 			target="_blank"
-			class="m-2 inline-block w-48 text-center hover:opacity-80"
+			class="m-2 mt-0 inline-block w-48 text-center hover:opacity-80"
 			><img src={ti} class="" alt="ti logo" /></a
 		>
 	</div>
+	<p class="text-md mb-4 mt-4 font-encode text-white xl:text-lg">
+		Special thanks to UCLA Samueli School of Engineering for their continued support of IDEA Hacks
+		and our mission to empower the next generation of engineers.
+	</p>
+	<img
+		src={uclaSamueliLogo}
+		class="my-8 h-16 w-auto"
+		alt="UCLA Samueli School of Engineering logo"
+	/>
 </div>
 
 <div class="z-20 h-24 w-full bg-contain" style="background-image: url({cityscape});" />
