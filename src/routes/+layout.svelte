@@ -33,6 +33,7 @@
 	import cloud2 from '$lib/images/CLOUDS_2.png';
 	import cloud3 from '$lib/images/CLOUDS_3.png';
 	import cloud4 from '$lib/images/CLOUDS_4.png';
+	import cloudCharacter from '$lib/images/CLOUD.png';
 	setTimeout(() => (wave1 = true), 0);
 	setTimeout(() => (wave2 = true), 15000);
 	setTimeout(() => (wave3 = true), 30000);
@@ -54,10 +55,10 @@
 			class="relative -left-96 top-96 z-0 w-96 opacity-25"
 		/>
 		<img
-			src={cloud2}
+			src={cloudCharacter}
 			transition:fly={{ duration: 30000, x: '100vw', opacity: 1, easing: linear }}
 			alt="cloud"
-			class="relative -left-96 bottom-20 z-0 w-96 opacity-25"
+			class="relative -left-96 bottom-20 z-0 w-48 opacity-25"
 		/>
 	{/if}
 
@@ -73,6 +74,12 @@
 			transition:fly={{ duration: 50000, x: '125vw', opacity: 1, easing: linear }}
 			alt="cloud"
 			class="relative -left-96 bottom-36 z-0 w-96 opacity-25"
+		/>
+		<img
+			src={cloudCharacter}
+			transition:fly={{ duration: 60000, x: '200vw', opacity: 1, easing: linear }}
+			alt="cloud"
+			class="relative -left-96 bottom-24 z-0 w-24 opacity-25"
 		/>
 	{/if}
 
@@ -94,6 +101,12 @@
 			transition:fly={{ duration: 50000, x: '125vw', opacity: 1, easing: linear }}
 			alt="cloud"
 			class="relative -left-96 top-96 z-0 w-96 opacity-25"
+		/>
+		<img
+			src={cloudCharacter}
+			transition:fly={{ duration: 60000, x: '150vw', opacity: 1, easing: linear }}
+			alt="cloud"
+			class="relative -left-96 bottom-52 z-0 w-36 opacity-25"
 		/>
 	{/if}
 </div>
