@@ -71,7 +71,9 @@
 
 	<div class="relative z-10 flex h-full w-full flex-col items-center justify-center text-center">
 		<img src={ideaHacksLogo} alt="Idea Hacks Logo" class="w-3/4 max-w-lg" />
-		<img src={superchargedLogo} alt="Supercharge" class="w-1/2 max-w-md" />
+		<div class="supercharge-container">
+			<img src={superchargedLogo} alt="Supercharge" class="supercharge-flicker max-w-md" />
+		</div>
 		<!-- <h1 class="pb-6 font-paytone text-6xl font-bold text-white max-md:text-4xl">IdeaHacks 2025</h1> -->
 		<p class="mb-0 mt-2 font-encode text-2xl text-white max-md:text-xl">
 			<strong>Covel Commons Grand Horizon Room</strong>
@@ -254,6 +256,87 @@
 			opacity: 0.8;
 			transform: scale(1);
 			filter: brightness(1.2);
+		}
+	}
+
+	.supercharge-container {
+		position: relative;
+	}
+
+	.supercharge-flicker {
+		animation: flicker 2s linear infinite;
+		filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 10px #4099ff);
+	}
+
+	@keyframes flicker {
+		0% {
+			opacity: 1;
+			transform: scale(1);
+			filter: brightness(1) drop-shadow(0 0 5px #fff);
+		}
+		3% {
+			opacity: 0.6;
+			transform: scale(1.02);
+			filter: brightness(1.2) drop-shadow(0 0 15px #4099ff);
+		}
+		6% {
+			opacity: 1;
+			transform: scale(1);
+			filter: brightness(1) drop-shadow(0 0 5px #fff);
+		}
+		7% {
+			opacity: 0.8;
+			transform: scale(1.01);
+			filter: brightness(1.1) drop-shadow(0 0 10px #4099ff);
+		}
+		9% {
+			opacity: 1;
+			transform: scale(1);
+			filter: brightness(1) drop-shadow(0 0 5px #fff);
+		}
+		11% {
+			opacity: 0.9;
+			transform: scale(1.01);
+			filter: brightness(1.2) drop-shadow(0 0 12px #4099ff);
+		}
+		20% {
+			opacity: 1;
+			transform: scale(1);
+			filter: brightness(1) drop-shadow(0 0 5px #fff);
+		}
+		80% {
+			opacity: 1;
+			transform: scale(1);
+			filter: brightness(1) drop-shadow(0 0 5px #fff);
+		}
+		85% {
+			opacity: 0.7;
+			transform: scale(1.02);
+			filter: brightness(1.3) drop-shadow(0 0 15px #4099ff);
+		}
+		87% {
+			opacity: 1;
+			transform: scale(1);
+			filter: brightness(1) drop-shadow(0 0 5px #fff);
+		}
+	}
+
+	@keyframes spark {
+		0% {
+			opacity: 0;
+			transform: scale(0.8);
+		}
+		20% {
+			opacity: 0.4;
+			transform: scale(1.1);
+		}
+		40% {
+			opacity: 0;
+			transform: scale(1.3);
+		}
+		100% {
+			opacity: 0;
+			transform: scale(1.4);
 		}
 	}
 </style>
