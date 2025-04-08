@@ -37,6 +37,7 @@
 
 	import { fly } from 'svelte/transition';
 	import { linear } from 'svelte/easing';
+	import { onMount } from 'svelte';
 
 	let wave1 = false;
 	let wave2 = false;
@@ -48,6 +49,47 @@
 	setTimeout(() => (wave1 = true), 0);
 	setTimeout(() => (wave2 = true), 15000);
 	setTimeout(() => (wave3 = true), 30000);
+
+	onMount(() => {
+		function generarRayo() {
+			const svg = document.getElementById('svgContainer');
+			const ancho = window.innerWidth;
+			const xInicio = Math.random() * ancho;
+			let yActual = 0;
+			let zigzag = `M${xInicio},${yActual}`;
+			let grosor = Math.random() * 3 + 1;
+			let color = Math.random() > 0.5 ? 'white' : 'yellow';
+
+			while (yActual < window.innerHeight) {
+				let xOffset = (Math.random() - 0.5) * 100;
+				let yOffset = Math.random() * 100 + 50;
+				yActual += yOffset;
+				zigzag += ` L${xInicio + xOffset},${yActual}`;
+
+				if (Math.random() > 0.7) {
+					let branchX = xInicio + xOffset + (Math.random() - 0.5) * 50;
+					let branchY = yActual + Math.random() * 30;
+					zigzag += ` M${xInicio + xOffset},${yActual} L${branchX},${branchY}`;
+				}
+			}
+
+			const linea = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+			linea.setAttribute('d', zigzag);
+			linea.setAttribute('class', 'rayo');
+			linea.setAttribute('stroke', color);
+			linea.setAttribute('stroke-width', grosor);
+			linea.setAttribute('fill', 'none');
+			svg.appendChild(linea);
+
+			document.body.style.animation = 'flash 0.2s';
+			setTimeout(() => {
+				document.body.style.animation = '';
+				linea.remove();
+			}, 700);
+		}
+
+		setInterval(generarRayo, Math.random() * 1500 + 500);
+	});
 </script>
 
 <section class="relative top-[-70px] h-screen w-screen overflow-hidden">
@@ -67,6 +109,7 @@
 					animation-duration: {star.duration}s;"
 			/>
 		{/each}
+		<svg id="svgContainer" />
 	</div>
 
 	<div class="relative z-10 flex h-full w-full flex-col items-center justify-center text-center">
@@ -271,22 +314,18 @@
 	@keyframes flicker {
 		0% {
 			opacity: 1;
-			transform: scale(1);
 			filter: brightness(1) drop-shadow(0 0 5px #fff);
 		}
 		3% {
 			opacity: 0.6;
-			transform: scale(1.02);
 			filter: brightness(1.2) drop-shadow(0 0 15px #4099ff);
 		}
 		6% {
 			opacity: 1;
-			transform: scale(1);
 			filter: brightness(1) drop-shadow(0 0 5px #fff);
 		}
 		7% {
 			opacity: 0.8;
-			transform: scale(1.01);
 			filter: brightness(1.1) drop-shadow(0 0 10px #4099ff);
 		}
 		9% {
@@ -296,27 +335,22 @@
 		}
 		11% {
 			opacity: 0.9;
-			transform: scale(1.01);
 			filter: brightness(1.2) drop-shadow(0 0 12px #4099ff);
 		}
 		20% {
 			opacity: 1;
-			transform: scale(1);
 			filter: brightness(1) drop-shadow(0 0 5px #fff);
 		}
 		80% {
 			opacity: 1;
-			transform: scale(1);
 			filter: brightness(1) drop-shadow(0 0 5px #fff);
 		}
 		85% {
 			opacity: 0.7;
-			transform: scale(1.02);
 			filter: brightness(1.3) drop-shadow(0 0 15px #4099ff);
 		}
 		87% {
 			opacity: 1;
-			transform: scale(1);
 			filter: brightness(1) drop-shadow(0 0 5px #fff);
 		}
 	}
@@ -337,6 +371,34 @@
 		100% {
 			opacity: 0;
 			transform: scale(1.4);
+		}
+	}
+
+	svg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		mix-blend-mode: screen;
+		opacity: 0.5;
+	}
+
+	@keyframes aparecer {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 0.5;
+		}
+	}
+
+	@keyframes desvanecer {
+		from {
+			opacity: 0.5;
+		}
+		to {
+			opacity: 0;
 		}
 	}
 </style>
