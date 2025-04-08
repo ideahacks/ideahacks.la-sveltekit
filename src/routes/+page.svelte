@@ -2,7 +2,9 @@
 	import ideaHacksLogo from '$lib/images/IDEAHACKS_LOGO_WHITE.png';
 	import superchargedLogo from '$lib/images/SUPERCHARGE.png';
 	import starCharacter from '$lib/images/STAR.png';
+	import cloudCharacter from '$lib/images/CLOUD.png';
 	import starIcon from '$lib/images/STAR_ICON.png';
+	import lightningCharacter from '$lib/images/lightning.png';
 	import SelectionButton from '$lib/components/utility/SelectionButton.svelte';
 	import BigFaq from '$lib/components/BigFaq.svelte';
 
@@ -35,6 +37,8 @@
 	}));
 	export let data;
 
+	let lightningIntervalId;
+
 	import { fly } from 'svelte/transition';
 	import { linear } from 'svelte/easing';
 	import { onMount } from 'svelte';
@@ -51,50 +55,65 @@
 	setTimeout(() => (wave3 = true), 30000);
 
 	onMount(() => {
-		function generarRayo() {
+		function generateLightning() {
 			const svg = document.getElementById('svgContainer');
-			const ancho = window.innerWidth;
-			const xInicio = Math.random() * ancho;
-			let yActual = 0;
-			let zigzag = `M${xInicio},${yActual}`;
-			let grosor = Math.random() * 3 + 1;
-			let color = Math.random() > 0.5 ? 'white' : 'yellow';
+			const width = window.innerWidth;
+			const initial_x = Math.random() * width;
+			let initial_y = 0;
+			let colors = ['white', 'yellow', 'cyan'];
+			let randomIndex = Math.floor(Math.random() * colors.length);
+			let color = colors[randomIndex];
+			const segmentDelay = Math.random() * 25; // Adjust for the speed of the lightning
+			let currentZigzagPath = `M${initial_x},${initial_y}`;
+			const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+			line.setAttribute('class', 'rayo');
+			line.setAttribute('stroke', color);
+			line.setAttribute('stroke-width', '' + (Math.random() * 2 + 1));
+			line.setAttribute('fill', 'none');
+			svg.appendChild(line);
 
-			while (yActual < window.innerHeight) {
+			function addSegment() {
+				if (initial_y >= window.innerHeight) {
+					setTimeout(() => {
+						line.style.transition = 'opacity 0.7s ease-in-out';
+						line.style.opacity = '0';
+						setTimeout(() => {
+							line.remove();
+						}, 700);
+					}, 700); // Fade out after reaching the bottom
+					return;
+				}
+
 				let xOffset = (Math.random() - 0.5) * 100;
 				let yOffset = Math.random() * 100 + 50;
-				yActual += yOffset;
-				zigzag += ` L${xInicio + xOffset},${yActual}`;
+				initial_y += yOffset;
+				currentZigzagPath += ` L${initial_x + xOffset},${initial_y}`;
 
 				if (Math.random() > 0.7) {
-					let branchX = xInicio + xOffset + (Math.random() - 0.5) * 50;
-					let branchY = yActual + Math.random() * 30;
-					zigzag += ` M${xInicio + xOffset},${yActual} L${branchX},${branchY}`;
+					let branchX = initial_x + xOffset + (Math.random() - 0.5) * 50;
+					let branchY = initial_y + Math.random() * 30;
+					currentZigzagPath += ` M${initial_x + xOffset},${initial_y} L${branchX},${branchY}`;
 				}
+
+				line.setAttribute('d', currentZigzagPath);
+				setTimeout(addSegment, segmentDelay);
 			}
 
-			const linea = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-			linea.setAttribute('d', zigzag);
-			linea.setAttribute('class', 'rayo');
-			linea.setAttribute('stroke', color);
-			linea.setAttribute('stroke-width', grosor);
-			linea.setAttribute('fill', 'none');
-			svg.appendChild(linea);
-
-			document.body.style.animation = 'flash 0.2s';
-			setTimeout(() => {
-				document.body.style.animation = '';
-				linea.remove();
-			}, 700);
+			addSegment(); // Start the process of adding segments
 		}
 
-		setInterval(generarRayo, Math.random() * 1500 + 500);
+		// Set the interval and store its ID
+		setTimeout(generateLightning, 1000);
+		setTimeout(generateLightning, 1100);
+		setTimeout(generateLightning, 1200);
+		setTimeout(generateLightning, 2000);
+		setTimeout(generateLightning, 2100);
+		setTimeout(generateLightning, 2200);
 	});
 </script>
 
 <section class="relative top-[-70px] h-screen w-screen overflow-hidden">
 	<div class="absolute inset-0 bg-gradient-to-b from-black/80 to-blue-950/0" />
-
 	<div class="absolute inset-0">
 		{#each stars as star}
 			<img
@@ -113,10 +132,15 @@
 	</div>
 
 	<div class="relative z-10 flex h-full w-full flex-col items-center justify-center text-center">
-		<img src={ideaHacksLogo} alt="Idea Hacks Logo" class="w-3/4 max-w-lg" />
-		<div class="supercharge-container">
-			<img src={superchargedLogo} alt="Supercharge" class="supercharge-flicker max-w-md" />
+		<img src={ideaHacksLogo} alt="Idea Hacks Logo" class="mt-20 w-3/4 max-w-lg" />
+		<div class="supercharge-container w-1/2 max-w-lg">
+			<img src={superchargedLogo} alt="Supercharge" class="supercharge-flicker w-full" />
 		</div>
+		<!-- <div class="supercharge-flicker">
+			<img src={starCharacter} alt="Lightning Character" class="inline max-w-20" />
+			<img src={lightningCharacter} alt="Lightning Character" class="inline max-w-20" />
+			<img src={cloudCharacter} alt="Lightning Character" class="inline max-w-20" />
+		</div> -->
 		<!-- <h1 class="pb-6 font-paytone text-6xl font-bold text-white max-md:text-4xl">IdeaHacks 2025</h1> -->
 		<p class="mb-0 mt-2 font-encode text-2xl text-white max-md:text-xl">
 			<strong>Covel Commons Grand Horizon Room</strong>
