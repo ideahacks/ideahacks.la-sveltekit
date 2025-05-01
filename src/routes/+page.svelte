@@ -39,20 +39,9 @@
 
 	let lightningIntervalId;
 
-	import { fly } from 'svelte/transition';
-	import { linear } from 'svelte/easing';
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 
-	let wave1 = false;
-	let wave2 = false;
-	let wave3 = false;
-	import cloud1 from '$lib/images/CLOUDS_1.png';
-	import cloud2 from '$lib/images/CLOUDS_2.png';
-	import cloud3 from '$lib/images/CLOUDS_3.png';
-	import cloud4 from '$lib/images/CLOUDS_4.png';
-	setTimeout(() => (wave1 = true), 0);
-	setTimeout(() => (wave2 = true), 15000);
-	setTimeout(() => (wave3 = true), 30000);
+	let alert = true;
 
 	onMount(() => {
 		function generateLightning() {
@@ -103,12 +92,20 @@
 		}
 
 		// Set the interval and store its ID
-		setTimeout(generateLightning, 1000);
-		setTimeout(generateLightning, 1100);
-		setTimeout(generateLightning, 1200);
-		setTimeout(generateLightning, 2000);
-		setTimeout(generateLightning, 2100);
-		setTimeout(generateLightning, 2200);
+		lightningIntervalId = setInterval(() => {
+			generateLightning();
+			if (Math.random() > 0.5) {
+				if (Math.random() > 0.5) {
+					setTimeout(generateLightning, 20 + Math.random() * 80); // Quicker follow-up
+				}
+				setTimeout(generateLightning, 20 + Math.random() * 80); // Quicker follow-up
+			}
+		}, Math.random() * 2500 + 1000); // More frequent
+	});
+
+	// Add an event listener for the 'beforeunload' event
+	onDestroy(() => {
+		clearInterval(lightningIntervalId); // Clear the interval
 	});
 </script>
 
@@ -129,6 +126,22 @@
 			/>
 		{/each}
 		<svg id="svgContainer" />
+	</div>
+	<div class="absolute z-20 my-20 w-full p-2">
+		{#if alert}
+			<div role="alert" class="alert mx-auto mb-4 max-w-4xl opacity-60 shadow-lg">
+				<p>
+					<span class="font-bold">Attention Hackers! </span>
+					The participant database is being updated to include those accepted via the Continued Interest
+					form. Access may be temporarily unavailable. Please check back soon. Thanks for your patience
+					:)
+				</p>
+				<button
+					class="hover-lift btn my-1 rounded-full bg-base-300 hover:bg-opacity-60"
+					on:click={() => (alert = false)}>OK</button
+				>
+			</div>
+		{/if}
 	</div>
 
 	<div class="relative z-10 flex h-full w-full flex-col items-center justify-center text-center">
