@@ -168,6 +168,12 @@
 					<SelectionButton className="btn-active bg-opacity-10 font-encode" text="Log In" />
 				</a>
 			{/if}
+			<a
+				href="https://docs.google.com/document/u/1/d/1XtLbLQ3eTxAcG1zBpWGPwdyBOa_sYtBboz2Pkh7FQsU/mobilebasic"
+				target="_blank"
+			>
+				<SelectionButton text="Pre-Event Guide" />
+			</a>
 		</div>
 	</div>
 </section>
