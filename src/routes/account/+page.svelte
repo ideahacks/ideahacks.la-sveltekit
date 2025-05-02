@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { supabaseClient } from '$lib/supabase';
 	import { RotateCw } from 'lucide-svelte';
 	export let data;
@@ -304,7 +304,11 @@
 			regenerateTeamLoading = false;
 			alert('Error creating team!');
 		}
-		currentTeam = updatedTeam[0];
+		if (updatedTeam) {
+			currentTeam = updatedTeam[0];
+		} else {
+			console.log('updatedTeam is somehow null');
+		}
 		regenerateTeamLoading = false;
 	}
 
@@ -340,7 +344,7 @@
 		participantLoading = false;
 	}
 
-	function showError(msg) {
+	function showError(msg: string) {
 		errorMessage = msg;
 		setTimeout(() => (errorMessage = ''), 750);
 	}

@@ -2,7 +2,7 @@
 	import brochure from '$lib/files/sponsorship-brochure.pdf';
 </script>
 
-<div class="mx-5 max-w-xl text-white sm:ml-12">
+<div class="z-10 mx-5 max-w-xl text-white sm:ml-12">
 	<h1 class="my-10 font-paytone text-3xl">Sponsoring IDEA Hacks</h1>
 	<p class="font-encode">
 		View and download our sponsorship brochure
