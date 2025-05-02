@@ -132,9 +132,9 @@
 		{#if alert}
 			<div role="alert" class="alert mx-auto mb-4 max-w-4xl opacity-60 shadow-lg">
 				<p>
-					<span class="font-bold">Attention! </span>
-					This is the Development Website. For the actual website, go to ideahacks.la. But if you're
-					here, I assume you already know that ;)
+					<span class="font-bold">Attention!</span>
+					If you cannot log in with your email, please send a Discord message to `agariomasster` with
+					your name, email you signed up with, and google email you want to change it to
 				</p>
 				<button
 					class="hover-lift btn my-1 rounded-full bg-base-300 hover:bg-opacity-60"

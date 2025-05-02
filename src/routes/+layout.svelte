@@ -148,6 +148,7 @@
 				</li>
 				<li><a href="/privacy">Privacy</a></li>
 				<li />
+				<li><a href="/parts">Parts</a></li>
 				{#if data.is_admin}
 					<li><a href="/admin">Admin</a></li>
 				{/if}
@@ -170,6 +171,7 @@
 				<a href="/sponsor-us">Sponsor Us!</a>
 			</li>
 			<li><a href="/privacy">Privacy</a></li>
+			<li><a href="/parts">Parts</a></li>
 			{#if data.is_admin}
 				<li><a href="/admin">Admin</a></li>
 			{/if}
