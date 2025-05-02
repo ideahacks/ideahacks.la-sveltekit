@@ -49,32 +49,13 @@
 		type="text"
 		name="search"
 		bind:value={search}
+		on:input={() => (currentPage = 1)}
 		placeholder="Search part"
 		class="input input-ghost w-full max-w-xs font-encode text-lg text-white placeholder-white caret-white focus:bg-opacity-30 focus:text-white focus:outline-none"
 	/>
 </form>
 
-<!-- <div class="dropdown dropdown-bottom mt-1 flex justify-center">
-	<div tabindex="0" role="button" class="btn btn-xs m-1 font-encode text-xs">Filter by:</div>
-	<div
-		tabindex="-1"
-		class="overflow-x-none menu dropdown-content z-[1] max-h-52 w-52 overflow-y-auto rounded-box bg-base-100 p-2"
-	>
-		{#each results_tags as tag}
-			<div class="items-center">
-				<input
-					type="checkbox"
-					value={tag}
-					bind:group={selectedTags}
-					class="rounded-xs checkbox h-5 w-5"
-				/>
-				<span class="label-text ml-2 font-encode text-xs">{tag}</span>
-			</div>
-		{/each}
-	</div>
-</div> -->
-
-<div class="m-4 rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5">
+<div class="z-10 m-4 rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5">
 	<input
 		type="text"
 		name="search"
@@ -89,7 +70,13 @@
 					class="btn form-control btn-sm border-none bg-opacity-10 font-encode font-thin has-[:hover]:btn-ghost"
 				>
 					<label class="label cursor-pointer">
-						<input type="checkbox" value={tag} class=" checkbox mr-2" bind:group={selectedTags} />
+						<input
+							type="checkbox"
+							value={tag}
+							class=" checkbox mr-2"
+							bind:group={selectedTags}
+							on:click={() => (currentPage = 1)}
+						/>
 						<span class="label-text text-white">{tag}</span>
 					</label>
 				</div>
@@ -111,9 +98,10 @@
 <div class="join my-10 justify-center">
 	{#each totalPagesArray as pageNum}
 		<input
-			class="btn join-item bg-white bg-opacity-10 text-white"
+			class="btn btn-square join-item after:btn-ghost"
 			type="radio"
 			name="options"
+			id="part_{pageNum}"
 			value={pageNum}
 			bind:group={currentPage}
 			aria-label={String(pageNum)}
