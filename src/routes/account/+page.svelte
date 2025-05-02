@@ -3,6 +3,8 @@
 	import { RotateCw } from 'lucide-svelte';
 	export let data;
 
+	import logo from '$lib/images/logo.png';
+
 	let currentTeam = data.team;
 
 	let currentParticipant = data.participant;
@@ -16,7 +18,9 @@
 	let errorMessage = '';
 
 	let teamMembers = data.members;
-	// console.log(teamMembers);
+
+	let teamParts = data.parts;
+
 	function generateTeamCode() {
 		const randomNumber = Math.floor(Math.random() * 10000); // Generate a random number between 0 and 9999
 		return randomNumber.toString().padStart(4, '0'); // Pad the number with leading zeros to ensure 4 digits
@@ -306,10 +310,10 @@
 		}
 		if (updatedTeam) {
 			currentTeam = updatedTeam[0];
+			regenerateTeamLoading = false;
 		} else {
-			console.log('updatedTeam is somehow null');
+			console.log("updated team doesn't exist!");
 		}
-		regenerateTeamLoading = false;
 	}
 
 	async function acceptInvitation() {
@@ -447,6 +451,43 @@
 
 			<h1 class="mt-10 font-paytone text-2xl">Parts</h1>
 			<p>As you check out parts during the event, you will see them here</p>
+			{#if teamParts && teamParts.length > 0}
+				<div class="overflow-x-auto">
+					<table class="table">
+						<thead class="text-white">
+							<tr>
+								<th>ID</th>
+								<th>Part</th>
+
+								<th />
+								<th>Quantity</th>
+							</tr>
+						</thead>
+
+						<tbody class="text-white">
+							{#each teamParts as teamPart}
+								<!-- <p>{JSON.stringify(teamPart)}</p> -->
+								<tr>
+									<td>{teamPart.part_id}</td>
+									<td>{teamPart.parts_2025.name}</td>
+									<td
+										>{#if teamPart.parts_2025.image_url}
+											<img
+												src={teamPart.parts_2025.image_url}
+												alt="default"
+												class="h-16 w-16 rounded object-contain"
+											/>
+										{:else}
+											<img src={logo} alt="default" class="h-16 w-16 rounded object-contain" />
+										{/if}</td
+									>
+									<td>{teamPart.quantity}</td>
+								</tr>
+							{/each}
+						</tbody>
+					</table>
+				</div>
+			{/if}
 		{:else if data.application}
 			<p>
 				Hello {data.application.preferred_name === ''

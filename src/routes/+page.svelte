@@ -132,10 +132,9 @@
 		{#if alert}
 			<div role="alert" class="alert mx-auto mb-4 max-w-4xl opacity-60 shadow-lg">
 				<p>
-					<span class="font-bold">Attention Hackers! </span>
-					The participant database is being updated to include those accepted via the Continued Interest
-					form. Access may be temporarily unavailable. Please check back soon. Thanks for your patience
-					:)
+					<span class="font-bold">Attention! </span>
+					This is the Development Website. For the actual website, go to ideahacks.la. But if you're
+					here, I assume you already know that ;)
 				</p>
 				<button
 					class="hover-lift btn my-1 rounded-full bg-base-300 hover:bg-opacity-60"

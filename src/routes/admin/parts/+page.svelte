@@ -180,7 +180,7 @@
 			checkoutLoading = false;
 			return;
 		}
-		// teamParts contains the team's parts and their quantitiess
+		// teamParts contains the team's parts and their quantities
 		// Group the parts that don't have a teams_parts entry
 		upsertRecords = [];
 
@@ -297,6 +297,7 @@
 				part_id: item.part_id,
 				num_in_use: getPart(item.part_id).num_in_use - item.part_quantity
 			};
+
 			upsertRecords.push(upsertRecord);
 		}
 
@@ -419,8 +420,6 @@
 					selectedTags.every((selectedTag: string) => tags.includes(selectedTag))
 			  );
 
-	$: tagsAfterFiltering = Array.from(new Set(tagFilteredParts.flatMap((part) => part.tags).sort()));
-
 	$: results = fuzzysort.go(search, tagFilteredParts, {
 		keys: scannerMode ? ['part_id'] : ['name', 'part_id'],
 		all: true
@@ -430,7 +429,6 @@
 	$: currentPage = 1;
 	const itemsPerPage = 8;
 	$: totalPages = Math.ceil(results.length / itemsPerPage);
-	$: totalPagesArray = Array.from({ length: totalPages }, (_, i) => i + 1);
 	$: paginatedResults = results.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 </script>
 
@@ -583,12 +581,9 @@
 		</div> -->
 		</div>
 		<div class="w-0.5 bg-white bg-opacity-25" />
-		<div class="z-10 w-1/2">
+		<div class="w-1/2">
 			<h3 class="mt-10 font-paytone text-xl text-white">Cart</h3>
-			<div class="font-encode text-white">
-				<p>Checking in a part = them giving it back to you</p>
-				<p>Checking out a part = you giving it out to them</p>
-			</div>
+
 			<div class="overflow-x-auto">
 				<table class="table">
 					<thead class="font-paytone text-white">

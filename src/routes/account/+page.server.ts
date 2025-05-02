@@ -1,4 +1,5 @@
 import { error } from '@sveltejs/kit';
+import type { Actions } from './$types';
 
 export const load = async ({ locals }) => {
 	const { data: participant, error: participantError } = await locals.sb
@@ -33,16 +34,32 @@ export const load = async ({ locals }) => {
 			.eq('team_id', team[0].id);
 		if (membersError) {
 			console.log(membersError);
-			throw error(500, 'Error checking team status');
+			throw error(500, 'Error fetching members!');
+		}
+
+		const { data: teamParts, error: teamPartsError } = await locals.sb
+			.from('teams_parts_2025')
+			.select(`part_id, quantity, parts_2025 (part_id, name, image_url)`)
+			.eq('team_id', team[0].id);
+		if (teamPartsError) {
+			console.log(teamPartsError);
+			throw error(500, 'Error fetching team parts!');
 		}
 
 		return {
 			participant: participant[0],
 			application: application[0],
 			team: team[0],
-			members: teamMembers
+			members: teamMembers,
+			parts: teamParts
 		};
 	}
 
-	return { participant: participant[0], application: application[0], team: null, members: null };
+	return {
+		participant: participant[0],
+		application: application[0],
+		team: null,
+		members: null,
+		parts: null
+	};
 };
