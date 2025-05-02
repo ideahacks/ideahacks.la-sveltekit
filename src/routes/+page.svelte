@@ -5,6 +5,7 @@
 	import starIcon from '$lib/images/STAR_ICON.png';
 	import SelectionButton from '$lib/components/utility/SelectionButton.svelte';
 	import BigFaq from '$lib/components/BigFaq.svelte';
+	import Prizes from '$lib/components/Prizes.svelte';
 
 	import ideahacks2020 from '$lib/images/ideahacks2020.png';
 	import ideahacks2021 from '$lib/images/ideahacks2021.png';
@@ -57,7 +58,9 @@
 			line.setAttribute('stroke', color);
 			line.setAttribute('stroke-width', '' + (Math.random() * 2 + 1));
 			line.setAttribute('fill', 'none');
-			svg.appendChild(line);
+			if (svg) {
+				svg.appendChild(line);
+			}
 
 			function addSegment() {
 				if (initial_y >= window.innerHeight) {
@@ -205,6 +208,11 @@
 			<span>FAQs</span>
 		</h1>
 		<BigFaq />
+
+		<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
+			<span>Prizes</span>
+			<Prizes />
+		</h1>
 
 		<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
 			<span>History</span>
