@@ -1,6 +1,7 @@
 <script lang="ts">
 	import PartCard from '$lib/components/PartCard.svelte';
 	import fuzzysort from 'fuzzysort';
+	import SelectionButton from '$lib/components/utility/SelectionButton.svelte';
 
 	export let data;
 
@@ -11,12 +12,36 @@
 	let searchTag = ''; // search tag
 	let selectedTags: string[] = [];
 
-	$: tagFilteredParts =
-		selectedTags.length === 0
-			? parts
-			: parts.filter(({ tags }) =>
-					selectedTags.every((selectedTag: string) => tags.includes(selectedTag))
-			  );
+	$: tagFilteredParts = filterPartsByTags(selectedTags.length);
+
+	function filterPartsByTags(s: number) {
+		// we take in s so that tagFilteredParts has something to "react" to
+		console.log(s);
+		if (selectedTags.length === 0) {
+			return parts;
+		}
+
+		let result = [];
+		for (let i = 0; i < parts.length; i++) {
+			let curr_part = parts[i];
+			if (curr_part.tags) {
+				// if object's tag exists
+				// check if part includes all selected tags
+				let num_matched_tags = 0;
+				for (let j = 0; j < selectedTags.length; j++) {
+					if (curr_part.tags.includes(selectedTags[j])) {
+						num_matched_tags++;
+					}
+				}
+				// part has all the tags
+				if (num_matched_tags === selectedTags.length) {
+					result.push(curr_part);
+				}
+			}
+		}
+
+		return result;
+	}
 
 	$: tagsAfterFiltering = Array.from(new Set(tagFilteredParts.flatMap((part) => part.tags).sort()));
 
@@ -44,7 +69,7 @@
 
 <h1 class="mb-6 mt-12 text-center font-paytone text-5xl font-bold text-white">Parts</h1>
 
-<form class="flex justify-center">
+<form class="z-10 flex justify-center">
 	<input
 		type="text"
 		name="search"
@@ -64,7 +89,7 @@
 		class="text-md input input-sm input-ghost mx-auto mb-5 block w-48 font-encode text-white placeholder-white caret-white focus:bg-opacity-30 focus:text-white focus:outline-none"
 	/>
 	<div class="h-48">
-		<div class="flex max-h-48 flex-wrap justify-center gap-2 overflow-y-auto">
+		<div class="flex max-h-48 flex-wrap justify-center gap-2 overflow-y-scroll">
 			{#each results_tags as tag}
 				<div
 					class="btn form-control btn-sm border-none bg-opacity-10 font-encode font-thin has-[:hover]:btn-ghost"
@@ -75,13 +100,18 @@
 							value={tag}
 							class=" checkbox mr-2"
 							bind:group={selectedTags}
-							on:click={() => (currentPage = 1)}
+							on:click={() => {
+								currentPage = 1;
+							}}
 						/>
 						<span class="label-text text-white">{tag}</span>
 					</label>
 				</div>
 			{/each}
 		</div>
+	</div>
+	<div class="flex justify-center">
+		<SelectionButton text="Clear Tags" onClick={() => (selectedTags = [])} />
 	</div>
 </div>
 

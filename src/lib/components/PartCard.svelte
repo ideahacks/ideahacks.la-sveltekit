@@ -11,13 +11,18 @@
 					? part_info.image_url
 					: default_part_image}
 				alt="default"
-				class="xl rounded"
+				class="rounded"
 			/>
 		</figure>
 		<h2 class="hyphenate text-md card-title justify-center font-encode">{part_info.name}</h2>
-		<p class="text-center font-encode text-xs">
-			{part_info.num_in_use} out of {part_info.num_total} in use
-		</p>
+		{#if part_info.requires_checkout === true}
+			<p class="text-center font-encode text-xs">
+				{part_info.quantity - part_info.num_in_use} out of {part_info.quantity} remaining
+			</p>
+		{:else}
+			<p class="text-center font-encode text-xs">No checkout required. Just grab & go!</p>
+		{/if}
+
 		<div
 			class="flex justify-center rounded-xl bg-white bg-opacity-10 text-center font-encode text-sm"
 		>
@@ -40,8 +45,10 @@
 					d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
 				/>
 			</svg>
-			{part_info.location}
+
+			{part_info.checkout_location}
 		</div>
+
 		<div>
 			<h3 class="hyphenate text-md font-encode">
 				<!-- <span class="font-paytone">Tags: </span>
@@ -51,7 +58,7 @@
 			</h3>
 		</div>
 		<h3 class="text-md font-encode">
-			<span class="font-paytone">ID: </span>{part_info.part_id}
+			<!-- <span class="font-paytone">ID: </span>{part_info.part_id} -->
 		</h3>
 		<div class="card-actions justify-center">
 			<label
@@ -60,17 +67,27 @@
 			>
 			<input type="checkbox" id={part_info.name} class="modal-toggle" />
 			<div class="modal" role="dialog">
-				<div class="modal-box">
-					<p class="hyphenate font-encode text-sm text-black">{part_info.description}</p>
+				<div
+					class="modal-box border border-white bg-[#83c3e8] bg-opacity-70 shadow-md backdrop-blur-sm"
+				>
+					<p class="hyphenate font-encode text-sm text-white">{part_info.description}</p>
+					<br />
+					<p class="hyphenate font-encode text-sm text-white">
+						<span class="font-bold">Tags: </span>{part_info.tags
+							? part_info.tags.map((/** @type {string} */ p) => ' ' + p)
+							: 'None'}
+					</p>
 					<div class="modal-action">
-						<label for={part_info.name} class="btn border-none bg-opacity-10">Close</label>
+						<label for={part_info.name} class="btn border-none bg-opacity-10 text-white shadow-md"
+							>Close</label
+						>
 					</div>
 				</div>
 				<label class="modal-backdrop" for={part_info.name}>Close</label>
 				<!--add the above line so clicking outside modal will also close the thing-->
 			</div>
 			<a
-				href={part_info.datasheet}
+				href={part_info.datasheet_url}
 				class="text-md btn btn-sm bg-white bg-opacity-10 font-encode text-white"
 				target="_blank"
 				>Datasheet
