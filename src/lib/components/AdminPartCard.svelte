@@ -1,11 +1,12 @@
 <script>
 	export let part_info;
+	export let addPartToCart;
 	import default_part_image from '$lib/images/logo.png';
 </script>
 
-<div class="card h-[28rem] w-[16rem] bg-white bg-opacity-10 p-1 text-white shadow-xl">
+<div class="card h-[20] w-[16rem] bg-white bg-opacity-10 p-1 text-white shadow-xl">
 	<div class="card-body p-1">
-		<figure class="h-48 px-12 pt-1">
+		<figure class="h-36 p-12">
 			<img
 				src={part_info.image_url && part_info.image_url.length > 0
 					? part_info.image_url
@@ -58,40 +59,15 @@
 			</h3>
 		</div>
 		<h3 class="text-md font-encode">
-			<!-- <span class="font-paytone">ID: </span>{part_info.part_id} -->
+			<span class="font-paytone">ID: </span>{part_info.part_id}
 		</h3>
 		<div class="card-actions justify-center">
-			<label
-				for={part_info.name}
-				class="text-md btn btn-sm bg-white bg-opacity-10 font-encode text-white">Details</label
-			>
-			<input type="checkbox" id={part_info.name} class="modal-toggle" />
-			<div class="modal" role="dialog">
-				<div
-					class="modal-box border border-white bg-[#83c3e8] bg-opacity-70 shadow-md backdrop-blur-sm"
-				>
-					<p class="hyphenate font-encode text-sm text-white">{part_info.description}</p>
-					<br />
-					<p class="hyphenate font-encode text-sm text-white">
-						<span class="font-bold">Tags: </span>{part_info.tags
-							? part_info.tags.map((/** @type {string} */ p) => ' ' + p)
-							: 'None'}
-					</p>
-					<div class="modal-action">
-						<label for={part_info.name} class="btn border-none bg-opacity-10 text-white shadow-md"
-							>Close</label
-						>
-					</div>
-				</div>
-				<label class="modal-backdrop" for={part_info.name}>Close</label>
-				<!--add the above line so clicking outside modal will also close the thing-->
-			</div>
-			<a
-				href={part_info.datasheet_url}
-				class="text-md btn btn-sm bg-white bg-opacity-10 font-encode text-white"
-				target="_blank"
-				>Datasheet
-			</a>
+			<button
+				disabled={!part_info.requires_checkout}
+				class="text-md btn btn-sm bg-white bg-opacity-10 font-encode text-white disabled:btn-ghost disabled:text-white disabled:opacity-40"
+				on:click={() => addPartToCart(part_info.part_id, 1)}
+				>{part_info.requires_checkout ? 'Add to Cart' : 'No Checkout Required!'}
+			</button>
 		</div>
 	</div>
 </div>

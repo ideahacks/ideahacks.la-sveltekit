@@ -1,6 +1,7 @@
 <script lang="ts">
 	import PartCard from '$lib/components/PartCard.svelte';
 	import fuzzysort from 'fuzzysort';
+	import SelectionButton from '$lib/components/utility/SelectionButton.svelte';
 
 	export let data;
 
@@ -11,12 +12,36 @@
 	let searchTag = ''; // search tag
 	let selectedTags: string[] = [];
 
-	$: tagFilteredParts =
-		selectedTags.length === 0
-			? parts
-			: parts.filter(({ tags }) =>
-					selectedTags.every((selectedTag: string) => tags.includes(selectedTag))
-			  );
+	$: tagFilteredParts = filterPartsByTags(selectedTags.length);
+
+	function filterPartsByTags(s: number) {
+		// we take in s so that tagFilteredParts has something to "react" to
+		console.log(s);
+		if (selectedTags.length === 0) {
+			return parts;
+		}
+
+		let result = [];
+		for (let i = 0; i < parts.length; i++) {
+			let curr_part = parts[i];
+			if (curr_part.tags) {
+				// if object's tag exists
+				// check if part includes all selected tags
+				let num_matched_tags = 0;
+				for (let j = 0; j < selectedTags.length; j++) {
+					if (curr_part.tags.includes(selectedTags[j])) {
+						num_matched_tags++;
+					}
+				}
+				// part has all the tags
+				if (num_matched_tags === selectedTags.length) {
+					result.push(curr_part);
+				}
+			}
+		}
+
+		return result;
+	}
 
 	$: tagsAfterFiltering = Array.from(new Set(tagFilteredParts.flatMap((part) => part.tags).sort()));
 
@@ -44,37 +69,18 @@
 
 <h1 class="mb-6 mt-12 text-center font-paytone text-5xl font-bold text-white">Parts</h1>
 
-<form class="flex justify-center">
+<form class="z-10 flex justify-center">
 	<input
 		type="text"
 		name="search"
 		bind:value={search}
+		on:input={() => (currentPage = 1)}
 		placeholder="Search part"
 		class="input input-ghost w-full max-w-xs font-encode text-lg text-white placeholder-white caret-white focus:bg-opacity-30 focus:text-white focus:outline-none"
 	/>
 </form>
 
-<!-- <div class="dropdown dropdown-bottom mt-1 flex justify-center">
-	<div tabindex="0" role="button" class="btn btn-xs m-1 font-encode text-xs">Filter by:</div>
-	<div
-		tabindex="-1"
-		class="overflow-x-none menu dropdown-content z-[1] max-h-52 w-52 overflow-y-auto rounded-box bg-base-100 p-2"
-	>
-		{#each results_tags as tag}
-			<div class="items-center">
-				<input
-					type="checkbox"
-					value={tag}
-					bind:group={selectedTags}
-					class="rounded-xs checkbox h-5 w-5"
-				/>
-				<span class="label-text ml-2 font-encode text-xs">{tag}</span>
-			</div>
-		{/each}
-	</div>
-</div> -->
-
-<div class="m-4 rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5">
+<div class="z-10 m-4 rounded-md border border-white border-opacity-50 bg-black bg-opacity-10 p-5">
 	<input
 		type="text"
 		name="search"
@@ -83,18 +89,29 @@
 		class="text-md input input-sm input-ghost mx-auto mb-5 block w-48 font-encode text-white placeholder-white caret-white focus:bg-opacity-30 focus:text-white focus:outline-none"
 	/>
 	<div class="h-48">
-		<div class="flex max-h-48 flex-wrap justify-center gap-2 overflow-y-auto">
+		<div class="flex max-h-48 flex-wrap justify-center gap-2 overflow-y-scroll">
 			{#each results_tags as tag}
 				<div
 					class="btn form-control btn-sm border-none bg-opacity-10 font-encode font-thin has-[:hover]:btn-ghost"
 				>
 					<label class="label cursor-pointer">
-						<input type="checkbox" value={tag} class=" checkbox mr-2" bind:group={selectedTags} />
+						<input
+							type="checkbox"
+							value={tag}
+							class=" checkbox mr-2"
+							bind:group={selectedTags}
+							on:click={() => {
+								currentPage = 1;
+							}}
+						/>
 						<span class="label-text text-white">{tag}</span>
 					</label>
 				</div>
 			{/each}
 		</div>
+	</div>
+	<div class="flex justify-center">
+		<SelectionButton text="Clear Tags" onClick={() => (selectedTags = [])} />
 	</div>
 </div>
 
@@ -111,9 +128,10 @@
 <div class="join my-10 justify-center">
 	{#each totalPagesArray as pageNum}
 		<input
-			class="btn join-item bg-white bg-opacity-10 text-white"
+			class="btn btn-square join-item after:btn-ghost"
 			type="radio"
 			name="options"
+			id="part_{pageNum}"
 			value={pageNum}
 			bind:group={currentPage}
 			aria-label={String(pageNum)}

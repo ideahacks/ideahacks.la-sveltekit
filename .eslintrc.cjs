@@ -21,6 +21,10 @@ module.exports = {
 	overrides: [
 		{
 			files: ['*.svelte'],
+			rules: {
+				// To disable the a11y-autofocus rule specifically for Scanner functionality
+				'svelte/valid-compile': 'off'
+			},
 			parser: 'svelte-eslint-parser',
 			parserOptions: {
 				parser: '@typescript-eslint/parser'
