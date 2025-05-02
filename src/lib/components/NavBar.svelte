@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import type { Session, SupabaseClient } from '@supabase/supabase-js';
 
 	export let supabase: SupabaseClient;
@@ -67,4 +67,23 @@
 			{/if}
 		</ul>
 	</div>
-</div>
+</div> -->
+
+<!-- <script lang="ts">
+	import { supabaseClient } from '$lib/supabase';
+
+	export let data;
+</script>
+
+<h1>SvelteKit & Supabase Auth</h1>
+{#if data.session}
+	<p>Welcome, {data.session.user.email}</p>
+	<form action="/logout" method="POST">
+		<button type="submit" class="btn btn-primary">Logout</button>
+	</form>
+{:else}
+	<p>Let's learn how to register and login users!</p>
+	<div class="">
+		<a href="/login" class="btn btn-primary">Login</a>
+	</div>
+{/if} -->
