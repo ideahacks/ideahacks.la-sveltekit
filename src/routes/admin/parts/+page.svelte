@@ -169,6 +169,10 @@
 			.upsert(upsertRecords)
 			.select();
 
+		if (checkoutError) {
+			alert(JSON.stringify(checkoutError));
+		}
+
 		// add team-to-part entry
 		const { data: teamParts, error: teamPartsError } = await supabaseClient
 			.from('teams_parts_2025')
@@ -376,7 +380,17 @@
 		}
 
 		for (let i = 0; i < updatedParts.length; i++) {
-			updatedParts[i].tags = JSON.parse(updatedParts[i].tags);
+			if (updatedParts[i].requires_checkout === 'Checkout') {
+				updatedParts[i].requires_checkout = true;
+			} else {
+				updatedParts[i].requires_checkout = false;
+			}
+
+			if (updatedParts[i].tags) {
+				updatedParts[i].tags = updatedParts[i].tags.split(', ');
+			} else {
+				updatedParts[i].tags = [];
+			}
 		}
 
 		parts = updatedParts;
