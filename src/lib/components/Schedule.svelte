@@ -126,7 +126,7 @@
 		{
 			Start: '9:00 AM',
 			End: '',
-			Event: 'Hacking ends and Project submissions due',
+			Event: 'Hacking ends and Submissions due',
 			Location: 'Ackerman Grand Ballroom'
 		},
 		{
@@ -169,10 +169,6 @@
 	let currDay = 'Friday';
 </script>
 
-<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
-	<span>Schedule</span>
-</h1>
-
 <SelectionButton
 	className={currDay === 'Friday' ? 'btn-active bg-opacity-40' : 'btn-ghost text-white'}
 	onClick={() => (currDay = 'Friday')}
@@ -192,9 +188,7 @@
 	class="gap-4 rounded-box bg-white bg-opacity-0 pb-4 pt-2 text-sm text-white md:flex lg:flex lg:bg-opacity-0"
 >
 	{#if currDay === 'Friday'}
-		<div
-			class="fade-in lg:to-opacity-20 timeline timeline-vertical timeline-snap-icon rounded-box px-2 max-[500px]:timeline-compact"
-		>
+		<div class="fade-in timeline timeline-vertical timeline-snap-icon mx-auto rounded-box px-2">
 			{#each fridaySchedule as event, index}
 				<TimelineItem
 					first={index === 0}
@@ -208,9 +202,7 @@
 		</div>
 	{/if}
 	{#if currDay === 'Saturday'}
-		<div
-			class="fade-in lg:to-opacity-20 timeline timeline-vertical timeline-snap-icon rounded-box px-2 max-[500px]:timeline-compact"
-		>
+		<div class="fade-in timeline timeline-vertical timeline-snap-icon mx-auto rounded-box px-2">
 			{#each saturdaySchedule as event, index}
 				<TimelineItem
 					first={index === 0}
@@ -224,9 +216,7 @@
 		</div>
 	{/if}
 	{#if currDay === 'Sunday'}
-		<div
-			class="fade-in timeline timeline-vertical timeline-snap-icon rounded-box px-2 max-[500px]:timeline-compact"
-		>
+		<div class="fade-in timeline timeline-vertical timeline-snap-icon mx-auto rounded-box px-2">
 			{#each sundaySchedule as event, index}
 				<TimelineItem
 					first={index === 0}
@@ -239,112 +229,4 @@
 			{/each}
 		</div>
 	{/if}
-</div>
-
-<div class="font-pantone py-4 text-center text-2xl font-extrabold">IDEA Hacks Schedule</div>
-<div class="gap-4 rounded-box bg-white bg-opacity-30 p-4 lg:flex lg:bg-opacity-0">
-	<div
-		class="timeline timeline-vertical timeline-snap-icon w-full rounded-box p-4 max-[500px]:timeline-compact lg:w-auto lg:bg-white lg:bg-opacity-30"
-	>
-		<div class="rounded-box py-4 text-center font-mono text-xl font-extrabold">FRIDAY, JAN. 17</div>
-		<TimelineItem
-			time="6:00-6:45 PM"
-			title="IDEA Hacks Kickoff"
-			location="Ackerman Grand Ballroom"
-			alignment="start"
-			first={true}
-		/>
-
-		<TimelineItem
-			time="4:30-8:00 PM"
-			title="Check-In"
-			location="Ackerman Union 2408"
-			alignment="end"
-		/>
-
-		<TimelineItem
-			time="5:00-5:45 PM"
-			title="Web Dev Workshop"
-			location="Ackerman Union 2408"
-			alignment="start"
-		/>
-
-		<TimelineItem
-			time="6:00-6:45 PM"
-			title="3D Printing Workshop"
-			location="Ackerman Union 2408"
-			alignment="end"
-			last={true}
-		/>
-	</div>
-
-	<div
-		class="timeline timeline-vertical timeline-snap-icon w-full rounded-box p-4 max-[500px]:timeline-compact lg:w-auto lg:bg-white lg:bg-opacity-30"
-	>
-		<div class="py-4 text-center font-mono text-xl font-extrabold">SATURDAY, JAN. 18</div>
-		<TimelineItem
-			time="6:00-6:45 PM"
-			title="IDEA Hacks Kickoff"
-			location="Ackerman Grand Ballroom"
-			alignment="start"
-			first={true}
-		/>
-
-		<TimelineItem
-			time="4:30-8:00 PM"
-			title="Check-In"
-			location="Ackerman Union 2408"
-			alignment="end"
-		/>
-
-		<TimelineItem
-			time="5:00-5:45 PM"
-			title="Web Dev Workshop"
-			location="Ackerman Union 2408"
-			alignment="start"
-		/>
-
-		<TimelineItem
-			time="6:00-6:45 PM"
-			title="3D Printing Workshop"
-			location="Ackerman Union 2408"
-			alignment="end"
-			last={true}
-		/>
-	</div>
-
-	<div
-		class="timeline timeline-vertical timeline-snap-icon w-full rounded-box p-4 max-[500px]:timeline-compact lg:w-auto lg:bg-white lg:bg-opacity-30"
-	>
-		<div class="py-4 text-center font-mono text-xl font-extrabold">SUNDAY, JAN. 19</div>
-		<TimelineItem
-			time="6:00-6:45 PM"
-			title="IDEA Hacks Kickoff"
-			location="Ackerman Grand Ballroom"
-			alignment="start"
-			first={true}
-		/>
-
-		<TimelineItem
-			time="4:30-8:00 PM"
-			title="Check-In"
-			location="Ackerman Union 2408"
-			alignment="end"
-		/>
-
-		<TimelineItem
-			time="5:00-5:45 PM"
-			title="Web Dev Workshop"
-			location="Ackerman Union 2408"
-			alignment="start"
-		/>
-
-		<TimelineItem
-			time="6:00-6:45 PM"
-			title="3D Printing Workshop"
-			location="Ackerman Union 2408"
-			alignment="end"
-			last={true}
-		/>
-	</div>
 </div>
