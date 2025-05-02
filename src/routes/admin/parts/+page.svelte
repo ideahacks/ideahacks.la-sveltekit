@@ -585,7 +585,10 @@
 		<div class="w-0.5 bg-white bg-opacity-25" />
 		<div class="z-10 w-1/2">
 			<h3 class="mt-10 font-paytone text-xl text-white">Cart</h3>
-
+			<div class="font-encode text-white">
+				<p>Checking in a part = them giving it back to you</p>
+				<p>Checking out a part = you giving it out to them</p>
+			</div>
 			<div class="overflow-x-auto">
 				<table class="table">
 					<thead class="font-paytone text-white">
