@@ -4,7 +4,7 @@
 </script>
 
 {#if data.is_admin}
-	<div class="z-10 mx-5 my-10 max-w-4xl font-encode text-white md:mx-24">
+	<div class="z-10 mx-5 my-10 max-w-4xl font-encode text-white sm:mx-24">
 		<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
 			<span>Admin Page</span>
 		</h1>
@@ -12,6 +12,8 @@
 		<a href="/admin/teams"><SelectionButton text="View All Teams" /></a>
 		<br />
 		<a href="/admin/parts"><SelectionButton text="Parts Checkin/Checkout" /></a>
+		<br />
+		<a href="/admin/add-admin"><SelectionButton text="View/Add Admins" /></a>
 	</div>
 {:else}
 	<h1 class="m-auto max-w-xl text-center font-encode text-lg text-white">
