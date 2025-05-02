@@ -9,15 +9,11 @@
 </script>
 
 <div class="relative overflow-hidden rounded-xl pb-5">
-	<!-- Pixel Clouds Overlay -->
-
-	<h1 class="py-4 text-center font-paytone text-2xl font-bold text-white">TOP PRIZES</h1>
-
 	<!-- Prizes -->
 	<div class="grid grid-cols-1 gap-4 px-4 md:grid-cols-2 lg:grid-cols-3">
 		<div class="flex flex-col items-center justify-center">
 			<p class="pb-4 text-center font-paytone text-sm text-white md:text-base lg:text-xl">
-				🥇 First Place Prize 🥇
+				🥇 First Place 🥇
 			</p>
 			<img src={grandPrize} alt="Grand Prize" class="hover1 w-48 max-w-xs" />
 			<p class="pb-4 pt-2 text-center font-encode text-xs text-white md:text-sm lg:text-lg">
@@ -27,7 +23,7 @@
 
 		<div class="flex flex-col items-center justify-center">
 			<p class="pb-4 text-center font-paytone text-sm text-white md:text-base lg:text-xl">
-				🥈 Second Place Prize 🥈
+				🥈 Second Place 🥈
 			</p>
 			<img src={secondPrize} alt="Second Prize" class="hover2 w-48 max-w-xs" />
 			<p class="pb-4 pt-2 text-center font-encode text-xs text-white md:text-sm lg:text-lg">
@@ -37,7 +33,7 @@
 
 		<div class="flex flex-col items-center justify-center">
 			<p class="pb-4 text-center font-paytone text-sm text-white md:text-base lg:text-xl">
-				🥉 Third Place Prize 🥉
+				🥉 Third Place 🥉
 			</p>
 			<img src={thirdPrize} alt="Third Prize" class="hover3 w-48 max-w-xs" />
 			<p class="pb-4 pt-2 text-center font-encode text-xs text-white md:text-sm lg:text-lg">
@@ -47,7 +43,6 @@
 	</div>
 </div>
 <div class="relative overflow-hidden rounded-xl p-5">
-	<h1 class="pt-4 text-center font-paytone text-3xl text-white">TRACK PRIZES</h1>
 	<div class="grid grid-cols-1 gap-4 px-4 md:grid-cols-2 lg:grid-cols-3">
 		<div class="flex flex-col items-center justify-center">
 			<h2 class="py-4 text-center font-paytone text-sm text-white md:text-base lg:text-xl">

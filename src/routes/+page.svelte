@@ -205,14 +205,14 @@
 		</div>
 
 		<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
-			<span>FAQs</span>
-		</h1>
-		<BigFaq />
-
-		<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
 			<span>Prizes</span>
 			<Prizes />
 		</h1>
+
+		<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
+			<span>FAQs</span>
+		</h1>
+		<BigFaq />
 
 		<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
 			<span>History</span>
