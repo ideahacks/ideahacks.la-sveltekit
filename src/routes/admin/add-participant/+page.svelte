@@ -9,22 +9,33 @@
 
 {#if is_admin}
 	<div class="z-10 mx-5 my-10 max-w-4xl font-encode text-white sm:mx-24">
-		<h1 class="mt-10 font-paytone text-2xl">Add New Admin</h1>
+		<h1 class="mt-10 font-paytone text-2xl">Add New Participant</h1>
 		<div class="label">
-			<span class="label-text text-white">Add Admin Email (use g.ucla.edu NOT ucla.edu)</span>
+			<span class="label-text text-white"
+				>Add Participant (make sure email supports Google Sign in!)</span
+			>
 		</div>
-		<form method="POST" class="flex">
+
+		<form method="POST">
 			<input
 				name="email"
 				placeholder="Email"
 				class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
 			/>
-			<button class="btn btn-ghost mx-2 text-white"><Plus /></button>
+			<div class="h-2" />
+			<div class="flex">
+				<input
+					name="full_name"
+					placeholder="Full Name"
+					class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
+				/>
+				<button class="btn btn-ghost mx-2 text-white"><Plus /></button>
+			</div>
 		</form>
 		<div class="text-md mt-4 font-encode text-white">{form?.message ?? ''}</div>
-		<h1 class="mt-10 font-paytone text-2xl">Current Admins</h1>
-		{#each data.admins as admin}
-			<p>{admin.email}</p>
+		<h1 class="mt-10 font-paytone text-2xl">Current Participants</h1>
+		{#each data.participants as participant}
+			<p>{participant.id} {participant.full_name} ({participant.email})</p>
 		{/each}
 	</div>
 {:else}
