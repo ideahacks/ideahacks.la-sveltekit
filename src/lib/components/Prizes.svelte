@@ -17,7 +17,7 @@
 	<div class="grid grid-cols-1 gap-4 px-4 md:grid-cols-2 lg:grid-cols-3">
 		<div class="flex flex-col items-center justify-center">
 			<p class="pb-4 text-center font-paytone text-sm text-white md:text-base lg:text-xl">
-				First Prize
+				🥇 First Place Prize 🥇
 			</p>
 			<img src={grandPrize} alt="Grand Prize" class="hover1 w-48 max-w-xs" />
 			<p class="pb-4 pt-2 text-center font-encode text-xs text-white md:text-sm lg:text-lg">
@@ -27,7 +27,7 @@
 
 		<div class="flex flex-col items-center justify-center">
 			<p class="pb-4 text-center font-paytone text-sm text-white md:text-base lg:text-xl">
-				Second Prize
+				🥈 Second Place Prize 🥈
 			</p>
 			<img src={secondPrize} alt="Second Prize" class="hover2 w-48 max-w-xs" />
 			<p class="pb-4 pt-2 text-center font-encode text-xs text-white md:text-sm lg:text-lg">
@@ -37,7 +37,7 @@
 
 		<div class="flex flex-col items-center justify-center">
 			<p class="pb-4 text-center font-paytone text-sm text-white md:text-base lg:text-xl">
-				Third Prize
+				🥉 Third Place Prize 🥉
 			</p>
 			<img src={thirdPrize} alt="Third Prize" class="hover3 w-48 max-w-xs" />
 			<p class="pb-4 pt-2 text-center font-encode text-xs text-white md:text-sm lg:text-lg">
@@ -51,7 +51,7 @@
 	<div class="grid grid-cols-1 gap-4 px-4 md:grid-cols-2 lg:grid-cols-3">
 		<div class="flex flex-col items-center justify-center">
 			<h2 class="py-4 text-center font-paytone text-sm text-white md:text-base lg:text-xl">
-				Super Human
+				⭐ Super Human ⭐
 			</h2>
 			<img src={superHumanPrize} alt="Super Human Prize" class="hover4 mx-auto w-32" />
 			<p class="pb-4 pt-2 text-center font-encode text-xs text-white md:text-sm lg:text-lg">
@@ -60,7 +60,7 @@
 		</div>
 		<div class="items-center justify-center">
 			<h2 class="py-4 text-center font-paytone text-sm text-white md:text-base lg:text-xl">
-				Super Nostalgic
+				☁️ Super Nostalgic ☁️
 			</h2>
 			<img src={superNostalgicPrize} alt="Super Nostalgic Prize" class="hover5 mx-auto w-32" />
 			<p class="pb-4 pt-2 text-center font-encode text-xs text-white md:text-sm lg:text-lg">
@@ -69,7 +69,7 @@
 		</div>
 		<div class="items-center justify-center md:col-span-2 lg:col-span-1">
 			<h2 class="py-4 text-center font-paytone text-sm text-white md:text-base lg:text-xl">
-				Super (in)sane
+				⚡ Super (in)sane ⚡
 			</h2>
 			<img src={superInsanePrize} alt="Super Insane Prize" class="hover6 mx-auto w-32" />
 			<p class="pb-4 pt-2 text-center font-encode text-xs text-white md:text-sm lg:text-lg">
