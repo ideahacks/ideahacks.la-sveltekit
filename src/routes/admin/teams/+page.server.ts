@@ -1,5 +1,4 @@
 import { error } from '@sveltejs/kit';
-import type { Actions } from './$types';
 
 export const load = async ({ locals }) => {
 	const { data: admin, error: adminError } = await locals.sb

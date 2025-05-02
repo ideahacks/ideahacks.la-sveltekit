@@ -2,9 +2,7 @@
 	import ideaHacksLogo from '$lib/images/IDEAHACKS_LOGO_WHITE.png';
 	import superchargedLogo from '$lib/images/SUPERCHARGE.png';
 	import starCharacter from '$lib/images/STAR.png';
-	import cloudCharacter from '$lib/images/CLOUD.png';
 	import starIcon from '$lib/images/STAR_ICON.png';
-	import lightningCharacter from '$lib/images/lightning.png';
 	import SelectionButton from '$lib/components/utility/SelectionButton.svelte';
 	import BigFaq from '$lib/components/BigFaq.svelte';
 
@@ -149,11 +147,6 @@
 		<div class="supercharge-container w-1/2 max-w-lg">
 			<img src={superchargedLogo} alt="Supercharge" class="supercharge-flicker w-full" />
 		</div>
-		<!-- <div class="supercharge-flicker">
-			<img src={starCharacter} alt="Lightning Character" class="inline max-w-20" />
-			<img src={lightningCharacter} alt="Lightning Character" class="inline max-w-20" />
-			<img src={cloudCharacter} alt="Lightning Character" class="inline max-w-20" />
-		</div> -->
 		<!-- <h1 class="pb-6 font-paytone text-6xl font-bold text-white max-md:text-4xl">IdeaHacks 2025</h1> -->
 		<p class="mb-0 mt-2 font-encode text-2xl text-white max-md:text-xl">
 			<strong>Covel Commons Grand Horizon Room</strong>

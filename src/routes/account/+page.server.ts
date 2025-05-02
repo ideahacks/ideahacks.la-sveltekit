@@ -1,5 +1,4 @@
 import { error } from '@sveltejs/kit';
-import type { Actions } from './$types';
 
 export const load = async ({ locals }) => {
 	const { data: participant, error: participantError } = await locals.sb
@@ -32,6 +31,10 @@ export const load = async ({ locals }) => {
 			.from('participants_2025')
 			.select()
 			.eq('team_id', team[0].id);
+		if (membersError) {
+			console.log(membersError);
+			throw error(500, 'Error checking team status');
+		}
 
 		return {
 			participant: participant[0],

@@ -2,39 +2,6 @@
 	import TimelineItem from './TimelineItem.svelte';
 	import SelectionButton from './utility/SelectionButton.svelte';
 
-	/**
-	 * @type {HTMLSpanElement}
-	 */
-	let rippleElement;
-
-	/**
-	 * @param {{ currentTarget: { getBoundingClientRect: () => any; appendChild: (arg0: HTMLSpanElement) => void; }; clientX: number; clientY: number; }} event
-	 */
-	function handleClick(event) {
-		const rect = event.currentTarget.getBoundingClientRect();
-		const x = event.clientX - rect.left;
-		const y = event.clientY - rect.top;
-
-		// Reset ripple
-		if (rippleElement) {
-			rippleElement.remove();
-		}
-
-		// Create new ripple
-		rippleElement = document.createElement('span');
-		rippleElement.classList.add('ripple');
-		rippleElement.style.left = `${x}px`;
-		rippleElement.style.top = `${y}px`;
-
-		event.currentTarget.appendChild(rippleElement);
-
-		// Remove ripple after animation
-		setTimeout(() => {
-			if (rippleElement) {
-				rippleElement.remove();
-			}
-		}, 600);
-	}
 	const fridaySchedule = [
 		{
 			Start: '4:30 PM',
@@ -272,7 +239,7 @@
 			{/each}
 		</div>
 	{/if}
-</script>
+</div>
 
 <div class="font-pantone py-4 text-center text-2xl font-extrabold">IDEA Hacks Schedule</div>
 <div class="gap-4 rounded-box bg-white bg-opacity-30 p-4 lg:flex lg:bg-opacity-0">

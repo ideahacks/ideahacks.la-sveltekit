@@ -2,40 +2,6 @@
 	import Faq from '$lib/components/Faq.svelte';
 	import SelectionButton from './utility/SelectionButton.svelte';
 	let section = 'general';
-
-	/**
-	 * @type {HTMLSpanElement}
-	 */
-	let rippleElement;
-
-	/**
-	 * @param {{ currentTarget: { getBoundingClientRect: () => any; appendChild: (arg0: HTMLSpanElement) => void; }; clientX: number; clientY: number; }} event
-	 */
-	function handleClick(event) {
-		const rect = event.currentTarget.getBoundingClientRect();
-		const x = event.clientX - rect.left;
-		const y = event.clientY - rect.top;
-
-		// Reset ripple
-		if (rippleElement) {
-			rippleElement.remove();
-		}
-
-		// Create new ripple
-		rippleElement = document.createElement('span');
-		rippleElement.classList.add('ripple');
-		rippleElement.style.left = `${x}px`;
-		rippleElement.style.top = `${y}px`;
-
-		event.currentTarget.appendChild(rippleElement);
-
-		// Remove ripple after animation
-		setTimeout(() => {
-			if (rippleElement) {
-				rippleElement.remove();
-			}
-		}, 600);
-	}
 </script>
 
 <div class="text-white">

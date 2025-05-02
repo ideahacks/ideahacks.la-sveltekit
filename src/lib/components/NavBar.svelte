@@ -69,7 +69,7 @@
 	</div>
 </div> -->
 
-<script lang="ts">
+<!-- <script lang="ts">
 	import { supabaseClient } from '$lib/supabase';
 
 	export let data;
@@ -86,4 +86,4 @@
 	<div class="">
 		<a href="/login" class="btn btn-primary">Login</a>
 	</div>
-{/if}
+{/if} -->

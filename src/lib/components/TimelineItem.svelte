@@ -27,12 +27,13 @@
 	>
 		<time class="text-md font-mono italic">{time}</time>
 		<div class="text-md font-encode font-black">{title}</div>
-	<div class="timeline-{alignment} mb-10 {alignment === 'start' ? 'md:text-end' : ''} pt-1.5">
-		<time class="font-mono italic">{time}</time>
-		<div class="font-paytone text-lg font-black">{title}</div>
-		<div>{location}</div>
+		<div class="timeline-{alignment} mb-10 {alignment === 'start' ? 'md:text-end' : ''} pt-1.5">
+			<time class="font-mono italic">{time}</time>
+			<div class="font-paytone text-lg font-black">{title}</div>
+			<div>{location}</div>
+		</div>
+		{#if !last}
+			<hr />
+		{/if}
 	</div>
-	{#if !last}
-		<hr />
-	{/if}
 </li>

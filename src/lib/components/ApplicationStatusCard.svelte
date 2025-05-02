@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	export let application;
 	export let index;
 	let statusClass = '';
@@ -36,4 +36,4 @@
 		</p>
 		<p class="m-0 px-4 py-0 font-paytone">{status}</p>
 	</div>
-</div>
+</div> -->

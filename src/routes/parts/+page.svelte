@@ -1,9 +1,6 @@
 <script lang="ts">
 	import PartCard from '$lib/components/PartCard.svelte';
-	import pixelclouds from '$lib/images/pixelclouds.png';
-	import lightning from '$lib/images/lightning.png';
 	import fuzzysort from 'fuzzysort';
-	import { Tag } from 'lucide-svelte';
 
 	export let data;
 

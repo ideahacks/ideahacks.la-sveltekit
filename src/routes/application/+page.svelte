@@ -1,8 +1,5 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms';
-	import SuperDebug from 'sveltekit-superforms';
-	// import type { Session, SupabaseClient } from '@supabase/supabase-js';
-	import { onMount } from 'svelte';
 	import cityscape from '$lib/images/cityscape.png';
 
 	export let data;

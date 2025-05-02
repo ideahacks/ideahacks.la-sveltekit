@@ -1,7 +1,5 @@
 <script>
 	import { supabaseClient } from '$lib/supabase';
-	import { SupabaseClient } from '@supabase/supabase-js';
-	import { error } from '@sveltejs/kit';
 	import { RotateCw } from 'lucide-svelte';
 	export let data;
 

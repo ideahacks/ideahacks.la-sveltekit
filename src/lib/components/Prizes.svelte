@@ -1,7 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
 	import topPrize from '$lib/images/tesla_model_s.png';
-	import pixelclouds from '$lib/images/pixelclouds.png';
 	import superHumanPrize from '$lib/images/Super_Mario.png';
 	import nostalgicPrize from '$lib/images/Old_Radio.png';
 	import insanePrize from '$lib/images/Frakenstein_Statue.png';

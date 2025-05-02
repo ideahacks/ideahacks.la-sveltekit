@@ -1,8 +1,6 @@
 <script lang="ts">
-	import { invalidateAll } from '$app/navigation';
 	import ApplicationStatusCard from '$lib/components/ApplicationStatusCard.svelte';
 	export let data;
-	export let form;
 
 	const APPS_PER_PAGE = 10;
 
@@ -172,7 +170,13 @@
 		</div>
 		<div class="flex w-full flex-wrap justify-center gap-2 py-2">
 			{#each grouped_apps as item, index}
-				<a href={'#item' + (index + 1)} class="btn btn-xs font-paytone">{index + 1}</a>
+				<a
+					href={'#item' + (index + 1)}
+					class="btn btn-xs font-paytone"
+					on:click={() => {
+						console.log(item);
+					}}>{index + 1}</a
+				>
 			{/each}
 		</div>
 	</div>

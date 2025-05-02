@@ -1,7 +1,8 @@
 <script>
 	export let text = '';
-	export let section = '';
-	export let onClick = () => {};
+	export let onClick = () => {
+		console.log('You found an easter egg!');
+	};
 	export let className = '';
 
 	/**
