@@ -8,7 +8,17 @@ export const load = async ({ locals }) => {
 	}
 
 	for (let i = 0; i < parts.length; i++) {
-		parts[i].tags = JSON.parse(parts[i].tags);
+		if (parts[i].requires_checkout === 'Checkout') {
+			parts[i].requires_checkout = true;
+		} else {
+			parts[i].requires_checkout = false;
+		}
+
+		if (parts[i].tags) {
+			parts[i].tags = parts[i].tags.split(', ');
+		} else {
+			parts[i].tags = [];
+		}
 	}
 
 	return { parts: parts };

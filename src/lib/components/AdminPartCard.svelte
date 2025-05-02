@@ -1,7 +1,7 @@
 <script>
 	export let part_info;
 	export let addPartToCart;
-	import default_part_image from '$lib/images/defaultPartPicture.png';
+	import default_part_image from '$lib/images/logo.png';
 </script>
 
 <div class="card h-[20] w-[16rem] bg-white bg-opacity-10 p-1 text-white shadow-xl">
