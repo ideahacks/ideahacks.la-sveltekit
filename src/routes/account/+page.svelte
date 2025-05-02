@@ -362,7 +362,7 @@
 	</div>
 {/if}
 
-<div class="z-10 mx-5 my-10 max-w-4xl font-encode text-white md:mx-24">
+<div class="z-10 mx-5 my-10 max-w-4xl font-encode text-white sm:mx-24">
 	{#if data.session}
 		{#if currentParticipant}
 			<p>

@@ -4,7 +4,7 @@
 </script>
 
 {#if data.is_admin}
-	<div class="z-10 mx-5 my-10 max-w-4xl font-encode text-white md:mx-24">
+	<div class="z-10 mx-5 my-10 max-w-4xl font-encode text-white sm:mx-24">
 		<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
 			<span>Admin Page</span>
 		</h1>
