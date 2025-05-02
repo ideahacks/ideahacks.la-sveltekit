@@ -39,6 +39,7 @@
 	let lightningIntervalId;
 
 	import { onMount, onDestroy } from 'svelte';
+	import Schedule from '$lib/components/Schedule.svelte';
 
 	let alert = true;
 
@@ -203,6 +204,11 @@
 		<div class="text-md mb-4 font-encode text-white xl:text-lg">
 			<span class="font-bold">⚡ Super (in)Sane ⚡</span> - Break the mold and discover your true self!
 		</div>
+
+		<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
+			<span>Schedule</span>
+		</h1>
+		<Schedule />
 
 		<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
 			<span>Prizes</span>
