@@ -111,7 +111,7 @@
 	});
 </script>
 
-<section class="relative top-[-70px] h-screen w-screen overflow-hidden">
+<section class="relative top-[-70px] h-screen overflow-hidden">
 	<div class="absolute inset-0 bg-gradient-to-b from-black/80 to-blue-950/0" />
 	<div class="absolute inset-0">
 		{#each stars as star}
@@ -210,10 +210,10 @@
 			<span class="font-bold">⚡ Super (in)Sane ⚡</span> - Break the mold and discover your true self!
 		</div>
 
-		<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
-			<span>Schedule</span>
+		<h1 class="mb-4 overflow-auto font-paytone text-2xl text-white xl:text-4xl">
+			<span>Schedule</span><br />
+			<Schedule />
 		</h1>
-		<Schedule />
 
 		<h1 class="mb-4 font-paytone text-2xl text-white xl:text-4xl">
 			<span>Prizes</span>
