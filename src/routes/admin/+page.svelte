@@ -12,6 +12,8 @@
 		<a href="/admin/teams"><SelectionButton text="View All Teams" /></a>
 		<br />
 		<a href="/admin/parts"><SelectionButton text="Parts Checkin/Checkout" /></a>
+		<br />
+		<a href="/admin/add-admin"><SelectionButton text="View/Add Admins" /></a>
 	</div>
 {:else}
 	<h1 class="m-auto max-w-xl text-center font-encode text-lg text-white">
