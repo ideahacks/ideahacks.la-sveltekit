@@ -23,7 +23,7 @@
 			<p class="text-center font-encode text-xs">No checkout required. Just grab & go!</p>
 		{/if}
 
-		<div
+		<!-- <div
 			class="flex justify-center rounded-xl bg-white bg-opacity-10 text-center font-encode text-sm"
 		>
 			<svg
@@ -47,7 +47,7 @@
 			</svg>
 
 			{part_info.checkout_location}
-		</div>
+		</div> -->
 
 		<div>
 			<h3 class="hyphenate text-md font-encode">

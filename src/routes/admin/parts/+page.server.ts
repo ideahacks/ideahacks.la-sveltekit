@@ -14,6 +14,13 @@ export const load = async ({ locals }) => {
 			parts[i].requires_checkout = false;
 		}
 
+		if (parts[i].alt_ids) {
+			parts[i].alt_ids = parts[i].alt_ids.split(', ');
+		} else {
+			parts[i].alt_ids = [];
+		}
+		console.log(parts[i].alt_ids);
+
 		if (parts[i].tags) {
 			parts[i].tags = parts[i].tags.split(', ');
 		} else {

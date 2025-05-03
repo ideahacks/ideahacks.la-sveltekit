@@ -21,7 +21,6 @@
 	let selectedTags: string[] = [];
 
 	let team_code = '';
-
 	// progress
 	let errorMessage = '';
 	let checkoutLoading = false;
@@ -55,7 +54,27 @@
 		setTimeout(() => (errorMessage = ''), duration);
 	}
 
-	function addPartToCart(part_id: string, part_quantity: number) {
+	function getPartIDFromString(idString: string): string {
+		if (!parts) {
+			return '';
+		}
+
+		const foundPart = parts.find(
+			(item) => item.part_id === idString || (item.alt_ids && item.alt_ids.includes(idString))
+		);
+
+		console.log(idString);
+		console.log(foundPart);
+
+		return foundPart?.part_id;
+	}
+
+	function addPartToCart(part_id_raw: string, part_quantity: number) {
+		let part_id = getPartIDFromString(part_id_raw);
+		if (part_id == '') {
+			showMessage('Invalid Barcode!');
+			return false;
+		}
 		const existingItemIndex = cartItems.findIndex((item) => item.part_id === part_id);
 		console.log(existingItemIndex);
 		if (existingItemIndex >= 0) {
@@ -63,13 +82,15 @@
 		} else {
 			cartItems = [...cartItems, { part_id, part_quantity }];
 		}
+		return true;
 	}
 
 	function getPartInfo(part_id: string) {
 		return parts.find((part) => part.part_id === part_id);
 	}
 
-	function removePartFromCart(part_id: string) {
+	function removePartFromCart(part_id_raw: string) {
+		let part_id = getPartIDFromString(part_id_raw);
 		const existingItemIndex = cartItems.findIndex((item) => item.part_id === part_id);
 		cartItems.splice(existingItemIndex, 1);
 		// to update the state
@@ -405,7 +426,13 @@
 				showMessage('Part does not require checkout!', 2000);
 			}
 		} else {
-			showMessage('Invalid Barcode!');
+			showMessage('BOOM');
+			let val = addPartToCart(search, 1);
+			if (val) {
+				showMessage('Part Added!');
+			} else {
+				showMessage('Invalid Barcode!!');
+			}
 		}
 		search = '';
 	}
