@@ -11,12 +11,16 @@
 	<div class="z-10 mx-5 my-10 max-w-4xl font-encode text-white sm:mx-24">
 		<h1 class="mt-10 font-paytone text-2xl">Add New Admin</h1>
 		<div class="label">
-			<span class="label-text text-white">Add Admin Email (use g.ucla.edu NOT ucla.edu)</span>
+			<span class="label-text text-white"
+				>Use g.ucla.edu and not ucla.edu. Make sure the email is entered in <span class="font-bold"
+					>all lowercase</span
+				></span
+			>
 		</div>
 		<form method="POST" class="flex">
 			<input
 				name="email"
-				placeholder="Email"
+				placeholder="email (.g.ucla.edu)"
 				class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
 			/>
 			<button class="btn btn-ghost mx-2 text-white"><Plus /></button>

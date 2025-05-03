@@ -75,12 +75,12 @@
 	}
 
 	function addPartToCart(part_id: string, part_quantity: number) {
-		if (part_id == '') {
+		if (part_id === '') {
 			showMessage('Invalid Barcode!');
 			return false;
 		}
+
 		const existingItemIndex = cartItems.findIndex((item) => item.part_id === part_id);
-		console.log(existingItemIndex);
 		if (existingItemIndex >= 0) {
 			cartItems[existingItemIndex].part_quantity += part_quantity;
 		} else {
@@ -107,7 +107,7 @@
 	function decrementPartQuantity(part_id: string) {
 		const existingItemIndex = cartItems.findIndex((item) => item.part_id === part_id);
 		cartItems[existingItemIndex].part_quantity -= 1;
-		if (cartItems[existingItemIndex].part_quantity == 0) {
+		if (cartItems[existingItemIndex].part_quantity === 0) {
 			cartItems.splice(existingItemIndex, 1);
 			// to update the state
 			cartItems = cartItems;
@@ -425,8 +425,12 @@
 
 		let part_id = getPartIDFromString(search);
 		if (part_id) {
-			addPartToCart(part_id, 1);
-			showMessage('Part scanned in!');
+			if (!getPartInfo(part_id).requires_checkout) {
+				showMessage('Part does not require checkout');
+			} else {
+				addPartToCart(part_id, 1);
+				showMessage('Part scanned in!');
+			}
 		} else {
 			showMessage("Part doesn't exist");
 		}

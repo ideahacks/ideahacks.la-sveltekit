@@ -12,7 +12,9 @@
 		<h1 class="mt-10 font-paytone text-2xl">Add New Participant</h1>
 		<div class="label">
 			<span class="label-text text-white"
-				>Add Participant (make sure email supports Google Sign in!)</span
+				>Make sure email supports Google Sign in and is entered in <span class="font-bold"
+					>all lowercase!
+				</span>If adding UCLA email, use g.ucla.edu and not ucla.edu</span
 			>
 		</div>
 
@@ -39,7 +41,9 @@
 
 		<h1 class="mt-10 font-paytone text-2xl">Delete Participant</h1>
 		<div class="label">
-			<span class="label-text text-white">Delete a participant by email address.</span>
+			<span class="label-text text-white"
+				>Delete a participant by email address (case sensitive).</span
+			>
 		</div>
 		<form method="POST" action="?/delete" class="flex">
 			<input
@@ -57,7 +61,7 @@
 
 		<h1 class="mt-10 font-paytone text-2xl">Current Participants</h1>
 		{#each data.participants as participant}
-			<p>{participant.id} {participant.full_name} ({participant.email})</p>
+			<p>{participant.full_name} ({participant.email})</p>
 		{/each}
 	</div>
 {:else}
