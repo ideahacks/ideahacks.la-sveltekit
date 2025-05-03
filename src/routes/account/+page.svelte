@@ -6,7 +6,7 @@
 	import logo from '$lib/images/logo.png';
 
 	let currentTeam = data.team;
-
+	let team_open = false;
 	let currentParticipant = data.participant;
 
 	let teamLoading = false;
@@ -375,10 +375,12 @@
 				<p>No team yet? Create one!</p>
 
 				{#if !teamLoading}
-					<button
-						class="btn border-none bg-opacity-10 text-white hover:bg-opacity-10"
-						on:click={createTeam}>Create Team</button
-					>
+					{#if team_open}
+						<button
+							class="btn border-none bg-opacity-10 text-white hover:bg-opacity-10"
+							on:click={createTeam}>Create Team</button
+						>
+					{/if}
 				{:else}
 					<button class="btn btn-ghost hover:bg-white hover:bg-opacity-10"
 						><span class="loading loading-ring loading-md" /></button
@@ -387,34 +389,39 @@
 
 				<br />
 				<br />
-				<p>Join Team</p>
-				<input
-					name="preferred_name"
-					placeholder="Enter Team Code"
-					bind:value={currentTeamCode}
-					class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
-				/>
 
-				{#if !joinTeamLoading}
-					<button class="btn btn-ghost mt-2 border-white border-opacity-10" on:click={joinTeam}
-						>Join!</button
-					>
-				{:else}
-					<span class="loading loading-ring loading-sm mx-5 mt-5" />
+				{#if team_open}
+					<p>Join Team</p>
+					<input
+						name="preferred_name"
+						placeholder="Enter Team Code"
+						bind:value={currentTeamCode}
+						class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
+					/>
+
+					{#if !joinTeamLoading}
+						<button class="btn btn-ghost mt-2 border-white border-opacity-10" on:click={joinTeam}
+							>Join!</button
+						>
+					{:else}
+						<span class="loading loading-ring loading-sm mx-5 mt-5" />
+					{/if}
 				{/if}
 			{:else}
 				<p class="">
 					Team Name: <span class="text-xl font-bold">{currentTeam.team_name}</span>
 				</p>
-				{#if !regenerateTeamLoading}
-					<button
-						class="btn btn-ghost p-1 hover:bg-white hover:bg-opacity-10"
-						on:click={generateNewTeamName}><RotateCw class="h-5 w-5" />Generate New Name</button
-					>
-				{:else}
-					<button class="btn btn-ghost p-1 hover:bg-white hover:bg-opacity-10"
-						><span class="loading loading-ring loading-md" /></button
-					>
+				{#if team_open}
+					{#if !regenerateTeamLoading}
+						<button
+							class="btn btn-ghost p-1 hover:bg-white hover:bg-opacity-10"
+							on:click={generateNewTeamName}><RotateCw class="h-5 w-5" />Generate New Name</button
+						>
+					{:else}
+						<button class="btn btn-ghost p-1 hover:bg-white hover:bg-opacity-10"
+							><span class="loading loading-ring loading-md" /></button
+						>
+					{/if}
 				{/if}
 				<p>Team Code: <span class="text-xl font-bold">{currentTeam.team_code}</span></p>
 				<br />
@@ -438,14 +445,16 @@
 					hackers!
 				</p>
 				<br />
-				{#if !leaveTeamLoading}
-					<button class="btn btn-ghost border-white border-opacity-10" on:click={leaveTeam}
-						>Leave Team</button
-					>
-				{:else}
-					<button class="btn btn-ghost hover:bg-white hover:bg-opacity-10"
-						><span class="loading loading-ring loading-md" /></button
-					>
+				{#if team_open}
+					{#if !leaveTeamLoading}
+						<button class="btn btn-ghost border-white border-opacity-10" on:click={leaveTeam}
+							>Leave Team</button
+						>
+					{:else}
+						<button class="btn btn-ghost hover:bg-white hover:bg-opacity-10"
+							><span class="loading loading-ring loading-md" /></button
+						>
+					{/if}
 				{/if}
 			{/if}
 
