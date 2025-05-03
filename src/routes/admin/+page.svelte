@@ -9,7 +9,7 @@
 			<span>Admin Page</span>
 		</h1>
 
-		<a href="/admin/teams"><SelectionButton text="View All Teams" /></a>
+		<a href="/admin/teams"><SelectionButton text="View All Teams & their Parts" /></a>
 		<br />
 		<a href="/admin/parts"><SelectionButton text="Parts Checkin/Checkout" /></a>
 		<br />
