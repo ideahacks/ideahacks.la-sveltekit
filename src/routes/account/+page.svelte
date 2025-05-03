@@ -475,23 +475,24 @@
 
 						<tbody class="text-white">
 							{#each teamParts as teamPart}
-								<!-- <p>{JSON.stringify(teamPart)}</p> -->
-								<tr>
-									<td>{teamPart.part_id}</td>
-									<td>{teamPart.parts_2025.name}</td>
-									<td
-										>{#if teamPart.parts_2025.image_url}
-											<img
-												src={teamPart.parts_2025.image_url}
-												alt="default"
-												class="h-16 w-16 rounded object-contain"
-											/>
-										{:else}
-											<img src={logo} alt="default" class="h-16 w-16 rounded object-contain" />
-										{/if}</td
-									>
-									<td>{teamPart.quantity}</td>
-								</tr>
+								{#if teamPart.parts_2025.requires_checkout === 'Checkout'}
+									<tr>
+										<td>{teamPart.part_id}</td>
+										<td>{teamPart.parts_2025.name}</td>
+										<td
+											>{#if teamPart.parts_2025.image_url}
+												<img
+													src={teamPart.parts_2025.image_url}
+													alt="default"
+													class="h-16 w-16 rounded object-contain"
+												/>
+											{:else}
+												<img src={logo} alt="default" class="h-16 w-16 rounded object-contain" />
+											{/if}</td
+										>
+										<td>{teamPart.quantity}</td>
+									</tr>
+								{/if}
 							{/each}
 						</tbody>
 					</table>

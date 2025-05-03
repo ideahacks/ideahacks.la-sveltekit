@@ -52,7 +52,7 @@
 						</td>
 						<td
 							>{#each data.teams_parts as team_part}
-								{#if team_part.team_id === team.id}
+								{#if team_part.team_id === team.id && getPart(team_part.part_id).requires_checkout}
 									<span class="font-bold">ID: </span>{getPart(team_part.part_id).part_id} |
 									<span class="font-bold">Name: </span>{getPart(team_part.part_id).name} |
 									<span class="font-bold">Quantity:</span>

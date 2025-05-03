@@ -39,7 +39,7 @@ export const load = async ({ locals }) => {
 
 		const { data: teamParts, error: teamPartsError } = await locals.sb
 			.from('teams_parts_2025')
-			.select(`part_id, quantity, parts_2025 (part_id, name, image_url)`)
+			.select(`part_id, quantity, parts_2025 (part_id, name, image_url, requires_checkout)`) // INNER JOIN
 			.eq('team_id', team[0].id);
 		if (teamPartsError) {
 			console.log(teamPartsError);
