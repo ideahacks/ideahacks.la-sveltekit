@@ -54,23 +54,25 @@
 		setTimeout(() => (errorMessage = ''), duration);
 	}
 
-	function getPartIDFromString(idString: string): string {
+	function getPartIDFromString(idString: string): string | null {
 		if (!parts) {
 			return '';
 		}
 
-		const foundPart = parts.find(
-			(item) => item.part_id === idString || (item.alt_ids && item.alt_ids.includes(idString))
-		);
+		for (let i = 0; i < parts.length; i++) {
+			if (parts[i].part_id === idString) {
+				return idString;
+			} else {
+				if (parts[i].alt_ids.includes(idString)) {
+					return parts[i].part_id;
+				}
+			}
+		}
 
-		console.log(idString);
-		console.log(foundPart);
-
-		return foundPart?.part_id;
+		return null;
 	}
 
-	function addPartToCart(part_id_raw: string, part_quantity: number) {
-		let part_id = getPartIDFromString(part_id_raw);
+	function addPartToCart(part_id: string, part_quantity: number) {
 		if (part_id == '') {
 			showMessage('Invalid Barcode!');
 			return false;
@@ -89,8 +91,7 @@
 		return parts.find((part) => part.part_id === part_id);
 	}
 
-	function removePartFromCart(part_id_raw: string) {
-		let part_id = getPartIDFromString(part_id_raw);
+	function removePartFromCart(part_id: string) {
 		const existingItemIndex = cartItems.findIndex((item) => item.part_id === part_id);
 		cartItems.splice(existingItemIndex, 1);
 		// to update the state
@@ -418,22 +419,16 @@
 	}
 
 	function handleSubmit() {
-		if (results.length > 0) {
-			if (results[0].obj.requires_checkout) {
-				addPartToCart(results[0].obj.part_id, 1);
-				showMessage('Part Added!');
-			} else {
-				showMessage('Part does not require checkout!', 2000);
-			}
+		// purely by ALT ids
+
+		let part_id = getPartIDFromString(search);
+		if (part_id) {
+			addPartToCart(part_id, 1);
+			showMessage('Part scanned in!');
 		} else {
-			showMessage('BOOM');
-			let val = addPartToCart(search, 1);
-			if (val) {
-				showMessage('Part Added!');
-			} else {
-				showMessage('Invalid Barcode!!');
-			}
+			showMessage("Part doesn't exist");
 		}
+
 		search = '';
 	}
 
