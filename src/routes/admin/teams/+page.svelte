@@ -46,7 +46,7 @@
 									<span class="font-bold">ID: </span>{getPart(team_part.part_id).part_id} |
 									<span class="font-bold">Name: </span>{getPart(team_part.part_id).name} |
 									<span class="font-bold">Quantity:</span>
-									{getPart(team_part.part_id).quantity}<br />
+									{team_part.quantity}<br />
 								{/if}
 							{/each}
 						</td>
