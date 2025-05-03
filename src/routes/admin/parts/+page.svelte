@@ -633,9 +633,16 @@
 		</div> -->
 		</div>
 		<div class="w-0.5 bg-white bg-opacity-25" />
-		<div class="w-1/2">
+		<div class="w-1/2 font-encode text-white">
 			<h3 class="mt-10 font-paytone text-xl text-white">Cart</h3>
-
+			<div>
+				<p>
+					<span class="font-bold">Check Out</span>: if they're taking the part from you
+				</p>
+				<p>
+					<span class="font-bold">Check In</span>: if they're bringing the part back to you
+				</p>
+			</div>
 			<div class="overflow-x-auto">
 				<table class="table">
 					<thead class="font-paytone text-white">
