@@ -1,5 +1,6 @@
 <script lang="ts">
 	export let data;
+	import { ChevronLeft } from 'lucide-svelte';
 
 	function getPart(part_id: string) {
 		let all_parts = data.parts;
@@ -14,8 +15,17 @@
 	}
 </script>
 
+<div class="z-10 mx-5 my-10 w-24 font-encode text-white sm:mx-24">
+	<a
+		href="/admin"
+		class="z-10 flex rounded-md border border-white border-opacity-10 px-2 py-1 font-encode text-sm font-light text-white hover:bg-black hover:bg-opacity-10"
+	>
+		<ChevronLeft class="h-5" />
+		<p class="text-">Admin</p>
+	</a>
+</div>
 {#if data.is_admin}
-	<div class="mx-auto my-10 text-center font-paytone text-3xl text-white max-sm:max-w-xs">
+	<div class="mx-auto mb-10 text-center font-paytone text-3xl text-white max-sm:max-w-xs">
 		Teams Panel
 	</div>
 	<div class="overflow-x-auto">

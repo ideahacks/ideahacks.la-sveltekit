@@ -1,5 +1,5 @@
 <script>
-	import { Plus } from 'lucide-svelte';
+	import { Plus, ChevronLeft } from 'lucide-svelte';
 
 	export let data;
 	export let form;
@@ -8,7 +8,16 @@
 </script>
 
 {#if is_admin}
-	<div class="z-10 mx-5 my-10 max-w-4xl font-encode text-white sm:mx-24">
+	<div class="z-10 mx-5 w-24 font-encode text-white sm:mx-24">
+		<a
+			href="/admin"
+			class="z-10 flex rounded-md border border-white border-opacity-10 px-2 py-1 font-encode text-sm font-light text-white hover:bg-black hover:bg-opacity-10"
+		>
+			<ChevronLeft class="h-5" />
+			<p class="text-">Admin</p>
+		</a>
+	</div>
+	<div class="z-10 mx-5 mb-10 max-w-4xl font-encode text-white sm:mx-24">
 		<h1 class="mt-10 font-paytone text-2xl">Add New Admin</h1>
 		<div class="label">
 			<span class="label-text text-white"

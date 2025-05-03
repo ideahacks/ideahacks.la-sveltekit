@@ -5,6 +5,7 @@
 	import { Trash2 } from 'lucide-svelte';
 	import { ScanBarcode } from 'lucide-svelte';
 	import { Keyboard } from 'lucide-svelte';
+	import { ChevronLeft } from 'lucide-svelte';
 
 	import fuzzysort from 'fuzzysort';
 
@@ -475,6 +476,15 @@
 </script>
 
 {#if is_admin}
+	<div class="z-10 mx-2 w-24 font-encode text-white sm:mx-24">
+		<a
+			href="/admin"
+			class="z-10 flex rounded-md border border-white border-opacity-10 px-2 py-1 font-encode text-sm font-light text-white hover:bg-black hover:bg-opacity-10"
+		>
+			<ChevronLeft class="h-5" />
+			<p class="text-">Admin</p>
+		</a>
+	</div>
 	{#if errorMessage !== ''}
 		<div class="toast toast-center toast-top">
 			<div class=" alert">
@@ -483,7 +493,7 @@
 		</div>
 	{/if}
 
-	<h1 class="mb-6 mt-12 text-center font-paytone text-5xl font-bold text-white">
+	<h1 class="mb-6 mt-5 text-center font-paytone text-5xl font-bold text-white">
 		Parts Admin Panel
 	</h1>
 	<div class="z-10 flex gap-4">
