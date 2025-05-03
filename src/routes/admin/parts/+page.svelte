@@ -305,11 +305,15 @@
 				cartItems[i].part_quantity > getTeamPart(cartItems[i].part_id).quantity
 			) {
 				showMessage(
-					'There are not enough parts to check in for' +
+					'Tried to check in ' +
+						cartItems[i].part_quantity +
+						' ' +
 						getPart(cartItems[i].part_id).name +
-						' with ID ' +
-						cartItems[i].part_id,
-					4500
+						' (ID: ' +
+						cartItems[i].part_id +
+						'), but the team only has ' +
+						getTeamPart(cartItems[i].part_id).quantity,
+					6000
 				);
 				updateParts();
 				checkinLoading = false;
