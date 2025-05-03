@@ -41,7 +41,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import Schedule from '$lib/components/Schedule.svelte';
 
-	let alert = true;
+	let alert = false;
 
 	onMount(() => {
 		function generateLightning() {
