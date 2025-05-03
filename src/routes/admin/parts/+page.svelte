@@ -63,8 +63,10 @@
 			if (parts[i].part_id === idString) {
 				return idString;
 			} else {
-				if (parts[i].alt_ids.includes(idString)) {
-					return parts[i].part_id;
+				if (parts[i].alt_ids) {
+					if (parts[i].alt_ids.includes(idString)) {
+						return parts[i].part_id;
+					}
 				}
 			}
 		}

@@ -15,7 +15,7 @@ export const load = async ({ locals }) => {
 		}
 
 		if (parts[i].alt_ids) {
-			parts[i].alt_ids = parts[i].alt_ids.split(', ');
+			parts[i].alt_ids = parts[i].alt_ids.split(',');
 		} else {
 			parts[i].alt_ids = [];
 		}
