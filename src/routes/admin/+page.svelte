@@ -13,9 +13,9 @@
 		<br />
 		<a href="/admin/parts"><SelectionButton text="Parts Checkin/Checkout" /></a>
 		<br />
-		<a href="/admin/add-admin"><SelectionButton text="View/Add Admins" /></a>
+		<a href="/admin/manage-admins"><SelectionButton text="Manage Admins" /></a>
 		<br />
-		<a href="/admin/add-participant"><SelectionButton text="View/Add Participants" /></a>
+		<a href="/admin/manage-participants"><SelectionButton text="Manage Participants" /></a>
 	</div>
 {:else}
 	<h1 class="m-auto max-w-xl text-center font-encode text-lg text-white">

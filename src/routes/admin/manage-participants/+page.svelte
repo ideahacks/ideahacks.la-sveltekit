@@ -1,5 +1,5 @@
-<script>
-	import { Plus } from 'lucide-svelte';
+<script lang="ts">
+	import { Plus, Minus } from 'lucide-svelte';
 
 	export let data;
 	export let form;
@@ -16,8 +16,9 @@
 			>
 		</div>
 
-		<form method="POST">
+		<form method="POST" action="?/add">
 			<input
+				type="email"
 				name="email"
 				placeholder="Email"
 				class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
@@ -31,8 +32,29 @@
 				/>
 				<button class="btn btn-ghost mx-2 text-white"><Plus /></button>
 			</div>
+			{#if form?.action == 'add'}
+				<div class="text-md mt-4 font-encode text-white">{form?.message ?? ''}</div>
+			{/if}
 		</form>
-		<div class="text-md mt-4 font-encode text-white">{form?.message ?? ''}</div>
+
+		<h1 class="mt-10 font-paytone text-2xl">Delete Participant</h1>
+		<div class="label">
+			<span class="label-text text-white">Delete a participant by email address.</span>
+		</div>
+		<form method="POST" action="?/delete" class="flex">
+			<input
+				type="email"
+				name="email"
+				placeholder="Email to Delete"
+				class="input w-full max-w-xs bg-opacity-10 text-white placeholder-gray-200 focus:outline-none"
+				required
+			/>
+			<button class="btn btn-ghost mx-2 text-white"><Minus /></button>
+		</form>
+		{#if form?.action == 'delete'}
+			<div class="text-md mt-4 font-encode text-white">{form?.message ?? ''}</div>
+		{/if}
+
 		<h1 class="mt-10 font-paytone text-2xl">Current Participants</h1>
 		{#each data.participants as participant}
 			<p>{participant.id} {participant.full_name} ({participant.email})</p>
