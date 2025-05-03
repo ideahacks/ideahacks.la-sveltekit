@@ -19,9 +19,22 @@ export const load = async ({ locals }) => {
 			.from('participants_2025')
 			.select();
 		if (participantsError) {
-			throw error(500, 'Error getting teams');
+			throw error(500, 'Error getting participants');
 		}
-		return { teams, participants, admin: true };
+
+		const { data: teams_parts, error: teamsPartsError } = await locals.sb
+			.from('teams_parts_2025')
+			.select();
+		if (teamsPartsError) {
+			throw error(500, 'Error getting teamsparts');
+		}
+
+		const { data: parts, error: partsFetchError } = await locals.sb.from('parts_2025').select();
+		if (partsFetchError) {
+			throw error(500, 'Error getting parts');
+		}
+
+		return { teams, participants, teams_parts, parts, admin: true };
 	}
-	return { teams: [], participants: [], admin: false };
+	return { teams: [], participants: [], teams_parts: [], admin: false };
 };
