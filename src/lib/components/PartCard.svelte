@@ -61,37 +61,41 @@
 			<!-- <span class="font-paytone">ID: </span>{part_info.part_id} -->
 		</h3>
 		<div class="card-actions justify-center">
-			<label
-				for={part_info.name}
-				class="text-md btn btn-sm bg-white bg-opacity-10 font-encode text-white">Details</label
-			>
-			<input type="checkbox" id={part_info.name} class="modal-toggle" />
-			<div class="modal" role="dialog">
-				<div
-					class="modal-box border border-white bg-[#83c3e8] bg-opacity-70 shadow-md backdrop-blur-sm"
+			{#if part_info.description}
+				<label
+					for={part_info.name}
+					class="text-md btn btn-sm bg-white bg-opacity-10 font-encode text-white">Details</label
 				>
-					<p class="hyphenate font-encode text-sm text-white">{part_info.description}</p>
-					<br />
-					<p class="hyphenate font-encode text-sm text-white">
-						<span class="font-bold">Tags: </span>{part_info.tags
-							? part_info.tags.map((/** @type {string} */ p) => ' ' + p)
-							: 'None'}
-					</p>
-					<div class="modal-action">
-						<label for={part_info.name} class="btn border-none bg-opacity-10 text-white shadow-md"
-							>Close</label
-						>
+				<input type="checkbox" id={part_info.name} class="modal-toggle" />
+				<div class="modal" role="dialog">
+					<div
+						class="modal-box border border-white bg-[#83c3e8] bg-opacity-70 shadow-md backdrop-blur-sm"
+					>
+						<p class="hyphenate font-encode text-sm text-white">{part_info.description}</p>
+						<br />
+						<p class="hyphenate font-encode text-sm text-white">
+							<span class="font-bold">Tags: </span>{part_info.tags
+								? part_info.tags.map((/** @type {string} */ p) => ' ' + p)
+								: 'None'}
+						</p>
+						<div class="modal-action">
+							<label for={part_info.name} class="btn border-none bg-opacity-10 text-white shadow-md"
+								>Close</label
+							>
+						</div>
 					</div>
+					<label class="modal-backdrop" for={part_info.name}>Close</label>
+					<!--add the above line so clicking outside modal will also close the thing-->
 				</div>
-				<label class="modal-backdrop" for={part_info.name}>Close</label>
-				<!--add the above line so clicking outside modal will also close the thing-->
-			</div>
-			<a
-				href={part_info.datasheet_url}
-				class="text-md btn btn-sm bg-white bg-opacity-10 font-encode text-white"
-				target="_blank"
-				>Datasheet
-			</a>
+			{/if}
+			{#if part_info.datasheet_url}
+				<a
+					href={part_info.datasheet_url}
+					class="text-md btn btn-sm bg-white bg-opacity-10 font-encode text-white"
+					target="_blank"
+					>Datasheet
+				</a>
+			{/if}
 		</div>
 	</div>
 </div>
