@@ -31,8 +31,14 @@ export const actions = {
 			};
 		}
 
+		function generateRandomNumber() {
+			return Math.floor(Math.random() * 10000) + 1;
+		}
+
 		// insert participant into supabase database
-		const { error } = await locals.sb.from('participants_2025').insert({ email, full_name });
+		const { error } = await locals.sb
+			.from('participants_2025')
+			.insert({ id: generateRandomNumber(), email, full_name });
 		if (error) {
 			console.log(error);
 			return {
