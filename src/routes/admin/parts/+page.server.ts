@@ -28,5 +28,17 @@ export const load = async ({ locals }) => {
 		}
 	}
 
-	return { parts: parts };
+	const { data: teams, error: teamsError } = await locals.sb.from('teams_2025').select();
+	if (teamsError) {
+		throw error(500, 'Error getting teams');
+	}
+
+	const { data: teams_parts, error: teamsPartsError } = await locals.sb
+		.from('teams_parts_2025')
+		.select();
+	if (teamsPartsError) {
+		throw error(500, 'Error getting teamsparts');
+	}
+
+	return { parts, teams, teams_parts };
 };

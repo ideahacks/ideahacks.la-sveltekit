@@ -6,6 +6,7 @@
 	import { ScanBarcode } from 'lucide-svelte';
 	import { Keyboard } from 'lucide-svelte';
 	import { ChevronLeft } from 'lucide-svelte';
+	import { RotateCw } from 'lucide-svelte';
 
 	import fuzzysort from 'fuzzysort';
 
@@ -22,26 +23,25 @@
 	let selectedTags: string[] = [];
 
 	let team_code = '';
+	let curr_team = '';
 	// progress
 	let errorMessage = '';
 	let checkoutLoading = false;
 	let checkinLoading = false;
-	// function onScanSuccess(decodedText: string, decodedResult: Html5QrcodeResult) {
-	// 	search = decodedText;
-	// 	// FIXME: result sometimes doesn't update fast enough, so force a delay
-	// 	setTimeout(() => {}, 100);
-	// }
-	// onMount(() => {
-	// 	const html5QrcodeScanner = new Html5QrcodeScanner(
-	// 		'barcode-scanner',
-	// 		{ fps: 10, qrbox: 250 },
-	// 		false
-	// 	);
 
-	// 	html5QrcodeScanner.render(onScanSuccess, () => {
-	// 		/* Callback when no barcode is detected */
-	// 	});
-	// });
+	let team_parts: string[] = [];
+
+	function getPart(part_id: string) {
+		let all_parts = parts;
+		if (all_parts) {
+			for (let i = 0; i < all_parts.length; i++) {
+				if (all_parts[i].part_id === part_id) {
+					return all_parts[i];
+				}
+			}
+		}
+		return [];
+	}
 
 	interface CartItem {
 		part_id: string;
@@ -113,6 +113,36 @@
 			// to update the state
 			cartItems = cartItems;
 		}
+	}
+
+	function displayTeamParts() {
+		team_parts = [];
+		curr_team = team_code;
+		let team_id = '';
+		if (data.teams) {
+			for (let i = 0; i < data.teams.length; i++) {
+				if (data.teams[i].team_code === team_code) {
+					team_id = data.teams[i].id;
+					break;
+				}
+			}
+		} else {
+			showMessage('No Teams Fetched');
+		}
+		if (team_id === '') {
+			showMessage('Team ' + team_code + ' does not exist');
+		}
+
+		if (data.teams_parts) {
+			for (let i = 0; i < data.teams_parts.length; i++) {
+				if (data.teams_parts[i].team_id === team_id) {
+					team_parts.push(data.teams_parts[i].part_id);
+				}
+			}
+		} else {
+			showMessage('No Teams Parts Fetched');
+		}
+		showMessage('Parts Fetched');
 	}
 
 	async function checkout(e: Event) {
@@ -758,6 +788,10 @@
 				class="input input-ghost block w-full max-w-xs font-encode text-white placeholder-white caret-white focus:bg-opacity-30 focus:text-white focus:outline-none"
 			/>
 			<div class="flex gap-4">
+				<button
+					class="btn btn-ghost mt-2 border-white border-opacity-10 text-white"
+					on:click={displayTeamParts}>Show/Refresh Team's Parts <RotateCw /></button
+				>
 				{#if !checkoutLoading}
 					<button
 						class="btn btn-ghost mt-2 border-white border-opacity-10 text-white"
@@ -779,6 +813,21 @@
 					>
 				{/if}
 			</div>
+			<br />
+			{#if curr_team.length > 0}
+				<p>Parts for Team <span class="font-bold">{curr_team}</span></p>
+			{/if}
+
+			<tbody class="text-white">
+				{#each team_parts as team_part}
+					{#if getPart(team_part).requires_checkout}
+						<span class="font-bold">ID: </span>{team_part} |
+						<span class="font-bold">Name: </span>{getPart(team_part).name} |
+						<span class="font-bold">Quantity: </span>
+						{getPart(team_part).num_in_use}<br />
+					{/if}
+				{/each}
+			</tbody>
 		</div>
 	</div>
 {:else}
