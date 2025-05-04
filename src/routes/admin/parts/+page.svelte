@@ -300,10 +300,21 @@
 
 		// check if there are enough team parts to check in
 		for (let i = 0; i < cartItems.length; i++) {
-			if (
-				!getTeamPart(cartItems[i].part_id) ||
-				cartItems[i].part_quantity > getTeamPart(cartItems[i].part_id).quantity
-			) {
+			if (!getTeamPart(cartItems[i].part_id) || getTeamPart(cartItems[i].part_id).length === 0) {
+				showMessage(
+					'Tried to check in ' +
+						cartItems[i].part_quantity +
+						' ' +
+						getPart(cartItems[i].part_id).name +
+						' (ID: ' +
+						cartItems[i].part_id +
+						'), but the team does not have any',
+					6000
+				);
+				updateParts();
+				checkinLoading = false;
+				return;
+			} else if (cartItems[i].part_quantity > getTeamPart(cartItems[i].part_id).quantity) {
 				showMessage(
 					'Tried to check in ' +
 						cartItems[i].part_quantity +
