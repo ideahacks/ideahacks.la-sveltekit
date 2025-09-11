@@ -60,9 +60,7 @@
 
 <!-- About Section -->
 <section id="about" class="bg-white text-black px-6">
-	<div
-		class="flex h-screen flex-col items-center justify-center text-center px-4 max-w-4xl mx-auto"
-	>
+	<div class="flex h-screen flex-col items-center justify-center px-4 max-w-4xl mx-auto">
 		<!-- About -->
 		<h2 class="text-3xl font-semibold mb-4 text-center">About</h2>
 		<p class="text-base text-gray-800 leading-relaxed">
@@ -126,7 +124,7 @@
 		</div>
 
 		<!-- Sponsors -->
-		<h2 class="text-3xl font-semibold mt-20 text-center">Sponsors</h2>
+		<h2 class="text-3xl font-semibold mt-20 text-center mb-6">Sponsors</h2>
 		<div class="flex flex-wrap justify-center gap-10 items-center">
 			<a href="https://www.digikey.com/" target="_blank" class="hover:opacity-90 transition">
 				<img src={digikey} alt="DigiKey" class="h-12" />
