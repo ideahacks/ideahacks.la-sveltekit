@@ -35,7 +35,7 @@
 <!-- Hero Section -->
 <section class="w-full bg-gradient-to-b h-screen from-gray-100 to-white text-black">
 	<div class="flex h-screen flex-col items-center justify-center text-center px-4">
-		<h1 class="text-6xl font-semibold tracking-tight max-md:text-4xl">IdeaHacks 2025</h1>
+		<h1 class="text-6xl font-semibold tracking-tight max-md:text-4xl">IdeaHacks 2026</h1>
 		<p class="mt-4 text-lg text-gray-700">Coming soon. Details to be announced.</p>
 
 		<!-- Chevron Button -->
