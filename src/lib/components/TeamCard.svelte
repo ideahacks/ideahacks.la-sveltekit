@@ -1,5 +1,5 @@
-<script>
-	export let team_info;
+<script lang="ts">
+	let { team_info } = $props();
 </script>
 
 <div

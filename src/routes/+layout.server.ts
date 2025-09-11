@@ -9,7 +9,7 @@ export const load: LayoutServerLoad = async (event) => {
 		.eq('email', event.locals.session?.user.email);
 	if (adminError) {
 		console.log(adminError);
-		throw error(500, 'Error checking admin status');
+		error(500, 'Error checking admin status');
 	}
 
 	return {

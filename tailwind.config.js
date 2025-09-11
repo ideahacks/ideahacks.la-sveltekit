@@ -5,6 +5,7 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
+				sans: ['Inter', 'sans-serif'],
 				paytone: ['Paytone One', 'sans-serif'],
 				encode: ['Encode Sans', 'sans-serif']
 			},
