@@ -7,7 +7,8 @@ export default {
 			fontFamily: {
 				sans: ['Inter', 'sans-serif'],
 				paytone: ['Paytone One', 'sans-serif'],
-				encode: ['Encode Sans', 'sans-serif']
+				encode: ['Encode Sans', 'sans-serif'],
+				mono: ['Roboto Mono', 'monospace']
 			},
 			colors: {
 				'custom-red': '#FF6B6B',

@@ -1,89 +1,36 @@
-<!-- <script lang="ts">
-	import type { Session, SupabaseClient } from '@supabase/supabase-js';
-
-	export let supabase: SupabaseClient;
-	export let session: Session;
-
-	const email = session ? session.user.email : '';
-
-	async function checkIfAdmin() {
-		const { data, error } = await supabase.from('admins').select();
-
-		if (error) {
-			console.log('Error retrieving admins');
-		}
-
-		console.log(data);
-		const isAdmin = data?.some((item) => item.email === email);
-
-		return isAdmin;
-	}
+<script lang="ts">
+	// Navigation items configuration
+	const navItems = [
+		{ name: 'Home', href: '/' },
+		{ name: 'About', href: '/about' },
+		{ name: 'Parts', href: '/parts' }
+	];
 </script>
 
-<div class="navbar bg-custom-yellow font-paytone font-bold">
-	<div class="flex flex-1 pl-4">
-		<a href="/" class="mr-4">HOME</a>
+<nav class="fixed top-0 left-0 right-0 z-50">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="flex justify-between items-center h-16">
+			<!-- Left side navigation -->
+			<div class="flex items-center space-x-8">
+				{#each navItems as item}
+					<a
+						href={item.href}
+						class="font-mono text-white hover:text-blue-400 transition-colors duration-200 text-sm sm:text-base md:text-lg lg:text-xl font-medium uppercase tracking-wider drop-shadow-lg"
+					>
+						{item.name}
+					</a>
+				{/each}
+			</div>
+
+			<!-- Right side - Login -->
+			<div class="flex items-center">
+				<a
+					href="/login"
+					class="font-mono text-white hover:text-blue-400 transition-colors duration-200 text-sm sm:text-base md:text-lg lg:text-xl font-medium uppercase tracking-wider border border-white/50 px-4 py-2 rounded hover:bg-white/20 drop-shadow-lg"
+				>
+					Login
+				</a>
+			</div>
+		</div>
 	</div>
-	<div class="ml-auto flex">
-		<ul class="flex flex-row items-center">
-			<li>
-				<a href="/" class="ml-2 mr-4">ABOUT</a>
-			</li>
-			<li>
-				<a href="/" class="ml-2 mr-4">WORKSHOPS</a>
-			</li>
-			<li>
-				<a href="/parts" class="ml-2 mr-4">PARTS</a>
-			</li>
-
-			{#await checkIfAdmin() then isAdmin}
-				{#if isAdmin}
-					<li>
-						<div class="dropdown dropdown-end dropdown-hover">
-							<div tabindex="-1" class="ml-2 mr-4">
-								<span class="hover:underline">ADMIN</span>
-							</div>
-							<ul
-								tabindex="-1"
-								class="menu dropdown-content z-[1] w-52 items-center rounded-box border-2 border-custom-yellow bg-base-100 p-1 text-sm"
-							>
-								<li><a href="/teams">Teams</a></li>
-								<li><a href="/">Checking Parts</a></li>
-								<li><a href="/">Application Review</a></li>
-							</ul>
-						</div>
-					</li>
-				{/if}
-			{/await}
-
-			{#if email && email.length > 0}
-				<li>
-					<a href="/" class="ml-2 mr-4 text-custom-brown">SIGN OUT</a>
-				</li>
-			{:else}
-				<li>
-					<a href="/login" class="ml-2 mr-4 text-custom-brown underline">LOGIN</a>
-				</li>
-			{/if}
-		</ul>
-	</div>
-</div> -->
-
-<!-- <script lang="ts">
-	import { supabaseClient } from '$lib/supabase';
-
-	export let data;
-</script>
-
-<h1>SvelteKit & Supabase Auth</h1>
-{#if data.session}
-	<p>Welcome, {data.session.user.email}</p>
-	<form action="/logout" method="POST">
-		<button type="submit" class="btn btn-primary">Logout</button>
-	</form>
-{:else}
-	<p>Let's learn how to register and login users!</p>
-	<div class="">
-		<a href="/login" class="btn btn-primary">Login</a>
-	</div>
-{/if} -->
+</nav>
