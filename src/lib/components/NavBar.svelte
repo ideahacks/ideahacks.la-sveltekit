@@ -1,35 +1,44 @@
 <script lang="ts">
-	// Navigation items configuration
-	const navItems = [
+	// Left-aligned navigation items
+	const leftNavItems = [
 		{ name: 'Home', href: '/' },
-		{ name: 'About', href: '/about' },
-		{ name: 'Parts', href: '/parts' }
+		{ name: 'IEEE @ UCLA', href: 'https://www.ieeebruins.com/', external: true }
+	];
+	
+	// Right-aligned navigation items
+	const rightNavItems = [
+		{ name: '2025', href: 'https://idea-hacks-2025.devpost.com/', external: true },
+		{ name: '2024', href: 'https://idea-hacks-2024.devpost.com/', external: true }
 	];
 </script>
 
 <nav class="fixed top-0 left-0 right-0 z-50">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="flex justify-between items-center h-16">
-			<!-- Left side navigation -->
+			<!-- Left-aligned navigation -->
 			<div class="flex items-center space-x-8">
-				{#each navItems as item}
+				{#each leftNavItems as item}
 					<a
 						href={item.href}
 						class="font-mono text-white hover:text-blue-400 transition-colors duration-200 text-sm sm:text-base md:text-lg lg:text-xl font-medium uppercase tracking-wider drop-shadow-lg"
+						{...item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
 					>
 						{item.name}
 					</a>
 				{/each}
 			</div>
 
-			<!-- Right side - Login -->
-			<div class="flex items-center">
-				<a
-					href="/login"
-					class="font-mono text-white hover:text-blue-400 transition-colors duration-200 text-sm sm:text-base md:text-lg lg:text-xl font-medium uppercase tracking-wider border border-white/50 px-4 py-2 rounded hover:bg-white/20 drop-shadow-lg"
-				>
-					Login
-				</a>
+			<!-- Right-aligned navigation -->
+			<div class="flex items-center space-x-8">
+				{#each rightNavItems as item}
+					<a
+						href={item.href}
+						class="font-mono text-white hover:text-blue-400 transition-colors duration-200 text-sm sm:text-base md:text-lg lg:text-xl font-medium uppercase tracking-wider drop-shadow-lg"
+						{...item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+					>
+						{item.name}
+					</a>
+				{/each}
 			</div>
 		</div>
 	</div>
