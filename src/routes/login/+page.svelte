@@ -28,25 +28,29 @@
   }
 </script>
 
-<div class="flex items-center justify-center min-h-screen bg-gray-500">
-  <div class="bg-white shadow-lg rounded-2xl p-8 w-[360px]">
-    <h1 class="text-2xl font-Ethnocentric text-center mb-6">Welcome!</h1>
+<div class="flex items-center justify-center min-h-screen" style="background: linear-gradient(0deg, #0C2F57 0%, #1B0029 100%);">
+  <div class="bg-white/25 shadow-lg rounded-md p-8 w-[400px] h-[500px]">
+    <h1 class="text-2xl text-stone-100 font-Ethnocentric text-center mb-6 mt-12">Welcome!</h1>
     
     <form on:submit|preventDefault={handleLogin} class="space-y-4">
       <div>
-        <label class="block text-sm font-medium mb-1">Email</label>
+        <label class="block text-sm font-medium mb-1 text-stone-100">Email Address</label>
         <input
           type="email"
           bind:value={email}
           class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200"
-          placeholder="you@example.com"
+          placeholder="joebruin@example.com"
           required
         />
       </div>
 
       <div>
-        <label class="block text-sm font-medium mb-1">Password</label>
+        <div class="flex justify-between items-center mb-1">
+          <label for="password" class="text-sm font-medium text-stone-100">Password</label>
+          <button type="button" class="text-sm text-blue-100 hover:underline">Forgot password?</button>
+        </div>
         <input
+          id="password"
           type="password"
           bind:value={password}
           class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200"
@@ -59,18 +63,20 @@
         <p class="text-red-500 text-sm">{errorMsg}</p>
       {/if}
 
+      <p class="text-left text-sm text-stone-100 mt-4">
+        Don’t have an account?
+        <a href="/signup" class="text-blue-100 hover:underline">Sign up!</a>
+      </p>
+
       <button
-        type="submit"
-        class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+        type="submit" 
+        class="w-full bg-cyan-900 text-stone-100 py-2 rounded-lg hover:bg-cyan-950 transition"
         disabled={loading}
       >
         {loading ? 'Logging in...' : 'Login'}
       </button>
 
-      <p class="text-center text-sm text-gray-500 mt-4">
-        Don’t have an account?
-        <a href="/signup" class="text-blue-600 hover:underline">Sign up</a>
-      </p>
+      
     </form>
   </div>
 </div>
