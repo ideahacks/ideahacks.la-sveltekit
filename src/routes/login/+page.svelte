@@ -29,8 +29,8 @@
 </script>
 
 <div class="flex items-center justify-center min-h-screen" style="background: linear-gradient(0deg, #0C2F57 0%, #1B0029 100%);">
-  <div class="bg-white/25 shadow-lg rounded-md p-8 w-[400px] h-[500px]">
-    <h1 class="text-2xl text-stone-100 font-Ethnocentric text-center mb-6 mt-12">Welcome!</h1>
+  <div class="bg-white/25 shadow-lg rounded-md p-8 w-[400px] h-[450px]">
+    <h1 class="text-2xl text-stone-100 font-Ethnocentric text-center mb-6 mt-10">Welcome!</h1>
     
     <form on:submit|preventDefault={handleLogin} class="space-y-4">
       <div>
