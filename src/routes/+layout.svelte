@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import { supabaseClient } from '$lib/supabase';
+	import { supabaseClient } from '$lib/supabaseClient';
 	import logo from '$lib/images/logo.png';
 
 	import type { PageData } from './$types';
