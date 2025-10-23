@@ -2,6 +2,7 @@
   import { supabaseClient } from '$lib/supabaseClient';
   import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
+  import logoImage from '$lib/images/sunset_car.jpg';
 
   let email = '';
   let password = '';
@@ -29,13 +30,21 @@
 </script>
 
 <div class="flex items-center justify-center min-h-screen" style="background: linear-gradient(0deg, #0C2F57 0%, #1B0029 100%);">
-  <div class="bg-white/25 shadow-lg rounded-md p-8 w-[400px] h-[450px]">
-    <h1 class="text-2xl text-stone-100 font-Ethnocentric text-center mb-6 mt-10">Welcome!</h1>
-    
-    <form on:submit|preventDefault={handleLogin} class="space-y-4">
-      <div>
-        <label class="block text-sm font-medium mb-1 text-stone-100">Email Address</label>
+  <div class="bg-white/25 shadow-lg rounded-md p-8 w-[800px] h-[500px] flex">
+    <!-- Left Half: Image -->
+    <div class="w-1/2 flex items-center justify-center overflow-hidden rounded-l-md">
+      <img src={logoImage} alt="Login illustration" class="w-full h-full object-cover" />
+    </div>
+
+    <!-- Right Half: Form -->
+    <div class="w-1/2 flex flex-col justify-center pl-8">
+      <h1 class="text-2xl text-stone-100 font-Ethnocentric text-center mb-6">Welcome!</h1>
+      
+      <form on:submit|preventDefault={handleLogin} class="space-y-4">
+        <div>
+          <label for="email" class="block text-sm font-medium mb-1 text-stone-100">Email Address</label>
         <input
+          id="email"
           type="email"
           bind:value={email}
           class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200"
@@ -68,15 +77,14 @@
         <a href="/signup" class="text-blue-100 hover:underline">Sign up!</a>
       </p>
 
-      <button
-        type="submit" 
-        class="w-full bg-cyan-900 text-stone-100 py-2 rounded-lg hover:bg-cyan-950 transition"
-        disabled={loading}
-      >
-        {loading ? 'Logging in...' : 'Login'}
-      </button>
-
-      
-    </form>
+        <button
+          type="submit" 
+          class="w-full bg-cyan-900 text-stone-100 py-2 rounded-lg hover:bg-cyan-950 transition"
+          disabled={loading}
+        >
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
+      </form>
+    </div>
   </div>
 </div>
