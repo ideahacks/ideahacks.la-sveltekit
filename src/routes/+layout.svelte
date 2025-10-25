@@ -44,7 +44,7 @@
 
 <style lang="postcss">
 	:global(body) {
-		background: linear-gradient(180deg, #2775af 0%, #83c3e8 100%);
+		background: linear-gradient(0deg, #0c2f57 0%, #1b0029 100%);
 		overscroll-behavior: contain;
 	}
 </style>
