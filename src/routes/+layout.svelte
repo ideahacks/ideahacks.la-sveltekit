@@ -2,7 +2,7 @@
 	import { invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { supabaseClient } from '$lib/supabase';
-	import logo from '$lib/images/logo.png';
+	import logo from '$lib/images/ideahacks_logos/default_logo.png';
 
 	import type { PageData } from './$types';
 
