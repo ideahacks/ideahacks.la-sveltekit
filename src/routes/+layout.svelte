@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import { supabaseClient } from '$lib/supabase';
+	import { supabaseClient } from '$lib/supabaseClient';
 	import logo from '$lib/images/ideahacks_logos/default_logo.png';
 
 	import type { PageData } from './$types';
@@ -45,6 +45,8 @@
 <style lang="postcss">
 	:global(body) {
 		background: linear-gradient(0deg, #0c2f57 0%, #1b0029 100%);
-		overscroll-behavior: contain;
+	}
+	:global(html, body) {
+		overscroll-behavior: none; /* prevents overscroll/bounce */
 	}
 </style>
