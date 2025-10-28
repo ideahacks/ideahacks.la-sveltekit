@@ -1,4 +1,6 @@
 <script lang="ts">
+	import SectionTitle from './SectionTitle.svelte';
+
 	let dropdownStates = Array(11).fill(false);
 
 	function toggleDropdown(index: number) {
@@ -10,12 +12,7 @@
 <div class="py-20 px-4">
 	<div class="max-w-6xl mx-auto text-center">
 		<!-- FAQs title -->
-		<h2
-			class="text-white text-5xl sm:text-6xl md:text-7xl font-bold mb-12"
-			style="font-family: 'Ethnocentric', sans-serif; text-shadow: 0 0 10px #8b5cf6, 0 0 20px #8b5cf6, 0 0 30px #8b5cf6;"
-		>
-			FAQs
-		</h2>
+		<SectionTitle title="FAQs" />
 
 		<!-- FAQs content -->
 		<div class="w-full">
@@ -51,7 +48,7 @@
 								class="text-white text-sm md:text-base font-medium"
 								style="font-family: 'Roboto Mono', monospace;"
 							>
-								The hackathon starts at 6:00 PM on Friday.
+								The hackathon starts at 6:00 PM on Friday, 1/12.
 							</p>
 						</div>
 					</div>
@@ -157,8 +154,7 @@
 								class="text-white text-sm md:text-base font-medium"
 								style="font-family: 'Roboto Mono', monospace;"
 							>
-								Yes! This year's theme is "Fashion the Future" - focus on wearable technology and
-								smart textiles.
+								Yes! This year's theme will be announced soon.
 							</p>
 						</div>
 					</div>
@@ -193,8 +189,8 @@
 								class="text-white text-sm md:text-base font-medium"
 								style="font-family: 'Roboto Mono', monospace;"
 							>
-								Grand prize, second place, third place, and special category prizes. Check our
-								website for details!
+								Grand prize, second place, third place, and special category prizes. Stay tuned for
+								details!
 							</p>
 						</div>
 					</div>
@@ -229,7 +225,7 @@
 								class="text-white text-sm md:text-base font-medium"
 								style="font-family: 'Roboto Mono', monospace;"
 							>
-								We'll have team formation activities on Friday night!
+								We'll have team formation activities right before the event!
 							</p>
 						</div>
 					</div>
@@ -336,8 +332,7 @@
 								class="text-white text-sm md:text-base font-medium"
 								style="font-family: 'Roboto Mono', monospace;"
 							>
-								We'll have Arduino kits, sensors, LEDs, and other basic components. Check our
-								website for the full list!
+								We'll have Arduino kits, sensors, LEDs, and other basic components.
 							</p>
 						</div>
 					</div>
@@ -372,7 +367,7 @@
 								class="text-white text-sm md:text-base font-medium"
 								style="font-family: 'Roboto Mono', monospace;"
 							>
-								Yes, we have designated sleeping areas with air mattresses.
+								No, make sure you have sleeping arrangements sorted before you come.
 							</p>
 						</div>
 					</div>

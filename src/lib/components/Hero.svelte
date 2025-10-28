@@ -4,6 +4,7 @@
 	// form state
 	let emailForm: HTMLFormElement;
 	let showThankYou = false;
+	let isSubmitting = false;
 
 	// stars
 	let starsFar: Array<{ id: number; x: number; y: number; opacity: number; size: number }> = [];
@@ -22,7 +23,7 @@
 		starsFar: 0.8,
 		starsClose: 0.6,
 		banner: 0.6,
-		sun: 0.3,
+		sun: 0.5,
 		mountains: 0.2,
 		foreground: 0 // closest - moves at normal scroll speed
 	};
@@ -68,7 +69,6 @@
 			verticalXs.push({ x1: 50 + baseOffset, x2: 50 + baseOffset + taper });
 			verticalXs.push({ x1: 50 - baseOffset, x2: 50 - baseOffset - taper });
 		}
-		console.log(verticalXs);
 	}
 
 	function generateMountains() {
@@ -98,30 +98,42 @@
 		mountainPath = path;
 	}
 
-	// email submit (unchanged aside from timing)
+	// email submit with loading state
 	async function handleEmailSubmit(event: Event) {
 		event.preventDefault();
 		const emailInput = emailForm.querySelector('input[name="email"]') as HTMLInputElement;
 		const email = emailInput.value;
 
+		isSubmitting = true;
+
 		try {
+			const controller = new AbortController();
+			const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
 			await fetch(
 				'https://script.google.com/macros/s/AKfycbx9IQG9oGgHJ5r5y0ZiKJlaQ7Gc74mYnOdL4RfGQB4gxeABLyfybtXg7kUHRmzZvIgp/exec',
 				{
 					method: 'POST',
 					mode: 'no-cors',
 					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ email })
+					body: JSON.stringify({ email }),
+					signal: controller.signal
 				}
 			);
+
+			clearTimeout(timeoutId);
 			console.log('Form submitted (no-cors)');
+
+			showThankYou = true;
+			emailForm.reset();
+			setTimeout(() => (showThankYou = false), 750);
 		} catch (err) {
 			console.error('submit error', err);
+			// Show error message to user
+			alert('Failed to submit email. Please try again.');
+		} finally {
+			isSubmitting = false;
 		}
-
-		showThankYou = true;
-		emailForm.reset();
-		setTimeout(() => (showThankYou = false), 750);
 	}
 
 	// scroll handler for parallax
@@ -237,10 +249,14 @@
 					/>
 					<button
 						type="submit"
-						class="px-8 py-3 bg-pink-600 hover:bg-pink-700 text-white font-medium transition-colors duration-200 text-sm md:text-base border-0"
+						disabled={isSubmitting}
+						class="px-8 py-3 bg-pink-600 hover:bg-pink-700 disabled:bg-pink-400 disabled:cursor-not-allowed text-white font-medium transition-colors duration-200 text-sm md:text-base border-0 flex items-center gap-2"
 						style="font-family: 'Roboto Mono', monospace;"
 					>
-						Submit
+						{#if isSubmitting}
+							<div class="loading-spinner"></div>
+						{/if}
+						{isSubmitting ? 'Submitting...' : 'Submit'}
 					</button>
 				</div>
 			</form>
@@ -294,7 +310,7 @@
 			style="height: 65%; position: absolute; bottom:0; left:0; right:0; z-index:30; transform: translateY({scrollY *
 				parallaxMultipliers.foreground}px)"
 		>
-			<div style="height:100%; background: linear-gradient(to top, #170A34 0%, black 100%);">
+			<div style="height:100%; background: linear-gradient(to top, #160F38 0%, black 100%);">
 				<svg
 					viewBox="0 0 100 100"
 					preserveAspectRatio="none"
@@ -355,5 +371,24 @@
 		width: 100%;
 		height: 100%;
 		display: block;
+	}
+
+	/* loading spinner animation */
+	.loading-spinner {
+		width: 16px;
+		height: 16px;
+		border: 2px solid rgba(255, 255, 255, 0.3);
+		border-top: 2px solid white;
+		border-radius: 50%;
+		animation: spin 1s linear infinite;
+	}
+
+	@keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
 	}
 </style>
