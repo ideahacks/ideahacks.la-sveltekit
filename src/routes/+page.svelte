@@ -140,7 +140,7 @@
 <div class="py-20 px-4">
 	<div class="max-w-6xl mx-auto text-center">
 		<SectionTitle title="PREVIOUS" />
-		<div class="flex flex-wrap justify-center gap-6 text-center text-white text-lg font-medium">
+		<div class="flex flex-wrap justify-center gap-6 text-center text-white text-base font-medium">
 			<a
 				href="https://idea-hacks-2025.devpost.com"
 				target="_blank"
@@ -149,7 +149,7 @@
 				<img
 					src={ideahacks2025}
 					alt="2025"
-					class="h-32 w-32 rounded-full opacity-80 group-hover:opacity-100 transition"
+					class="h-24 w-24 rounded-full opacity-80 group-hover:opacity-100 transition"
 				/>
 				<p class="mt-4">2025</p>
 			</a>
@@ -161,7 +161,7 @@
 				<img
 					src={ideahacks2024}
 					alt="2024"
-					class="h-32 w-32 rounded-full opacity-80 group-hover:opacity-100 transition"
+					class="h-24 w-24 rounded-full opacity-80 group-hover:opacity-100 transition"
 				/>
 				<p class="mt-4">2024</p>
 			</a>
@@ -173,7 +173,7 @@
 				<img
 					src={ideahacks2023}
 					alt="2023"
-					class="h-32 w-32 rounded-full opacity-80 group-hover:opacity-100 transition"
+					class="h-24 w-24 rounded-full opacity-80 group-hover:opacity-100 transition"
 				/>
 				<p class="mt-4">2023</p>
 			</a>
@@ -185,7 +185,7 @@
 				<img
 					src={ideahacks2022}
 					alt="2022"
-					class="h-32 w-32 rounded-full opacity-80 group-hover:opacity-100 transition"
+					class="h-24 w-24 rounded-full opacity-80 group-hover:opacity-100 transition"
 				/>
 				<p class="mt-4">2022</p>
 			</a>
@@ -197,7 +197,7 @@
 				<img
 					src={ideahacks2021}
 					alt="2021"
-					class="h-32 w-32 rounded-full opacity-80 group-hover:opacity-100 transition"
+					class="h-24 w-24 rounded-full opacity-80 group-hover:opacity-100 transition"
 				/>
 				<p class="mt-4">2021</p>
 			</a>
@@ -209,7 +209,7 @@
 				<img
 					src={ideahacks2020}
 					alt="2020"
-					class="h-32 w-32 rounded-full opacity-80 group-hover:opacity-100 transition"
+					class="h-24 w-24 rounded-full opacity-80 group-hover:opacity-100 transition"
 				/>
 				<p class="mt-4">2020</p>
 			</a>

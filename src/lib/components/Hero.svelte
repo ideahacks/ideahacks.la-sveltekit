@@ -15,6 +15,7 @@
 	let mountainPath = ''; // valid SVG path string (starts with M)
 	let rise = -75; // percentage translateY: start below (100%) -> 0%
 	let hasAnimated = false;
+	let sunRise = 70; // percentage translateY for sun entrance
 
 	// parallax state
 	let scrollY = 0;
@@ -150,6 +151,7 @@
 		requestAnimationFrame(() => {
 			hasAnimated = true;
 			rise = 0;
+			sunRise = 0;
 		});
 
 		// Add scroll listener for parallax
@@ -214,15 +216,15 @@
 	>
 		<!-- Logo and Date -->
 		<div class="text-center mb-8">
-			<img src="/logo.svg" alt="IDEA Hacks Logo" class="w-full max-w-5xl h-auto mx-auto mb-6" />
+			<img src="/logo.svg" alt="IDEA Hacks Logo" class="w-full max-w-4xl h-auto mx-auto mb-6" />
 			<div class="space-y-2">
 				<div
-					class="font-sans text-gray-300 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold drop-shadow-lg"
+					class="font-sans text-gray-300 text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold drop-shadow-lg"
 				>
 					Jan 16-18, 2026
 				</div>
 				<div
-					class="font-sans text-gray-300 text-lg sm:text-xl md:text-2xl lg:text-3xl drop-shadow-lg"
+					class="font-sans text-gray-300 text-base sm:text-lg md:text-xl lg:text-2xl drop-shadow-lg"
 				>
 					Ackerman Grand Ballroom
 				</div>
@@ -235,7 +237,7 @@
 				bind:this={emailForm}
 				on:submit={handleEmailSubmit}
 				enctype="multipart/form-data"
-				class="rounded-lg overflow-hidden inline-block w-96 md:w-[28rem]"
+				class="rounded-lg overflow-hidden inline-block w-80 md:w-[24rem]"
 				style="background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(190,190,190,0.4) 30%, rgba(255,255,255,0.4) 100%); z-index:40;"
 			>
 				<div class="flex">
@@ -243,14 +245,14 @@
 						type="email"
 						name="email"
 						placeholder="Enter email to stay updated"
-						class="flex-1 px-5 py-3 bg-white text-gray-800 placeholder-gray-500 text-sm md:text-base focus:outline-none border-0"
+						class="flex-1 px-5 py-3 bg-white text-gray-800 placeholder-gray-500 text-sm md:text-sm focus:outline-none border-0"
 						style="font-family: 'Roboto Mono', monospace;"
 						required
 					/>
 					<button
 						type="submit"
 						disabled={isSubmitting}
-						class="px-8 py-3 bg-pink-600 hover:bg-pink-700 disabled:bg-pink-400 disabled:cursor-not-allowed text-white font-medium transition-colors duration-200 text-sm md:text-base border-0 flex items-center gap-2"
+						class="px-6 py-3 bg-pink-600 hover:bg-pink-700 disabled:bg-pink-400 disabled:cursor-not-allowed text-white font-medium transition-colors duration-200 text-sm md:text-sm border-0 flex items-center gap-2"
 						style="font-family: 'Roboto Mono', monospace;"
 					>
 						{#if isSubmitting}
@@ -274,17 +276,22 @@
 
 	<!-- Sun with glow (behind mountains) -->
 	<div
-		class="absolute bottom-[50px] left-1/2 transform -translate-x-1/2 w-96 h-96 md:w-[500px] md:h-[500px]"
+		class="absolute bottom-[0px] left-1/2 transform -translate-x-1/2 w-80 h-80 md:w-[420px] md:h-[420px]"
 		style="z-index:5; transform: translate(-50%, {scrollY * parallaxMultipliers.sun}px);"
 	>
 		<div
-			class="absolute inset-0 rounded-full opacity-60 blur-3xl"
-			style="background: radial-gradient(circle, #ffe24f 0%, #FFB80c 50%, transparent 70%);"
-		></div>
-		<div
-			class="relative w-full h-full rounded-full"
-			style="background: radial-gradient(circle, #ffe24f 0%, #FFB80c 100%); box-shadow: 0 0 60px #ffe24f, 0 0 120px #FFB80c;"
-		></div>
+			class="relative w-full h-full"
+			style={`transform: translateY(${sunRise}%); transition: transform 1200ms cubic-bezier(.22,1,.36,1);`}
+		>
+			<div
+				class="absolute inset-0 rounded-full opacity-60 blur-3xl"
+				style="background: radial-gradient(circle, #ffe24f 0%, #FFB80c 50%, transparent 70%);"
+			></div>
+			<div
+				class="relative w-full h-full rounded-full"
+				style="background: radial-gradient(circle, #ffe24f 0%, #FFB80c 100%); box-shadow: 0 0 60px #ffe24f, 0 0 120px #FFB80c;"
+			></div>
+		</div>
 	</div>
 
 	<!-- Mountains + Grid + Panel -->
@@ -296,7 +303,7 @@
 		<svg
 			viewBox="0 0 100 100"
 			preserveAspectRatio="none"
-			style="height: 100%; width: 100%; z-index:20;"
+			style="height: 100%; width: 100%; z-index:20; clip-path: inset(0 0 65% 0);"
 		>
 			<path
 				d={mountainPath}
@@ -310,7 +317,7 @@
 			style="height: 65%; position: absolute; bottom:0; left:0; right:0; z-index:30; transform: translateY({scrollY *
 				parallaxMultipliers.foreground}px)"
 		>
-			<div style="height:100%; background: linear-gradient(to top, #160F38 0%, black 100%);">
+			<div style="height:100%; background: linear-gradient(to top, #170D35 20%, black 100%);">
 				<svg
 					viewBox="0 0 100 100"
 					preserveAspectRatio="none"
@@ -359,7 +366,7 @@
 	/* scene sizing */
 	.scene {
 		width: 100%;
-		height: 400px; /* visible band for mountains + grid + panel */
+		height: 300px; /* visible band for mountains + grid + panel */
 		overflow: hidden;
 	}
 
