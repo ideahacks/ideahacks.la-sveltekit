@@ -219,7 +219,7 @@
 				<div
 					class="font-sans text-gray-300 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold drop-shadow-lg"
 				>
-					Jan 12-14, 2026
+					Jan 16-18, 2026
 				</div>
 				<div
 					class="font-sans text-gray-300 text-lg sm:text-xl md:text-2xl lg:text-3xl drop-shadow-lg"

@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&family=Paytone+One&family=Roboto+Mono&display=swap');
 
+/* Ensure consistent font rendering across environments */
+* {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -60,4 +67,12 @@
 .hover-lift:active {
 	transform: translateY(2px);
 	transition: transform 0.1s ease;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
