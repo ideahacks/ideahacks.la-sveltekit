@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&family=Paytone+One&family=Roboto+Mono&display=swap');
 
+/* Ensure consistent font rendering across environments */
+* {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -64,6 +71,10 @@
 
 html, body {
   width: 100%;
+<<<<<<< HEAD
+=======
+  height: 100%;
+>>>>>>> origin/main
   max-width: 100%;
   overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
