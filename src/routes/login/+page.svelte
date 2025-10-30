@@ -8,35 +8,44 @@
   let password = '';
   let errorMsg = '';
   let loading = false;
+  let signInDebug: any = null;
 
   async function handleLogin() {
     loading = true;
     errorMsg = '';
+    signInDebug = null;
+    try {
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      // Helpful debug - visible in browser console. Remove when not needed.
+      console.log('supabase signIn', { data, error });
+      signInDebug = { data, error };
 
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
-      email,
-      password
-    });
-
-    if (error) {
-      errorMsg = error.message;
-    } else {
-      // Redirect on success
-      goto('/dashboard');
+      if (error) {
+        errorMsg = error.message;
+      } else {
+        // Redirect on success
+        goto('/dashboard');
+      }
+    } catch (err) {
+      // `err` is `unknown` in strict TS configs. Handle safely.
+      console.error('signIn exception', err);
+      if (err instanceof Error) {
+        errorMsg = err.message;
+      } else {
+        errorMsg = String(err);
+      }
+    } finally {
+      loading = false;
     }
-
-    loading = false;
   }
 </script>
 
 <div class="flex items-center justify-center min-h-screen" style="background: linear-gradient(0deg, #0C2F57 0%, #1B0029 100%);">
   <div class="bg-white/25 shadow-lg rounded-md p-8 w-[800px] h-[500px] flex">
-    <!-- Left Half: Image -->
     <div class="w-1/2 flex items-center justify-center overflow-hidden rounded-l-md">
       <img src={logoImage} alt="Login illustration" class="w-full h-full object-cover" />
     </div>
 
-    <!-- Right Half: Form -->
     <div class="w-1/2 flex flex-col justify-center pl-8">
       <h1 class="text-2xl text-stone-100 font-Ethnocentric text-center mb-6">Welcome!</h1>
       
@@ -56,7 +65,7 @@
       <div>
         <div class="flex justify-between items-center mb-1">
           <label for="password" class="text-sm font-medium text-stone-100">Password</label>
-          <button type="button" class="text-sm text-blue-100 hover:underline">Forgot password?</button>
+          <a href="/reset" class="text-sm text-blue-100 hover:underline">Forgot password?</a>
         </div>
         <input
           id="password"
