@@ -61,3 +61,11 @@
 	transform: translateY(2px);
 	transition: transform 0.1s ease;
 }
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}

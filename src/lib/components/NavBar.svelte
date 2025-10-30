@@ -2,9 +2,9 @@
 	// Left-aligned navigation items
 	const leftNavItems = [
 		{ name: 'Home', href: '/' },
-		{ name: 'IEEE @ UCLA', href: 'https://www.ieeebruins.com/', external: true }
+		{ name: 'IEEE', href: 'https://www.ieeebruins.com/', external: true }
 	];
-	
+
 	// Right-aligned navigation items
 	const rightNavItems = [
 		{ name: '2025', href: 'https://idea-hacks-2025.devpost.com/', external: true },
