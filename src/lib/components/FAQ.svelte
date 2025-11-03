@@ -19,7 +19,7 @@
 			<div class="flex justify-center items-center">
 				<div class="block w-3/5 space-y-3">
 					<!-- FAQ 2 -->
-					<div
+					<!-- <div
 						class="p-4 rounded-lg text-left flex items-center justify-between cursor-pointer"
 						style="background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(190,190,190,0.4) 30%, rgba(255,255,255,0.4) 100%);"
 						on:click={() => toggleDropdown(1)}
@@ -36,7 +36,7 @@
 						>
 							&gt;
 						</span>
-					</div>
+					</div> -->
 					<div
 						class="overflow-hidden transition-all duration-300 ease-in-out"
 						style="max-height: {dropdownStates[1] ? '50px' : '0px'}; opacity: {dropdownStates[1]
