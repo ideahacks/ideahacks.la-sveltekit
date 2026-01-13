@@ -2,7 +2,8 @@
 	// Left-aligned navigation items
 	const leftNavItems = [
 		{ name: 'Home', href: '/' },
-		{ name: 'IEEE', href: 'https://www.ieeebruins.com/', external: true }
+		{ name: 'IEEE', href: 'https://www.ieeebruins.com/', external: true },
+		{ name: 'Discord', href: 'https://discord.gg/XFkxmCwME5', external: true }
 	];
 
 	// Right-aligned navigation items
@@ -28,6 +29,7 @@
 				{/each}
 			</div>
 
+			<!-- Right-aligned navigation -->
 			<!-- Right-aligned navigation -->
 			<div class="flex items-center space-x-8">
 				{#each rightNavItems as item}

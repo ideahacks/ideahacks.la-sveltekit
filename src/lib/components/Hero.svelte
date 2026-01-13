@@ -221,7 +221,7 @@
 				<div
 					class="font-sans text-gray-300 text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold drop-shadow-lg"
 				>
-					Spring 2026
+					April 24-26, 2026
 					<!-- Ackerman Grand Ballroom,  -->
 				</div>
 				<div
