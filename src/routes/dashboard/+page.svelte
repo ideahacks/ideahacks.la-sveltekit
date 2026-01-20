@@ -1,0 +1,81 @@
+<script lang="ts">
+	import NavBar from '$lib/components/NavBar.svelte';
+	import { supabaseClient } from '$lib/supabaseClient';
+	import { goto } from '$app/navigation';
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
+
+	async function handleLogout() {
+		await supabaseClient.auth.signOut();
+		goto('/');
+	}
+</script>
+
+<NavBar />
+
+<div class="flex items-center justify-center min-h-screen pt-16">
+	<div class="max-w-4xl w-full px-4 py-8">
+		<div class="bg-white/10 backdrop-blur-md rounded-lg shadow-lg p-8">
+			<h1 class="text-4xl font-bold text-white mb-6 font-mono uppercase tracking-wider">
+				Dashboard
+			</h1>
+
+			<div class="space-y-6">
+				<!-- Apply Button Section -->
+				<div class="bg-gradient-to-r from-cyan-600/20 to-blue-600/20 rounded-lg p-8 border-2 border-cyan-500/30">
+					<div class="text-center">
+						<h2 class="text-3xl font-bold text-white mb-4 font-mono uppercase tracking-wider">
+							Ready to Apply?
+						</h2>
+						<p class="text-white/80 mb-6">
+							Fill out the application form to join IDEA Hacks 2026
+						</p>
+						<a
+							href="/dashboard/apply"
+							class="inline-block px-12 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white rounded-lg transition-all duration-200 font-mono uppercase tracking-wider text-xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105"
+						>
+							APPLY HERE
+						</a>
+					</div>
+				</div>
+
+				<!-- Welcome Section -->
+				<div class="bg-white/5 rounded-lg p-6">
+					<h2 class="text-2xl font-semibold text-white mb-2 font-mono">
+						Welcome, {data.session?.user?.email}!
+					</h2>
+					<p class="text-white/80">
+						You're successfully logged in to your IDEA Hacks dashboard.
+					</p>
+				</div>
+
+				<!-- User Info Section -->
+				<div class="bg-white/5 rounded-lg p-6">
+					<h3 class="text-xl font-semibold text-white mb-4 font-mono uppercase">
+						Account Information
+					</h3>
+					<div class="space-y-2 text-white/90">
+						<p><strong>Email:</strong> {data.session?.user?.email}</p>
+						<p><strong>User ID:</strong> {data.session?.user?.id}</p>
+					</div>
+				</div>
+
+				<!-- Actions Section -->
+				<div class="bg-white/5 rounded-lg p-6">
+					<h3 class="text-xl font-semibold text-white mb-4 font-mono uppercase">
+						Actions
+					</h3>
+					<div class="flex gap-4">
+						<button
+							onclick={handleLogout}
+							class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors duration-200 font-mono uppercase tracking-wider"
+						>
+							Logout
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

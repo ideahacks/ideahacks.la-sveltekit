@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+
 	// Left-aligned navigation items
 	const leftNavItems = [
 		{ name: 'Home', href: '/' },
@@ -6,11 +8,13 @@
 		{ name: 'Discord', href: 'https://discord.gg/XFkxmCwME5', external: true }
 	];
 
-	// Right-aligned navigation items
-	const rightNavItems = [
-		{ name: '2025', href: 'https://idea-hacks-2025.devpost.com/', external: true },
-		{ name: '2024', href: 'https://idea-hacks-2024.devpost.com/', external: true }
-	];
+	// Right-aligned navigation items - conditional based on auth
+	$: rightNavItems = $page.data.session
+		? [{ name: 'DASHBOARD', href: '/dashboard' }]
+		: [
+				{ name: 'LOGIN', href: '/login' },
+				{ name: 'APPLY', href: '/signup' }
+			];
 </script>
 
 <nav class="fixed top-0 left-0 right-0 z-50">
