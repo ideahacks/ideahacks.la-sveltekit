@@ -52,7 +52,7 @@ export const actions: Actions = {
 		const supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
 
 		try {
-			const { error } = await supabaseAdmin.from('applications').insert({
+			const { error } = await supabaseAdmin.from('applications_2026').insert({
 				uid,
 				email,
 				name,
