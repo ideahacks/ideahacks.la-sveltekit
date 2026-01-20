@@ -1,5 +1,7 @@
 import { redirect, fail } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
+import { createClient } from '@supabase/supabase-js';
+import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
 
 export const load: PageServerLoad = async (event) => {
 	// Check if user is authenticated
@@ -47,55 +49,43 @@ export const actions: Actions = {
 			return fail(400, { error: 'Please fill out all required fields.' });
 		}
 
+		const supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
+
 		try {
-			// Prepare data as form data for Google Apps Script
-			// Google Apps Script expects form data, not JSON
-			const submissionData = new URLSearchParams();
-			submissionData.append('timestamp', new Date().toISOString());
-			submissionData.append('name', name);
-			submissionData.append('preferredName', preferredName);
-			submissionData.append('pronouns', pronouns);
-			submissionData.append('school', school);
-			submissionData.append('year', year);
-			submissionData.append('transfer', isTransfer);
-			submissionData.append('major', major);
-			submissionData.append('priorEngineeringExperience', priorEngineeringExperience);
-			submissionData.append('whyIdeaHacks', whyIdeaHacks);
-			submissionData.append('hackathonIdeas', hackathonIdeas);
-			submissionData.append('priorHackathonExperience', priorHackathonExperience);
-			submissionData.append('suggestedParts', suggestedParts);
-			submissionData.append('shirtSize', shirtSize);
-			submissionData.append('dietaryRestrictions', dietaryRestrictions);
-			submissionData.append('email', email);
-			submissionData.append('uid', uid);
-
-			// Submit to Google Sheets via Google Apps Script Web App
-			// Set GOOGLE_APPS_SCRIPT_URL in your .env file
-			// In SvelteKit, use $env/static/private for server-side env vars
-			const { GOOGLE_APPS_SCRIPT_URL } = await import('$env/static/private');
-			const googleScriptUrl = GOOGLE_APPS_SCRIPT_URL || 
-				'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
-
-			// Use fetch with no-cors mode for Google Apps Script
-			await fetch(googleScriptUrl, {
-				method: 'POST',
-				mode: 'no-cors',
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded'
-				},
-				body: submissionData.toString()
+			const { error } = await supabaseAdmin.from('applications').insert({
+				uid,
+				email,
+				name,
+				preferred_name: preferredName,
+				pronouns,
+				school,
+				year,
+				transfer: isTransfer,
+				major,
+				prior_engineering_experience: priorEngineeringExperience,
+				why_ideahacks: whyIdeaHacks,
+				hackathon_ideas: hackathonIdeas,
+				prior_hackathon_experience: priorHackathonExperience,
+				suggested_parts: suggestedParts,
+				shirt_size: shirtSize,
+				dietary_restrictions: dietaryRestrictions
 			});
 
-			// Since we're using no-cors, we can't check the response
-			// But we'll assume success if no error was thrown
-			
+			if (error) {
+				console.error('Supabase insert error:', error);
+				return fail(500, { error: 'Failed to submit application. Please try again.' });
+			}
+
 			return {
 				success: true,
 				message: 'Application submitted successfully!'
 			};
-		} catch (error) {
-			console.error('Error submitting to Google Sheets:', error);
+		} catch (err) {
+			console.error('Unexpected error submitting to Supabase:', err);
 			return fail(500, { error: 'Failed to submit application. Please try again.' });
 		}
+
+			
+		
 	}
 };
