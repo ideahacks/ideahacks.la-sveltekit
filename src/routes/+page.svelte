@@ -218,14 +218,13 @@
 </div>
 
 <!-- Sponsors Section -->
+<!--
 <div class="py-20 px-4">
 	<div class="max-w-6xl mx-auto text-center">
-		<!-- SPONSORS title -->
 		<SectionTitle title="SPONSORS" />
 
-		<!-- Sponsors logos -->
 		<div class="flex flex-col md:flex-row gap-8 justify-center items-center">
-			<!-- Infineon -->
+
 			<div class="flex items-center justify-center">
 				<a
 					href="https://www.infineon.com/"
@@ -240,7 +239,8 @@
 					/>
 				</a>
 			</div>
-			<!-- Texas Instruments -->
+
+
 			<div class="flex items-center justify-center">
 				<a
 					href="https://www.ti.com/"
@@ -255,7 +255,8 @@
 					/>
 				</a>
 			</div>
-			<!-- DigiKey -->
+
+
 			<div class="flex items-center justify-center">
 				<a
 					href="https://www.digikey.com/"
@@ -272,7 +273,8 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
+
 
 <!-- FAQ Component -->
 <FAQ />
