@@ -47,14 +47,6 @@
 					</svg>
 				</a>
 			</div>
-
-			<!-- Footer Text -->
-			<p
-				class="text-gray-300 text-sm md:text-base text-center"
-				style="font-family: 'Roboto Mono', monospace;"
-			>
-				Made with ❤️ and ✨ from IDEA Hacks
-			</p>
 		</div>
 	</div>
 </div>

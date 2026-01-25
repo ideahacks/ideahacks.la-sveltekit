@@ -217,7 +217,8 @@
 	</div>
 </div>
 
-<!-- Sponsors Section -->
+
+
 <!--
 <div class="py-20 px-4">
 	<div class="max-w-6xl mx-auto text-center">
@@ -278,6 +279,19 @@
 
 <!-- FAQ Component -->
 <FAQ />
+
+<!-- Sponsors Section -->
+<div class="pt-5 pb-10 px-4">
+  <div class="max-w-6xl mx-auto text-center">
+
+  <!-- Footer Text -->
+  <p
+  class="text-gray-300 text-md md:text-base text-center"
+  >
+  Interested in sponsoring IDEA Hacks? <br> Email us at <a class="underline text-gray-400" href="mailto:corporate@ieeebruins.com">corporate@ieeebruins.com</a>
+  </p>
+  </div>
+</div>
 
 <!-- Footer Component -->
 <Footer />
