@@ -8,9 +8,14 @@
 		{ name: 'Discord', href: 'https://discord.gg/XFkxmCwME5', external: true }
 	];
 
-	// Right-aligned navigation items - conditional based on auth
+	// Right-aligned navigation items - conditional based on auth and admin
 	$: rightNavItems = $page.data.session
-		? [{ name: 'DASHBOARD', href: '/dashboard' }]
+		? $page.data.is_admin
+			? [
+					{ name: 'DASHBOARD', href: '/dashboard' },
+					{ name: 'ADMIN', href: '/admin' }
+				]
+			: [{ name: 'DASHBOARD', href: '/dashboard' }]
 		: [
 				{ name: 'LOGIN', href: '/login' },
 				{ name: 'APPLY', href: '/signup' }
