@@ -37,9 +37,11 @@
 
 <NavBar />
 
-<div class="flex items-center justify-center min-h-screen pt-16 pb-16">
-	<div class="max-w-4xl w-full px-4 py-8">
-		<div class="bg-white/10 backdrop-blur-md rounded-lg shadow-lg p-8">
+<!-- Explicit scroll container: fixed height + overflow-y-auto so content scrolls regardless of layout quirks -->
+<div class="apply-page-scroll h-screen overflow-y-auto overflow-x-hidden">
+	<div class="flex min-h-full flex-col items-center pt-16 pb-16">
+		<div class="max-w-4xl w-full px-4 py-8">
+			<div class="bg-white/10 backdrop-blur-md rounded-lg shadow-lg p-8">
 			<h1 class="text-4xl font-bold text-white mb-2 font-mono uppercase tracking-wider">
 				Application Form
 			</h1>
@@ -312,6 +314,13 @@
 					</button>
 				</div>
 			</form>
+			</div>
 		</div>
 	</div>
 </div>
+
+<style>
+	.apply-page-scroll {
+		-webkit-overflow-scrolling: touch;
+	}
+</style>
