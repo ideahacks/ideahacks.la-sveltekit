@@ -14,14 +14,17 @@
 
 <NavBar />
 
-<div class="flex items-center justify-center min-h-screen pt-16">
-	<div class="max-w-4xl w-full px-4 py-8">
-		<div class="bg-white/10 backdrop-blur-md rounded-lg shadow-lg p-8">
+<!-- Explicit scroll container: fixed height + overflow-y-auto so content scrolls regardless of layout quirks -->
+<div class="dashboard-page-scroll h-screen overflow-y-auto overflow-x-hidden">
+	<div class="flex min-h-full flex-col items-center pt-16 pb-8">
+		<div class="max-w-4xl w-full px-4 py-8">
+			<div class="bg-white/10 backdrop-blur-md rounded-lg shadow-lg p-8">
 			<h1 class="text-4xl font-bold text-white mb-6 font-mono uppercase tracking-wider">
 				Dashboard
 			</h1>
 
 			<div class="space-y-6">
+				{#if !data.hasApplied}
 				<!-- Apply Button Section -->
 				<div class="bg-gradient-to-r from-cyan-600/20 to-blue-600/20 rounded-lg p-8 border-2 border-cyan-500/30">
 					<div class="text-center">
@@ -39,6 +42,30 @@
 						</a>
 					</div>
 				</div>
+				{:else}
+				<!-- Application Status Section -->
+				<div class="bg-white/10 backdrop-blur-md rounded-lg p-8 border border-white/20">
+					<div class="text-center">
+						<h2 class="text-3xl font-bold text-white mb-4 font-mono uppercase tracking-wider">
+							Application Status
+						</h2>
+
+						{#if data.status === 'submitted'}
+							<p class="text-yellow-300 text-xl font-semibold">
+								Submitted — under review
+							</p>
+						{:else if data.status === 'accepted'}
+							<p class="text-green-400 text-xl font-semibold">
+								Accepted 🎉
+							</p>
+						{:else if data.status === 'rejected'}
+							<p class="text-red-400 text-xl font-semibold">
+								Not accepted
+							</p>
+						{/if}
+					</div>
+				</div>
+			{/if}
 
 				<!-- Welcome Section -->
 				<div class="bg-white/5 rounded-lg p-6">
@@ -76,6 +103,13 @@
 					</div>
 				</div>
 			</div>
+			</div>
 		</div>
 	</div>
 </div>
+
+<style>
+	.dashboard-page-scroll {
+		-webkit-overflow-scrolling: touch;
+	}
+</style>
