@@ -226,6 +226,7 @@
 
 		<div class="flex flex-col md:flex-row gap-8 justify-center items-center">
 
+
 			<div class="flex items-center justify-center">
 				<a
 					href="https://www.infineon.com/"
@@ -242,6 +243,8 @@
 			</div>
 
 
+
+
 			<div class="flex items-center justify-center">
 				<a
 					href="https://www.ti.com/"
@@ -256,6 +259,8 @@
 					/>
 				</a>
 			</div>
+
+
 
 
 			<div class="flex items-center justify-center">
