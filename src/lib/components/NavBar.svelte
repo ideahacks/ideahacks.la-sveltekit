@@ -39,7 +39,6 @@
 			</div>
 
 			<!-- Right-aligned navigation -->
-			<!-- Right-aligned navigation -->
 			<div class="flex items-center space-x-8">
 				{#each rightNavItems as item}
 					<a
