@@ -27,7 +27,7 @@ export const load: PageServerLoad = async (event) => {
 async function requireAdmin(event: import('@sveltejs/kit').RequestEvent): Promise<boolean> {
 	if (!event.locals.session?.user?.email) return false;
 	const { data } = await event.locals.sb
-		.from('admins_2025')
+		.from('admins_2026')
 		.select('email')
 		.eq('email', event.locals.session.user.email)
 		.limit(1);

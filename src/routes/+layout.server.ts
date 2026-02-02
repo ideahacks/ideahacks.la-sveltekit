@@ -4,7 +4,7 @@ import { error } from '@sveltejs/kit';
 
 export const load: LayoutServerLoad = async (event) => {
 	const { data: admin, error: adminError } = await event.locals.sb
-		.from('admins_2025')
+		.from('admins_2026')
 		.select()
 		.eq('email', event.locals.session?.user.email);
 	if (adminError) {
