@@ -4,6 +4,7 @@
 	// Left-aligned navigation items
 	const leftNavItems = [
 		{ name: 'Home', href: '/' },
+		{ name: 'Parts', href: '/parts' },
 		{ name: 'IEEE', href: 'https://www.ieeebruins.com/', external: true },
 		{ name: 'Discord', href: 'https://discord.gg/XFkxmCwME5', external: true }
 	];
