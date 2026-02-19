@@ -12,13 +12,14 @@ export const load: PageServerLoad = async (event) => {
 
 	const { data, error } = await event.locals.sb
 		.from('applications_2026')
-		.select('status')
+		.select('status, team_status')
 		.eq('uid', uid)
 		.maybeSingle();
 
 	return {
 		session: event.locals.session,
 		hasApplied: !!data && !error,
-		status: data?.status ?? null
+		status: data?.status ?? null,
+		teamStatus: data?.team_status?? null
 	};
 };
