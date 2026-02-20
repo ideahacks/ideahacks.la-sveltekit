@@ -3,29 +3,25 @@
 	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
 
-	let { data }: { data: PageData } = $props();
+	let { data, form }: { data: PageData; form: any } = $props();
+	
 
 	// layout-only state (no Supabase / no actions yet)
 	let teamName = '';
 
 	// mock results for layout preview (replace with real search results later)
 	
-
-	function handleCancel() {
-		goto('/dashboard');
-	}
-
-
 	type Participant = { uid: string, full_name: string };
 
 	let participantQuery = $state('');
+	let stagedInvites = $state<Participant[]>([]);
 
-	const participantResults: Participant[] = [
-		{ uid:'1' ,full_name: 'Avery Nguyen' },
-		{ uid:'2' ,full_name: 'Jordan Patel' },
-		{  uid:'3' ,full_name: 'Sam Rivera' },
-		{  uid:'4' ,full_name: 'Sophia Coulsell' }
-	];
+	const participantResults: Participant[] = data.participants
+		.filter((p: any) => p.id !== data.session.user.id)
+		.map((p: any) => ({
+		uid: p.id,
+		full_name: p.full_name
+	}));
 
 	const filteredParticipants = $derived.by(() => {
 		const q = participantQuery.trim().toLowerCase();
@@ -47,14 +43,23 @@
 			.map((x) => x.p);
 	});
 
-	let stagedInvites = $state<Participant[]>([]);
+	
 
 
 	function stageInvite(p: Participant) {
-	if (!stagedInvites.find(i => i.uid === p.uid)) {
-		stagedInvites = [...stagedInvites, p];
+		if (!stagedInvites.find(i => i.uid === p.uid)) {
+			stagedInvites = [...stagedInvites, p];
+		}	
 	}
-}
+
+
+	function removeInvite(uid: string) {
+		stagedInvites = stagedInvites.filter((p) => p.uid !== uid);
+	}
+
+	function handleCancel() {
+		goto('/dashboard');
+	}
 
 </script>
 
@@ -94,6 +99,7 @@
 						</label>
 
 						<input
+							name = "team_name"
 							bind:value={teamName}
 							placeholder="e.g., Silicon Divas"
 							class="w-full px-4 py-3 rounded-lg bg-black/30 border border-white/30 text-white placeholder:text-white/40
@@ -209,9 +215,16 @@
 										{#each stagedInvites as p}
 											<li class="flex items-center justify-between">
 												<p class="text-white/90 text-sm">{p.full_name}</p>
-												<span class="text-xs font-mono uppercase tracking-wider text-yellow-300">
-													Queued
-												</span>
+												<button
+						type="button"
+						onclick={() => removeInvite(p.uid)}
+						aria-label={`Remove ${p.full_name}`}
+						class="shrink-0 px-3 py-1 border border-white/30 text-white/80 rounded-lg
+						transition-colors duration-200 font-mono uppercase tracking-wider
+						hover:border-white/60 hover:text-white hover:bg-white/10"
+					>
+						✕
+					</button>
 											</li>
 										{/each}
 									</ul>
@@ -227,18 +240,28 @@
 								Once your team is created, you can manage invites and members from the dashboard.
 							</p>
 
-							<div class="flex flex-wrap gap-3">
-								<!-- Layout-only buttons -->
+							<form method="POST" action="?/createTeam" class="flex flex-wrap gap-3">
+								<!-- send team name -->
+								<input type="hidden" name="team_name" value={teamName} />
+							
+								<!-- send invitee uid list -->
+								<input
+									type="hidden"
+									name="invitee_uids"
+									value={JSON.stringify(stagedInvites.map((p) => p.uid))}
+								/>
+							
 								<button
-									type="button"
+									type="submit"
 									class="px-6 py-2 border border-white/50 text-white rounded-lg
 									transition-colors duration-200 font-mono uppercase tracking-wider
 									hover:bg-white hover:text-black"
 								>
 									Create Team
 								</button>
-
+							
 								<button
+									type="button"
 									onclick={handleCancel}
 									class="px-6 py-2 border border-white/20 text-white/80 rounded-lg
 									transition-colors duration-200 font-mono uppercase tracking-wider
@@ -246,8 +269,13 @@
 								>
 									Cancel
 								</button>
-							</div>
+							</form>
 						</div>
+						{#if form?.error}
+							<p class="text-red-300 text-sm mt-4">
+								{form.error}
+							</p>
+						{/if}
 					</div>
 
 				</div>

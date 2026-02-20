@@ -61,7 +61,7 @@
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 						<div>
 							<label for="name" class="block text-sm font-medium mb-1 text-stone-100">
-								Name <span class="text-red-400">*</span>
+								Full Name <span class="text-red-400">*</span>
 							</label>
 							<input
 								id="name"

@@ -89,6 +89,7 @@
 				</div>
 
 				<!-- Team Section -->
+				{#if data.status === 'accepted'}
 				<div class = "bg-white/5 rounded-lg p-6">
 					<h2 class="text-2xl font-semibold text-white mb-2 font-mono">
 						Team Status
@@ -117,6 +118,7 @@
 					</div>
 					{/if}
 				</div>
+				{/if}
 
 				<!-- User Info Section -->
 				<div class="bg-white/5 rounded-lg p-6">
