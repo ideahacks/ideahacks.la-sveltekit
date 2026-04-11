@@ -9,8 +9,8 @@
 </script>
 
 <!-- FAQs section -->
-<div class="py-20 px-4">
-	<div class="max-w-6xl mx-auto text-center">
+<div class="py-20 md:px-4">
+	<div class="md:max-w-6xl max-w-[100%] mx-auto text-center">
 		<!-- FAQs title -->
 		<SectionTitle title="FAQs" />
 

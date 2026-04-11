@@ -30,12 +30,17 @@
 	import expressifLogo from '$lib/images/sponsors/espressif.svg';
 
 	let sponsors = [
-		{ href: 'https://www.digikey.com/', src: digikeyLogo, alt: 'DigiKey' },
-		{ href: 'https://www.teledyneflir.com/', src: teledyneLogo, alt: 'Teledyne FLIR' },
-		{ href: 'https://www.ti.com/', src: tiLogo, alt: 'Texas Instruments' },
-		{ href: 'https://www.pcbway.com/', src: pcbwayLogo, alt: 'PCBWay' },
-		{ href: 'https://silvustechnologies.com/', src: silvusLogo, alt: 'Silvus Technologies' },
-		{ href: 'https://www.espressif.com/', src: expressifLogo, alt: 'Espressif' }
+		{ href: 'https://www.digikey.com/', src: digikeyLogo, alt: 'DigiKey', height: 80 },
+		{ href: 'https://www.flir.com/', src: teledyneLogo, alt: 'Teledyne FLIR', height: 80 },
+		{ href: 'https://www.ti.com/', src: tiLogo, alt: 'Texas Instruments', height: 65 },
+		{ href: 'https://www.pcbway.com/', src: pcbwayLogo, alt: 'PCBWay', height: 65 },
+		{
+			href: 'https://silvustechnologies.com/',
+			src: silvusLogo,
+			alt: 'Silvus Technologies',
+			height: 65
+		},
+		{ href: 'https://www.espressif.com/', src: expressifLogo, alt: 'Espressif', height: 40 }
 	];
 
 	// Image cycling logic
@@ -246,7 +251,8 @@
 						<img
 							src={sponsor.src}
 							alt={sponsor.alt}
-							class="h-16 md:h-20 w-auto filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity duration-200"
+							style="height: {sponsor.height}px;"
+							class="w-auto filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity duration-200"
 						/>
 					</a>
 				</div>
