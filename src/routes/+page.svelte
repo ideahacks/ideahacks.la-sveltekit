@@ -21,9 +21,22 @@
 	import previous5 from '$lib/images/previous/Previous 5.png';
 
 	// Import sponsor images
-	import infineonLogo from '$lib/images/sponsors/infineon.svg';
-	import tiLogo from '$lib/images/sponsors/ti.svg';
 	import digikeyLogo from '$lib/images/sponsors/digikey.svg';
+	import teledyneLogo from '$lib/images/sponsors/teledyneflir.png';
+	import silvusLogo from '$lib/images/sponsors/silvus.png';
+
+	import tiLogo from '$lib/images/sponsors/ti.svg';
+	import pcbwayLogo from '$lib/images/sponsors/pcbway.png';
+	import expressifLogo from '$lib/images/sponsors/espressif.svg';
+
+	let sponsors = [
+		{ href: 'https://www.digikey.com/', src: digikeyLogo, alt: 'DigiKey' },
+		{ href: 'https://www.teledyneflir.com/', src: teledyneLogo, alt: 'Teledyne FLIR' },
+		{ href: 'https://www.ti.com/', src: tiLogo, alt: 'Texas Instruments' },
+		{ href: 'https://www.pcbway.com/', src: pcbwayLogo, alt: 'PCBWay' },
+		{ href: 'https://silvustechnologies.com/', src: silvusLogo, alt: 'Silvus Technologies' },
+		{ href: 'https://www.espressif.com/', src: expressifLogo, alt: 'Espressif' }
+	];
 
 	// Image cycling logic
 	const previousImages = [previous1, previous2, previous3, previous4, previous5];
@@ -217,67 +230,30 @@
 	</div>
 </div>
 
-<!--
 <div class="py-20 px-4">
-	<div class="max-w-6xl mx-auto text-center">
+	<div class="max-w-3xl mx-auto text-center">
 		<SectionTitle title="SPONSORS" />
 
-		<div class="flex flex-col md:flex-row gap-8 justify-center items-center">
-
-
-			<div class="flex items-center justify-center">
-				<a
-					href="https://www.infineon.com/"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="transition-transform duration-200 hover:scale-105"
-				>
-					<img
-						src={infineonLogo}
-						alt="Infineon"
-						class="h-16 md:h-20 w-auto filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity duration-200"
-					/>
-				</a>
-			</div>
-
-
-
-
-			<div class="flex items-center justify-center">
-				<a
-					href="https://www.ti.com/"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="transition-transform duration-200 hover:scale-105"
-				>
-					<img
-						src={tiLogo}
-						alt="Texas Instruments"
-						class="h-16 md:h-20 w-auto filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity duration-200"
-					/>
-				</a>
-			</div>
-
-
-
-
-			<div class="flex items-center justify-center">
-				<a
-					href="https://www.digikey.com/"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="transition-transform duration-200 hover:scale-105"
-				>
-					<img
-						src={digikeyLogo}
-						alt="DigiKey"
-						class="h-16 md:h-20 w-auto filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity duration-200"
-					/>
-				</a>
-			</div>
+		<div class="flex flex-col md:flex-row md:flex-wrap gap-8 justify-center items-center">
+			{#each sponsors as sponsor}
+				<div class="flex items-center justify-center">
+					<a
+						href={sponsor.href}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="transition-transform duration-200 hover:scale-105"
+					>
+						<img
+							src={sponsor.src}
+							alt={sponsor.alt}
+							class="h-16 md:h-20 w-auto filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity duration-200"
+						/>
+					</a>
+				</div>
+			{/each}
 		</div>
 	</div>
-</div> -->
+</div>
 
 <!-- FAQ Component -->
 <FAQ />
@@ -299,16 +275,16 @@
 <Footer />
 
 <style>
-	/* :global(body) { */
-	/* margin: 0; */
-	/* padding: 0; */
-	/* overflow-x: hidden; */
-	/* background-color: #111827; */
-	/* } */
+	:global(body) {
+		margin: 0;
+		padding: 0;
+		/* overflow-x: hidden; */
+		/* background-color: #111827; */
+	}
 
-	/* :global(html) { */
-	/* margin: 0; */
-	/* padding: 0; */
-	/* overflow-x: hidden; */
-	/* } */
+	:global(html) {
+		margin: 0;
+		padding: 0;
+		/* overflow-x: hidden; */
+	}
 </style>
