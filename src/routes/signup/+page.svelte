@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { supabaseClient } from '$lib/supabaseClient';
 	import { goto } from '$app/navigation';
-	import previous5 from '$lib/images/previous/Previous 5 trimmed.png';
 
 	let email = '';
 	let password = '';
@@ -50,83 +49,98 @@
 </script>
 
 <div
-	class="flex items-center justify-center min-h-screen"
+	class="flex items-center justify-center min-h-screen px-4"
 	style="background: linear-gradient(0deg, #0C2F57 0%, #1B0029 100%);"
 >
-	<div class="bg-white/25 shadow-lg rounded-md p-8 w-[800px] h-[500px] flex">
-		<!-- Left: Decorative image -->
-		<div class="w-1/2 flex items-center justify-center overflow-hidden rounded-l-md">
-			<img src={previous5} alt="signup illustration" class="w-full h-full object-cover" />
-		</div>
-
-		<!-- Right: Signup form -->
-		<div class="w-1/2 flex flex-col justify-center pl-8">
-			<h1 class="text-2xl text-stone-100 font-Ethnocentric text-center mb-6">Create account</h1>
-
-			<form on:submit|preventDefault={handleSignUp} class="space-y-4">
-				<div>
-					<label for="email" class="block text-sm font-medium mb-1 text-stone-100"
-						>Email Address</label
-					>
-					<input
-						id="email"
-						type="email"
-						bind:value={email}
-						class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200"
-						placeholder="you@example.com"
-						required
-					/>
+	<div
+		class="w-full max-w-4xl overflow-hidden rounded-[32px] border border-white/10 bg-white/10 backdrop-blur-xl shadow-2xl shadow-cyan-900/20"
+	>
+		<div class="grid grid-cols-1 md:grid-cols-2">
+			<div
+				class="hidden md:flex flex-col justify-center gap-4 bg-gradient-to-br from-cyan-700/20 via-slate-950/30 to-blue-700/20 p-10"
+			>
+				<div class="space-y-4">
+					<p class="text-xl uppercase tracking-[0.35em] font-mono text-cyan-100/80">
+						Join IDEA Hacks
+					</p>
+					<h2 class="text-4xl font-bold text-white font-mono tracking-wider">Sign Up</h2>
+					<p class="text-white/70 leading-relaxed">
+						Create your IDEA Hacks account and access the dashboard.
+					</p>
 				</div>
+			</div>
 
-				<div>
-					<label for="password" class="block text-sm font-medium mb-1 text-stone-100"
-						>Password</label
+			<div class="p-10">
+				<!-- <div class="mb-8 text-center">
+					<h1 class="text-3xl font-semibold text-white font-mono uppercase tracking-wider">
+						Sign up
+					</h1>
+					<p class="mt-3 text-sm text-white/70">
+						Create your IDEA Hacks account and access the dashboard.
+					</p>
+				</div> -->
+
+				<form on:submit|preventDefault={handleSignUp} class="space-y-6">
+					<div class="space-y-2">
+						<label for="email" class="block text-sm font-medium text-white/80">Email Address</label>
+						<input
+							id="email"
+							type="email"
+							bind:value={email}
+							class="w-full rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-white placeholder:text-slate-400 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
+							placeholder="you@example.com"
+							required
+						/>
+					</div>
+
+					<div class="space-y-2">
+						<label for="password" class="block text-sm font-medium text-white/80">Password</label>
+						<input
+							id="password"
+							type="password"
+							bind:value={password}
+							class="w-full rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-white placeholder:text-slate-400 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
+							placeholder="Create a password"
+							required
+						/>
+					</div>
+
+					<div class="space-y-2">
+						<label for="confirm" class="block text-sm font-medium text-white/80"
+							>Confirm Password</label
+						>
+						<input
+							id="confirm"
+							type="password"
+							bind:value={confirm}
+							class="w-full rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-white placeholder:text-slate-400 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
+							placeholder="Repeat password"
+							required
+						/>
+					</div>
+
+					{#if errorMsg}
+						<p class="text-sm text-red-400">{errorMsg}</p>
+					{/if}
+
+					{#if infoMsg}
+						<p class="text-sm text-emerald-300">{infoMsg}</p>
+					{/if}
+
+					<button
+						type="submit"
+						class="w-full rounded-2xl bg-gradient-to-r from-cyan-600 to-blue-600 px-4 py-3 text-sm font-semibold uppercase tracking-wider text-white shadow-lg shadow-cyan-700/30 transition hover:from-cyan-500 hover:to-blue-500 disabled:opacity-50"
+						disabled={loading}
 					>
-					<input
-						id="password"
-						type="password"
-						bind:value={password}
-						class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200"
-						placeholder="Create a password"
-						required
-					/>
-				</div>
+						{loading ? 'Creating account...' : 'Sign up'}
+					</button>
 
-				<div>
-					<label for="confirm" class="block text-sm font-medium mb-1 text-stone-100"
-						>Confirm password</label
-					>
-					<input
-						id="confirm"
-						type="password"
-						bind:value={confirm}
-						class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200"
-						placeholder="Repeat password"
-						required
-					/>
-				</div>
-
-				{#if errorMsg}
-					<p class="text-red-500 text-sm">{errorMsg}</p>
-				{/if}
-
-				{#if infoMsg}
-					<p class="text-green-400 text-sm">{infoMsg}</p>
-				{/if}
-
-				<button
-					type="submit"
-					class="w-full bg-cyan-900 text-stone-100 py-2 rounded-lg hover:bg-cyan-950 transition"
-					disabled={loading}
-				>
-					{loading ? 'Creating account...' : 'Sign up'}
-				</button>
-
-				<p class="text-center text-sm text-stone-100 mt-4">
-					Already have an account?
-					<a href="/login" class="text-blue-100 hover:underline">Log in</a>
-				</p>
-			</form>
+					<p class="text-center text-sm text-white/70 mt-4">
+						Already have an account?
+						<a href="/login" class="text-cyan-200 hover:text-white transition">Log in</a>
+					</p>
+				</form>
+			</div>
 		</div>
 	</div>
 </div>

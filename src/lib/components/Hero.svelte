@@ -167,8 +167,7 @@
 	<!-- Gradient Background -->
 	<div
 		class="absolute inset-0 w-full h-full"
-		style="background: linear-gradient(180deg, #000214 0%, #0B0C3C 20%, #310E4D 40%, #651758 60%, #A6275B 80%, #D19EB6 100%); z-index:0; transform: translateY({scrollY *
-			parallaxMultipliers.background}px);"
+		style="background: linear-gradient(180deg, #000214 0%, #0B0C3C 20%, #310E4D 40%, #651758 60%, #A6275B 80%, #D19EB6 100%); z-index:0;"
 	></div>
 
 	<!-- Stars Farther -->

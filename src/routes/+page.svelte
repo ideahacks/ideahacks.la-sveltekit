@@ -217,8 +217,6 @@
 	</div>
 </div>
 
-
-
 <!--
 <div class="py-20 px-4">
 	<div class="max-w-6xl mx-auto text-center">
@@ -281,37 +279,36 @@
 	</div>
 </div> -->
 
-
 <!-- FAQ Component -->
 <FAQ />
 
 <!-- Sponsors Section -->
 <div class="pt-5 pb-10 px-4">
-  <div class="max-w-6xl mx-auto text-center">
-
-  <!-- Footer Text -->
-  <p
-  class="text-gray-300 text-md md:text-base text-center"
-  >
-  Interested in sponsoring IDEA Hacks? <br> Email us at <a class="underline text-gray-400" href="mailto:corporate@ieeebruins.com">corporate@ieeebruins.com</a>
-  </p>
-  </div>
+	<div class="max-w-6xl mx-auto text-center">
+		<!-- Footer Text -->
+		<p class="text-gray-300 text-md md:text-base text-center">
+			Interested in sponsoring IDEA Hacks? <br /> Email us at
+			<a class="underline text-gray-400" href="mailto:corporate@ieeebruins.com"
+				>corporate@ieeebruins.com</a
+			>
+		</p>
+	</div>
 </div>
 
 <!-- Footer Component -->
 <Footer />
 
 <style>
-	:global(body) {
-		margin: 0;
-		padding: 0;
-		/* overflow-x: hidden; */
-		/* background-color: #111827; */
-	}
+	/* :global(body) { */
+	/* margin: 0; */
+	/* padding: 0; */
+	/* overflow-x: hidden; */
+	/* background-color: #111827; */
+	/* } */
 
-	:global(html) {
-		margin: 0;
-		padding: 0;
-		/* overflow-x: hidden; */
-	}
+	/* :global(html) { */
+	/* margin: 0; */
+	/* padding: 0; */
+	/* overflow-x: hidden; */
+	/* } */
 </style>

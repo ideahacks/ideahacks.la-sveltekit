@@ -10,6 +10,17 @@
 		await supabaseClient.auth.signOut();
 		goto('/');
 	}
+
+	function gotoTeamCreation() {
+		console.log("clicked");
+		goto('/dashboard/createTeam');
+	}
+
+	function gotoTeamLookUp() {
+		console.log("clicked");
+		goto('/dashboard/joinTeam');
+	}
+
 </script>
 
 <NavBar />
@@ -72,10 +83,42 @@
 					<h2 class="text-2xl font-semibold text-white mb-2 font-mono">
 						Welcome, {data.session?.user?.email}!
 					</h2>
-					<p class="text-white/80">
-						You're successfully logged in to your IDEA Hacks dashboard.
-					</p>
+						<p class="text-white/80">
+							You're successfully logged in to your IDEA Hacks dashboard.
+						</p>
 				</div>
+
+				<!-- Team Section -->
+				{#if data.status === 'accepted'}
+				<div class = "bg-white/5 rounded-lg p-6">
+					<h2 class="text-2xl font-semibold text-white mb-2 font-mono">
+						Team Status
+					</h2> 
+					{#if data.teamStatus == "No Team"}
+					<div class = "flex flex-col gap-4">
+						<p class="text-white/80">
+							You currently don't have a team!
+						</p>
+						<div class="flex gap-4">
+							<button
+							onclick={gotoTeamCreation}
+							class="px-6 py-2 border border-white/50 text-white rounded-lg 
+							transition-colors duration-200 font-mono uppercase tracking-wider
+							hover:bg-white hover:text-black">
+								Create team
+							</button>
+							<button
+							onclick={gotoTeamLookUp}
+							class="px-6 py-2 border border-white/50 text-white rounded-lg 
+							transition-colors duration-200 font-mono uppercase tracking-wider
+							hover:bg-white hover:text-black">
+								Join existing team
+							</button>	
+						</div>
+					</div>
+					{/if}
+				</div>
+				{/if}
 
 				<!-- User Info Section -->
 				<div class="bg-white/5 rounded-lg p-6">
@@ -85,6 +128,7 @@
 					<div class="space-y-2 text-white/90">
 						<p><strong>Email:</strong> {data.session?.user?.email}</p>
 						<p><strong>User ID:</strong> {data.session?.user?.id}</p>
+						<p><strong>Team Status:</strong> {data.teamStatus}</p>
 					</div>
 				</div>
 
