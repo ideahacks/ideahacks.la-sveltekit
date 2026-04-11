@@ -17,7 +17,9 @@
 		loading = true;
 		try {
 			const redirectTo = `${window.location.origin}/reset/change`;
-			const { data, error } = await supabaseClient.auth.resetPasswordForEmail(email, { redirectTo });
+			const { data, error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+				redirectTo
+			});
 			console.log('supabase resetPasswordForEmail', { data, error });
 			if (error) {
 				errorMsg = error.message;

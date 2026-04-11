@@ -11,7 +11,10 @@
 	let recoverySession = false;
 
 	onMount(async () => {
-		if (window.location.hash.includes('type=recovery') || window.location.hash.includes('access_token')) {
+		if (
+			window.location.hash.includes('type=recovery') ||
+			window.location.hash.includes('access_token')
+		) {
 			const { error } = await supabaseClient.auth.initialize();
 			if (error) {
 				errorMsg = error.message;
@@ -48,7 +51,8 @@
 		try {
 			const { data: sessionData } = await supabaseClient.auth.getSession();
 			if (!sessionData.session) {
-				errorMsg = 'Unable to update password because your recovery session was not detected. Please request a new reset link.';
+				errorMsg =
+					'Unable to update password because your recovery session was not detected. Please request a new reset link.';
 				return;
 			}
 
@@ -80,7 +84,9 @@
 	>
 		<div class="p-10">
 			<div class="text-center mb-8">
-				<p class="text-sm uppercase tracking-[0.35em] font-mono text-cyan-100/80">Update password</p>
+				<p class="text-sm uppercase tracking-[0.35em] font-mono text-cyan-100/80">
+					Update password
+				</p>
 				<h1 class="mt-3 text-3xl font-semibold text-white font-mono tracking-wider">
 					Choose a new password
 				</h1>
@@ -103,7 +109,9 @@
 				</div>
 
 				<div class="space-y-2">
-					<label for="confirmPassword" class="block text-sm font-medium text-white/80">Confirm Password</label>
+					<label for="confirmPassword" class="block text-sm font-medium text-white/80"
+						>Confirm Password</label
+					>
 					<input
 						id="confirmPassword"
 						type="password"
@@ -123,7 +131,9 @@
 				{/if}
 
 				{#if !recoverySession}
-					<p class="text-sm text-white/70">Waiting for recovery validation, or visit the reset page again if your link is expired.</p>
+					<p class="text-sm text-white/70">
+						Waiting for recovery validation, or visit the reset page again if your link is expired.
+					</p>
 				{/if}
 
 				<button
