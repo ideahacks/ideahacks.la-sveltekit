@@ -58,18 +58,29 @@ export const actions: Actions = {
 		if (teamErr) return fail(500, { error: teamErr.message });
 		const team_id = team.id as number; // bigint identity comes through as number in JS
 
-		// 2) Add creator as owner member
-		const { error: memberErr } = await event.locals.sb
-			.from('team_members_2026')
-			.insert({
-				team_id,
-				uid,
-				role: 'owner'
-			});
-
-		if (memberErr) return fail(500, { error: memberErr.message });
-
-		// 3) Insert invites (pending)
+				// 2) Add creator as owner member
+				const { error: memberErr } = await event.locals.sb
+				.from('team_members_2026')
+				.insert({
+					team_id,
+					uid,
+					role: 'owner'
+				});
+	
+			if (memberErr) return fail(500, { error: memberErr.message });
+	
+			// 3) Update creator's application row
+			const { error: appUpdateErr } = await event.locals.sb
+				.from('applications_2026')
+				.update({
+					team_id,
+					team_status: 'In Team'
+				})
+				.eq('uid', uid);
+	
+			if (appUpdateErr) return fail(500, { error: appUpdateErr.message });
+	
+			// 4) Insert invites (pending)
 		if (invitee_uids.length > 0) {
 			const inviteRows = invitee_uids.map((invitee_uid) => ({
 				team_id,
