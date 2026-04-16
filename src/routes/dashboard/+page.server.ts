@@ -20,33 +20,35 @@ export const load: PageServerLoad = async (event) => {
 			console.error('Error fetching application/team data:', error);
 		}
 
-	let teamMembers: Array<{
-		uid: string;
-		applications_2026: {
-			name?: string | null;
-			first_name?: string | null;
-			last_name?: string | null;
-		} | null;
-	}> = [];
+		let teamMembers: Array<{
+			uid: string;
+			applications_2026: {
+				uid?: string | null;
+				name?: string | null;
+			} | null;
+		}> = [];
 
-		if (data?.team_id) {
-			const { data: membersData, error: membersError } = await event.locals.sb
-				.from('team_members_2026')
-				.select(`
+	if (data?.team_id) {
+		const { data: membersData, error: membersError } = await event.locals.sb
+			.from('team_members_2026')
+			.select(`
+				uid,
+				applications_2026 (
 					uid,
-					applications_2026 (
-						name,
-						first_name,
-						last_name
-					)
-				`)
-				.eq('team_id', data.team_id)
-				.neq('uid', uid); // remove this line if you want to include the current user too
+					name
+				)
+			`)
+			.eq('team_id', data.team_id)
+			.neq('uid', uid);
 	
-			if (!membersError && membersData) {
-				teamMembers = membersData;
-			}
+		if (membersError) {
+			console.error('Error fetching team members:', membersError);
 		}
+	
+		if (!membersError && membersData) {
+			teamMembers = membersData;
+		}
+	}
 
 
 
@@ -220,6 +222,57 @@ export const actions: Actions = {
 	
 		if (otherInvitesError) {
 			return fail(500, { error: otherInvitesError.message });
+		}
+	
+		return { success: true };
+	},
+
+	leaveTeam: async (event) => {
+		if (!event.locals.session) throw redirect(302, '/login');
+	
+		const uid = event.locals.session.user.id;
+	
+		// Check current application/team state
+		const { data: appRow, error: appError } = await event.locals.sb
+			.from('applications_2026')
+			.select('team_id, team_status')
+			.eq('uid', uid)
+			.maybeSingle();
+	
+		if (appError) {
+			return fail(500, { error: appError.message });
+		}
+	
+		if (!appRow) {
+			return fail(404, { error: 'Application record not found.' });
+		}
+	
+		if (!appRow.team_id) {
+			return fail(400, { error: 'You are not currently on a team.' });
+		}
+	
+		// Remove user from team members
+		const { error: memberDeleteError } = await event.locals.sb
+			.from('team_members_2026')
+			.delete()
+			.eq('uid', uid)
+			.eq('team_id', appRow.team_id);
+	
+		if (memberDeleteError) {
+			return fail(500, { error: memberDeleteError.message });
+		}
+	
+		// Update application row
+		const { error: appUpdateError } = await event.locals.sb
+			.from('applications_2026')
+			.update({
+				team_id: null,
+				team_status: 'No Team'
+			})
+			.eq('uid', uid);
+	
+		if (appUpdateError) {
+			return fail(500, { error: appUpdateError.message });
 		}
 	
 		return { success: true };
