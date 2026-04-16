@@ -22,6 +22,7 @@ export const load: PageServerLoad = async (event) => {
 
 		let teamMembers: Array<{
 			uid: string;
+			role: string;
 			applications_2026: {
 				uid?: string | null;
 				name?: string | null;
@@ -33,6 +34,7 @@ export const load: PageServerLoad = async (event) => {
 			.from('team_members_2026')
 			.select(`
 				uid,
+				role,
 				applications_2026 (
 					uid,
 					name
@@ -232,7 +234,7 @@ export const actions: Actions = {
 	
 		const uid = event.locals.session.user.id;
 	
-		// Check current application/team state
+		// 1) Get the user's current team
 		const { data: appRow, error: appError } = await event.locals.sb
 			.from('applications_2026')
 			.select('team_id, team_status')
@@ -251,18 +253,102 @@ export const actions: Actions = {
 			return fail(400, { error: 'You are not currently on a team.' });
 		}
 	
-		// Remove user from team members
+		const teamId = appRow.team_id;
+	
+		// 2) Check this user's membership + role
+		const { data: myMembership, error: membershipError } = await event.locals.sb
+			.from('team_members_2026')
+			.select('uid, team_id, role, joined_at')
+			.eq('uid', uid)
+			.eq('team_id', teamId)
+			.maybeSingle();
+	
+		if (membershipError) {
+			return fail(500, { error: membershipError.message });
+		}
+	
+		if (!myMembership) {
+			return fail(404, { error: 'Team membership not found.' });
+		}
+	
+		// 3) If owner, determine whether to transfer ownership or delete team
+		if (myMembership.role === 'owner') {
+			const { data: otherMembers, error: othersError } = await event.locals.sb
+				.from('team_members_2026')
+				.select('uid, role, joined_at')
+				.eq('team_id', teamId)
+				.neq('uid', uid)
+				.order('joined_at', { ascending: true });
+	
+			if (othersError) {
+				return fail(500, { error: othersError.message });
+			}
+	
+			// No one else left -> delete the whole team
+			if (!otherMembers || otherMembers.length === 0) {
+				// Remove owner membership first
+				const { error: deleteMembershipError } = await event.locals.sb
+					.from('team_members_2026')
+					.delete()
+					.eq('uid', uid)
+					.eq('team_id', teamId);
+	
+				if (deleteMembershipError) {
+					return fail(500, { error: deleteMembershipError.message });
+				}
+	
+				// Clear application row for leaving user
+				const { error: appUpdateError } = await event.locals.sb
+					.from('applications_2026')
+					.update({
+						team_id: null,
+						team_status: 'No Team'
+					})
+					.eq('uid', uid);
+	
+				if (appUpdateError) {
+					return fail(500, { error: appUpdateError.message });
+				}
+	
+				// Delete the team itself
+				const { error: teamDeleteError } = await event.locals.sb
+					.from('teams_2026')
+					.delete()
+					.eq('id', teamId);
+	
+				if (teamDeleteError) {
+					return fail(500, { error: teamDeleteError.message });
+				}
+	
+				return { success: true };
+			}
+	
+			// Otherwise transfer ownership to earliest joined member
+			const newOwner = otherMembers[0];
+	
+			const { error: transferError } = await event.locals.sb
+				.from('team_members_2026')
+				.update({ role: 'owner' })
+				.eq('uid', newOwner.uid)
+				.eq('team_id', teamId);
+	
+			if (transferError) {
+				return fail(500, { error: transferError.message });
+			}
+		}
+	
+		// 4) Remove this user from team_members_2026
 		const { error: memberDeleteError } = await event.locals.sb
 			.from('team_members_2026')
 			.delete()
 			.eq('uid', uid)
-			.eq('team_id', appRow.team_id);
+			.eq('team_id', teamId);
 	
 		if (memberDeleteError) {
 			return fail(500, { error: memberDeleteError.message });
 		}
 	
-		// Update application row
+		// 5) Clear their application team info
 		const { error: appUpdateError } = await event.locals.sb
 			.from('applications_2026')
 			.update({

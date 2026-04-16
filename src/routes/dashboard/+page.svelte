@@ -187,7 +187,9 @@
 														class="bg-black/20 rounded-lg border border-white/10 px-4 py-3 text-white flex items-center justify-between"
 													>
 														<span>{member.applications_2026?.name ?? member.uid}</span>
-														<span class="text-white/40 text-sm font-mono">Member</span>
+														<span class="text-white/40 text-sm font-mono uppercase">
+															{member.role}
+														</span>
 													</li>
 												{/each}
 											</ul>
