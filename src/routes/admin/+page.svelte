@@ -5,11 +5,7 @@
 
 	let { data, form }: { data: PageData; form?: ActionData } = $props();
 
-	type FilterMode =
-		| 'all'
-		| 'accepted'
-		| 'rejected'
-		| 'pending';
+	type FilterMode = 'all' | 'accepted' | 'rejected' | 'pending';
 
 	type ApplicationRecord = {
 		uid: string;
@@ -117,12 +113,12 @@
 
 	let allVisibleCollapsed = $derived(
 		filteredApplications.length > 0 &&
-		filteredApplications.every((app: ApplicationRecord) => collapsedUids.includes(app.uid))
+			filteredApplications.every((app: ApplicationRecord) => collapsedUids.includes(app.uid))
 	);
 
 	let counts = $derived(
-			((data.applications ?? []) as ApplicationRecord[]).reduce(
-				(acc: { accepted: number; rejected: number; pending: number }, app: ApplicationRecord) => {
+		((data.applications ?? []) as ApplicationRecord[]).reduce(
+			(acc: { accepted: number; rejected: number; pending: number }, app: ApplicationRecord) => {
 				const status = getStatus(app);
 				acc[status] += 1;
 				return acc;
@@ -207,13 +203,13 @@
 							</button>
 						{/each}
 					</div>
-				<button
-					type="button"
-					onclick={() => setCollapsedForVisible(!allVisibleCollapsed)}
-					class="ml-auto px-3 py-2 rounded-lg bg-white/5 border border-white/15 text-white text-sm font-mono uppercase tracking-wider hover:bg-white/10"
-				>
-					{allVisibleCollapsed ? 'Expand all' : 'Collapse all'}
-				</button>
+					<button
+						type="button"
+						onclick={() => setCollapsedForVisible(!allVisibleCollapsed)}
+						class="ml-auto px-3 py-2 rounded-lg bg-white/5 border border-white/15 text-white text-sm font-mono uppercase tracking-wider hover:bg-white/10"
+					>
+						{allVisibleCollapsed ? 'Expand all' : 'Collapse all'}
+					</button>
 				</div>
 
 				{#if !data.applications?.length}
@@ -228,7 +224,9 @@
 								data-uid={app.uid}
 							>
 								<!-- Header: name, email, status, actions -->
-								<div class="flex flex-wrap items-center justify-between gap-4 p-4 border-b border-white/10">
+								<div
+									class="flex flex-wrap items-center justify-between gap-4 p-4 border-b border-white/10"
+								>
 									<div>
 										<span class="text-white font-semibold font-mono">{app.name ?? app.email}</span>
 										{#if app.preferred_name}
@@ -284,7 +282,7 @@
 									<dl class="p-4 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 text-sm">
 										{#each orderedKeys as key}
 											{#if app[key] != null || key === 'status'}
-												<div class="{longTextFields.includes(key) ? 'md:col-span-2' : ''}">
+												<div class={longTextFields.includes(key) ? 'md:col-span-2' : ''}>
 													<dt class="text-white/60 font-mono uppercase tracking-wider mb-0.5">
 														{fieldLabels[key] ?? key}
 													</dt>
