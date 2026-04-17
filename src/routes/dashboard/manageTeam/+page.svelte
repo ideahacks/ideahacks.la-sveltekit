@@ -280,7 +280,7 @@
 									transition-colors duration-200 font-mono uppercase tracking-wider
 									hover:border-white/40 hover:text-white"
 								>
-									Cancel
+									Go Back
 								</button>
 							</form>
 						</div>

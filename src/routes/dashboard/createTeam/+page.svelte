@@ -7,7 +7,7 @@
 	
 
 	// layout-only state (no Supabase / no actions yet)
-	let teamName = '';
+	let teamName = $state('');
 
 	// mock results for layout preview (replace with real search results later)
 	
