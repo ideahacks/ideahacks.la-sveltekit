@@ -73,7 +73,18 @@ export const load: PageServerLoad = async (event) => {
 	.eq('status', 'pending')
 	.order('created_at', { ascending: false });
 
+	let myTeamRole: string | null = null;
 
+	if (data?.team_id) {
+		const { data: myMembership } = await event.locals.sb
+			.from('team_members_2026')
+			.select('role')
+			.eq('team_id', data.team_id)
+			.eq('uid', uid)
+			.maybeSingle();
+	
+		myTeamRole = myMembership?.role ?? null;
+	}
 	
 
 	return {
@@ -83,7 +94,8 @@ export const load: PageServerLoad = async (event) => {
 		teamStatus: data?.team_status?? null,
 		teamName: data?.teams_2026?.team_name ?? null,
 		teamMembers,
-		receivedInvites: receivedInvites ?? []
+		receivedInvites: receivedInvites ?? [],
+		myTeamRole
 	};
 };
 

@@ -22,6 +22,10 @@
 		goto('/dashboard/joinTeam');
 	}
 
+	function gotoManageTeam() {
+		goto('/dashboard/manageTeam');
+	}
+
 	let showError = $state(false);
 
 	$effect(() => {
@@ -105,13 +109,25 @@
 								<h2 class="text-2xl font-semibold text-white font-mono">Team Status</h2>
 
 								{#if data.teamStatus == 'In Team'}
-									<button
-										type="button"
-										onclick={() => (showLeaveConfirm = true)}
-										class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors duration-200 font-mono uppercase tracking-wider"
-									>
-										Leave Team
-									</button>
+									<div class="flex gap-3">
+										{#if data.myTeamRole === 'owner'}
+											<button
+												type="button"
+												onclick={gotoManageTeam}
+												class="px-6 py-2 border border-white/50 text-white rounded-lg transition-colors duration-200 font-mono uppercase tracking-wider hover:bg-white hover:text-black"
+											>
+												Manage Team
+											</button>
+										{/if}
+
+										<button
+											type="button"
+											onclick={() => (showLeaveConfirm = true)}
+											class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors duration-200 font-mono uppercase tracking-wider"
+										>
+											Leave Team
+										</button>
+									</div>
 								{/if}
 							</div>
 
