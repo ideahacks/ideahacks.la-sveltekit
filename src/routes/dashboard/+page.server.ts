@@ -199,20 +199,34 @@ export const actions: Actions = {
 		if (appUpdateError) {
 			return fail(500, { error: appUpdateError.message });
 		}
+
+		// 4) check if empty team 
+
+		const {data: ownerExistance, error: ownerExistanceError} = await event.locals.sb
+		.from('team_members_2026')
+		.select('uid')
+		.eq('team_id', invite.team_id);
+		
+		if (ownerExistanceError){
+			return fail(500, { error: ownerExistanceError.message });
+		}
+
+		const role = !ownerExistance || ownerExistance.length === 0 ? 'owner' : 'member';
 	
-		// 4) Add them to team_members_2026
+		// 4.5) Add them to team_members_2026
 		const { error: memberInsertError } = await event.locals.sb
 			.from('team_members_2026')
 			.insert({
 				team_id: invite.team_id,
 				uid,
-				role: 'member'
+				role: role
 			});
 	
 		if (memberInsertError) {
 			return fail(500, { error: memberInsertError.message });
 		}
-	
+
+		
 		
 	
 		// 5) Mark this invite as accepted
@@ -323,14 +337,7 @@ export const actions: Actions = {
 				}
 	
 				// Delete the team itself
-				const { error: teamDeleteError } = await event.locals.sb
-					.from('teams_2026')
-					.delete()
-					.eq('id', teamId);
-	
-				if (teamDeleteError) {
-					return fail(500, { error: teamDeleteError.message });
-				}
+				
 	
 				return { success: true };
 			}
@@ -347,6 +354,17 @@ export const actions: Actions = {
 			if (transferError) {
 				return fail(500, { error: transferError.message });
 			}
+		}
+
+		//  delete their invites
+		const { error: deleteInvitesError } = await event.locals.sb
+			.from('team_invites_2026')
+			.delete()
+			.eq('invitee_uid', uid)
+			.eq('team_id', teamId);
+	
+		if (deleteInvitesError) {
+			return fail(500, { error: deleteInvitesError.message });
 		}
 	
 		// 4) Remove this user from team_members_2026
@@ -372,8 +390,16 @@ export const actions: Actions = {
 		if (appUpdateError) {
 			return fail(500, { error: appUpdateError.message });
 		}
+
+
+		
 	
 		return { success: true };
+
+
+		
+
+
 	}
 
 };

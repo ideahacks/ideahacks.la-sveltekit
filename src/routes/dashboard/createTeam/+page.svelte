@@ -11,16 +11,16 @@
 
 	// mock results for layout preview (replace with real search results later)
 	
-	type Participant = { uid: string, full_name: string };
+	type Participant = { uid: string; name: string };
 
 	let participantQuery = $state('');
 	let stagedInvites = $state<Participant[]>([]);
 
 	const participantResults: Participant[] = data.participants
-		.filter((p: any) => p.id !== data.session.user.id)
-		.map((p: any) => ({
-		uid: p.id,
-		full_name: p.full_name
+	.filter((p: any) => p.uid !== data.session.user.id)
+	.map((p: any) => ({
+		uid: p.uid,
+		name: p.name
 	}));
 
 	const filteredParticipants = $derived.by(() => {
@@ -37,9 +37,9 @@
 		};
 
 		return participantResults
-			.map((p) => ({ p, s: score(p.full_name) }))
+			.map((p) => ({ p, s: score(p.name) }))
 			.filter((x) => x.s < 9999)
-			.sort((a, b) => a.s - b.s || a.p.full_name.localeCompare(b.p.full_name))
+			.sort((a, b) => a.s - b.s || a.p.name.localeCompare(b.p.name))
 			.map((x) => x.p);
 	});
 
@@ -170,7 +170,7 @@
 										{#each filteredParticipants as p}
 											<li class="px-4 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
 												<div>
-													<p class="text-white font-semibold">{p.full_name}</p>
+													<p class="text-white font-semibold">{p.name}</p>
 												</div>
 								
 												<div class="flex gap-3">
@@ -214,11 +214,11 @@
 									<ul class="space-y-2">
 										{#each stagedInvites as p}
 											<li class="flex items-center justify-between">
-												<p class="text-white/90 text-sm">{p.full_name}</p>
+												<p class="text-white/90 text-sm">{p.name}</p>
 												<button
 						type="button"
 						onclick={() => removeInvite(p.uid)}
-						aria-label={`Remove ${p.full_name}`}
+						aria-label={`Remove ${p.name}`}
 						class="shrink-0 px-3 py-1 border border-white/30 text-white/80 rounded-lg
 						transition-colors duration-200 font-mono uppercase tracking-wider
 						hover:border-white/60 hover:text-white hover:bg-white/10"

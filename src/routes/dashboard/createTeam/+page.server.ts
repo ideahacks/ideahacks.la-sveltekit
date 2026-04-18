@@ -5,8 +5,9 @@ export const load: PageServerLoad = async (event) => {
 	if (!event.locals.session) throw redirect(302, '/login');
 
 	const { data: participants, error } = await event.locals.sb
-		.from('participants_2026')
-		.select('id, full_name');
+		.from('applications_2026')
+		.select('uid, name, status')
+		.eq('status', 'accepted')
 
 	if (error) {
 		console.error(error);
