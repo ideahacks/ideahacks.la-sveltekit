@@ -10,17 +10,24 @@ export const load: PageServerLoad = async (event) => {
 		throw redirect(302, '/');
 	}
 
-	const { data: applications, error } = await event.locals.sb
-		.from('applications_2026')
-		.select('*');
+	const [{ data: applications, error: applicationsError }, { data: teams, error: teamsError }] =
+		await Promise.all([
+			event.locals.sb.from('applications_2026').select('*'),
+			event.locals.sb.from('teams_2026').select('id, team_name')
+		]);
 
-	if (error) {
-		console.error('Admin fetch applications error:', error);
-		return { applications: [], error: error.message };
+	if (applicationsError) {
+		console.error('Admin fetch applications error:', applicationsError);
+	}
+
+	if (teamsError) {
+		console.error('Admin fetch teams error:', teamsError);
 	}
 
 	return {
-		applications: applications ?? []
+		applications: applications ?? [],
+		teams: teams ?? [],
+		error: applicationsError?.message ?? teamsError?.message
 	};
 };
 
