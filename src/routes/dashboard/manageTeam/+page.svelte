@@ -6,8 +6,8 @@
 	let { data, form }: { data: PageData; form: any } = $props();
 	
 
-	// layout-only state (no Supabase / no actions yet)
-	let teamName = $state('');
+	
+	
 
 	// mock results for layout preview (replace with real search results later)
 	
@@ -22,7 +22,6 @@
 		uid: p.uid,
 		name: p.name
 	}));
-
 	const filteredParticipants = $derived.by(() => {
 		const q = participantQuery.trim().toLowerCase();
 		if (!q) return [];
@@ -72,11 +71,11 @@
 				<div class="flex items-start justify-between gap-4">
 					<div>
 						<h1 class="text-4xl font-bold text-white mb-2 font-mono uppercase tracking-wider">
-							Create Team
-						</h1>
-						<p class="text-white/80">
-							Name your team and invite participants.
-						</p>
+                            Manage Team
+                        </h1>
+                        <p class="text-white/80">
+                            Invite participants to join {data.teamName}.
+                        </p>
 					</div>
 
 					<!-- Optional status chip area -->
@@ -88,24 +87,16 @@
 				</div>
 
 				<div class="space-y-6 mt-8">
-					<!-- Team Name Card -->
 					<div class="bg-white/5 rounded-lg p-6 border border-white/10">
-						<h2 class="text-2xl font-semibold text-white mb-4 font-mono uppercase tracking-wider">
-							Team Name
-						</h2>
-
-						<label class="block text-white/80 font-mono mb-2">
-							Enter a team name
-						</label>
-
-						<input
-							name = "team_name"
-							bind:value={teamName}
-							placeholder="e.g., Silicon Divas"
-							class="w-full px-4 py-3 rounded-lg bg-black/30 border border-white/30 text-white placeholder:text-white/40
-							focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/40"
-						/>
-					</div>
+                        <h2 class="text-2xl font-semibold text-white mb-4 font-mono uppercase tracking-wider">
+                            Current Team
+                        </h2>
+                    
+                        <p class="text-white/80">
+                            Managing invites for
+                            <span class="text-white font-semibold">{data.teamName}</span>
+                        </p>
+                    </div>
 
 					<!-- Invite Participants Card -->
 					<div class="bg-white/5 rounded-lg p-6 border border-white/10">
@@ -233,32 +224,53 @@
 						</div>
 					</div>
 
+                    <div class="bg-white/5 rounded-lg p-6 border border-white/10">
+                        <h2 class="text-2xl font-semibold text-white mb-4 font-mono uppercase tracking-wider">
+                            Sent Invites
+                        </h2>
+                    
+                        {#if data.pendingSentInvites.length === 0}
+                            <p class="text-white/70">
+                                No pending invites yet.
+                            </p>
+                        {:else}
+                            <ul class="space-y-2">
+                                {#each data.pendingSentInvites as invite}
+                                    <li class="flex items-center justify-between rounded-lg border border-white/10 bg-black/20 px-4 py-3">
+                                        <span class="text-white">
+                                            {invite.applications_2026?.name ?? invite.invitee_uid}
+                                        </span>
+                                        <span class="text-white/40 text-sm font-mono uppercase">
+                                            {invite.status}
+                                        </span>
+                                    </li>
+                                {/each}
+                            </ul>
+                        {/if}
+                    </div>
+
 					<!-- Bottom Actions -->
 					<div class="bg-white/5 rounded-lg p-6 border border-white/10">
 						<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 							<p class="text-white/70">
-								Once your team is created, you can manage invites and members from the dashboard.
-							</p>
+                                Send invites to accepted participants who are not already on a team.
+                            </p>
 
-							<form method="POST" action="?/createTeam" class="flex flex-wrap gap-3">
-								<!-- send team name -->
-								<input type="hidden" name="team_name" value={teamName} />
-							
-								<!-- send invitee uid list -->
-								<input
-									type="hidden"
-									name="invitee_uids"
-									value={JSON.stringify(stagedInvites.map((p) => p.uid))}
-								/>
-							
-								<button
-									type="submit"
-									class="px-6 py-2 border border-white/50 text-white rounded-lg
-									transition-colors duration-200 font-mono uppercase tracking-wider
-									hover:bg-white hover:text-black"
-								>
-									Create Team
-								</button>
+							<form method="POST" action="?/sendInvites" class="flex flex-wrap gap-3">
+                                <input
+                                    type="hidden"
+                                    name="invitee_uids"
+                                    value={JSON.stringify(stagedInvites.map((p) => p.uid))}
+                                />
+                            
+                                <button
+                                    type="submit"
+                                    class="px-6 py-2 border border-white/50 text-white rounded-lg
+                                    transition-colors duration-200 font-mono uppercase tracking-wider
+                                    hover:bg-white hover:text-black"
+                                >
+                                    Send Invites
+                                </button>
 							
 								<button
 									type="button"
@@ -267,7 +279,7 @@
 									transition-colors duration-200 font-mono uppercase tracking-wider
 									hover:border-white/40 hover:text-white"
 								>
-									Cancel
+									Go Back
 								</button>
 							</form>
 						</div>
