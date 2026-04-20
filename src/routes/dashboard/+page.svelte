@@ -57,18 +57,23 @@
 							class="bg-gradient-to-r from-cyan-600/20 to-blue-600/20 rounded-lg p-8 border-2 border-cyan-500/30"
 						>
 							<div class="text-center">
-								<h2 class="text-3xl font-bold text-white mb-4 font-mono uppercase tracking-wider">
-									Ready to Apply?
-								</h2>
-								<p class="text-white/80 mb-6">
-									Fill out the application form to join IDEA Hacks 2026
+								<!-- <h2 class="text-3xl font-bold text-white mb-4 font-mono uppercase tracking-wider">
+									Applications are now closed!
+								</h2> -->
+								<p class="text-white/80">
+									Applications for IDEA Hacks 2026 are now closed. If you have any questions, please
+									reach out to us on
+									<a
+										href="https://discord.com/invite/XFkxmCwME5"
+										class="text-cyan-400 hover:underline">Discord</a
+									>.
 								</p>
-								<a
+								<!-- <a
 									href="/dashboard/apply"
 									class="inline-block px-12 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white rounded-lg transition-all duration-200 font-mono uppercase tracking-wider text-xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105"
 								>
 									APPLY HERE
-								</a>
+								</a> -->
 							</div>
 						</div>
 					{:else}
