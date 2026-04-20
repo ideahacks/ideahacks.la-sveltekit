@@ -12,13 +12,29 @@ export const load: PageServerLoad = async (event) => {
 
 	const { data, error } = await event.locals.sb
 		.from('applications_2026')
-		.select(`name, status, team_status, team_id,teams_2026 ( id, team_name)`)
+		.select('name, status, team_status, team_id')
 		.eq('uid', uid)
 		.maybeSingle();
 
-		if (error) {
-			console.error('Error fetching application/team data:', error);
+	if (error) {
+		console.error('Error fetching application/team data:', error);
+	}
+
+	let teamName: string | null = null;
+
+	if (data?.team_id) {
+		const { data: teamData, error: teamError } = await event.locals.sb
+			.from('teams_2026')
+			.select('team_name')
+			.eq('id', data.team_id)
+			.maybeSingle();
+
+		if (teamError) {
+			console.error('Error fetching team name:', teamError);
+		} else {
+			teamName = teamData?.team_name ?? null;
 		}
+	}
 
 		let teamMembers: Array<{
 			uid: string;
@@ -93,7 +109,7 @@ export const load: PageServerLoad = async (event) => {
 		applicationName: data?.name ?? null,
 		status: data?.status ?? null,
 		teamStatus: data?.team_status?? null,
-		teamName: data?.teams_2026?.team_name ?? null,
+		teamName,
 		teamMembers,
 		receivedInvites: receivedInvites ?? [],
 		myTeamRole
