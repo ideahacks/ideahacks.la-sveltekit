@@ -18,11 +18,6 @@
 		goto('/dashboard/createTeam');
 	}
 
-	function gotoTeamLookUp() {
-		console.log('clicked');
-		goto('/dashboard/joinTeam');
-	}
-
 	function gotoManageTeam() {
 		goto('/dashboard/manageTeam');
 	}
@@ -56,7 +51,7 @@
 				</h1>
 
 				<div class="space-y-6">
-					{#if !data.hasApplied}
+					{#if !data.status}
 						<!-- Apply Button Section -->
 						<div
 							class="bg-gradient-to-r from-cyan-600/20 to-blue-600/20 rounded-lg p-8 border-2 border-cyan-500/30"
