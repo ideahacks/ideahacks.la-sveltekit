@@ -12,7 +12,7 @@ export const load: PageServerLoad = async (event) => {
 
 	const { data, error } = await event.locals.sb
 		.from('applications_2026')
-		.select(`status, team_status, team_id,teams_2026 ( id, team_name)`)
+		.select(`name, status, team_status, team_id,teams_2026 ( id, team_name)`)
 		.eq('uid', uid)
 		.maybeSingle();
 
@@ -90,6 +90,7 @@ export const load: PageServerLoad = async (event) => {
 	return {
 		session: event.locals.session,
 		hasApplied: !!data && !error,
+		applicationName: data?.name ?? null,
 		status: data?.status ?? null,
 		teamStatus: data?.team_status?? null,
 		teamName: data?.teams_2026?.team_name ?? null,

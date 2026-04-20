@@ -93,7 +93,7 @@
 					<!-- Welcome Section -->
 					<div class="bg-white/5 rounded-lg p-6">
 						<h2 class="text-2xl font-semibold text-white mb-2 font-mono">
-							Welcome, {data.session?.user?.email}!
+							Welcome, {data.applicationName ?? data.session?.user?.email}!
 						</h2>
 						<p class="text-white/80">You're successfully logged in to your IDEA Hacks dashboard.</p>
 					</div>
