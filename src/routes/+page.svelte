@@ -3,7 +3,6 @@
 	import Hero from '$lib/components/Hero.svelte';
 	import FAQ from '$lib/components/FAQ.svelte';
 	import Schedule from '$lib/components/Schedule.svelte';
-	import Tracks from '$lib/components/Tracks.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import SectionTitle from '$lib/components/SectionTitle.svelte';
 
@@ -148,8 +147,7 @@
 <!-- <Tracks /> -->
 
 <!-- Schedule Component -->
-<!-- <Schedule /> -->
-
+<Schedule />
 <!-- About Section -->
 <!-- <div class="flex h-screen flex-col items-center justify-center px-4 max-w-4xl mx-auto"> -->
 <!-- About -->

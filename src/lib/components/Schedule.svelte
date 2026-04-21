@@ -1,313 +1,329 @@
-<script>
+<script lang="ts">
 	import SectionTitle from './SectionTitle.svelte';
-	import redpill from '$lib/images/redpill.svg';
-	import yellowpill from '$lib/images/yellowpill.svg';
-	import greenpill from '$lib/images/greenpill.svg';
-	import orangepill from '$lib/images/orangepill.svg';
+
+	type EventType = 'Technical Workshop' | 'Meal' | 'Event-wide' | 'Corporate' | 'Fun' | 'Other';
+
+	interface Event {
+		startTime: string;
+		endTime: string;
+		title: string;
+		eventType: EventType;
+		location: string;
+	}
+
+	interface ScheduleSection {
+		title: string;
+		events: Event[];
+	}
+
+	const fridayEvents: Event[] = [
+		{
+			startTime: '5:00 PM',
+			endTime: '6:00 PM',
+			title: 'Set Up',
+			eventType: 'Other',
+			location: 'IEEE Lab'
+		},
+		{
+			startTime: '6:00 PM',
+			endTime: '7:00 PM',
+			title: 'MAIN SET-UP',
+			eventType: 'Other',
+			location: 'ENG 6'
+		},
+		{
+			startTime: '7:00 PM',
+			endTime: '8:00 PM',
+			title: 'Check In',
+			eventType: 'Event-wide',
+			location: 'ENG 6'
+		},
+		{
+			startTime: '7:30 PM',
+			endTime: '8:30 PM',
+			title: 'Digikey / Microchip Workshop',
+			eventType: 'Technical Workshop',
+			location: 'Mong'
+		},
+		{
+			startTime: '8:30 PM',
+			endTime: '9:00 PM',
+			title: 'Opening presentation',
+			eventType: 'Event-wide',
+			location: ''
+		},
+		{
+			startTime: '9:00 PM',
+			endTime: '9:45 PM',
+			title: 'Teambuilding workshop',
+			eventType: 'Technical Workshop',
+			location: ''
+		},
+		{
+			startTime: '9:45 PM',
+			endTime: '',
+			title: 'Team Registration Closes',
+			eventType: 'Fun',
+			location: ''
+		},
+		{
+			startTime: '10:00 PM',
+			endTime: '',
+			title: 'Hacking begins',
+			eventType: 'Fun',
+			location: ''
+		},
+		{
+			startTime: '10:00 PM',
+			endTime: '10:45 PM',
+			title: 'Microcontroller Selection workshop',
+			eventType: 'Technical Workshop',
+			location: ''
+		},
+		{
+			startTime: '11:00 PM',
+			endTime: '12:00 AM',
+			title: 'Wireless Connectivity workshop',
+			eventType: 'Technical Workshop',
+			location: ''
+		}
+	];
+
+	const saturdayEvents: Event[] = [
+		{
+			startTime: '8:00 AM',
+			endTime: '10:00 AM',
+			title: 'Breakfast',
+			eventType: 'Meal',
+			location: ''
+		},
+		{
+			startTime: '10:00 AM',
+			endTime: '11:00 AM',
+			title: 'Product Design Workshop',
+			eventType: 'Technical Workshop',
+			location: ''
+		},
+		{
+			startTime: '12:00 PM',
+			endTime: '1:30 PM',
+			title: 'Lunch',
+			eventType: 'Meal',
+			location: ''
+		},
+		{
+			startTime: '2:00 PM',
+			endTime: '3:00 PM',
+			title: 'Soldering Workshop',
+			eventType: 'Technical Workshop',
+			location: 'Makerspace'
+		},
+		{
+			startTime: '4:00 PM',
+			endTime: '5:00 PM',
+			title: '3D Printing / CAD workshop',
+			eventType: 'Technical Workshop',
+			location: ''
+		},
+		{
+			startTime: '6:00 PM',
+			endTime: '7:30 PM',
+			title: 'Dinner',
+			eventType: 'Meal',
+			location: ''
+		},
+		{
+			startTime: '9:00 PM',
+			endTime: '12:00 AM',
+			title: 'Frog Night',
+			eventType: 'Event-wide',
+			location: ''
+		}
+	];
+
+	const sundayEvents: Event[] = [
+		{
+			startTime: '8:00 AM',
+			endTime: '9:30 AM',
+			title: 'Breakfast',
+			eventType: 'Meal',
+			location: ''
+		},
+		{
+			startTime: '9:00 AM',
+			endTime: '',
+			title: 'Hacking ends and Project submissions due',
+			eventType: 'Fun',
+			location: ''
+		},
+		{
+			startTime: '9:15 AM',
+			endTime: '10:45 AM',
+			title: 'Round 1 judging',
+			eventType: 'Event-wide',
+			location: ''
+		},
+		{
+			startTime: '11:00 AM',
+			endTime: '12:30 PM',
+			title: 'Judging Finals',
+			eventType: 'Event-wide',
+			location: ''
+		},
+		{
+			startTime: '12:40 PM',
+			endTime: '1:00 PM',
+			title: 'Awards and closing',
+			eventType: 'Event-wide',
+			location: ''
+		}
+	];
+
+	const defaultSchedules: ScheduleSection[] = [
+		{
+			title: 'FRIDAY',
+			events: fridayEvents
+		},
+		{
+			title: 'SATURDAY',
+			events: saturdayEvents
+		},
+		{
+			title: 'SUNDAY',
+			events: sundayEvents
+		}
+	];
+
+	export let schedules: ScheduleSection[] = defaultSchedules;
+
+	const typeBadgeClassMap: Record<EventType, string> = {
+		'Technical Workshop': 'bg-yellow-300/25 text-yellow-100 border-yellow-200/40',
+		Meal: 'bg-green-300/25 text-green-100 border-green-200/40',
+		'Event-wide': 'bg-red-300/25 text-red-100 border-red-200/40',
+		Corporate: 'bg-orange-300/25 text-orange-100 border-orange-200/40',
+		Fun: 'bg-pink-300/25 text-pink-100 border-pink-200/40',
+		Other: 'bg-slate-300/20 text-slate-100 border-slate-200/40'
+	};
+
+	function getTypeBadgeClass(eventType: EventType): string {
+		return typeBadgeClassMap[eventType];
+	}
+
+	function formatTimeRange(event: Event): string {
+		return event.endTime ? `${event.startTime} - ${event.endTime}` : event.startTime;
+	}
+
+	function revealOnScroll(node: HTMLElement) {
+		node.classList.add('event-row-hidden');
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) {
+						node.classList.add('event-row-visible');
+						observer.unobserve(node);
+					}
+				}
+			},
+			{ threshold: 0.2, rootMargin: '0px 0px -8% 0px' }
+		);
+
+		observer.observe(node);
+
+		return {
+			destroy() {
+				observer.disconnect();
+			}
+		};
+	}
 </script>
 
-<!-- SCHEDULE section -->
 <div class="py-20 px-4">
-	<div class="max-w-6xl mx-auto text-center">
-		<!-- SCHEDULE title -->
-		<SectionTitle title="SCHEDULE" />
+	<div class="max-w-6xl mx-auto">
+		<div class="text-center">
+			<SectionTitle title="SCHEDULE" />
+		</div>
 
-		<!-- Schedule content -->
-		<div class="w-full">
-			<div class="flex justify-center items-start">
-				<div class="block w-3/5">
-					<div class="relative">
-						<!-- Vertical timeline centered within the left slot -->
-						<div class="absolute top-0 bottom-0 left-6 w-0">
-							<div
-								class="absolute left-1/2 top-0 bottom-0 w-4 -translate-x-1/2 bg-white opacity-60 rounded-full"
-							></div>
-							<div
-								class="absolute left-1/2 top-0 w-8 h-8 bg-white rounded-full -translate-x-1/2 -translate-y-1/2"
-							></div>
-						</div>
+		<div class="space-y-8">
+			{#each schedules as schedule}
+				<section>
+					<h2
+						class="text-center text-white text-xl md:text-2xl font-bold tracking-wide mb-5"
+						style="font-family: 'Roboto Mono', monospace;"
+					>
+						{schedule.title}
+					</h2>
 
-						<!-- Rows: each row controls its own pill vertical centering -->
-						<div class="space-y-1">
-							<!-- Friday Title Row -->
-							<div class="relative flex items-center min-h-[48px]">
-								<!-- Pill centered on line -->
-								<img
-									src={redpill}
-									alt="Friday"
-									class="absolute left-6 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28"
-								/>
-								<!-- Text -->
-								<div class="w-full text-center">
-									<p
-										class="m-0 text-white text-lg md:text-xl font-bold"
-										style="font-family: 'Roboto Mono', monospace;"
+					<div class="max-w-3xl mx-auto">
+						<div class="space-y-2.5">
+							{#each schedule.events as event}
+								<div class="event-row" use:revealOnScroll>
+									<div
+										class="rounded-lg border border-white/15 bg-white/10 px-3 py-2 md:px-4 md:py-2 w-full max-w-2xl mx-auto"
 									>
-										FRIDAY
-									</p>
+										<div
+											class="min-w-0 flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between"
+										>
+											<div class="text-center sm:text-left">
+												<p
+													class="text-white/75 text-xs md:text-[13px] uppercase tracking-[0.11em]"
+													style="font-family: 'Roboto Mono', monospace;"
+												>
+													{formatTimeRange(event)}
+												</p>
+												<p
+													class="text-white text-base md:text-[17px] font-semibold"
+													style="font-family: 'Roboto Mono', monospace;"
+												>
+													{event.title}
+												</p>
+												{#if event.location}
+													<p
+														class="text-white/70 text-sm"
+														style="font-family: 'Roboto Mono', monospace;"
+													>
+														{event.location}
+													</p>
+												{/if}
+											</div>
+											<span
+												class={`self-center sm:self-auto shrink-0 rounded-full border px-2.5 py-0.5 text-[11px] uppercase tracking-[0.08em] ${getTypeBadgeClass(event.eventType)}`}
+												style="font-family: 'Roboto Mono', monospace;"
+											>
+												{event.eventType}
+											</span>
+										</div>
+									</div>
 								</div>
-							</div>
-
-							<!-- Friday Item 1 -->
-							<div class="relative flex items-center min-h-[48px]">
-								<img
-									src={orangepill}
-									alt="Event"
-									class="absolute left-6 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28"
-								/>
-								<div class="w-full text-left pl-36">
-									<p
-										class="m-0 text-white text-sm md:text-base font-medium"
-										style="font-family: 'Roboto Mono', monospace;"
-									>
-										4:30-8:00 PM • Check in • Ackerman Union 2408
-									</p>
-								</div>
-							</div>
-
-							<!-- Friday Item 2 -->
-							<div class="relative flex items-center min-h-[48px]">
-								<img
-									src={yellowpill}
-									alt="Event"
-									class="absolute left-6 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28"
-								/>
-								<div class="w-full text-left pl-36">
-									<p
-										class="m-0 text-white text-sm md:text-base font-medium"
-										style="font-family: 'Roboto Mono', monospace;"
-									>
-										5:00-5:45 PM • Web Dev Workshop • Ackerman Union 2408
-									</p>
-								</div>
-							</div>
-
-							<!-- Friday Item 3 -->
-							<div class="relative flex items-center min-h-[48px]">
-								<img
-									src={greenpill}
-									alt="Event"
-									class="absolute left-6 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28"
-								/>
-								<div class="w-full text-left pl-36">
-									<p
-										class="m-0 text-white text-sm md:text-base font-medium"
-										style="font-family: 'Roboto Mono', monospace;"
-									>
-										6:00-6:45 PM • IDEA Hacks Kickoff • Ackerman Grand Ballroom
-									</p>
-								</div>
-							</div>
-
-							<!-- Saturday Title Row -->
-							<div class="relative flex items-center min-h-[48px]">
-								<img
-									src={redpill}
-									alt="Saturday"
-									class="absolute left-6 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28"
-								/>
-								<div class="w-full text-center">
-									<p
-										class="m-0 text-white text-lg md:text-xl font-bold"
-										style="font-family: 'Roboto Mono', monospace;"
-									>
-										SATURDAY
-									</p>
-								</div>
-							</div>
-
-							<!-- Saturday Item 1 -->
-							<div class="relative flex items-center min-h-[48px]">
-								<img
-									src={orangepill}
-									alt="Event"
-									class="absolute left-6 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28"
-								/>
-								<div class="w-full text-left pl-36">
-									<p
-										class="m-0 text-white text-sm md:text-base font-medium"
-										style="font-family: 'Roboto Mono', monospace;"
-									>
-										8:00-9:00 AM • Breakfast • Ackerman Grand Ballroom
-									</p>
-								</div>
-							</div>
-
-							<!-- Saturday Item 2 -->
-							<div class="relative flex items-center min-h-[48px]">
-								<img
-									src={yellowpill}
-									alt="Event"
-									class="absolute left-6 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28"
-								/>
-								<div class="w-full text-left pl-36">
-									<p
-										class="m-0 text-white text-sm md:text-base font-medium"
-										style="font-family: 'Roboto Mono', monospace;"
-									>
-										10:00-11:00 AM • Hardware Workshop • Ackerman Union 2408
-									</p>
-								</div>
-							</div>
-
-							<!-- Saturday Item 3 -->
-							<div class="relative flex items-center min-h-[48px]">
-								<img
-									src={greenpill}
-									alt="Event"
-									class="absolute left-6 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28"
-								/>
-								<div class="w-full text-left pl-36">
-									<p
-										class="m-0 text-white text-sm md:text-base font-medium"
-										style="font-family: 'Roboto Mono', monospace;"
-									>
-										12:00-1:00 PM • Lunch • Ackerman Grand Ballroom
-									</p>
-								</div>
-							</div>
-
-							<!-- Saturday Item 4 -->
-							<div class="relative flex items-center min-h-[48px]">
-								<img
-									src={orangepill}
-									alt="Event"
-									class="absolute left-6 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28"
-								/>
-								<div class="w-full text-left pl-36">
-									<p
-										class="m-0 text-white text-sm md:text-base font-medium"
-										style="font-family: 'Roboto Mono', monospace;"
-									>
-										2:00-3:00 PM • AI/ML Workshop • Ackerman Union 2408
-									</p>
-								</div>
-							</div>
-
-							<!-- Saturday Item 5 -->
-							<div class="relative flex items-center min-h-[48px]">
-								<img
-									src={yellowpill}
-									alt="Event"
-									class="absolute left-6 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28"
-								/>
-								<div class="w-full text-left pl-36">
-									<p
-										class="m-0 text-white text-sm md:text-base font-medium"
-										style="font-family: 'Roboto Mono', monospace;"
-									>
-										6:00-6:45 PM • 3D Printing Workshop • Ackerman Union 2408
-									</p>
-								</div>
-							</div>
-
-							<!-- Sunday Title Row -->
-							<div class="relative flex items-center min-h-[48px]">
-								<!-- Pill centered on line -->
-								<img
-									src={redpill}
-									alt="Sunday"
-									class="absolute left-6 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28"
-								/>
-								<!-- Text -->
-								<div class="w-full text-center">
-									<p
-										class="m-0 text-white text-lg md:text-xl font-bold"
-										style="font-family: 'Roboto Mono', monospace;"
-									>
-										SUNDAY
-									</p>
-								</div>
-							</div>
-
-							<!-- Sunday Item 1 -->
-							<div class="relative flex items-center min-h-[48px]">
-								<img
-									src={orangepill}
-									alt="Event"
-									class="absolute left-6 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28"
-								/>
-								<div class="w-full text-left pl-36">
-									<p
-										class="m-0 text-white text-sm md:text-base font-medium"
-										style="font-family: 'Roboto Mono', monospace;"
-									>
-										8:00-9:00 AM • Breakfast • Ackerman Grand Ballroom
-									</p>
-								</div>
-							</div>
-
-							<!-- Sunday Item 2 -->
-							<div class="relative flex items-center min-h-[48px]">
-								<img
-									src={yellowpill}
-									alt="Event"
-									class="absolute left-6 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28"
-								/>
-								<div class="w-full text-left pl-36">
-									<p
-										class="m-0 text-white text-sm md:text-base font-medium"
-										style="font-family: 'Roboto Mono', monospace;"
-									>
-										10:00-11:00 AM • Pitch Workshop • Ackerman Union 2408
-									</p>
-								</div>
-							</div>
-
-							<!-- Sunday Item 3 -->
-							<div class="relative flex items-center min-h-[48px]">
-								<img
-									src={greenpill}
-									alt="Event"
-									class="absolute left-6 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28"
-								/>
-								<div class="w-full text-left pl-36">
-									<p
-										class="m-0 text-white text-sm md:text-base font-medium"
-										style="font-family: 'Roboto Mono', monospace;"
-									>
-										12:00-1:00 PM • Lunch • Ackerman Grand Ballroom
-									</p>
-								</div>
-							</div>
-
-							<!-- Sunday Item 4 -->
-							<div class="relative flex items-center min-h-[48px]">
-								<img
-									src={orangepill}
-									alt="Event"
-									class="absolute left-6 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28"
-								/>
-								<div class="w-full text-left pl-36">
-									<p
-										class="m-0 text-white text-sm md:text-base font-medium"
-										style="font-family: 'Roboto Mono', monospace;"
-									>
-										2:00-3:00 PM • Project Submissions Due • Devpost
-									</p>
-								</div>
-							</div>
-
-							<!-- Sunday Item 5 -->
-							<div class="relative flex items-center min-h-[48px]">
-								<img
-									src={yellowpill}
-									alt="Event"
-									class="absolute left-6 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28"
-								/>
-								<div class="w-full text-left pl-36">
-									<p
-										class="m-0 text-white text-sm md:text-base font-medium"
-										style="font-family: 'Roboto Mono', monospace;"
-									>
-										4:00-6:00 PM • Judging & Awards Ceremony • Ackerman Grand Ballroom
-									</p>
-								</div>
-							</div>
+							{/each}
 						</div>
 					</div>
-				</div>
-			</div>
+				</section>
+			{/each}
 		</div>
 	</div>
 </div>
+
+<style>
+	.event-row-hidden {
+		opacity: 0;
+		transform: translateY(14px) scale(0.985);
+	}
+
+	.event-row-visible {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+		transition:
+			opacity 0.45s ease,
+			transform 0.45s ease;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.event-row-hidden,
+		.event-row-visible {
+			opacity: 1;
+			transform: none;
+			transition: none;
+		}
+	}
+</style>
