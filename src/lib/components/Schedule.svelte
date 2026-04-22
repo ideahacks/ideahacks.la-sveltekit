@@ -238,7 +238,7 @@
 	}
 </script>
 
-<div class="py-20 px-4">
+<div class="py-16 px-4">
 	<div class="max-w-6xl mx-auto">
 		<div class="text-center">
 			<SectionTitle title="SCHEDULE" />
