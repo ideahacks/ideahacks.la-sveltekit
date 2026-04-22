@@ -108,10 +108,10 @@
 		form?.returnCheckoutError || form?.returnCheckoutSuccess
 			? 'teams'
 			: form?.foundPart ||
-				form?.lookupError ||
-				form?.lookupSuccess ||
-				form?.checkoutError ||
-				form?.checkoutSuccess
+				  form?.lookupError ||
+				  form?.lookupSuccess ||
+				  form?.checkoutError ||
+				  form?.checkoutSuccess
 				? 'parts'
 				: 'applications'
 	);
@@ -455,13 +455,19 @@
 														>
 															<div>
 																<p class="text-white font-mono text-sm">{checkout.part_id}</p>
-																<p class="text-white/70 text-sm">{checkout.part_name ?? 'Unknown part'}</p>
+																<p class="text-white/70 text-sm">
+																	{checkout.part_name ?? 'Unknown part'}
+																</p>
 																<p class="text-white/60 text-xs">Quantity: {checkout.quantity}</p>
 															</div>
 															<form method="POST" action="?/returnTeamPart" use:enhance>
 																<input type="hidden" name="teamId" value={String(team.id)} />
 																<input type="hidden" name="partId" value={checkout.part_id} />
-																<input type="hidden" name="quantity" value={String(checkout.quantity)} />
+																<input
+																	type="hidden"
+																	name="quantity"
+																	value={String(checkout.quantity)}
+																/>
 																<button
 																	type="submit"
 																	class="px-3 py-2 rounded-lg bg-amber-400 text-slate-900 font-mono uppercase tracking-wider text-xs"
@@ -489,8 +495,8 @@
 								Parts Checkout
 							</h2>
 							<p class="text-white/70 mb-4">
-								Find a part by ID. Search checks <span class="font-mono">part_id</span> first,
-								then each item in <span class="font-mono">alt_ids</span>.
+								Find a part by ID. Search checks <span class="font-mono">part_id</span> first, then
+								each item in <span class="font-mono">alt_ids</span>.
 							</p>
 
 							{#if form?.lookupError}
@@ -505,7 +511,12 @@
 								</div>
 							{/if}
 
-							<form method="POST" action="?/findPart" use:enhance class="grid gap-3 md:grid-cols-[1fr_auto]">
+							<form
+								method="POST"
+								action="?/findPart"
+								use:enhance
+								class="grid gap-3 md:grid-cols-[1fr_auto]"
+							>
 								<input
 									type="text"
 									name="partLookupId"
@@ -550,8 +561,17 @@
 									</div>
 								{/if}
 
-								<form method="POST" action="?/checkoutPart" use:enhance class="grid gap-4 md:grid-cols-3">
-									<input type="hidden" name="partLookupId" value={partLookupId || foundPart.part_id} />
+								<form
+									method="POST"
+									action="?/checkoutPart"
+									use:enhance
+									class="grid gap-4 md:grid-cols-3"
+								>
+									<input
+										type="hidden"
+										name="partLookupId"
+										value={partLookupId || foundPart.part_id}
+									/>
 									<input type="hidden" name="selectedPartId" value={foundPart.part_id} />
 
 									<div>
@@ -568,7 +588,7 @@
 											class="w-full rounded-lg border border-white/20 bg-black/20 px-3 py-2 text-white font-mono"
 										>
 											<option value="">Select a team</option>
-											{#each (data.teams ?? []) as team}
+											{#each data.teams ?? [] as team}
 												<option value={team.id}>{team.team_name}</option>
 											{/each}
 										</select>
