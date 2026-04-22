@@ -1,6 +1,99 @@
 import { redirect, fail } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 
+type PartRecord = {
+	part_id: string;
+	name: string;
+	quantity: number | null;
+	num_in_use: number | null;
+	alt_ids: string | null;
+};
+
+type TeamPartCheckoutRecord = {
+	team_id: string | number;
+	part_id: string;
+	quantity: number | null;
+};
+
+function normalizeAltIds(value: string | null): string[] {
+	if (!value) return [];
+	return value
+		.split(',')
+		.map((id) => id.trim())
+		.filter(Boolean);
+}
+
+function serializePart(part: PartRecord) {
+	return {
+		part_id: part.part_id,
+		name: part.name,
+		quantity: part.quantity ?? 0,
+		num_in_use: part.num_in_use ?? 0,
+		alt_ids: normalizeAltIds(part.alt_ids)
+	};
+}
+
+async function resolveCheckoutTeamId(
+	event: import('@sveltejs/kit').RequestEvent,
+	rawTeamSelection: string
+): Promise<string | number | null> {
+	const selection = rawTeamSelection.trim();
+	if (!selection) return null;
+
+	const numericId = Number.parseInt(selection, 10);
+	const lookupValue = Number.isNaN(numericId) ? selection : numericId;
+
+	const { data: teamRow, error } = await event.locals.sb
+		.from('teams_2026')
+		.select('id')
+		.eq('id', lookupValue)
+		.maybeSingle<{ id: string | number }>();
+
+	if (error) {
+		console.error('Admin resolve team id error:', error);
+		return null;
+	}
+
+	if (!teamRow) return null;
+	return teamRow.id;
+}
+
+async function findPartByAnyId(event: import('@sveltejs/kit').RequestEvent, rawPartId: string) {
+	const partId = rawPartId.trim();
+	if (!partId) return null;
+
+	const { data: directPart, error: directPartError } = await event.locals.sb
+		.from('parts_2026')
+		.select('part_id, name, quantity, num_in_use, alt_ids')
+		.eq('part_id', partId)
+		.maybeSingle<PartRecord>();
+
+	if (directPartError) {
+		console.error('Admin find part by part_id error:', directPartError);
+		return null;
+	}
+
+	if (directPart) return directPart;
+
+	const { data: altCandidates, error: altCandidatesError } = await event.locals.sb
+		.from('parts_2026')
+		.select('part_id, name, quantity, num_in_use, alt_ids')
+		.not('alt_ids', 'is', null)
+		.returns<PartRecord[]>();
+
+	if (altCandidatesError) {
+		console.error('Admin find part by alt_ids error:', altCandidatesError);
+		return null;
+	}
+
+	const normalizedInput = partId.toLowerCase();
+	return (
+		(altCandidates ?? []).find((part: PartRecord) =>
+			normalizeAltIds(part.alt_ids).some((altId) => altId.toLowerCase() === normalizedInput)
+		) ?? null
+	);
+}
+
 export const load: PageServerLoad = async (event) => {
 	const parentData = await event.parent();
 	if (!parentData?.session) {
@@ -10,11 +103,17 @@ export const load: PageServerLoad = async (event) => {
 		throw redirect(302, '/');
 	}
 
-	const [{ data: applications, error: applicationsError }, { data: teams, error: teamsError }] =
-		await Promise.all([
-			event.locals.sb.from('applications_2026').select('*'),
-			event.locals.sb.from('teams_2026').select('id, team_name')
-		]);
+	const [
+		{ data: applications, error: applicationsError },
+		{ data: teams, error: teamsError },
+		{ data: checkoutRows, error: checkoutsError },
+		{ data: partRows, error: partsError }
+	] = await Promise.all([
+		event.locals.sb.from('applications_2026').select('*'),
+		event.locals.sb.from('teams_2026').select('id, team_name'),
+		event.locals.sb.from('teams_parts_2026').select('team_id, part_id, quantity'),
+		event.locals.sb.from('parts_2026').select('part_id, name')
+	]);
 
 	if (applicationsError) {
 		console.error('Admin fetch applications error:', applicationsError);
@@ -24,10 +123,37 @@ export const load: PageServerLoad = async (event) => {
 		console.error('Admin fetch teams error:', teamsError);
 	}
 
+	if (checkoutsError) {
+		console.error('Admin fetch team checkouts error:', checkoutsError);
+	}
+
+	if (partsError) {
+		console.error('Admin fetch parts for checkouts error:', partsError);
+	}
+
+	const partNameById = new Map<string, string>();
+	for (const part of (partRows ?? []) as Array<{ part_id: string; name: string | null }>) {
+		if (part?.part_id) {
+			partNameById.set(part.part_id, part.name ?? 'Unknown part');
+		}
+	}
+
+	const teamCheckouts = ((checkoutRows ?? []) as TeamPartCheckoutRecord[]).map((checkout) => ({
+		team_id: checkout.team_id,
+		part_id: checkout.part_id,
+		quantity: checkout.quantity ?? 0,
+		part_name: partNameById.get(checkout.part_id) ?? 'Unknown part'
+	}));
+
 	return {
 		applications: applications ?? [],
 		teams: teams ?? [],
-		error: applicationsError?.message ?? teamsError?.message
+		teamCheckouts,
+		error:
+			applicationsError?.message ??
+			teamsError?.message ??
+			checkoutsError?.message ??
+			partsError?.message
 	};
 };
 
@@ -42,6 +168,243 @@ async function requireAdmin(event: import('@sveltejs/kit').RequestEvent): Promis
 }
 
 export const actions: Actions = {
+	findPart: async (event) => {
+		if (!(await requireAdmin(event))) {
+			return fail(403, { error: 'Forbidden' });
+		}
+
+		const formData = await event.request.formData();
+		const partLookupId = formData.get('partLookupId')?.toString().trim() ?? '';
+
+		if (!partLookupId) {
+			return fail(400, {
+				partLookupId,
+				lookupError: 'Enter a part ID to search.'
+			});
+		}
+
+		const foundPart = await findPartByAnyId(event, partLookupId);
+		if (!foundPart) {
+			return fail(404, {
+				partLookupId,
+				lookupError: 'No part found for that ID.'
+			});
+		}
+
+		return {
+			partLookupId,
+			foundPart: serializePart(foundPart),
+			lookupSuccess: `Found part ${foundPart.part_id}.`
+		};
+	},
+
+	cancelCheckout: async (event) => {
+		if (!(await requireAdmin(event))) {
+			return fail(403, { error: 'Forbidden' });
+		}
+
+		return {
+			partLookupId: '',
+			foundPart: null,
+			lookupSuccess: null,
+			checkoutSuccess: null
+		};
+	},
+
+	checkoutPart: async (event) => {
+		if (!(await requireAdmin(event))) {
+			return fail(403, { error: 'Forbidden' });
+		}
+
+		const formData = await event.request.formData();
+		const partLookupId = formData.get('partLookupId')?.toString().trim() ?? '';
+		const selectedPartId = formData.get('selectedPartId')?.toString().trim() ?? '';
+		const teamId = formData.get('teamId')?.toString().trim() ?? '';
+		const quantityRaw = formData.get('quantity')?.toString().trim() ?? '';
+
+		if (!selectedPartId || !teamId || !quantityRaw) {
+			return fail(400, {
+				partLookupId,
+				checkoutError: 'Part, team, and quantity are required.'
+			});
+		}
+
+		const quantity = Number.parseInt(quantityRaw, 10);
+		if (!Number.isInteger(quantity) || quantity <= 0) {
+			return fail(400, {
+				partLookupId,
+				checkoutError: 'Quantity must be a positive integer.'
+			});
+		}
+
+		const foundPart = await findPartByAnyId(event, selectedPartId);
+		if (!foundPart) {
+			return fail(404, {
+				partLookupId,
+				checkoutError: 'Selected part no longer exists.'
+			});
+		}
+
+		const available = (foundPart.quantity ?? 0) - (foundPart.num_in_use ?? 0);
+		if (quantity > available) {
+			return fail(400, {
+				partLookupId,
+				foundPart: serializePart(foundPart),
+				checkoutError: `Only ${Math.max(available, 0)} available for checkout.`
+			});
+		}
+
+		const checkoutTeamId = await resolveCheckoutTeamId(event, teamId);
+		if (!checkoutTeamId) {
+			return fail(400, {
+				partLookupId,
+				foundPart: serializePart(foundPart),
+				checkoutError: 'Could not resolve a valid team id for checkout.'
+			});
+		}
+
+		const { error: insertCheckoutError } = await event.locals.sb.from('teams_parts_2026').insert({
+			team_id: checkoutTeamId,
+			part_id: foundPart.part_id,
+			quantity
+		});
+
+		if (insertCheckoutError) {
+			console.error('Admin checkout insert error:', insertCheckoutError);
+			return fail(500, {
+				partLookupId,
+				foundPart: serializePart(foundPart),
+				checkoutError: insertCheckoutError.message
+			});
+		}
+
+		const nextNumInUse = (foundPart.num_in_use ?? 0) + quantity;
+		const { error: updatePartError } = await event.locals.sb
+			.from('parts_2026')
+			.update({ num_in_use: nextNumInUse })
+			.eq('part_id', foundPart.part_id);
+
+		if (updatePartError) {
+			console.error('Admin checkout update part error:', updatePartError);
+			return fail(500, {
+				partLookupId,
+				foundPart: serializePart(foundPart),
+				checkoutError: updatePartError.message
+			});
+		}
+
+		const refreshedPart = {
+			...foundPart,
+			num_in_use: nextNumInUse
+		};
+
+		return {
+			partLookupId,
+			foundPart: serializePart(refreshedPart),
+			checkoutSuccess: `Checked out ${quantity} of ${foundPart.part_id} to team ${teamId}.`
+		};
+	},
+
+	returnTeamPart: async (event) => {
+		if (!(await requireAdmin(event))) {
+			return fail(403, { error: 'Forbidden' });
+		}
+
+		const formData = await event.request.formData();
+		const teamIdRaw = formData.get('teamId')?.toString().trim() ?? '';
+		const partId = formData.get('partId')?.toString().trim() ?? '';
+		const quantityRaw = formData.get('quantity')?.toString().trim() ?? '';
+
+		if (!teamIdRaw || !partId || !quantityRaw) {
+			return fail(400, {
+				returnCheckoutError: 'Team and part are required to return a checkout.'
+			});
+		}
+
+		const quantity = Number.parseInt(quantityRaw, 10);
+		if (!Number.isInteger(quantity) || quantity <= 0) {
+			return fail(400, {
+				returnCheckoutError: 'Checkout quantity must be a positive integer.'
+			});
+		}
+
+		const numericTeamId = Number.parseInt(teamIdRaw, 10);
+		const teamId = Number.isNaN(numericTeamId) ? teamIdRaw : numericTeamId;
+
+		const { data: checkoutRecord, error: checkoutRecordError } = await event.locals.sb
+			.from('teams_parts_2026')
+			.select('team_id, part_id, quantity')
+			.eq('team_id', teamId)
+			.eq('part_id', partId)
+			.eq('quantity', quantity)
+			.maybeSingle<TeamPartCheckoutRecord>();
+
+		if (checkoutRecordError) {
+			console.error('Admin fetch checkout to return error:', checkoutRecordError);
+			return fail(500, {
+				returnCheckoutError: checkoutRecordError.message
+			});
+		}
+
+		if (!checkoutRecord) {
+			return fail(404, {
+				returnCheckoutError: 'Checkout record not found.'
+			});
+		}
+
+		const quantityToReturn = Math.max(checkoutRecord.quantity ?? 0, 0);
+
+		const { data: partRow, error: partFetchError } = await event.locals.sb
+			.from('parts_2026')
+			.select('part_id, num_in_use')
+			.eq('part_id', checkoutRecord.part_id)
+			.maybeSingle<{ part_id: string; num_in_use: number | null }>();
+
+		if (partFetchError) {
+			console.error('Admin fetch part before return error:', partFetchError);
+			return fail(500, {
+				returnCheckoutError: partFetchError.message
+			});
+		}
+
+		if (!partRow) {
+			return fail(404, {
+				returnCheckoutError: 'Part for checkout record no longer exists.'
+			});
+		}
+
+		const { error: deleteCheckoutError } = await event.locals.sb
+			.from('teams_parts_2026')
+			.delete()
+			.eq('team_id', teamId)
+			.eq('part_id', checkoutRecord.part_id)
+			.eq('quantity', quantity);
+
+		if (deleteCheckoutError) {
+			console.error('Admin delete checkout error:', deleteCheckoutError);
+			return fail(500, {
+				returnCheckoutError: deleteCheckoutError.message
+			});
+		}
+
+		const nextNumInUse = Math.max((partRow.num_in_use ?? 0) - quantityToReturn, 0);
+		const { error: updatePartError } = await event.locals.sb
+			.from('parts_2026')
+			.update({ num_in_use: nextNumInUse })
+			.eq('part_id', checkoutRecord.part_id);
+
+		if (updatePartError) {
+			console.error('Admin update part after return error:', updatePartError);
+			return fail(500, {
+				returnCheckoutError: updatePartError.message
+			});
+		}
+
+		return {
+			returnCheckoutSuccess: `Returned ${quantityToReturn} of ${checkoutRecord.part_id} for team ${teamIdRaw}.`
+		};
+	},
+
 	approve: async (event) => {
 		if (!(await requireAdmin(event))) {
 			return fail(403, { error: 'Forbidden' });

@@ -25,6 +25,22 @@
 
 	type TeamView = TeamRecord & {
 		members: ApplicationRecord[];
+		checkouts: TeamCheckoutRecord[];
+	};
+
+	type TeamCheckoutRecord = {
+		team_id: number | string;
+		part_id: string;
+		part_name?: string | null;
+		quantity: number;
+	};
+
+	type FoundPart = {
+		part_id: string;
+		name: string;
+		quantity: number;
+		num_in_use: number;
+		alt_ids: string[];
 	};
 
 	const fieldLabels: Record<string, string> = {
@@ -88,7 +104,17 @@
 		{ key: 'parts', label: 'Parts Checkout' }
 	];
 
-	let activeTab = $state<TabKey>('applications');
+	let activeTab = $state<TabKey>(
+		form?.returnCheckoutError || form?.returnCheckoutSuccess
+			? 'teams'
+			: form?.foundPart ||
+				form?.lookupError ||
+				form?.lookupSuccess ||
+				form?.checkoutError ||
+				form?.checkoutSuccess
+				? 'parts'
+				: 'applications'
+	);
 	let filterMode = $state<FilterMode>('all');
 	let collapsedUids = $state<string[]>([]);
 
@@ -146,15 +172,31 @@
 	);
 
 	let teamsView = $derived(
-		((data.teams ?? []) as TeamRecord[])
-			.map((team: TeamRecord) => ({
-				...team,
-				members: applications.filter(
-					(app: ApplicationRecord) => String(app.team_id ?? '') === String(team.id)
-				)
-			}))
-			.sort((left: TeamView, right: TeamView) => left.team_name.localeCompare(right.team_name))
+		(() => {
+			const checkouts = (data.teamCheckouts ?? []) as TeamCheckoutRecord[];
+			const checkoutsByTeam = new Map<string, TeamCheckoutRecord[]>();
+
+			for (const checkout of checkouts) {
+				const key = String(checkout.team_id);
+				const existing = checkoutsByTeam.get(key) ?? [];
+				existing.push(checkout);
+				checkoutsByTeam.set(key, existing);
+			}
+
+			return ((data.teams ?? []) as TeamRecord[])
+				.map((team: TeamRecord) => ({
+					...team,
+					members: applications.filter(
+						(app: ApplicationRecord) => String(app.team_id ?? '') === String(team.id)
+					),
+					checkouts: checkoutsByTeam.get(String(team.id)) ?? []
+				}))
+				.sort((left: TeamView, right: TeamView) => left.team_name.localeCompare(right.team_name));
+		})()
 	);
+
+	let partLookupId = $derived((form?.partLookupId as string | undefined) ?? '');
+	let foundPart = $derived((form?.foundPart as FoundPart | null | undefined) ?? null);
 
 	function formatValue(key: string, value: unknown): string {
 		if (value == null) return '—';
@@ -357,6 +399,18 @@
 							</p>
 						</div>
 
+						{#if form?.returnCheckoutError}
+							<div class="bg-red-500/20 border border-red-500 rounded-lg p-4 mb-4">
+								<p class="text-red-200">{form.returnCheckoutError}</p>
+							</div>
+						{/if}
+
+						{#if form?.returnCheckoutSuccess}
+							<div class="bg-green-500/20 border border-green-500 rounded-lg p-4 mb-4">
+								<p class="text-green-200">{form.returnCheckoutSuccess}</p>
+							</div>
+						{/if}
+
 						{#if !((data.teams ?? []) as TeamRecord[]).length}
 							<p class="text-white/80">No teams yet.</p>
 						{:else}
@@ -388,6 +442,40 @@
 										{:else}
 											<p class="text-white/60">No applications are linked to this team yet.</p>
 										{/if}
+
+										<div class="mt-4 border-t border-white/10 pt-4">
+											<p class="text-white/70 font-mono uppercase tracking-wider text-xs mb-3">
+												Checked Out Parts
+											</p>
+											{#if team.checkouts.length}
+												<div class="space-y-2">
+													{#each team.checkouts as checkout}
+														<div
+															class="rounded-md border border-white/10 bg-black/10 px-3 py-3 flex flex-wrap items-center justify-between gap-3"
+														>
+															<div>
+																<p class="text-white font-mono text-sm">{checkout.part_id}</p>
+																<p class="text-white/70 text-sm">{checkout.part_name ?? 'Unknown part'}</p>
+																<p class="text-white/60 text-xs">Quantity: {checkout.quantity}</p>
+															</div>
+															<form method="POST" action="?/returnTeamPart" use:enhance>
+																<input type="hidden" name="teamId" value={String(team.id)} />
+																<input type="hidden" name="partId" value={checkout.part_id} />
+																<input type="hidden" name="quantity" value={String(checkout.quantity)} />
+																<button
+																	type="submit"
+																	class="px-3 py-2 rounded-lg bg-amber-400 text-slate-900 font-mono uppercase tracking-wider text-xs"
+																>
+																	Return
+																</button>
+															</form>
+														</div>
+													{/each}
+												</div>
+											{:else}
+												<p class="text-white/60">No parts currently checked out.</p>
+											{/if}
+										</div>
 									</div>
 								{/each}
 							</div>
@@ -395,19 +483,135 @@
 					</div>
 				{/if}
 				{#if activeTab === 'parts'}
-					<div class="rounded-lg border border-dashed border-white/20 bg-white/5 p-6">
-						<h2 class="text-xl font-semibold text-white font-mono uppercase tracking-wider mb-2">
-							Parts Checkout
-						</h2>
-						<p class="text-white/70 mb-4">
-							This tab is a placeholder for the parts checkout workflow.
-						</p>
-						<div class="space-y-3 text-white/60 text-sm">
-							<p>- Inventory list and search</p>
-							<p>- Check-in / check-out controls</p>
-							<p>- Borrower and team assignment summary</p>
-							<p>- Checkout history and audit log</p>
+					<div class="space-y-6">
+						<div class="rounded-lg border border-white/15 bg-white/5 p-6">
+							<h2 class="text-xl font-semibold text-white font-mono uppercase tracking-wider mb-2">
+								Parts Checkout
+							</h2>
+							<p class="text-white/70 mb-4">
+								Find a part by ID. Search checks <span class="font-mono">part_id</span> first,
+								then each item in <span class="font-mono">alt_ids</span>.
+							</p>
+
+							{#if form?.lookupError}
+								<div class="bg-red-500/20 border border-red-500 rounded-lg p-3 mb-4">
+									<p class="text-red-200 text-sm">{form.lookupError}</p>
+								</div>
+							{/if}
+
+							{#if form?.lookupSuccess}
+								<div class="bg-green-500/20 border border-green-500 rounded-lg p-3 mb-4">
+									<p class="text-green-200 text-sm">{form.lookupSuccess}</p>
+								</div>
+							{/if}
+
+							<form method="POST" action="?/findPart" use:enhance class="grid gap-3 md:grid-cols-[1fr_auto]">
+								<input
+									type="text"
+									name="partLookupId"
+									placeholder="Enter part ID or alt ID"
+									value={partLookupId}
+									required
+									class="w-full rounded-lg border border-white/20 bg-black/20 px-3 py-2 text-white placeholder-white/40 font-mono"
+								/>
+								<button
+									type="submit"
+									class="px-4 py-2 rounded-lg bg-white text-slate-900 font-mono uppercase tracking-wider text-sm"
+								>
+									Find Part
+								</button>
+							</form>
 						</div>
+
+						{#if foundPart}
+							<div class="rounded-lg border border-white/15 bg-white/5 p-6">
+								<div class="grid gap-2 mb-5 text-sm">
+									<p class="text-white font-mono">
+										Selected Part: <span class="text-cyan-200">{foundPart.part_id}</span>
+									</p>
+									<p class="text-white/80">{foundPart.name}</p>
+									<p class="text-white/70">
+										Available: {Math.max(foundPart.quantity - foundPart.num_in_use, 0)} / {foundPart.quantity}
+									</p>
+									{#if foundPart.alt_ids.length}
+										<p class="text-white/60">Alt IDs: {foundPart.alt_ids.join(', ')}</p>
+									{/if}
+								</div>
+
+								{#if form?.checkoutError}
+									<div class="bg-red-500/20 border border-red-500 rounded-lg p-3 mb-4">
+										<p class="text-red-200 text-sm">{form.checkoutError}</p>
+									</div>
+								{/if}
+
+								{#if form?.checkoutSuccess}
+									<div class="bg-green-500/20 border border-green-500 rounded-lg p-3 mb-4">
+										<p class="text-green-200 text-sm">{form.checkoutSuccess}</p>
+									</div>
+								{/if}
+
+								<form method="POST" action="?/checkoutPart" use:enhance class="grid gap-4 md:grid-cols-3">
+									<input type="hidden" name="partLookupId" value={partLookupId || foundPart.part_id} />
+									<input type="hidden" name="selectedPartId" value={foundPart.part_id} />
+
+									<div>
+										<label
+											for="teamId"
+											class="text-white/70 font-mono uppercase tracking-wider text-xs block mb-1"
+										>
+											Team
+										</label>
+										<select
+											id="teamId"
+											name="teamId"
+											required
+											class="w-full rounded-lg border border-white/20 bg-black/20 px-3 py-2 text-white font-mono"
+										>
+											<option value="">Select a team</option>
+											{#each (data.teams ?? []) as team}
+												<option value={team.id}>{team.team_name}</option>
+											{/each}
+										</select>
+									</div>
+
+									<div>
+										<label
+											for="quantity"
+											class="text-white/70 font-mono uppercase tracking-wider text-xs block mb-1"
+										>
+											Quantity
+										</label>
+										<input
+											id="quantity"
+											type="number"
+											name="quantity"
+											min="1"
+											max={Math.max(foundPart.quantity - foundPart.num_in_use, 1)}
+											required
+											class="w-full rounded-lg border border-white/20 bg-black/20 px-3 py-2 text-white font-mono"
+										/>
+									</div>
+
+									<div class="flex items-end gap-2">
+										<button
+											type="submit"
+											class="px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-mono uppercase tracking-wider text-sm"
+										>
+											Checkout
+										</button>
+									</div>
+								</form>
+
+								<form method="POST" action="?/cancelCheckout" use:enhance class="mt-4">
+									<button
+										type="submit"
+										class="px-4 py-2 rounded-lg border border-white/20 bg-white/5 text-white font-mono uppercase tracking-wider text-sm hover:bg-white/10"
+									>
+										Cancel
+									</button>
+								</form>
+							</div>
+						{/if}
 					</div>
 				{/if}
 			</div>
