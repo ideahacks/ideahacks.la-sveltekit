@@ -78,18 +78,18 @@
 						</div>
 					{:else}
 						<!-- Application Status Section -->
-						<div class="bg-white/10 backdrop-blur-md rounded-lg p-8 border border-white/20">
+						<div class="bg-white/10 backdrop-blur-md rounded-lg p-3 md:p-4 border border-white/20">
 							<div class="text-center">
-								<h2 class="text-3xl font-bold text-white mb-4 font-mono uppercase tracking-wider">
+								<h2 class="text-xl font-bold text-white mb-1 font-mono uppercase tracking-wider">
 									Application Status
 								</h2>
 
 								{#if data.status === 'submitted'}
-									<p class="text-yellow-300 text-xl font-semibold">Submitted — under review</p>
+									<p class="text-yellow-300 text-md font-semibold">Submitted — under review</p>
 								{:else if data.status === 'accepted'}
-									<p class="text-green-400 text-xl font-semibold">Accepted 🎉</p>
+									<p class="text-green-400 text-md font-semibold">Accepted 🎉</p>
 								{:else if data.status === 'rejected'}
-									<p class="text-red-400 text-xl font-semibold">Not accepted</p>
+									<p class="text-red-400 text-md font-semibold">Not accepted</p>
 								{/if}
 							</div>
 						</div>
