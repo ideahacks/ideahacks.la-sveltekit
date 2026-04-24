@@ -87,7 +87,7 @@
 
 						<p class="text-white/80">
 							Managing invites for
-							<span class="text-white font-semibold">{data.teamName}</span>. MAX 5 PEOPLE PER TEAM.
+							<span class="text-white font-semibold">{data.teamName}</span>. Max 5 people per team.
 						</p>
 					</div>
 

@@ -223,7 +223,7 @@
 						<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 							<p class="text-white/70">
 								Once your team is created, you can manage invites and members from the dashboard.
-								MAX 5 PEOPLE PER TEAM.
+								Max 5 people per team.
 							</p>
 
 							<form method="POST" action="?/createTeam" class="flex flex-wrap gap-3">

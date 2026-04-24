@@ -118,14 +118,14 @@
 			: form?.teamDeleteError || form?.teamDeleteSuccess
 				? 'teams'
 				: form?.returnCheckoutError || form?.returnCheckoutSuccess
-				? 'teams'
-				: form?.foundPart ||
-					  form?.lookupError ||
-					  form?.lookupSuccess ||
-					  form?.checkoutError ||
-					  form?.checkoutSuccess
-					? 'parts'
-					: 'applications'
+					? 'teams'
+					: form?.foundPart ||
+						  form?.lookupError ||
+						  form?.lookupSuccess ||
+						  form?.checkoutError ||
+						  form?.checkoutSuccess
+						? 'parts'
+						: 'applications'
 	);
 	let filterMode = $state<FilterMode>('all');
 	let collapsedUids = $state<string[]>([]);
