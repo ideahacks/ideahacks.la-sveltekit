@@ -189,7 +189,7 @@
 											<h3
 												class="text-lg font-semibold text-white mb-3 font-mono uppercase tracking-wider"
 											>
-												Team Members
+												Team Members (Max 5)
 											</h3>
 
 											<ul class="space-y-2">

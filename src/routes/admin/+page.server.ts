@@ -7,12 +7,19 @@ type PartRecord = {
 	quantity: number | null;
 	num_in_use: number | null;
 	alt_ids: string | null;
+	image_url: string | null;
 };
 
 type TeamPartCheckoutRecord = {
 	team_id: string | number;
 	part_id: string;
 	quantity: number | null;
+};
+
+type AdminRecord = {
+	id: number;
+	email: string;
+	created_at: string | null;
 };
 
 function normalizeAltIds(value: string | null): string[] {
@@ -29,7 +36,8 @@ function serializePart(part: PartRecord) {
 		name: part.name,
 		quantity: part.quantity ?? 0,
 		num_in_use: part.num_in_use ?? 0,
-		alt_ids: normalizeAltIds(part.alt_ids)
+		alt_ids: normalizeAltIds(part.alt_ids),
+		image_url: part.image_url
 	};
 }
 
@@ -64,7 +72,7 @@ async function findPartByAnyId(event: import('@sveltejs/kit').RequestEvent, rawP
 
 	const { data: directPart, error: directPartError } = await event.locals.sb
 		.from('parts_2026')
-		.select('part_id, name, quantity, num_in_use, alt_ids')
+		.select('part_id, name, quantity, num_in_use, alt_ids, image_url')
 		.eq('part_id', partId)
 		.maybeSingle<PartRecord>();
 
@@ -77,7 +85,7 @@ async function findPartByAnyId(event: import('@sveltejs/kit').RequestEvent, rawP
 
 	const { data: altCandidates, error: altCandidatesError } = await event.locals.sb
 		.from('parts_2026')
-		.select('part_id, name, quantity, num_in_use, alt_ids')
+		.select('part_id, name, quantity, num_in_use, alt_ids, image_url')
 		.not('alt_ids', 'is', null)
 		.returns<PartRecord[]>();
 
@@ -107,12 +115,17 @@ export const load: PageServerLoad = async (event) => {
 		{ data: applications, error: applicationsError },
 		{ data: teams, error: teamsError },
 		{ data: checkoutRows, error: checkoutsError },
-		{ data: partRows, error: partsError }
+		{ data: partRows, error: partsError },
+		{ data: adminRows, error: adminsError }
 	] = await Promise.all([
 		event.locals.sb.from('applications_2026').select('*'),
 		event.locals.sb.from('teams_2026').select('id, team_name'),
 		event.locals.sb.from('teams_parts_2026').select('team_id, part_id, quantity'),
-		event.locals.sb.from('parts_2026').select('part_id, name')
+		event.locals.sb.from('parts_2026').select('part_id, name'),
+		event.locals.sb
+			.from('admins_2026')
+			.select('id, email, created_at')
+			.order('created_at', { ascending: true })
 	]);
 
 	if (applicationsError) {
@@ -129,6 +142,10 @@ export const load: PageServerLoad = async (event) => {
 
 	if (partsError) {
 		console.error('Admin fetch parts for checkouts error:', partsError);
+	}
+
+	if (adminsError) {
+		console.error('Admin fetch admins error:', adminsError);
 	}
 
 	const partNameById = new Map<string, string>();
@@ -148,12 +165,14 @@ export const load: PageServerLoad = async (event) => {
 	return {
 		applications: applications ?? [],
 		teams: teams ?? [],
+		admins: (adminRows ?? []) as AdminRecord[],
 		teamCheckouts,
 		error:
 			applicationsError?.message ??
 			teamsError?.message ??
 			checkoutsError?.message ??
-			partsError?.message
+			partsError?.message ??
+			adminsError?.message
 	};
 };
 
@@ -405,6 +424,73 @@ export const actions: Actions = {
 		};
 	},
 
+	deleteTeam: async (event) => {
+		if (!(await requireAdmin(event))) {
+			return fail(403, { error: 'Forbidden' });
+		}
+
+		const formData = await event.request.formData();
+		const teamIdRaw = formData.get('teamId')?.toString().trim() ?? '';
+
+		if (!teamIdRaw) {
+			return fail(400, {
+				teamDeleteError: 'Missing team id.'
+			});
+		}
+
+		const numericTeamId = Number.parseInt(teamIdRaw, 10);
+		const teamId = Number.isNaN(numericTeamId) ? teamIdRaw : numericTeamId;
+
+		const { error: clearCheckoutsError } = await event.locals.sb
+			.from('teams_parts_2026')
+			.delete()
+			.eq('team_id', teamId);
+
+		if (clearCheckoutsError) {
+			console.error('Admin clear team checkouts before delete error:', clearCheckoutsError);
+			return fail(500, {
+				teamDeleteError: clearCheckoutsError.message
+			});
+		}
+
+		const { error: clearMembersError } = await event.locals.sb
+			.from('applications_2026')
+			.update({ team_id: null })
+			.eq('team_id', teamId);
+
+		if (clearMembersError) {
+			console.error('Admin clear team members before delete error:', clearMembersError);
+			return fail(500, {
+				teamDeleteError: clearMembersError.message
+			});
+		}
+
+		const { data: deletedTeams, error: deleteTeamError } = await event.locals.sb
+			.from('teams_2026')
+			.delete()
+			.eq('id', teamId)
+			.select('id, team_name')
+			.returns<Array<{ id: string | number; team_name: string | null }>>();
+
+		if (deleteTeamError) {
+			console.error('Admin delete team error:', deleteTeamError);
+			return fail(500, {
+				teamDeleteError: deleteTeamError.message
+			});
+		}
+
+		if (!deletedTeams?.length) {
+			return fail(404, {
+				teamDeleteError: 'Team not found.'
+			});
+		}
+
+		const deletedTeam = deletedTeams[0];
+		return {
+			teamDeleteSuccess: `Deleted team ${deletedTeam.team_name ?? teamIdRaw}.`
+		};
+	},
+
 	approve: async (event) => {
 		if (!(await requireAdmin(event))) {
 			return fail(403, { error: 'Forbidden' });
@@ -445,5 +531,48 @@ export const actions: Actions = {
 			return fail(500, { error: error.message });
 		}
 		return { success: true, action: 'rejected' };
+	},
+
+	addAdmin: async (event) => {
+		if (!(await requireAdmin(event))) {
+			return fail(403, { error: 'Forbidden' });
+		}
+
+		const formData = await event.request.formData();
+		const email = formData.get('email')?.toString().trim().toLowerCase() ?? '';
+
+		if (!email) {
+			return fail(400, {
+				adminAddError: 'Email is required.'
+			});
+		}
+
+		if (!email.includes('@')) {
+			return fail(400, {
+				adminAddError: 'Enter a valid email address.'
+			});
+		}
+
+		const { error } = await event.locals.sb.from('admins_2026').insert({
+			email,
+			created_at: new Date().toISOString()
+		});
+
+		if (error) {
+			console.error('Admin add admin error:', error);
+			if (error.code === '23505') {
+				return fail(409, {
+					adminAddError: 'That email is already an admin.'
+				});
+			}
+
+			return fail(500, {
+				adminAddError: error.message
+			});
+		}
+
+		return {
+			adminAddSuccess: `Added ${email} as an admin.`
+		};
 	}
 };

@@ -4,24 +4,23 @@
 	import { goto } from '$app/navigation';
 
 	let { data, form }: { data: PageData; form: any } = $props();
-	
 
 	// layout-only state (no Supabase / no actions yet)
 	let teamName = $state('');
 
 	// mock results for layout preview (replace with real search results later)
-	
+
 	type Participant = { uid: string; name: string };
 
 	let participantQuery = $state('');
 	let stagedInvites = $state<Participant[]>([]);
 
 	const participantResults: Participant[] = data.participants
-	.filter((p: any) => p.uid !== data.session.user.id)
-	.map((p: any) => ({
-		uid: p.uid,
-		name: p.name
-	}));
+		.filter((p: any) => p.uid !== data.session.user.id)
+		.map((p: any) => ({
+			uid: p.uid,
+			name: p.name
+		}));
 
 	const filteredParticipants = $derived.by(() => {
 		const q = participantQuery.trim().toLowerCase();
@@ -43,15 +42,11 @@
 			.map((x) => x.p);
 	});
 
-	
-
-
 	function stageInvite(p: Participant) {
-		if (!stagedInvites.find(i => i.uid === p.uid)) {
+		if (!stagedInvites.find((i) => i.uid === p.uid)) {
 			stagedInvites = [...stagedInvites, p];
-		}	
+		}
 	}
-
 
 	function removeInvite(uid: string) {
 		stagedInvites = stagedInvites.filter((p) => p.uid !== uid);
@@ -60,7 +55,6 @@
 	function handleCancel() {
 		goto('/dashboard');
 	}
-
 </script>
 
 <NavBar />
@@ -74,14 +68,14 @@
 						<h1 class="text-4xl font-bold text-white mb-2 font-mono uppercase tracking-wider">
 							Create Team
 						</h1>
-						<p class="text-white/80">
-							Name your team and invite participants.
-						</p>
+						<p class="text-white/80">Name your team and invite participants.</p>
 					</div>
 
 					<!-- Optional status chip area -->
 					<div class="hidden sm:block">
-						<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono uppercase tracking-wider border border-white/30 text-white/90 bg-white/5">
+						<span
+							class="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono uppercase tracking-wider border border-white/30 text-white/90 bg-white/5"
+						>
 							IDEA Hacks 2026
 						</span>
 					</div>
@@ -94,12 +88,10 @@
 							Team Name
 						</h2>
 
-						<label class="block text-white/80 font-mono mb-2">
-							Enter a team name
-						</label>
+						<label class="block text-white/80 font-mono mb-2"> Enter a team name </label>
 
 						<input
-							name = "team_name"
+							name="team_name"
 							bind:value={teamName}
 							placeholder="e.g., Silicon Divas"
 							class="w-full px-4 py-3 rounded-lg bg-black/30 border border-white/30 text-white placeholder:text-white/40
@@ -111,16 +103,15 @@
 					<div class="bg-white/5 rounded-lg p-6 border border-white/10">
 						<div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
 							<div>
-								<h2 class="text-2xl font-semibold text-white mb-2 font-mono uppercase tracking-wider">
+								<h2 class="text-2xl font-semibold text-white font-mono uppercase tracking-wider">
 									Invite Participants
 								</h2>
-								<p class="text-white/70">
-									Search by full name, then send an invite.
-								</p>
 							</div>
 
 							<!-- Optional small helper badge -->
-							<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono uppercase tracking-wider border border-white/30 text-white/90 bg-white/5">
+							<span
+								class="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono uppercase tracking-wider border border-white/30 text-white/90 bg-white/5"
+							>
 								Search
 							</span>
 						</div>
@@ -128,9 +119,7 @@
 						<div class="mt-6 space-y-4">
 							<!-- Search input -->
 							<div>
-								<label class="block text-white/80 font-mono mb-2">
-									Participant search
-								</label>
+								<label class="block text-white/80 font-mono mb-2"> Participant search </label>
 
 								<div class="flex flex-col sm:flex-row gap-3">
 									<input
@@ -140,25 +129,19 @@
 										focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/40"
 									/>
 								</div>
-
-								<p class="text-white/50 text-sm mt-2">
-									Results will appear below. You can filter to accepted participants later.
-								</p>
 							</div>
 
 							<!-- Results list -->
 							<div class="bg-black/20 rounded-lg border border-white/10 overflow-hidden">
 								<div class="px-4 py-3 border-b border-white/10">
-									<p class="text-white/80 font-mono uppercase tracking-wider text-sm">
-										Results
-									</p>
+									<p class="text-white/80 font-mono uppercase tracking-wider text-sm">Results</p>
 								</div>
 
 								<ul class="divide-y divide-white/10">
 									{#if !participantQuery.trim()}
 										<!-- Show nothing OR helper text -->
 										<li class="px-4 py-4 text-white/60 text-sm">
-										Start typing a name to search participants.
+											Start typing a name to search participants.
 										</li>
 									{:else if filteredParticipants.length === 0}
 										<li class="px-4 py-4">
@@ -168,23 +151,27 @@
 										</li>
 									{:else}
 										{#each filteredParticipants as p}
-											<li class="px-4 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+											<li
+												class="px-4 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
+											>
 												<div>
 													<p class="text-white font-semibold">{p.name}</p>
 												</div>
-								
+
 												<div class="flex gap-3">
 													<button
 														onclick={() => stageInvite(p)}
-														disabled={stagedInvites.some(i => i.uid === p.uid)}
+														disabled={stagedInvites.some((i) => i.uid === p.uid)}
 														class={`px-5 py-2 rounded-lg transition-colors duration-200 font-mono uppercase tracking-wider
-															${stagedInvites.some(i => i.uid === p.uid)
-																? 'bg-white/10 text-white/50 border border-white/10 cursor-not-allowed'
-																: 'border border-white/50 text-white hover:bg-white hover:text-black'}`}
+															${
+																stagedInvites.some((i) => i.uid === p.uid)
+																	? 'bg-white/10 text-white/50 border border-white/10 cursor-not-allowed'
+																	: 'border border-white/50 text-white hover:bg-white hover:text-black'
+															}`}
 													>
 														Invite
 													</button>
-								
+
 													<button
 														type="button"
 														class="px-5 py-2 border border-white/20 text-white/80 rounded-lg
@@ -205,26 +192,24 @@
 								<h3 class="text-white font-mono uppercase tracking-wider text-sm mb-3">
 									Invites to be Sent
 								</h3>
-							
+
 								{#if stagedInvites.length === 0}
-									<p class="text-white/70 text-sm">
-										No invites selected yet.
-									</p>
+									<p class="text-white/70 text-sm">No invites selected yet.</p>
 								{:else}
 									<ul class="space-y-2">
 										{#each stagedInvites as p}
 											<li class="flex items-center justify-between">
 												<p class="text-white/90 text-sm">{p.name}</p>
 												<button
-						type="button"
-						onclick={() => removeInvite(p.uid)}
-						aria-label={`Remove ${p.name}`}
-						class="shrink-0 px-3 py-1 border border-white/30 text-white/80 rounded-lg
+													type="button"
+													onclick={() => removeInvite(p.uid)}
+													aria-label={`Remove ${p.name}`}
+													class="shrink-0 px-3 py-1 border border-white/30 text-white/80 rounded-lg
 						transition-colors duration-200 font-mono uppercase tracking-wider
 						hover:border-white/60 hover:text-white hover:bg-white/10"
-					>
-						✕
-					</button>
+												>
+													✕
+												</button>
 											</li>
 										{/each}
 									</ul>
@@ -238,19 +223,20 @@
 						<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 							<p class="text-white/70">
 								Once your team is created, you can manage invites and members from the dashboard.
+								MAX 5 PEOPLE PER TEAM.
 							</p>
 
 							<form method="POST" action="?/createTeam" class="flex flex-wrap gap-3">
 								<!-- send team name -->
 								<input type="hidden" name="team_name" value={teamName} />
-							
+
 								<!-- send invitee uid list -->
 								<input
 									type="hidden"
 									name="invitee_uids"
 									value={JSON.stringify(stagedInvites.map((p) => p.uid))}
 								/>
-							
+
 								<button
 									type="submit"
 									class="px-6 py-2 border border-white/50 text-white rounded-lg
@@ -259,7 +245,7 @@
 								>
 									Create Team
 								</button>
-							
+
 								<button
 									type="button"
 									onclick={handleCancel}
@@ -277,7 +263,6 @@
 							</p>
 						{/if}
 					</div>
-
 				</div>
 			</div>
 		</div>

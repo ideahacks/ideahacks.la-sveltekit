@@ -56,8 +56,7 @@ export const load: PageServerLoad = async (event) => {
 					name
 				)
 			`)
-			.eq('team_id', data.team_id)
-			.neq('uid', uid);
+			.eq('team_id', data.team_id);
 	
 		if (membersError) {
 			console.error('Error fetching team members:', membersError);
@@ -70,7 +69,7 @@ export const load: PageServerLoad = async (event) => {
 
 
 
-		const { data: receivedInvites, error: invitesError } = await event.locals.sb
+		const { data: receivedInvites } = await event.locals.sb
 	.from('team_invites_2026')
 	.select(`
 		id,
@@ -168,6 +167,20 @@ export const actions: Actions = {
 	
 		if (invite.status !== 'pending') {
 			return fail(400, { error: 'This invite is no longer pending.' });
+		}
+
+		// Enforce a hard max team size of 2 members.
+		const { count: currentTeamSize, error: teamSizeError } = await event.locals.sb
+			.from('team_members_2026')
+			.select('uid', { count: 'exact', head: true })
+			.eq('team_id', invite.team_id);
+
+		if (teamSizeError) {
+			return fail(500, { error: teamSizeError.message });
+		}
+
+		if ((currentTeamSize ?? 0) >= 5) {
+			return fail(400, { error: 'THIS TEAM IS FULL. Please contact the team creator.' });
 		}
 	
 		// 2) Check whether user is already in a team

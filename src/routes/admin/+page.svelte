@@ -5,7 +5,7 @@
 
 	let { data, form }: { data: PageData; form?: ActionData } = $props();
 
-	type TabKey = 'applications' | 'teams' | 'parts';
+	type TabKey = 'applications' | 'teams' | 'parts' | 'admins';
 	type FilterMode = 'all' | 'accepted' | 'rejected' | 'pending';
 
 	type ApplicationRecord = {
@@ -41,6 +41,13 @@
 		quantity: number;
 		num_in_use: number;
 		alt_ids: string[];
+		image_url: string | null;
+	};
+
+	type AdminRecord = {
+		id: number;
+		email: string;
+		created_at: string | null;
 	};
 
 	const fieldLabels: Record<string, string> = {
@@ -101,19 +108,24 @@
 	const tabOptions: Array<{ key: TabKey; label: string }> = [
 		{ key: 'applications', label: 'Applications' },
 		{ key: 'teams', label: 'Teams' },
-		{ key: 'parts', label: 'Parts Checkout' }
+		{ key: 'parts', label: 'Parts Checkout' },
+		{ key: 'admins', label: 'Admins' }
 	];
 
 	let activeTab = $state<TabKey>(
-		form?.returnCheckoutError || form?.returnCheckoutSuccess
-			? 'teams'
-			: form?.foundPart ||
-				  form?.lookupError ||
-				  form?.lookupSuccess ||
-				  form?.checkoutError ||
-				  form?.checkoutSuccess
-				? 'parts'
-				: 'applications'
+		form?.adminAddError || form?.adminAddSuccess
+			? 'admins'
+			: form?.teamDeleteError || form?.teamDeleteSuccess
+				? 'teams'
+				: form?.returnCheckoutError || form?.returnCheckoutSuccess
+				? 'teams'
+				: form?.foundPart ||
+					  form?.lookupError ||
+					  form?.lookupSuccess ||
+					  form?.checkoutError ||
+					  form?.checkoutSuccess
+					? 'parts'
+					: 'applications'
 	);
 	let filterMode = $state<FilterMode>('all');
 	let collapsedUids = $state<string[]>([]);
@@ -197,6 +209,7 @@
 
 	let partLookupId = $derived((form?.partLookupId as string | undefined) ?? '');
 	let foundPart = $derived((form?.foundPart as FoundPart | null | undefined) ?? null);
+	let admins = $derived((data.admins ?? []) as AdminRecord[]);
 
 	function formatValue(key: string, value: unknown): string {
 		if (value == null) return '—';
@@ -411,6 +424,18 @@
 							</div>
 						{/if}
 
+						{#if form?.teamDeleteError}
+							<div class="bg-red-500/20 border border-red-500 rounded-lg p-4 mb-4">
+								<p class="text-red-200">{form.teamDeleteError}</p>
+							</div>
+						{/if}
+
+						{#if form?.teamDeleteSuccess}
+							<div class="bg-green-500/20 border border-green-500 rounded-lg p-4 mb-4">
+								<p class="text-green-200">{form.teamDeleteSuccess}</p>
+							</div>
+						{/if}
+
 						{#if !((data.teams ?? []) as TeamRecord[]).length}
 							<p class="text-white/80">No teams yet.</p>
 						{:else}
@@ -422,11 +447,22 @@
 												<h3 class="text-white font-semibold font-mono text-lg">{team.team_name}</h3>
 												<p class="text-white/50 text-sm font-mono">Team ID: {team.id}</p>
 											</div>
-											<span
-												class="px-3 py-1 rounded-full border border-white/15 text-white/70 text-sm font-mono uppercase tracking-wider"
-											>
-												{team.members.length} members
-											</span>
+											<div class="flex flex-wrap items-center gap-2">
+												<span
+													class="px-3 py-1 rounded-full border border-white/15 text-white/70 text-sm font-mono uppercase tracking-wider"
+												>
+													{team.members.length} members
+												</span>
+												<form method="POST" action="?/deleteTeam" use:enhance>
+													<input type="hidden" name="teamId" value={String(team.id)} />
+													<button
+														type="submit"
+														class="px-3 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-mono uppercase tracking-wider text-xs"
+													>
+														Delete Team
+													</button>
+												</form>
+											</div>
 										</div>
 
 										{#if team.members.length}
@@ -494,11 +530,17 @@
 							<h2 class="text-xl font-semibold text-white font-mono uppercase tracking-wider mb-2">
 								Parts Checkout
 							</h2>
-							<p class="text-white/70 mb-4">
-								Find a part by ID. Search checks <span class="font-mono">part_id</span> first, then
-								each item in <span class="font-mono">alt_ids</span>.
+							<p class="text-white/70">
+								Find a part by ID (<span class="font-mono">part_id</span> or
+								<span class="font-mono">alt_ids</span>)
 							</p>
-
+							<p class="text-white/70 mb-4">
+								Refer to the <a
+									href="https://docs.google.com/spreadsheets/d/1tLmBVyZHYDnfWacVV9OnJ631A-ajusv1Z2gPdddkyWM/edit?resourcekey=&gid=1605859279#gid=1605859279"
+									target="_blank"
+									class="text-cyan-400 hover:underline">parts inventory spreadsheet</a
+								> for available parts and IDs.
+							</p>
 							{#if form?.lookupError}
 								<div class="bg-red-500/20 border border-red-500 rounded-lg p-3 mb-4">
 									<p class="text-red-200 text-sm">{form.lookupError}</p>
@@ -546,6 +588,13 @@
 									</p>
 									{#if foundPart.alt_ids.length}
 										<p class="text-white/60">Alt IDs: {foundPart.alt_ids.join(', ')}</p>
+									{/if}
+									{#if foundPart.image_url && foundPart.image_url.length > 0}
+										<img
+											src={foundPart.image_url}
+											alt={`Image for ${foundPart.part_id}`}
+											class="mt-2 max-h-48 w-auto rounded-md border border-white/10 bg-black/20"
+										/>
 									{/if}
 								</div>
 
@@ -632,6 +681,70 @@
 								</form>
 							</div>
 						{/if}
+					</div>
+				{/if}
+
+				{#if activeTab === 'admins'}
+					<div class="space-y-6">
+						<div class="rounded-lg border border-white/15 bg-white/5 p-6">
+							<h2 class="text-xl font-semibold text-white font-mono uppercase tracking-wider mb-2">
+								Admins
+							</h2>
+							<p class="text-white/70 mb-4">Add a new admin via email.</p>
+
+							{#if form?.adminAddError}
+								<div class="bg-red-500/20 border border-red-500 rounded-lg p-3 mb-4">
+									<p class="text-red-200 text-sm">{form.adminAddError}</p>
+								</div>
+							{/if}
+
+							{#if form?.adminAddSuccess}
+								<div class="bg-green-500/20 border border-green-500 rounded-lg p-3 mb-4">
+									<p class="text-green-200 text-sm">{form.adminAddSuccess}</p>
+								</div>
+							{/if}
+
+							<form
+								method="POST"
+								action="?/addAdmin"
+								use:enhance
+								class="grid gap-3 md:grid-cols-[1fr_auto]"
+							>
+								<input
+									type="email"
+									name="email"
+									placeholder="admin@example.com"
+									required
+									class="w-full rounded-lg border border-white/20 bg-black/20 px-3 py-2 text-white placeholder-white/40 font-mono"
+								/>
+								<button
+									type="submit"
+									class="px-4 py-2 rounded-lg bg-white text-slate-900 font-mono uppercase tracking-wider text-sm"
+								>
+									Add Admin
+								</button>
+							</form>
+						</div>
+
+						<div class="rounded-lg border border-white/15 bg-white/5 p-6">
+							<h3 class="text-lg font-semibold text-white font-mono uppercase tracking-wider mb-3">
+								Current Admin Emails
+							</h3>
+
+							{#if !admins.length}
+								<p class="text-white/70">No admins found.</p>
+							{:else}
+								<ul class="space-y-2">
+									{#each admins as admin}
+										<li
+											class="rounded-md border border-white/10 bg-black/10 px-3 py-2 text-white/90 font-mono break-all"
+										>
+											{admin.email}
+										</li>
+									{/each}
+								</ul>
+							{/if}
+						</div>
 					</div>
 				{/if}
 			</div>

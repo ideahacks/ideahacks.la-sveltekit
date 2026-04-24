@@ -61,6 +61,7 @@ export const load: PageServerLoad = async (event) => {
 			)
 		`)
 		.eq('team_id', membership.team_id)
+		.eq('status', 'pending')
 		.order('created_at', { ascending: false });
 
 	if (pendingInvitesError) {
@@ -78,6 +79,60 @@ export const load: PageServerLoad = async (event) => {
 
 
 export const actions: Actions = {
+	deletePendingInvite: async (event) => {
+		if (!event.locals.session) throw redirect(302, '/login');
+
+		const uid = event.locals.session.user.id;
+		const formData = await event.request.formData();
+		const inviteId = formData.get('invite_id')?.toString();
+
+		if (!inviteId) {
+			return fail(400, { error: 'Missing invite id.' });
+		}
+
+		// Confirm current user is an owner and get their team id.
+		const { data: membership, error: membershipError } = await event.locals.sb
+			.from('team_members_2026')
+			.select('team_id, role')
+			.eq('uid', uid)
+			.maybeSingle();
+
+		if (membershipError) return fail(500, { error: membershipError.message });
+
+		if (!membership?.team_id || membership.role !== 'owner') {
+			return fail(403, { error: 'Only the team owner can delete pending invites.' });
+		}
+
+		// Ensure the invite belongs to this team and is still pending.
+		const { data: inviteRow, error: inviteLookupError } = await event.locals.sb
+			.from('team_invites_2026')
+			.select('id, team_id, status')
+			.eq('id', inviteId)
+			.eq('team_id', membership.team_id)
+			.maybeSingle();
+
+		if (inviteLookupError) return fail(500, { error: inviteLookupError.message });
+
+		if (!inviteRow) {
+			return fail(404, { error: 'Invite not found.' });
+		}
+
+		if (inviteRow.status !== 'pending') {
+			return fail(400, { error: 'Only pending invites can be deleted.' });
+		}
+
+		const { error: deleteError } = await event.locals.sb
+			.from('team_invites_2026')
+			.delete()
+			.eq('id', inviteId)
+			.eq('team_id', membership.team_id)
+			.eq('status', 'pending');
+
+		if (deleteError) return fail(500, { error: deleteError.message });
+
+		return { success: true };
+	},
+
 	sendInvites: async (event) => {
 		if (!event.locals.session) throw redirect(302, '/login');
 	
