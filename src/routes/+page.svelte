@@ -40,17 +40,17 @@
 	import expressifLogo from '$lib/images/sponsors/espressif.svg';
 
 	let sponsors = [
-		{ href: 'https://www.digikey.com/', src: digikeyLogo, alt: 'DigiKey', height: 80 },
-		{ href: 'https://www.flir.com/', src: teledyneLogo, alt: 'Teledyne FLIR', height: 80 },
-		{ href: 'https://www.ti.com/', src: tiLogo, alt: 'Texas Instruments', height: 65 },
-		{ href: 'https://www.pcbway.com/', src: pcbwayLogo, alt: 'PCBWay', height: 65 },
+		{ href: 'https://www.digikey.com/', src: digikeyLogo, alt: 'DigiKey', height: 90 },
+		{ href: 'https://www.flir.com/', src: teledyneLogo, alt: 'Teledyne FLIR', height: 90 },
+		{ href: 'https://www.ti.com/', src: tiLogo, alt: 'Texas Instruments', height: 75 },
+		{ href: 'https://www.pcbway.com/', src: pcbwayLogo, alt: 'PCBWay', height: 75 },
 		{
 			href: 'https://silvustechnologies.com/',
 			src: silvusLogo,
 			alt: 'Silvus Technologies',
-			height: 65
+			height: 75
 		},
-		{ href: 'https://www.espressif.com/', src: expressifLogo, alt: 'Espressif', height: 40 }
+		{ href: 'https://www.espressif.com/', src: expressifLogo, alt: 'Espressif', height: 50 }
 	];
 
 	// Image cycling logic
@@ -372,7 +372,7 @@
 </div>
 
 <div class="py-20 px-4">
-	<div class="max-w-3xl mx-auto text-center">
+	<div class="max-w-4xl mx-auto text-center">
 		<SectionTitle title="SPONSORS" />
 
 		<div class="flex flex-col md:flex-row md:flex-wrap gap-8 justify-center items-center">
@@ -388,7 +388,7 @@
 							src={sponsor.src}
 							alt={sponsor.alt}
 							style="height: {sponsor.height}px;"
-							class="w-auto filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity duration-200"
+							class="w-auto hover:brightness-110 transition-opacity duration-200"
 						/>
 					</a>
 				</div>
