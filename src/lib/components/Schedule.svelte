@@ -18,20 +18,6 @@
 
 	const fridayEvents: Event[] = [
 		{
-			startTime: '5:00 PM',
-			endTime: '6:00 PM',
-			title: 'Set Up',
-			eventType: 'Other',
-			location: 'IEEE Lab'
-		},
-		{
-			startTime: '6:00 PM',
-			endTime: '7:00 PM',
-			title: 'MAIN SET-UP',
-			eventType: 'Other',
-			location: 'ENG 6'
-		},
-		{
 			startTime: '7:00 PM',
 			endTime: '8:00 PM',
 			title: 'Check In',
