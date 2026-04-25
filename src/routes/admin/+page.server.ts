@@ -340,19 +340,53 @@ export const actions: Actions = {
 			});
 		}
 
-		const { error: insertCheckoutError } = await event.locals.sb.from('teams_parts_2026').insert({
-			team_id: checkoutTeamId,
-			part_id: foundPart.part_id,
-			quantity
-		});
+		const { data: existingCheckout, error: existingCheckoutError } = await event.locals.sb
+			.from('teams_parts_2026')
+			.select('quantity')
+			.eq('team_id', checkoutTeamId)
+			.eq('part_id', foundPart.part_id)
+			.maybeSingle<TeamPartCheckoutRecord>();
 
-		if (insertCheckoutError) {
-			console.error('Admin checkout insert error:', insertCheckoutError);
+		if (existingCheckoutError) {
+			console.error('Admin fetch existing checkout error:', existingCheckoutError);
 			return fail(500, {
 				partLookupId,
 				foundPart: serializePart(foundPart),
-				checkoutError: insertCheckoutError.message
+				checkoutError: existingCheckoutError.message
 			});
+		}
+
+		if (existingCheckout) {
+			const nextCheckoutQuantity = (existingCheckout.quantity ?? 0) + quantity;
+			const { error: updateCheckoutError } = await event.locals.sb
+				.from('teams_parts_2026')
+				.update({ quantity: nextCheckoutQuantity })
+				.eq('team_id', checkoutTeamId)
+				.eq('part_id', foundPart.part_id);
+
+			if (updateCheckoutError) {
+				console.error('Admin checkout update error:', updateCheckoutError);
+				return fail(500, {
+					partLookupId,
+					foundPart: serializePart(foundPart),
+					checkoutError: updateCheckoutError.message
+				});
+			}
+		} else {
+			const { error: insertCheckoutError } = await event.locals.sb.from('teams_parts_2026').insert({
+				team_id: checkoutTeamId,
+				part_id: foundPart.part_id,
+				quantity
+			});
+
+			if (insertCheckoutError) {
+				console.error('Admin checkout insert error:', insertCheckoutError);
+				return fail(500, {
+					partLookupId,
+					foundPart: serializePart(foundPart),
+					checkoutError: insertCheckoutError.message
+				});
+			}
 		}
 
 		const nextNumInUse = (foundPart.num_in_use ?? 0) + quantity;
