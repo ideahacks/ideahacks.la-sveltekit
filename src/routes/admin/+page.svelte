@@ -3,7 +3,11 @@
 	import { enhance } from '$app/forms';
 	import type { PageData, ActionData } from './$types';
 
-	let { data, form }: { data: PageData; form?: ActionData } = $props();
+	type PartsActionData = ActionData & {
+		foundParts?: FoundPart[];
+	};
+
+	let { data, form }: { data: PageData; form?: PartsActionData } = $props();
 
 	type TabKey = 'applications' | 'teams' | 'parts' | 'admins';
 	type FilterMode = 'all' | 'accepted' | 'rejected' | 'pending';
@@ -209,6 +213,7 @@
 
 	let partLookupId = $derived((form?.partLookupId as string | undefined) ?? '');
 	let foundPart = $derived((form?.foundPart as FoundPart | null | undefined) ?? null);
+	let foundParts = $derived((form?.foundParts as FoundPart[] | undefined) ?? []);
 	let admins = $derived((data.admins ?? []) as AdminRecord[]);
 
 	function formatValue(key: string, value: unknown): string {
@@ -576,7 +581,45 @@
 							</form>
 						</div>
 
-						{#if foundPart}
+						{#if foundParts.length > 1}
+							<div class="rounded-lg border border-white/15 bg-white/5 p-6">
+								<div class="grid gap-2 mb-5 text-sm">
+									<p class="text-white font-mono uppercase tracking-wider text-xs">
+										Possible Matches
+									</p>
+									<p class="text-white/70">
+										Multiple parts matched "{partLookupId}". Select one to open the checkout form.
+									</p>
+								</div>
+								<div class="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+									{#each foundParts as match}
+										<div class="rounded-lg border border-white/10 bg-black/20 p-4 space-y-3">
+											<div class="space-y-1 text-sm">
+												<p class="text-white font-mono">
+													{match.part_id}
+												</p>
+												<p class="text-white/80">{match.name}</p>
+												<p class="text-white/70">
+													Available: {Math.max(match.quantity - match.num_in_use, 0)} / {match.quantity}
+												</p>
+												{#if match.alt_ids.length}
+													<p class="text-white/60 text-xs">Alt IDs: {match.alt_ids.join(', ')}</p>
+												{/if}
+											</div>
+											<form method="POST" action="?/findPart" use:enhance>
+												<input type="hidden" name="partLookupId" value={match.part_id} />
+												<button
+													type="submit"
+													class="w-full px-3 py-2 rounded-lg bg-white text-slate-900 font-mono uppercase tracking-wider text-xs"
+												>
+													Select This Part
+												</button>
+											</form>
+										</div>
+									{/each}
+								</div>
+							</div>
+						{:else if foundPart}
 							<div class="rounded-lg border border-white/15 bg-white/5 p-6">
 								<div class="grid gap-2 mb-5 text-sm">
 									<p class="text-white font-mono">

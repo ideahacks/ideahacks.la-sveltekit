@@ -16,6 +16,15 @@ type TeamPartCheckoutRecord = {
 	quantity: number | null;
 };
 
+type SerializedPart = {
+	part_id: string;
+	name: string;
+	quantity: number;
+	num_in_use: number;
+	alt_ids: string[];
+	image_url: string | null;
+};
+
 type AdminRecord = {
 	id: number;
 	email: string;
@@ -30,7 +39,7 @@ function normalizeAltIds(value: string | null): string[] {
 		.filter(Boolean);
 }
 
-function serializePart(part: PartRecord) {
+function serializePart(part: PartRecord): SerializedPart {
 	return {
 		part_id: part.part_id,
 		name: part.name,
@@ -39,6 +48,51 @@ function serializePart(part: PartRecord) {
 		alt_ids: normalizeAltIds(part.alt_ids),
 		image_url: part.image_url
 	};
+}
+
+function normalizeSearchTerm(value: string): string {
+	return value.trim().toLowerCase();
+}
+
+function partMatchesSearch(part: PartRecord, normalizedSearchTerm: string): boolean {
+	if (part.part_id.toLowerCase().includes(normalizedSearchTerm)) return true;
+
+	return normalizeAltIds(part.alt_ids).some((altId) =>
+		altId.toLowerCase().includes(normalizedSearchTerm)
+	);
+}
+
+function partMatchesSearchByName(part: PartRecord, normalizedSearchTerm: string): boolean {
+	return part.name.toLowerCase().includes(normalizedSearchTerm);
+}
+
+async function findPartMatchesBySearchTerm(event: import('@sveltejs/kit').RequestEvent, rawPartId: string) {
+	const partId = rawPartId.trim();
+	if (!partId) return [];
+
+	const { data: parts, error } = await event.locals.sb
+		.from('parts_2026')
+		.select('part_id, name, quantity, num_in_use, alt_ids, image_url')
+		.returns<PartRecord[]>();
+
+	if (error) {
+		console.error('Admin find part matches error:', error);
+		return [];
+	}
+
+	const normalizedSearchTerm = normalizeSearchTerm(partId);
+	const exactMatches = (parts ?? []).filter((part: PartRecord) => {
+		if (part.part_id.toLowerCase() === normalizedSearchTerm) return true;
+		return normalizeAltIds(part.alt_ids).some((altId) => altId.toLowerCase() === normalizedSearchTerm);
+	});
+
+	if (exactMatches.length > 0) {
+		return exactMatches;
+	}
+
+	return (parts ?? []).filter(
+		(part: PartRecord) => partMatchesSearch(part, normalizedSearchTerm) || partMatchesSearchByName(part, normalizedSearchTerm)
+	);
 }
 
 async function resolveCheckoutTeamId(
@@ -202,18 +256,22 @@ export const actions: Actions = {
 			});
 		}
 
-		const foundPart = await findPartByAnyId(event, partLookupId);
-		if (!foundPart) {
+		const foundParts = await findPartMatchesBySearchTerm(event, partLookupId);
+		if (!foundParts.length) {
 			return fail(404, {
 				partLookupId,
-				lookupError: 'No part found for that ID.'
+				lookupError: `No part found for ID: ${partLookupId}.`
 			});
 		}
 
 		return {
 			partLookupId,
-			foundPart: serializePart(foundPart),
-			lookupSuccess: `Found part ${foundPart.part_id}.`
+			foundPart: serializePart(foundParts[0]),
+			foundParts: foundParts.map((part: PartRecord) => serializePart(part)),
+			lookupSuccess:
+				foundParts.length === 1
+					? `Found part ${foundParts[0].part_id}.`
+					: `Found ${foundParts.length} possible matches for "${partLookupId}".`
 		};
 	},
 
