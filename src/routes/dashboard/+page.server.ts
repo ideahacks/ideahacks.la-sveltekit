@@ -108,6 +108,7 @@ export const load: PageServerLoad = async (event) => {
 		applicationName: data?.name ?? null,
 		status: data?.status ?? null,
 		teamStatus: data?.team_status?? null,
+		teamId: data?.team_id ?? null,
 		teamName,
 		teamMembers,
 		receivedInvites: receivedInvites ?? [],

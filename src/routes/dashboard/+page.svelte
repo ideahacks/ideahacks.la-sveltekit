@@ -182,6 +182,11 @@
 								<div class="flex flex-col gap-4">
 									<p class="text-white/80">
 										Team: <span class="text-white font-semibold">{data.teamName}</span>
+										{#if data.teamId}
+											<span class="block font-mono mt-1">
+												Team ID: <b>{data.teamId}</b>
+											</span>
+										{/if}
 									</p>
 
 									{#if data.teamMembers.length > 0}
