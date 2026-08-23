@@ -1,26 +1,10 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-
 	// Left-aligned navigation items
 	const leftNavItems = [
 		{ name: 'Home', href: '/' },
-		{ name: 'Parts', href: '/parts' },
 		{ name: 'IEEE', href: 'https://www.ieeebruins.com/', external: true },
 		{ name: 'Discord', href: 'https://discord.gg/XFkxmCwME5', external: true }
 	];
-
-	// Right-aligned navigation items - conditional based on auth and admin
-	$: rightNavItems = $page.data.session
-		? $page.data.is_admin
-			? [
-					{ name: 'DASHBOARD', href: '/dashboard' },
-					{ name: 'ADMIN', href: '/admin' }
-				]
-			: [{ name: 'DASHBOARD', href: '/dashboard' }]
-		: [
-				{ name: 'LOGIN', href: '/login' },
-				{ name: 'APPLY', href: '/signup' }
-			];
 </script>
 
 <nav class="fixed top-0 left-0 right-0 z-50">
@@ -29,19 +13,6 @@
 			<!-- Left-aligned navigation -->
 			<div class="flex items-center space-x-8">
 				{#each leftNavItems as item}
-					<a
-						href={item.href}
-						class="font-mono text-white hover:text-blue-400 transition-colors duration-200 text-sm sm:text-base md:text-lg lg:text-xl font-medium uppercase tracking-wider drop-shadow-lg"
-						{...item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
-					>
-						{item.name}
-					</a>
-				{/each}
-			</div>
-
-			<!-- Right-aligned navigation -->
-			<div class="flex items-center space-x-8">
-				{#each rightNavItems as item}
 					<a
 						href={item.href}
 						class="font-mono text-white hover:text-blue-400 transition-colors duration-200 text-sm sm:text-base md:text-lg lg:text-xl font-medium uppercase tracking-wider drop-shadow-lg"
