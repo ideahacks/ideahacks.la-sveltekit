@@ -45,7 +45,7 @@
 							</div>
 						{:else if data.applicationWindow === 'upcoming'}
 							<p>Applications have not opened yet.</p>
-						{:else if data.applicationWindow === 'closed'}
+						{:else}
 							<p class="text-[#064471]">
 									Applications for IDEA Hacks 2027 are now closed. If you have any questions, please
 									reach out to us on
@@ -54,8 +54,6 @@
 										class="font-semibold text-[#0068BD] underline underline-offset-2 hover:text-[#064471]">Discord</a
 									>.
 								</p>
-						{:else}
-							<p>Applications are currently unavailable.</p>
 						{/if}
 					{:else}
 						<!-- Application Status Section -->

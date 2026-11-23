@@ -1,11 +1,11 @@
 import { error, fail, redirect } from '@sveltejs/kit';
-import { getApplicationUser, getApplicationWindow } from '$lib/server/applications';
+import { applicationWindow, getApplicationUser } from '$lib/server/applications';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const user = await getApplicationUser(locals);
 	if (!user) redirect(302, '/login');
-	if (getApplicationWindow() !== 'open') redirect(302, '/dashboard');
+	if (applicationWindow !== 'open') redirect(302, '/dashboard');
 
 	const { data: application, error: fetchError } = await locals.sb
 		.from('applications_2027')
@@ -42,7 +42,7 @@ export const actions: Actions = {
 			hackathon_ideas: answer('hackathonIdeas')
 		};
 
-		if (getApplicationWindow() !== 'open') {
+		if (applicationWindow !== 'open') {
 			return fail(403, { error: 'Applications are not open.' });
 		}
 		if (Object.values(requiredAnswers).some((value) => !value)) {

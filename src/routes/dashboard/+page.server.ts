@@ -1,5 +1,5 @@
 import { error, redirect } from '@sveltejs/kit';
-import { getApplicationUser, getApplicationWindow } from '$lib/server/applications';
+import { applicationWindow, getApplicationUser } from '$lib/server/applications';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
@@ -17,5 +17,5 @@ export const load: PageServerLoad = async ({ locals }) => {
 		error(500, 'Could not load your application status. Please try again.');
 	}
 
-	return { application, applicationWindow: getApplicationWindow() };
+	return { application, applicationWindow };
 };
