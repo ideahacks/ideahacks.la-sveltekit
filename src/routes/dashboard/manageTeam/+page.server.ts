@@ -22,15 +22,15 @@ export const load: PageServerLoad = async (event) => {
 
         if (membershipError) {
             console.error(membershipError);
-            throw redirect(302, '/dashboard');
+            throw redirect(302, '/dashboard/2026');
         }
 
 	if (!membership?.team_id) {
-		throw redirect(302, '/dashboard');
+		throw redirect(302, '/dashboard/2026');
 	}
 
 	if (membership.role !== 'owner') {
-		throw redirect(302, '/dashboard');
+		throw redirect(302, '/dashboard/2026');
 	}
 
 	const { data: participants, error: participantsError } = await event.locals.sb

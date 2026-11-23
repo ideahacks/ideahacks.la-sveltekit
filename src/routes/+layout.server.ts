@@ -1,19 +1,6 @@
 import { getServerSession } from '@supabase/auth-helpers-sveltekit';
 import type { LayoutServerLoad } from './$types';
-import { error } from '@sveltejs/kit';
 
-export const load: LayoutServerLoad = async (event) => {
-	const { data: admin, error: adminError } = await event.locals.sb
-		.from('admins_2026')
-		.select()
-		.eq('email', event.locals.session?.user.email);
-	if (adminError) {
-		console.log(adminError);
-		error(500, 'Error checking admin status');
-	}
-
-	return {
-		session: await getServerSession(event),
-		is_admin: admin.length > 0
-	};
-};
+export const load: LayoutServerLoad = async (event) => ({
+	session: await getServerSession(event)
+});

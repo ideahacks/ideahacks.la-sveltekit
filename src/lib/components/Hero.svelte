@@ -1,400 +1,521 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
+	import { onMount } from 'svelte';
+	import mountains from '$lib/images/hero-2027/mountains.png';
+	import hillLight from '$lib/images/hero-2027/hill-light.png';
+	import hillBright from '$lib/images/hero-2027/hill-bright.png';
+	import hillFront from '$lib/images/hero-2027/hill-front.png';
+	import hillFrontTexture from '$lib/images/hero-2027/hill-front-texture.png';
+	import cloudLeft from '$lib/images/hero-2027/cloud-left.png';
+	import cloudRight from '$lib/images/hero-2027/cloud-right.png';
+	import ideaWhite from '$lib/images/hero-2027/idea-white.png';
+	import ideaBlue from '$lib/images/hero-2027/idea-blue.png';
+	import gear from '$lib/images/hero-2027/gear.png';
+	import hacksWhite from '$lib/images/hero-2027/hacks-white.png';
+	import hacksBlue from '$lib/images/hero-2027/hacks-blue.png';
 
-	// form state
-	let emailForm: HTMLFormElement;
-	let showThankYou = false;
-	let isSubmitting = false;
+	export let comingSoon = false;
 
-	// stars
-	let starsFar: Array<{ id: number; x: number; y: number; opacity: number; size: number }> = [];
-	let starsClose: Array<{ id: number; x: number; y: number; opacity: number; size: number }> = [];
+	let hero: HTMLElement;
 
-	// mountain + animation
-	const numPoints = 100;
-	let mountainPath = ''; // valid SVG path string (starts with M)
-	let rise = -75; // percentage translateY: start below (100%) -> 0%
-	let hasAnimated = false;
-	let sunRise = 70; // percentage translateY for sun entrance
+	onMount(() => {
+		const section = hero;
+		const parallax = window.matchMedia(
+			'(min-width: 701px) and (pointer: fine) and (prefers-reduced-motion: no-preference)'
+		);
+		let frame: number | null = null;
+		let lastProgress: number | undefined;
 
-	// parallax state
-	let scrollY = 0;
-	let parallaxMultipliers = {
-		background: 1, // furthest back - moves slowest
-		starsFar: 0.8,
-		starsClose: 0.6,
-		banner: 0.6,
-		sun: 0.5,
-		mountains: 0.2,
-		foreground: 0 // closest - moves at normal scroll speed
-	};
+		function updateParallax() {
+			frame = null;
+			const { top, height } = section.getBoundingClientRect();
+			const progress = height > 0 ? Math.min(1, Math.max(0, -top / height)) : 0;
 
-	function generateStars() {
-		const starCount = Math.floor(Math.random() * 101) + 200;
-		starsFar = Array.from({ length: starCount / 2 }, (_, i) => ({
-			id: i,
-			x: Math.random() * 100,
-			y: Math.random() * 100,
-			opacity: Math.random() * 0.8,
-			size: Math.random() * 2 + 1
-		}));
-		starsClose = Array.from({ length: starCount / 2 }, (_, i) => ({
-			id: i,
-			x: Math.random() * 100,
-			y: Math.random() * 100,
-			opacity: Math.random() * 0.8 + 0.2,
-			size: Math.random() * 2 + 1
-		}));
-	}
-
-	// grid precomputed paths
-	const horizontalCount = 10;
-	let horizontalYs: number[] = [];
-	let verticalXs: { x1: number; x2: number }[] = [];
-	const numLines = 60;
-
-	function generateGrid() {
-		horizontalYs = Array.from({ length: horizontalCount }, (_, i) => {
-			const t = i / horizontalCount;
-			// Compress near top
-			return 100 * Math.pow(t, 2);
-		}).reverse();
-
-		// vertical lines spread out further at the bottom than the top
-		verticalXs = [];
-
-		for (let i = 1; i <= numLines / 2; i++) {
-			const baseOffset = i * 170 * Math.pow(1 / (numLines / 2), 1.4);
-			const taper = i * 5;
-
-			verticalXs.push({ x1: 50 + baseOffset, x2: 50 + baseOffset + taper });
-			verticalXs.push({ x1: 50 - baseOffset, x2: 50 - baseOffset - taper });
-		}
-	}
-
-	function generateMountains() {
-		let height = 110;
-		const minH = 20;
-		const maxH = 100;
-		const smoothness = 7;
-		const points: number[] = [];
-
-		for (let i = 0; i < numPoints; i++) {
-			// smooth random walk with gentle bounce at edges
-			height += (Math.random() - 0.5) * smoothness;
-			if (height > maxH) height -= Math.random() * smoothness * 2;
-			if (height < minH) height += Math.random() * smoothness * 2;
-			points.push(height);
+			if (progress !== lastProgress) {
+				section.style.setProperty('--parallax-progress', String(progress));
+				lastProgress = progress;
+			}
 		}
 
-		// Build SVG path string safely (starts with M)
-		let path = `M 0 ${100 - points[0]}`;
-		for (let i = 1; i < points.length; i++) {
-			const x = (i / (numPoints - 1)) * 100;
-			const y = 100 - points[i];
-			path += ` L ${x} ${y}`;
+		function queueUpdate() {
+			if (frame === null) frame = window.requestAnimationFrame(updateParallax);
 		}
-		// close to bottom to create filled polygon
-		path += ' L 100 100 L 0 100 Z';
-		mountainPath = path;
-	}
 
-	// email submit with loading state
-	async function handleEmailSubmit(event: Event) {
-		event.preventDefault();
-		const emailInput = emailForm.querySelector('input[name="email"]') as HTMLInputElement;
-		const email = emailInput.value;
-
-		isSubmitting = true;
-
-		try {
-			const controller = new AbortController();
-			const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
-
-			await fetch(
-				'https://script.google.com/macros/s/AKfycbx9IQG9oGgHJ5r5y0ZiKJlaQ7Gc74mYnOdL4RfGQB4gxeABLyfybtXg7kUHRmzZvIgp/exec',
-				{
-					method: 'POST',
-					mode: 'no-cors',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ email }),
-					signal: controller.signal
-				}
-			);
-
-			clearTimeout(timeoutId);
-			console.log('Form submitted (no-cors)');
-
-			showThankYou = true;
-			emailForm.reset();
-			setTimeout(() => (showThankYou = false), 750);
-		} catch (err) {
-			console.error('submit error', err);
-			// Show error message to user
-			alert('Failed to submit email. Please try again.');
-		} finally {
-			isSubmitting = false;
+		function stopParallax() {
+			window.removeEventListener('scroll', queueUpdate);
+			window.removeEventListener('resize', queueUpdate);
+			if (frame !== null) window.cancelAnimationFrame(frame);
+			frame = null;
+			lastProgress = undefined;
+			section.style.removeProperty('--parallax-progress');
 		}
-	}
 
-	// scroll handler for parallax
-	function handleScroll() {
-		scrollY = window.scrollY;
-	}
+		function syncParallax() {
+			if (parallax.matches) {
+				window.addEventListener('scroll', queueUpdate, { passive: true });
+				window.addEventListener('resize', queueUpdate);
+				queueUpdate();
+			} else {
+				stopParallax();
+			}
+		}
 
-	generateStars();
-	generateGrid();
-	generateMountains();
+		syncParallax();
+		parallax.addEventListener('change', syncParallax);
 
-	onMount(async () => {
-		// Trigger CSS transition after mount
-		requestAnimationFrame(() => {
-			hasAnimated = true;
-			rise = 0;
-			sunRise = 0;
-		});
-
-		// Add scroll listener for parallax
-		window.addEventListener('scroll', handleScroll, { passive: true });
-	});
-
-	onDestroy(() => {
-		// window.removeEventListener('scroll', handleScroll);
+		return () => {
+			parallax.removeEventListener('change', syncParallax);
+			stopParallax();
+		};
 	});
 </script>
 
-<div class="relative w-full h-screen min-h-[800px] overflow-hidden">
-	<!-- Gradient Background -->
-	<div
-		class="absolute inset-0 w-full h-full"
-		style="background: linear-gradient(180deg, #000214 0%, #0B0C3C 20%, #310E4D 40%, #651758 60%, #A6275B 80%, #D19EB6 100%); z-index:0;"
-	></div>
+<section bind:this={hero} class="hero-2027" aria-labelledby="hero-2027-title">
+	<div class="rays" aria-hidden="true"></div>
 
-	<!-- Stars Farther -->
-	<div
-		class="absolute inset-0 w-full h-full"
-		style="z-index:5; transform: translateY({scrollY * parallaxMultipliers.starsFar}px);"
-	>
-		{#each starsFar as star (star.id)}
-			<div
-				class="absolute rounded-full bg-white"
-				style="
-					left: {star.x}%;
-					top: {star.y}%;
-					width: {star.size}px;
-					height: {star.size}px;
-					opacity: {star.opacity};
-				"
-			></div>
-		{/each}
-	</div>
-
-	<!-- Stars Closer -->
-	<div
-		class="absolute inset-0 w-full h-full"
-		style="z-index:5; transform: translateY({scrollY * parallaxMultipliers.starsClose}px);"
-	>
-		{#each starsClose as star (star.id)}
-			<div
-				class="absolute rounded-full bg-white"
-				style="
-        left: {star.x}%;
-        top: {star.y}%;
-        width: {star.size}px;
-        height: {star.size}px;
-        opacity: {star.opacity};
-      "
-			></div>
-		{/each}
-	</div>
-
-	<!-- Content Container -->
-	<div
-		class="relative z-10 flex flex-col items-center justify-start h-full px-4 pt-[20vh]"
-		style="transform: translateY({scrollY * parallaxMultipliers.banner}px);"
-	>
-		<!-- Logo and Date -->
-		<div class="text-center mb-8">
-			<img src="/logo.svg" alt="IDEA Hacks Logo" class="w-full max-w-4xl h-auto mx-auto mb-6" />
-			<div class="space-y-2">
-				<div
-					class="font-sans text-gray-300 text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold drop-shadow-lg"
-				>
-					April 24-26, 2026
-				</div>
-				<div
-					class="font-sans text-gray-300 text-base sm:text-lg md:text-xl lg:text-2xl drop-shadow-lg"
-				>
-					7:00 PM in Engineering VI
-				</div>
-			</div>
-		</div>
-
-		<!-- Email Signup Form -->
-		<div class="relative">
-			<form
-				bind:this={emailForm}
-				on:submit={handleEmailSubmit}
-				enctype="multipart/form-data"
-				class="rounded-lg overflow-hidden inline-block w-80 md:w-[24rem]"
-				style="background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(190,190,190,0.4) 30%, rgba(255,255,255,0.4) 100%); z-index:40;"
-			>
-				<div class="flex">
-					<input
-						type="email"
-						name="email"
-						placeholder="Enter email to stay updated"
-						class="flex-1 px-5 py-3 bg-white text-gray-800 placeholder-gray-500 text-sm md:text-sm focus:outline-none border-0"
-						style="font-family: 'Roboto Mono', monospace;"
-						required
-					/>
-					<button
-						type="submit"
-						disabled={isSubmitting}
-						class="px-6 py-3 bg-pink-600 hover:bg-pink-700 disabled:bg-pink-400 disabled:cursor-not-allowed text-white font-medium transition-colors duration-200 text-sm md:text-sm border-0 flex items-center gap-2"
-						style="font-family: 'Roboto Mono', monospace;"
-					>
-						{#if isSubmitting}
-							<div class="loading-spinner"></div>
-						{/if}
-						{isSubmitting ? 'Submitting...' : 'Submit'}
-					</button>
-				</div>
-			</form>
-
-			{#if showThankYou}
-				<div
-					class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-4 py-2 bg-green-500 text-white rounded-lg text-sm font-medium transition-all duration-300"
-					style="font-family: 'Roboto Mono', monospace;"
-				>
-					Thank you!
-				</div>
-			{/if}
+	<div class="terrain" aria-hidden="true">
+		<img class="mountains" src={mountains} alt="" />
+		<img class="hill-light" src={hillLight} alt="" />
+		<img class="hill-bright" src={hillBright} alt="" />
+		<div class="hill-front">
+			<img src={hillFront} alt="" />
+			<img class="hill-texture" src={hillFrontTexture} alt="" />
 		</div>
 	</div>
 
-	<!-- Sun with glow (behind mountains) -->
-	<div
-		class="absolute bottom-[0px] left-1/2 transform -translate-x-1/2 w-80 h-80 md:w-[420px] md:h-[420px]"
-		style="z-index:5; transform: translate(-50%, {scrollY * parallaxMultipliers.sun}px);"
-	>
-		<div
-			class="relative w-full h-full"
-			style={`transform: translateY(${sunRise}%); transition: transform 1200ms cubic-bezier(.22,1,.36,1);`}
-		>
-			<div
-				class="absolute inset-0 rounded-full opacity-60 blur-3xl"
-				style="background: radial-gradient(circle, #ffe24f 0%, #FFB80c 50%, transparent 70%);"
-			></div>
-			<div
-				class="relative w-full h-full rounded-full"
-				style="background: radial-gradient(circle, #ffe24f 0%, #FFB80c 100%); box-shadow: 0 0 60px #ffe24f, 0 0 120px #FFB80c;"
-			></div>
-		</div>
+	<div class="clouds" aria-hidden="true">
+		<img class="cloud-left" src={cloudLeft} alt="" />
+		<img class="cloud-right" src={cloudRight} alt="" />
+		<img class="cloud-distant" src={cloudRight} alt="" />
 	</div>
 
-	<!-- Mountains + Grid + Panel -->
-	<div
-		class="scene"
-		style="position: absolute; left:0; right:0; bottom:0; z-index:20; pointer-events: none;"
-	>
-		<!-- Mountains SVG (on top of grid and panel) -->
-		<svg
-			viewBox="0 0 100 100"
-			preserveAspectRatio="none"
-			style="height: 100%; width: 100%; z-index:20; clip-path: inset(0 0 65% 0);"
-		>
-			<path
-				d={mountainPath}
-				fill="black"
-				style={`transform: translateY(${-rise}%); transition: transform 1400ms cubic-bezier(.22,1,.36,1);`}
-			/>
-		</svg>
-
-		<!-- Gradient ground panel (slightly overlaps mountains to prevent flicker) -->
-		<div
-			style="height: 65%; position: absolute; bottom:0; left:0; right:0; z-index:30; transform: translateY({scrollY *
-				parallaxMultipliers.foreground}px)"
-		>
-			<div style="height:100%; background: linear-gradient(to top, #170D35 20%, black 100%);">
-				<svg
-					viewBox="0 0 100 100"
-					preserveAspectRatio="none"
-					style="width:100%; height:100%; z-index:40;"
-				>
-					<defs>
-						<linearGradient id="grid-fade" x1="0" y1="0" x2="0" y2="1">
-							<stop offset="0%" stop-color="white" stop-opacity="0.45" />
-							<stop offset="100%" stop-color="white" stop-opacity="0" />
-						</linearGradient>
-					</defs>
-
-					{#each horizontalYs as y, i}
-						<line
-							x1="0"
-							y1={y - 2}
-							x2="100"
-							y2={y - 2}
-							stroke="white"
-							stroke-width="0.3"
-							opacity={i / horizontalYs.length}
-							stroke-dasharray="100"
-							stroke-dashoffset={hasAnimated ? 0 : 100}
-							style="transition: stroke-dashoffset 1s ease-out {i * 0.04}s;"
-						/>
-					{/each}
-
-					{#each verticalXs as vx, i}
-						<path
-							d={`M ${vx.x1} 0 L ${vx.x2} 100`}
-							stroke="url(#grid-fade)"
-							stroke-width="0.3"
-							opacity="0.9"
-							stroke-dasharray="140"
-							stroke-dashoffset={hasAnimated ? 0 : 140}
-							style="transition: stroke-dashoffset 1s ease-out {i * 0.03}s;"
-						/>
-					{/each}
-				</svg>
-			</div>
-		</div>
+	<div class="hero-2027-content">
+		<h1 class="wordmark" id="hero-2027-title">
+			<span class="sr-only">IDEA Hacks 2027</span>
+			<span class="lettering idea" aria-hidden="true">
+				<img class="letter-shadow" src={ideaWhite} alt="" />
+				<img src={ideaBlue} alt="" />
+			</span>
+			<img class="gear" src={gear} alt="" />
+			<span class="lettering hacks" aria-hidden="true">
+				<img class="letter-shadow" src={hacksWhite} alt="" />
+				<img src={hacksBlue} alt="" />
+			</span>
+		</h1>
+		{#if comingSoon}
+			<p class="event-date">Coming Soon</p>
+			<p class="event-venue">Details to be announced</p>
+		{:else}
+			<p class="event-date">January 29–31, 2027</p>
+			<p class="event-venue">5:00 PM in Ackerman Grand Ballroom</p>
+			<a class="apply" href="/dashboard/apply">Apply Now</a>
+		{/if}
 	</div>
-</div>
+</section>
 
 <style>
-	/* scene sizing */
-	.scene {
-		width: 100%;
-		height: 300px; /* visible band for mountains + grid + panel */
-		overflow: hidden;
+	@property --hero-2027-ray-angle {
+		syntax: '<angle>';
+		inherits: false;
+		initial-value: -14deg;
 	}
 
-	/* ensure svg children align to the scene */
-	.scene svg {
+	.hero-2027 {
+		position: relative;
+		isolation: isolate;
+		overflow: hidden;
+		width: 100%;
+		container-type: inline-size;
+		aspect-ratio: 1440 / 1024;
+		background: #3ba3f4 url('$lib/images/hero-2027/sky.png') center / 100% 100% no-repeat;
+		--wordmark-top: 4%;
+		--wordmark-width: 72%;
+		/* The gear center sits 44.5% across the wordmark. */
+		--ray-x: calc(50% - 3.96% - 2.2vw);
+		--ray-y: calc(var(--wordmark-top) + 10.32cqw);
+	}
+
+	.rays {
 		position: absolute;
-		left: 0;
-		bottom: 0;
+		inset: 0;
+		background: conic-gradient(
+			from var(--hero-2027-ray-angle, -14deg) at var(--ray-x) var(--ray-y),
+			transparent 0deg 23deg,
+			#b4ddff65 23deg 29deg,
+			#fff3a36b 29deg 44deg,
+			#b4ddff65 44deg 51deg,
+			transparent 51deg 95deg,
+			#b4ddff50 95deg 116deg,
+			transparent 116deg 152deg,
+			#b4ddff60 152deg 159deg,
+			transparent 159deg 171deg,
+			#fff3a36b 171deg 188deg,
+			#b4ddff60 188deg 195deg,
+			transparent 195deg 218deg,
+			#b4ddff65 218deg 225deg,
+			#fff3a36b 225deg 239deg,
+			#b4ddff65 239deg 246deg,
+			transparent 246deg 276deg,
+			#b4ddff55 276deg 295deg,
+			transparent 295deg 330deg,
+			#b4ddff65 330deg 337deg,
+			#fff3a36b 337deg 351deg,
+			#b4ddff65 351deg 357deg,
+			transparent 357deg 360deg
+		);
+	}
+
+	.terrain {
+		position: absolute;
+		inset: auto 0 0;
+		aspect-ratio: 1440 / 1024;
+	}
+
+	.terrain img,
+	.clouds img {
+		position: absolute;
+		max-width: none;
+	}
+
+	.mountains {
+		top: 38%;
+		left: -17%;
+		width: 139%;
+	}
+
+	.hill-light {
+		top: 55%;
+		left: -8%;
+		width: 147%;
+	}
+
+	.hill-bright {
+		top: 54%;
+		left: -46%;
+		width: 147%;
+	}
+
+	.hill-front {
+		position: absolute;
+		inset: 77% auto 0 -21%;
+		width: 132%;
+		background: linear-gradient(to bottom, transparent 85%, #2eb723 85%);
+	}
+
+	.hill-front img {
+		inset: 0;
 		width: 100%;
 		height: 100%;
+	}
+
+	.hill-texture {
+		mix-blend-mode: multiply;
+		opacity: 0.28;
+	}
+
+	.clouds {
+		position: absolute;
+		inset: 0;
+		container-type: inline-size;
+		pointer-events: none;
+		--sky-floor: 38%;
+	}
+
+	.clouds img {
+		/* Leave room for the full cloud above the highest mountain peak. */
+		top: min(var(--cloud-top), calc(var(--sky-floor) - 11cqw - 8px));
+	}
+
+	.cloud-left {
+		--cloud-top: 29.7%;
+		left: 5.4%;
+		width: 17.7%;
+	}
+
+	.cloud-right {
+		--cloud-top: 21%;
+		right: 4.2%;
+		width: 16%;
+	}
+
+	.cloud-distant {
+		display: none;
+	}
+
+	.hero-2027-content {
+		position: relative;
+		top: var(--wordmark-top);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+	}
+
+	.wordmark {
+		position: relative;
+		width: var(--wordmark-width);
+		aspect-ratio: 1037 / 298;
+		margin: 0;
+		transform: translateX(-2.2vw);
+	}
+
+	.wordmark img {
 		display: block;
+		width: 100%;
 	}
 
-	/* loading spinner animation */
-	.loading-spinner {
-		width: 16px;
-		height: 16px;
-		border: 2px solid rgba(255, 255, 255, 0.3);
-		border-top: 2px solid white;
-		border-radius: 50%;
-		animation: spin 1s linear infinite;
+	.lettering,
+	.gear {
+		position: absolute;
 	}
 
-	@keyframes spin {
-		0% {
-			transform: rotate(0deg);
+	.wordmark .gear {
+		top: 0;
+		left: 30.5%;
+		width: 28%;
+	}
+
+	.lettering {
+		top: 29%;
+		isolation: isolate;
+	}
+
+	.idea {
+		left: 0;
+		width: 28.5%;
+	}
+
+	.hacks {
+		right: 0;
+		width: 38.9%;
+	}
+
+	.letter-shadow {
+		position: absolute;
+		z-index: -1;
+		transform: translate(-1.5%, 4%);
+	}
+
+	.event-date {
+		margin: clamp(0.45rem, 1vw, 0.9rem) 0 0.15rem;
+		color: #052c55;
+		font-size: clamp(1rem, 1.9vw, 1.7rem);
+		font-weight: 800;
+	}
+
+	.event-venue {
+		margin: 0 1rem 0.55rem;
+		color: #052c55;
+		font-size: clamp(0.875rem, 1.4vw, 1.25rem);
+		font-weight: 700;
+	}
+
+	.apply {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 11rem;
+		min-height: 56px;
+		padding: 0.7rem 2.15rem;
+		border: 2px solid #052c55;
+		border-radius: 0.5rem;
+		background: #fff466;
+		color: #052c55;
+		font-size: clamp(1.2rem, 1.7vw, 1.55rem);
+		font-weight: 800;
+		text-decoration: none;
+	}
+
+	.apply:hover {
+		background: #fff9a6;
+	}
+
+	.apply:focus-visible {
+		outline: 3px solid #052c55;
+		outline-offset: 4px;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.rays {
+			animation:
+				hero-fade-in 1.35s ease-out backwards,
+				hero-ray-power-up 10s linear 1.35s infinite;
+		}
+
+		.wordmark {
+			animation: hero-logo-in 1.1s ease-out backwards;
+		}
+
+		.mountains,
+		.hill-light,
+		.hill-bright,
+		.hill-front {
+			animation: hero-rise-in 1.15s cubic-bezier(0.2, 0.65, 0.3, 1) backwards;
+		}
+
+		.hill-light {
+			animation-delay: 120ms;
+		}
+
+		.hill-bright {
+			animation-delay: 240ms;
+		}
+
+		.hill-front {
+			animation-delay: 360ms;
+		}
+
+		.clouds img {
+			right: auto;
+			left: 0;
+			animation:
+				hero-fade-in 1.25s ease-out 250ms backwards,
+				hero-cloud-crossing var(--cloud-duration) linear var(--cloud-phase) infinite
+					var(--cloud-direction, normal);
+		}
+
+		.cloud-left {
+			--cloud-duration: 54s;
+			--cloud-phase: -10.8s;
+		}
+
+		.cloud-right {
+			--cloud-duration: 44s;
+			--cloud-phase: -7.8s;
+			--cloud-direction: reverse;
+		}
+
+		.cloud-distant {
+			display: block;
+			width: 11%;
+			--cloud-top: 13%;
+			--cloud-duration: 59s;
+			--cloud-phase: -40s;
+		}
+
+		.event-date,
+		.event-venue,
+		.apply {
+			animation: hero-fade-in 800ms ease-out 1.1s backwards;
+		}
+
+		.apply:focus-visible {
+			animation: none;
+		}
+	}
+
+	@keyframes hero-fade-in {
+		from {
+			opacity: 0;
+		}
+	}
+
+	@keyframes hero-ray-power-up {
+		0%,
+		82% {
+			--hero-2027-ray-angle: -14deg;
+			filter: sepia(0) saturate(1) brightness(1);
+			animation-timing-function: ease-in-out;
+		}
+		91% {
+			filter: sepia(0.55) saturate(1.6) brightness(1.85);
+			animation-timing-function: ease-in-out;
 		}
 		100% {
-			transform: rotate(360deg);
+			/* One full turn returns to the exact starting angle before the loop restarts. */
+			--hero-2027-ray-angle: 346deg;
+			filter: sepia(0) saturate(1) brightness(1);
+		}
+	}
+
+	@keyframes hero-logo-in {
+		from {
+			opacity: 0;
+			scale: 0.97;
+		}
+	}
+
+	@keyframes hero-rise-in {
+		from {
+			opacity: 0;
+			translate: 0 clamp(10px, 1.6vw, 24px);
+		}
+	}
+
+	@keyframes hero-cloud-crossing {
+		from {
+			translate: calc(-100% - 8px);
+		}
+		to {
+			translate: calc(100cqw + 8px);
+		}
+	}
+
+	@media (min-width: 701px) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+		/* Independent of the entrance animations, which use the translate property. */
+		.mountains,
+		.hill-light,
+		.hill-bright {
+			transform: translateY(calc(var(--parallax-progress, 0) * var(--parallax-distance)));
+		}
+
+		.mountains {
+			--parallax-distance: 48px;
+		}
+
+		.hill-light {
+			--parallax-distance: 16px;
+		}
+
+		.hill-bright {
+			--parallax-distance: 8px;
+		}
+	}
+
+	@media (min-width: 701px) {
+		.hero-2027 {
+			min-height: 470px;
+		}
+	}
+
+	@media (max-width: 700px) {
+		.hero-2027 {
+			min-height: 510px;
+			aspect-ratio: auto;
+			--wordmark-top: 91px;
+			--wordmark-width: min(87%, 485px);
+			--ray-x: calc(50% - min(4.785%, 26.675px));
+			--ray-y: calc(var(--wordmark-top) + min(12.47cqw, 69.54px));
+		}
+
+		.wordmark {
+			transform: none;
+		}
+
+		.terrain {
+			right: auto;
+			left: 50%;
+			width: max(115%, 620px);
+			transform: translateX(-50%);
+		}
+
+		.clouds {
+			/* The terrain covers 62% of its reference canvas above the bottom. */
+			--sky-floor: calc(100% - max(115cqw, 620px) * 1024 / 1440 * 0.62);
+		}
+
+		.cloud-left {
+			--cloud-top: 46%;
+			left: 3%;
+			width: 17%;
+		}
+
+		.cloud-right {
+			--cloud-top: 34%;
+			right: 3%;
+		}
+
+		.event-date {
+			margin-top: 0.9rem;
 		}
 	}
 </style>

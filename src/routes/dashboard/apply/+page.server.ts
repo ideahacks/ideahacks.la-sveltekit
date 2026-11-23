@@ -1,91 +1,72 @@
-import { redirect, fail } from '@sveltejs/kit';
-import type { PageServerLoad, Actions } from './$types';
-import { createClient } from '@supabase/supabase-js';
-import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
+import { error, fail, redirect } from '@sveltejs/kit';
+import { applicationWindow, getApplicationUser } from '$lib/server/applications';
+import type { Actions, PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async (event) => {
-	// Check if user is authenticated
-	if (!event.locals.session) {
-		// Redirect to login if not authenticated
-		throw redirect(302, '/login');
+export const load: PageServerLoad = async ({ locals }) => {
+	const user = await getApplicationUser(locals);
+	if (!user) redirect(302, '/login');
+	if (applicationWindow !== 'open') redirect(302, '/dashboard');
+
+	const { data: application, error: fetchError } = await locals.sb
+		.from('applications_2027')
+		.select('status')
+		.eq('uid', user.id)
+		.maybeSingle();
+
+	if (fetchError) {
+		console.error('Could not check for an existing 2027 application', fetchError.code);
+		error(500, 'Could not check your application status. Please try again.');
 	}
-
-	return {
-		session: event.locals.session
-	};
+	if (application) redirect(302, '/dashboard');
 };
 
 export const actions: Actions = {
-	submit: async (event) => {
-		// Check authentication
-		if (!event.locals.session) {
-			return fail(401, { error: 'Unauthorized' });
+	submit: async ({ locals, request }) => {
+		if (!(await getApplicationUser(locals))) {
+			return fail(401, { error: 'Please log in before submitting an application.' });
 		}
 
-		const formData = await event.request.formData();
-		
-		// Extract form fields
-		const name = formData.get('name')?.toString() || '';
-		const preferredName = formData.get('preferredName')?.toString() || '';
-		const pronouns = formData.get('pronouns')?.toString() || '';
-		const school = formData.get('school')?.toString() || '';
-		const year = formData.get('year')?.toString() || '';
-		const isTransfer = formData.get('isTransfer') === 'on' ? 'Yes' : 'No';
-		const major = formData.get('major')?.toString() || '';
-		const priorEngineeringExperience = formData.get('priorEngineeringExperience')?.toString() || '';
-		const whyIdeaHacks = formData.get('whyIdeaHacks')?.toString() || '';
-		const hackathonIdeas = formData.get('hackathonIdeas')?.toString() || '';
-		const priorHackathonExperience = formData.get('priorHackathonExperience')?.toString() || '';
-		const suggestedParts = formData.get('suggestedParts')?.toString() || '';
-		const shirtSize = formData.get('shirtSize')?.toString() || '';
-		const dietaryRestrictions = formData.get('dietaryRestrictions')?.toString() || '';
-		
-		// Get user info
-		const email = event.locals.session.user.email || '';
-		const uid = event.locals.session.user.id || '';
+		const fields = await request.formData();
+		const answer = (name: string) => {
+			const value = fields.get(name);
+			return typeof value === 'string' ? value.trim() : '';
+		};
 
-		// Validate required fields
-		if (!name || !school || !year || !major || !priorEngineeringExperience || !whyIdeaHacks || !hackathonIdeas) {
+		const requiredAnswers = {
+			name: answer('name'),
+			school: answer('school'),
+			year: answer('year'),
+			major: answer('major'),
+			prior_engineering_experience: answer('priorEngineeringExperience'),
+			why_ideahacks: answer('whyIdeaHacks'),
+			hackathon_ideas: answer('hackathonIdeas')
+		};
+
+		if (applicationWindow !== 'open') {
+			return fail(403, { error: 'Applications are not open.' });
+		}
+		if (Object.values(requiredAnswers).some((value) => !value)) {
 			return fail(400, { error: 'Please fill out all required fields.' });
 		}
 
-		const supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
+		const { error: insertError } = await locals.sb.from('applications_2027').insert(
+			{
+				...requiredAnswers,
+				preferred_name: answer('preferredName') || null,
+				pronouns: answer('pronouns') || null,
+				transfer: fields.get('isTransfer') === 'on' ? 'Yes' : 'No',
+				prior_hackathon_experience: answer('priorHackathonExperience') || null,
+				suggested_parts: answer('suggestedParts') || null,
+				shirt_size: answer('shirtSize') || null,
+				dietary_restrictions: answer('dietaryRestrictions') || null
+			},
+			{ defaultToNull: false }
+		);
 
-		try {
-			const { error } = await supabaseAdmin.from('applications_2026').insert({
-				uid,
-				email,
-				name,
-				preferred_name: preferredName,
-				pronouns,
-				school,
-				year,
-				transfer: isTransfer,
-				major,
-				prior_engineering_experience: priorEngineeringExperience,
-				why_ideahacks: whyIdeaHacks,
-				hackathon_ideas: hackathonIdeas,
-				prior_hackathon_experience: priorHackathonExperience,
-				suggested_parts: suggestedParts,
-				shirt_size: shirtSize,
-				dietary_restrictions: dietaryRestrictions
-			});
+		// A repeat submission lands on the status page without replacing the existing answers.
+		if (!insertError || insertError.code === '23505') redirect(303, '/dashboard');
 
-			if (error) {
-				console.error('Supabase insert error:', error);
-				return fail(500, { error: 'Failed to submit application. Please try again.' });
-			}
-
-			return {
-				success: true,
-				message: 'Application submitted successfully!'
-			};
-		} catch (err) {
-			console.error('Unexpected error submitting to Supabase:', err);
-			return fail(500, { error: 'Failed to submit application. Please try again.' });
-		}
-
-			
-		
+		console.error('Could not submit 2027 application', insertError.code);
+		return fail(500, { error: 'Failed to submit application. Please try again.' });
 	}
 };

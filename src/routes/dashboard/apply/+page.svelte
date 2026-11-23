@@ -1,51 +1,31 @@
 <script lang="ts">
+	import Fonts2027 from '$lib/components/Fonts2027.svelte';
 	import NavBar from '$lib/components/NavBar.svelte';
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	import type { PageData, ActionData } from './$types';
+	import type { ActionData } from './$types';
 
-	let { data, form }: { data: PageData; form?: ActionData } = $props();
+	let { form }: { form?: ActionData } = $props();
 
-	// Form state
-	let name = '';
-	let preferredName = '';
-	let pronouns = '';
-	let school = '';
-	let year = '';
-	let isTransfer = false;
-	let major = '';
-	let priorEngineeringExperience = '';
-	let whyIdeaHacks = '';
-	let hackathonIdeas = '';
-	let priorHackathonExperience = '';
-	let suggestedParts = '';
-	let shirtSize = '';
-	let dietaryRestrictions = '';
 
-	const yearOptions = ['Freshman', 'Sophomore', 'Junior', 'Senior', 'Graduate', 'Other'];
+	const yearOptions = ['Freshman', 'Sophomore', 'Junior', 'Senior', 'Graduate', 'High School','Other'];
 	const shirtSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
-	// Handle successful submission
-	$effect(() => {
-		if (form?.success) {
-			setTimeout(() => {
-				goto('/dashboard');
-			}, 2000);
-		}
-	});
 </script>
 
-<NavBar />
+<Fonts2027 />
+
+<NavBar portal2027 />
 
 <!-- Explicit scroll container: fixed height + overflow-y-auto so content scrolls regardless of layout quirks -->
-<div class="apply-page-scroll h-screen overflow-y-auto overflow-x-hidden">
+<div class="apply-page-scroll h-screen overflow-y-auto overflow-x-hidden bg-gradient-to-b from-[#3FA9FF] to-[#BBD98D] font-inter text-[#064471]">
 	<div class="flex min-h-full flex-col items-center pt-16 pb-16">
 		<div class="max-w-4xl w-full px-4 py-8">
-			<div class="bg-white/10 backdrop-blur-md rounded-lg shadow-lg p-8">
-			<h1 class="text-4xl font-bold text-white mb-2 font-mono uppercase tracking-wider">
+			<div class="rounded-lg border border-[#0068BD]/20 bg-white p-8 shadow-lg shadow-[#0068BD]/20">
+			<h1 class="mb-2 font-jaro text-4xl uppercase tracking-wide text-[#0068BD]">
 				Application Form
 			</h1>
-			<p class="text-white/70 mb-8">Fill out the form below to apply for IDEA Hacks 2026</p>
+			<p class="mb-8 text-[#064471]">Fill out the form below to apply for IDEA Hacks 2027</p>
 
 			<form
 				method="POST"
@@ -54,48 +34,45 @@
 				class="space-y-6"
 			>
 				<!-- Personal Information -->
-				<div class="bg-white/5 rounded-lg p-6">
-					<h2 class="text-2xl font-semibold text-white mb-4 font-mono uppercase">
+				<div class="rounded-lg bg-[#BBD98D]/30 p-6">
+					<h2 class="mb-4 font-jetbrains text-2xl font-semibold uppercase text-[#064471]">
 						Personal Information
 					</h2>
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 						<div>
-							<label for="name" class="block text-sm font-medium mb-1 text-stone-100">
-								Full Name <span class="text-red-400">*</span>
+							<label for="name" class="block text-sm font-medium mb-1 text-[#064471]">
+								Full Name <span class="text-red-700">*</span>
 							</label>
 							<input
 								id="name"
 								name="name"
 								type="text"
-								bind:value={name}
-								class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200 bg-white text-gray-900"
+								class="w-full rounded-lg border border-[#0068BD]/25 bg-white px-3 py-2 text-[#064471] placeholder:text-slate-500 focus:border-[#0068BD] focus:outline-none focus:ring-2 focus:ring-[#3FA9FF]/50"
 								placeholder="John Doe"
 								required
 							/>
 						</div>
 						<div>
-							<label for="preferredName" class="block text-sm font-medium mb-1 text-stone-100">
+							<label for="preferredName" class="block text-sm font-medium mb-1 text-[#064471]">
 								Preferred Name
 							</label>
 							<input
 								id="preferredName"
 								name="preferredName"
 								type="text"
-								bind:value={preferredName}
-								class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200 bg-white text-gray-900"
+								class="w-full rounded-lg border border-[#0068BD]/25 bg-white px-3 py-2 text-[#064471] placeholder:text-slate-500 focus:border-[#0068BD] focus:outline-none focus:ring-2 focus:ring-[#3FA9FF]/50"
 								placeholder="Johnny"
 							/>
 						</div>
 						<div>
-							<label for="pronouns" class="block text-sm font-medium mb-1 text-stone-100">
+							<label for="pronouns" class="block text-sm font-medium mb-1 text-[#064471]">
 								Pronouns
 							</label>
 							<input
 								id="pronouns"
 								name="pronouns"
 								type="text"
-								bind:value={pronouns}
-								class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200 bg-white text-gray-900"
+								class="w-full rounded-lg border border-[#0068BD]/25 bg-white px-3 py-2 text-[#064471] placeholder:text-slate-500 focus:border-[#0068BD] focus:outline-none focus:ring-2 focus:ring-[#3FA9FF]/50"
 								placeholder="he/him, she/her, they/them, etc."
 							/>
 						</div>
@@ -103,34 +80,32 @@
 				</div>
 
 				<!-- Academic Information -->
-				<div class="bg-white/5 rounded-lg p-6">
-					<h2 class="text-2xl font-semibold text-white mb-4 font-mono uppercase">
+				<div class="rounded-lg bg-[#BBD98D]/30 p-6">
+					<h2 class="mb-4 font-jetbrains text-2xl font-semibold uppercase text-[#064471]">
 						Academic Information
 					</h2>
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 						<div>
-							<label for="school" class="block text-sm font-medium mb-1 text-stone-100">
-								School <span class="text-red-400">*</span>
+							<label for="school" class="block text-sm font-medium mb-1 text-[#064471]">
+								School <span class="text-red-700">*</span>
 							</label>
 							<input
 								id="school"
 								name="school"
 								type="text"
-								bind:value={school}
-								class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200 bg-white text-gray-900"
+								class="w-full rounded-lg border border-[#0068BD]/25 bg-white px-3 py-2 text-[#064471] placeholder:text-slate-500 focus:border-[#0068BD] focus:outline-none focus:ring-2 focus:ring-[#3FA9FF]/50"
 								placeholder="UCLA"
 								required
 							/>
 						</div>
 						<div>
-							<label for="year" class="block text-sm font-medium mb-1 text-stone-100">
-								Year <span class="text-red-400">*</span>
+							<label for="year" class="block text-sm font-medium mb-1 text-[#064471]">
+								Year <span class="text-red-700">*</span>
 							</label>
 							<select
 								id="year"
 								name="year"
-								bind:value={year}
-								class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200 bg-white text-gray-900"
+								class="w-full rounded-lg border border-[#0068BD]/25 bg-white px-3 py-2 text-[#064471] placeholder:text-slate-500 focus:border-[#0068BD] focus:outline-none focus:ring-2 focus:ring-[#3FA9FF]/50"
 								required
 							>
 								<option value="">Select year</option>
@@ -140,15 +115,14 @@
 							</select>
 						</div>
 						<div>
-							<label for="major" class="block text-sm font-medium mb-1 text-stone-100">
-								Major <span class="text-red-400">*</span>
+							<label for="major" class="block text-sm font-medium mb-1 text-[#064471]">
+								Major <span class="text-red-700">*</span>
 							</label>
 							<input
 								id="major"
 								name="major"
 								type="text"
-								bind:value={major}
-								class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200 bg-white text-gray-900"
+								class="w-full rounded-lg border border-[#0068BD]/25 bg-white px-3 py-2 text-[#064471] placeholder:text-slate-500 focus:border-[#0068BD] focus:outline-none focus:ring-2 focus:ring-[#3FA9FF]/50"
 								placeholder="Computer Science"
 								required
 							/>
@@ -159,86 +133,80 @@
 									id="isTransfer"
 									name="isTransfer"
 									type="checkbox"
-									bind:checked={isTransfer}
-									class="mr-2 w-4 h-4"
+									class="mr-2 h-4 w-4 accent-[#0068BD]"
 								/>
-								<span class="text-stone-100">Transfer?</span>
+								<span class="text-[#064471]">Transfer?</span>
 							</label>
 						</div>
 					</div>
 				</div>
 
 				<!-- Application Questions -->
-				<div class="bg-white/5 rounded-lg p-6">
-					<h2 class="text-2xl font-semibold text-white mb-4 font-mono uppercase">
+				<div class="rounded-lg bg-[#BBD98D]/30 p-6">
+					<h2 class="mb-4 font-jetbrains text-2xl font-semibold uppercase text-[#064471]">
 						Application Questions
 					</h2>
 					<div class="space-y-4">
 						<div>
-							<label for="priorEngineeringExperience" class="block text-sm font-medium mb-1 text-stone-100">
-								Prior Engineering Experience <span class="text-red-400">*</span>
+							<label for="priorEngineeringExperience" class="block text-sm font-medium mb-1 text-[#064471]">
+								Prior Engineering Experience <span class="text-red-700">*</span>
 							</label>
 							<textarea
 								id="priorEngineeringExperience"
 								name="priorEngineeringExperience"
-								bind:value={priorEngineeringExperience}
 								rows="4"
-								class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200 bg-white text-gray-900"
+								class="w-full rounded-lg border border-[#0068BD]/25 bg-white px-3 py-2 text-[#064471] placeholder:text-slate-500 focus:border-[#0068BD] focus:outline-none focus:ring-2 focus:ring-[#3FA9FF]/50"
 								placeholder="Describe your prior engineering experience..."
 								required
 							></textarea>
 						</div>
 						<div>
-							<label for="whyIdeaHacks" class="block text-sm font-medium mb-1 text-stone-100">
-								Why IDEA Hacks? <span class="text-red-400">*</span>
+							<label for="whyIdeaHacks" class="block text-sm font-medium mb-1 text-[#064471]">
+								Why IDEA Hacks? <span class="text-red-700">*</span>
 							</label>
 							<textarea
 								id="whyIdeaHacks"
 								name="whyIdeaHacks"
-								bind:value={whyIdeaHacks}
 								rows="4"
-								class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200 bg-white text-gray-900"
+								class="w-full rounded-lg border border-[#0068BD]/25 bg-white px-3 py-2 text-[#064471] placeholder:text-slate-500 focus:border-[#0068BD] focus:outline-none focus:ring-2 focus:ring-[#3FA9FF]/50"
 								placeholder="Tell us why you want to attend IDEA Hacks..."
 								required
 							></textarea>
 						</div>
 						<div>
-							<label for="hackathonIdeas" class="block text-sm font-medium mb-1 text-stone-100">
-								Hackathon Ideas <span class="text-red-400">*</span>
+							<label for="hackathonIdeas" class="block text-sm font-medium mb-1 text-[#064471]">
+								Hackathon Ideas <span class="text-red-700">*</span>
 							</label>
 							<textarea
 								id="hackathonIdeas"
 								name="hackathonIdeas"
-								bind:value={hackathonIdeas}
 								rows="4"
-								class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200 bg-white text-gray-900"
+								class="w-full rounded-lg border border-[#0068BD]/25 bg-white px-3 py-2 text-[#064471] placeholder:text-slate-500 focus:border-[#0068BD] focus:outline-none focus:ring-2 focus:ring-[#3FA9FF]/50"
 								placeholder="Share your hackathon project ideas..."
 								required
 							></textarea>
 						</div>
 						<div>
-							<label for="priorHackathonExperience" class="block text-sm font-medium mb-1 text-stone-100">
+							<label for="priorHackathonExperience" class="block text-sm font-medium mb-1 text-[#064471]">
 								Prior Hackathon Experience
 							</label>
 							<textarea
 								id="priorHackathonExperience"
 								name="priorHackathonExperience"
-								bind:value={priorHackathonExperience}
 								rows="3"
-								class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200 bg-white text-gray-900"
+								class="w-full rounded-lg border border-[#0068BD]/25 bg-white px-3 py-2 text-[#064471] placeholder:text-slate-500 focus:border-[#0068BD] focus:outline-none focus:ring-2 focus:ring-[#3FA9FF]/50"
 								placeholder="List any hackathons you've attended..."
 							></textarea>
 						</div>
 						<div>
-							<label for="suggestedParts" class="block text-sm font-medium mb-1 text-stone-100">
+							<label for="suggestedParts" class="block text-sm font-medium mb-1 text-[#064471]">
 								Suggested Parts
 							</label>
 							<textarea
 								id="suggestedParts"
 								name="suggestedParts"
-								bind:value={suggestedParts}
 								rows="3"
-								class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200 bg-white text-gray-900"
+								class="w-full rounded-lg border border-[#0068BD]/25 bg-white px-3 py-2 text-[#064471] placeholder:text-slate-500 focus:border-[#0068BD] focus:outline-none focus:ring-2 focus:ring-[#3FA9FF]/50"
 								placeholder="Any parts or components you'd like to see available..."
 							></textarea>
 						</div>
@@ -246,20 +214,19 @@
 				</div>
 
 				<!-- Event Details -->
-				<div class="bg-white/5 rounded-lg p-6">
-					<h2 class="text-2xl font-semibold text-white mb-4 font-mono uppercase">
+				<div class="rounded-lg bg-[#BBD98D]/30 p-6">
+					<h2 class="mb-4 font-jetbrains text-2xl font-semibold uppercase text-[#064471]">
 						Event Details
 					</h2>
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 						<div>
-							<label for="shirtSize" class="block text-sm font-medium mb-1 text-stone-100">
+							<label for="shirtSize" class="block text-sm font-medium mb-1 text-[#064471]">
 								Shirt Size
 							</label>
 							<select
 								id="shirtSize"
 								name="shirtSize"
-								bind:value={shirtSize}
-								class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200 bg-white text-gray-900"
+								class="w-full rounded-lg border border-[#0068BD]/25 bg-white px-3 py-2 text-[#064471] placeholder:text-slate-500 focus:border-[#0068BD] focus:outline-none focus:ring-2 focus:ring-[#3FA9FF]/50"
 							>
 								<option value="">Select size</option>
 								{#each shirtSizes as size}
@@ -268,31 +235,24 @@
 							</select>
 						</div>
 						<div>
-							<label for="dietaryRestrictions" class="block text-sm font-medium mb-1 text-stone-100">
+							<label for="dietaryRestrictions" class="block text-sm font-medium mb-1 text-[#064471]">
 								Dietary Restrictions
 							</label>
 							<input
 								id="dietaryRestrictions"
 								name="dietaryRestrictions"
 								type="text"
-								bind:value={dietaryRestrictions}
-								class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200 bg-white text-gray-900"
+								class="w-full rounded-lg border border-[#0068BD]/25 bg-white px-3 py-2 text-[#064471] placeholder:text-slate-500 focus:border-[#0068BD] focus:outline-none focus:ring-2 focus:ring-[#3FA9FF]/50"
 								placeholder="Vegetarian, Vegan, Gluten-free, etc."
 							/>
 						</div>
 					</div>
 				</div>
 
-				<!-- Error/Success Messages -->
+				<!-- Submission error -->
 				{#if form?.error}
-					<div class="bg-red-500/20 border border-red-500 rounded-lg p-4">
-						<p class="text-red-200">{form.error}</p>
-					</div>
-				{/if}
-
-				{#if form?.success}
-					<div class="bg-green-500/20 border border-green-500 rounded-lg p-4">
-						<p class="text-green-200">{form.message || 'Application submitted successfully! Redirecting...'}</p>
+					<div class="rounded-lg border border-red-300 bg-red-50 p-4">
+						<p class="text-red-800">{form.error}</p>
 					</div>
 				{/if}
 
@@ -300,15 +260,14 @@
 				<div class="flex gap-4">
 					<button
 						type="submit"
-						disabled={form?.success}
-						class="flex-1 px-8 py-4 bg-cyan-600 hover:bg-cyan-700 disabled:bg-cyan-400 disabled:cursor-not-allowed text-white rounded-lg transition-colors duration-200 font-mono uppercase tracking-wider text-lg font-bold"
+						class="flex-1 px-8 py-4 rounded-lg border border-[#0068BD] bg-[#FFF385] text-[#064471] transition-colors duration-200 hover:bg-[#BBD98D] font-jetbrains uppercase tracking-wider text-lg font-bold"
 					>
-						{form?.success ? 'Submitted!' : 'Submit Application'}
+						Submit Application
 					</button>
 					<button
 						type="button"
 						onclick={() => goto('/dashboard')}
-						class="px-6 py-4 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors duration-200 font-mono uppercase tracking-wider"
+						class="px-6 py-4 rounded-lg border border-[#0068BD] bg-white text-[#0068BD] transition-colors duration-200 hover:bg-[#3FA9FF]/20 font-jetbrains uppercase tracking-wider"
 					>
 						Cancel
 					</button>

@@ -1,5 +1,5 @@
 <!-- Footer section with social media icons and footer text -->
-<div class="py-12 px-4">
+<div class="border-t-4 border-[#3FA9FF] bg-[#0068BD] px-4 py-10">
 	<div class="max-w-6xl mx-auto">
 		<div class="flex flex-col items-center space-y-4">
 			<!-- Social Media Icons -->
@@ -9,7 +9,7 @@
 					href="https://www.instagram.com/uclaieee"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="text-white hover:text-purple-400 transition-colors duration-200"
+					class="text-[#FFFFFF] transition-colors duration-200 hover:text-[#FFF385] focus-visible:text-[#FFF385]"
 					aria-label="Follow us on Instagram"
 				>
 					<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -23,7 +23,7 @@
 					href="https://x.com/uclaieee"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="text-white hover:text-purple-400 transition-colors duration-200"
+					class="text-[#FFFFFF] transition-colors duration-200 hover:text-[#FFF385] focus-visible:text-[#FFF385]"
 					aria-label="Follow us on X (Twitter)"
 				>
 					<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -37,7 +37,7 @@
 					href="https://www.linkedin.com/company/ieee-student-branch-ucla/"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="text-white hover:text-purple-400 transition-colors duration-200"
+					class="text-[#FFFFFF] transition-colors duration-200 hover:text-[#FFF385] focus-visible:text-[#FFF385]"
 					aria-label="Follow us on LinkedIn"
 				>
 					<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
