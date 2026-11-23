@@ -53,7 +53,7 @@
 	}
 
 	function handleCancel() {
-		goto('/dashboard');
+		goto('/dashboard/2026');
 	}
 </script>
 

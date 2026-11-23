@@ -98,6 +98,6 @@ export const actions: Actions = {
 		}
 
 		// Success — you can redirect or return success state
-		throw redirect(302, '/dashboard');
+		throw redirect(302, '/dashboard/2026');
 	}
 };

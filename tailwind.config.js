@@ -6,6 +6,9 @@ export default {
 		extend: {
 			fontFamily: {
 				sans: ['Inter', 'sans-serif'],
+				inter: ['Inter', 'sans-serif'],
+				jaro: ['Jaro', 'sans-serif'],
+				jetbrains: ['JetBrains Mono', 'monospace'],
 				paytone: ['Paytone One', 'sans-serif'],
 				encode: ['Encode Sans', 'sans-serif'],
 				mono: ['Roboto Mono', 'monospace']

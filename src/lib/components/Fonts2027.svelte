@@ -1,0 +1,6 @@
+<svelte:head>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Jaro&family=JetBrains+Mono:wght@400;600;700&display=swap"
+		rel="stylesheet"
+	/>
+</svelte:head>

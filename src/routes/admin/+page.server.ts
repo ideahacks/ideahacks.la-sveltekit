@@ -161,7 +161,7 @@ export const load: PageServerLoad = async (event) => {
 	if (!parentData?.session) {
 		throw redirect(302, '/login');
 	}
-	if (!parentData?.is_admin) {
+	if (!(await requireAdmin(event))) {
 		throw redirect(302, '/');
 	}
 
@@ -218,6 +218,7 @@ export const load: PageServerLoad = async (event) => {
 
 	return {
 		applications: applications ?? [],
+		is_admin: true,
 		teams: teams ?? [],
 		admins: (adminRows ?? []) as AdminRecord[],
 		teamCheckouts,
