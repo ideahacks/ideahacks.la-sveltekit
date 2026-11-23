@@ -220,12 +220,12 @@
 				<div
 					class="font-sans text-gray-300 text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold drop-shadow-lg"
 				>
-					Coming Soon
+					April 24-26, 2026
 				</div>
 				<div
 					class="font-sans text-gray-300 text-base sm:text-lg md:text-xl lg:text-2xl drop-shadow-lg"
 				>
-					Details to be announced
+					7:00 PM in Engineering VI
 				</div>
 			</div>
 		</div>
