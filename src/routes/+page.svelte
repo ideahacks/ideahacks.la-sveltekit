@@ -53,10 +53,10 @@
 
 <Fonts2027 />
 
-<NavBar homepage2027 comingSoon />
+<NavBar homepage2027 />
 
 <!-- Hero Section -->
-<Hero comingSoon />
+<Hero />
 
 <div class="bg-gradient-to-b from-[#2EB723] via-[#73CB53] to-[#BBD98D] px-4 py-16 sm:py-24">
 	<div class="max-w-6xl mx-auto text-center">
